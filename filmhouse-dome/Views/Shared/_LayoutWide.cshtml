@@ -1,0 +1,156 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>DEMO</title>
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="~/css/custom.css">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="~/css/jquery.mThumbnailScroller.css">
+    <link rel="stylesheet" href="~/css/site.css">
+
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/modernizr/modernizr.js"></script>
+
+
+    <script>
+        $(function () {
+            $(".tipup").tooltip();
+        });
+    </script>
+    <style>
+        .link-sub {
+            padding: 0px;
+            color: #FAFAFA;
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+
+        .link-sub:hover,
+        .link-sub:focus,
+        .link-sub:active {
+            color: #E6E6E6;
+            text-decoration: none;
+        }
+
+        .span-search {
+            border-width: 0px;
+            background-color: #FFFFFF;
+            border-radius: 0px;
+        }
+
+        .input-search {
+            border-width: 0px;
+            border-radius: 0px;
+        }
+
+        .input-search:focus,
+        .input-search:active {
+            -webkit-box-shadow: 0 0 16px #10761A;
+            -moz-box-shadow: 0 0 16px #10761A;
+            box-shadow: 0 0 16px #10761A;
+        }
+
+        .btn-search {
+            border-width: 0px;
+            border-radius: 0px;
+        }
+
+        .btn-search:hover {
+            color: #10761A;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" style="font-family:'Weston Free'; " title="Sharing 为爱电影的人">Sharing</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="/">首页</a>
+                    </li>
+                    <li>
+                        <a href="/Search">选电影</a>
+                    </li>
+                    <li>
+                        <a href="/Ask">求资源</a>
+                    </li>
+                    <li>
+                        <a href="/Album">专辑</a>
+                    </li>
+                    <li>
+                        <a href="/Mine">我的主页</a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                </ul>
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </div>
+
+    @if (ViewBag.PageType == 1)//首页
+    {
+        <div style="background-color:#3B9047; padding:5px; margin-bottom:20px;" class="hidden-xs">
+            <div class="container">
+                <div class="row no-margin no-padding">
+                    <a class="link-sub">热门分类：</a>
+                    <a class="link-sub" href="/Search/Index?country=10" target="_self">大陆</a>
+                    <a class="link-sub" href="/Search/Index?country=11" target="_self">香港</a>
+                    <a class="link-sub" href="/Search/Index?country=12" target="_self">美国</a>
+                    <a class="link-sub" href="/Search/Index?country=14" target="_self">日本</a>
+                    <a class="link-sub" href="/Search/Index?genre=14" target="_self">动作</a>
+                    <a class="link-sub" href="/Search/Index?genre=12" target="_self">喜剧</a>
+                    <a class="link-sub" href="/Search/Index?genre=15" target="_self">科幻</a>
+                    <a class="link-sub" href="/Search/Index?genre=22" target="_self">悬疑</a>
+                    <a class="link-sub" href="/Search/Index?genre=13" target="_self">爱情</a>
+                </div>
+            </div>
+        </div>
+    }
+    else if (ViewBag.PageType == 2)//一般页面
+    {
+        <div style="background-color:#3B9047; padding:10px 0px; margin-bottom:20px;">
+            <div class="input-group col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+                <input type="search" class="form-control input-search" placeholder="搜索 电影" name="search" />
+                <span class="input-group-btn span-search">
+                    <a title="搜索" class="btn btn-default btn-search" href="javascript:document.getElementById('searchForm').submit()">
+                        <i class="fa fa-search"></i>
+                    </a>
+                </span>
+            </div>
+        </div>
+    }
+
+    @RenderBody()
+
+    <footer class="site-footer bg-doubangreen" role="contentinfo">
+        <div style="height:27px; background-color:#DCDCDC;"></div>
+        <div class="site-info" style="padding:40px 0px 30px 0px; margin:0px;">
+            <p style="text-align:center; color:#F2F2F2;">© 2023 &nbsp;&nbsp;&nbsp;&nbsp;<a href="/Home/Index" style="font-family:'Weston Free'; color:inherit; text-decoration:underline;" title="Sharing 为爱电影的人">Sharing</a> - 为爱电影的人</p>
+        </div>
+    </footer>
+
+    @RenderSection("scripts", required: false)
+</body>
+
+
+</html>
