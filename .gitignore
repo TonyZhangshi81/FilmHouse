@@ -242,6 +242,7 @@ ModelManifest.xml
 .fake/
 
 
-/FilmHouse/src/FilmHouse.Web/DataEncrpytionKeys
-/FilmHouse.Web/Logs
-/FilmHouse.Web/wwwroot/lib
+/src/FilmHouse.Web/DataEncrpytionKeys
+/src/FilmHouse.Web/Logs
+/src/FilmHouse.Web/wwwroot/lib
+
