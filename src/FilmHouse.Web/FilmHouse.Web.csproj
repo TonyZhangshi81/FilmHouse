@@ -21,6 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\FilmHouse.Business\FilmHouse.Business.csproj" />
 		<ProjectReference Include="..\FilmHouse.Data.PostgreSql\FilmHouse.Data.PostgreSql.csproj" />
 		<ProjectReference Include="..\FilmHouse.Data\FilmHouse.Data.csproj" />
 		<ProjectReference Include="..\FilmHouse.Mvc\FilmHouse.Mvc.csproj" />
@@ -28,7 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Resources\" />
+		<Folder Include="Resources\UploadedImages\" />
 	</ItemGroup>
 
 </Project>

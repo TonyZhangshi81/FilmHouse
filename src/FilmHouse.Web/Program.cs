@@ -141,7 +141,6 @@ void WriteParameterTable()
     table.AddRow(new Markup("[blue]IP addresses[/]"), new Rows(ips.Select(p => new Text(p.ToString()))));
     table.AddRow(new Markup("[blue]Database type[/]"), new Text(dbType!));
     table.AddRow(new Markup("[blue]Image storage[/]"), new Text(builder.Configuration["ImageStorage:Provider"]!));
-    table.AddRow(new Markup("[blue]Authentication provider[/]"), new Text(builder.Configuration["Authentication:Provider"]!));
     table.AddRow(new Markup("[blue]Editor[/]"), new Text(builder.Configuration["Editor"]!));
 
     AnsiConsole.Write(table);
