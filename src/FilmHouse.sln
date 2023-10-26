@@ -5,11 +5,11 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data.PostgreSql", "FilmHouse.Data.PostgreSql\FilmHouse.Data.PostgreSql.csproj", "{0C7EA5BE-3924-4A33-A048-025EA1593F2E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{19FA03C4-5871-4B54-8EBA-2788D6C26B6E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{19FA03C4-5871-4B54-8EBA-2788D6C26B6E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{558E87CD-C7B6-460D-BC5B-DC685B52B41E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{558E87CD-C7B6-460D-BC5B-DC685B52B41E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{BFA828E5-7AAC-45E4-8D48-55FBC3C6BAD8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{BFA828E5-7AAC-45E4-8D48-55FBC3C6BAD8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{12EE32C5-FA6E-41C9-8A81-D1DCDF1C28C7}"
 EndProject
@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Business", "FilmH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Business.Test", "FilmHouse.Business.Test\FilmHouse.Business.Test.csproj", "{D14E0E3A-AF3E-4C3D-91C8-92E1F35B9B9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmHouse.Mvc", "FilmHouse.Mvc\FilmHouse.Mvc.csproj", "{4153A40D-3910-42E6-812E-84E6A4ACB056}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Mvc", "FilmHouse.Mvc\FilmHouse.Mvc.csproj", "{4153A40D-3910-42E6-812E-84E6A4ACB056}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
