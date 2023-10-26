@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net7.0</TargetFramework>
+		<AssemblyName>FilmHouse.Data</AssemblyName>
+		<RootNamespace>FilmHouse.Data</RootNamespace>
+		<IsTestProject>false</IsTestProject>
+		<IsPackable>false</IsPackable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AnalysisLevel>none</AnalysisLevel>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
+		<Copyright>(C) 2023 tonyzhangshi@163.com</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>

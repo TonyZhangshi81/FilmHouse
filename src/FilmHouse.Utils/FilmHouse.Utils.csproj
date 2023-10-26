@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net7.0</TargetFramework>
+		<AssemblyName>FilmHouse.Utils</AssemblyName>
+		<RootNamespace>FilmHouse.Utils</RootNamespace>
+		<IsTestProject>false</IsTestProject>
+		<IsPackable>false</IsPackable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+</Project>
