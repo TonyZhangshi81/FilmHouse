@@ -7,17 +7,25 @@
 		<RootNamespace>FilmHouse.Web</RootNamespace>
 		<IsTestProject>false</IsTestProject>
 		<IsPackable>false</IsPackable>
+		<Nullable>enable</Nullable>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="7.1.0" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="7.1.0" />
+		<PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
+		<PackageReference Include="MediatR" Version="12.1.1" />
 		<PackageReference Include="NLog" Version="5.2.5" />
 		<PackageReference Include="NLog.Extensions.Logging" Version="5.3.5" />
 		<PackageReference Include="NLog.Web.AspNetCore" Version="5.3.5" />
 		<PackageReference Include="Spectre.Console" Version="0.47.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -29,7 +37,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Resources\UploadedImages\" />
+		<Folder Include="Middleware\" />
+		<Folder Include="Views\Admin\" />
+		<Folder Include="Views\Settings\" />
 	</ItemGroup>
 
 </Project>

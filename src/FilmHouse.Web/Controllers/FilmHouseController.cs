@@ -4,24 +4,23 @@ using System.Diagnostics;
 
 namespace FilmHouse.Web.Controllers
 {
-    public class HomeController : Controller
+    public class FilmHouseController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<FilmHouseController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public FilmHouseController(ILogger<FilmHouseController> logger)
         {
             _logger = logger;
         }
 
+        [Route("")]
+        [Route("[controller]")]
+        [Route("[controller]/Index")]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

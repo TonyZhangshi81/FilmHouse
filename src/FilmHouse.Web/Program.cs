@@ -1,11 +1,16 @@
+using AspNetCoreRateLimit;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Mvc.Health;
 using FilmHouse.Mvc.SecurityHeaders;
 using FilmHouse.Utils;
 using FilmHouse.Utils.PasswordGenerator;
 using FilmHouse.Web;
+using FilmHouse.Web.Configuration;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using NLog.Web;
@@ -13,6 +18,7 @@ using Spectre.Console;
 using System.Globalization;
 using System.Net;
 using System.Text;
+using System.Text.Json.Serialization;
 using Encoder = FilmHouse.Web.Configuration.Encoder;
 
 Console.OutputEncoding = Encoding.UTF8;
@@ -26,74 +32,16 @@ var persistKeys = builder.Configuration["PersistKeysFile:path"];
 var cultures = new[] { "en-US", "zh-cn" }.Select(p => new CultureInfo(p)).ToList();
 
 WriteParameterTable();
-
 AnsiConsole.MarkupLine("[link=https://github.com/TonyZhangshi81/FilmHouse]GitHub: TonyZhangshi81/FilmHouse[/]");
 
 ConfigureConfiguration();
-
 ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
 await FirstRun();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles(new StaticFileOptions
-{
-    OnPrepareResponse = ctx =>
-    {
-        const int durationInSeconds = 24 * 60 * 60; // 24 hours
-        ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=" + durationInSeconds;
-    }
-});
-app.UseCookiePolicy();
-app.UseSecurityHeaders(builder =>
-{
-    builder.PermissionsPolicySettings.Camera.AllowNone();
-
-    builder.CspSettings.Defaults.AllowNone();
-    builder.CspSettings.Connect.AllowSelf();
-    builder.CspSettings.Manifest.AllowSelf();
-    builder.CspSettings.Objects.AllowNone();
-    builder.CspSettings.Frame.AllowNone();
-    builder.CspSettings.Scripts.AllowSelf();
-
-    builder.CspSettings.Styles
-        .AllowSelf()
-        .AllowUnsafeInline();
-
-    builder.CspSettings.Fonts.AllowSelf();
-
-    builder.CspSettings.Images
-        .AllowSelf()
-        .Allow("https://i2.wp.com")
-        .Allow("https://www.gravatar.com");
-
-    builder.CspSettings.BaseUri.AllowNone();
-    builder.CspSettings.FormAction.AllowSelf();
-    builder.CspSettings.FrameAncestors.AllowNone();
-
-    builder.ReferrerPolicy = ReferrerPolicies.NoReferrerWhenDowngrade;
-});
-app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>().Value);
-app.UseRouting();
-app.UseAuthorization();
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.UseHealthChecks("/health", new HealthCheckOptions());
-
-
-
+ConfigureMiddleware();
 
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 try
@@ -105,20 +53,15 @@ try
     app.Run();
 
     logger.LogInformation("Stopped application");
-    return 0;
 }
 catch (Exception exception)
 {
     logger.LogError(exception, "Application terminated unexpectedly");
-    return 1;
 }
 finally
 {
     NLog.LogManager.Shutdown();
 }
-
-
-
 
 void WriteParameterTable()
 {
@@ -146,11 +89,9 @@ void WriteParameterTable()
     AnsiConsole.Write(table);
 }
 
-
 void ConfigureConfiguration()
 {
 }
-
 
 void ConfigureServices(IServiceCollection services)
 {
@@ -159,11 +100,15 @@ void ConfigureServices(IServiceCollection services)
         logging.ClearProviders();
         logging.SetMinimumLevel(LogLevel.Trace);
         logging.AddConsole();
-        //logging.AddNLog("nlog.config");
     });
     builder.Host.UseNLog();
 
     AppDomain.CurrentDomain.Load("FilmHouse.Business");
+
+    services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+    services.AddOptions()
+            .AddHttpContextAccessor()
+            .AddRateLimit(builder.Configuration.GetSection("IpRateLimiting"));
 
     services.AddDataProtection()
             .PersistKeysToFileSystem(new DirectoryInfo(persistKeys!))
@@ -185,15 +130,19 @@ void ConfigureServices(IServiceCollection services)
         options.SupportedUICultures = cultures;
     });
 
-    services.AddLocalization();
-    services.AddControllersWithViews()
-            .AddViewLocalization(options => options.ResourcesPath = "Resources")
-            .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(Program)));
+    services.AddLocalization(options => options.ResourcesPath = "Resources");
+    services.AddControllers(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))
+            .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    services.AddRazorPages()
+            .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(Program)))
+            .AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddPageRoute("/Admin/Post", "admin");
+                options.Conventions.AuthorizeFolder("/Admin");
+                options.Conventions.AuthorizeFolder("/Settings");
+            });
 
-
-    services.AddHealthChecks()
-            .AddNpgSql(builder.Configuration["ConnectionStrings:FilmHouseDatabase"])
-            .AddCheck<LogfileHealthCheck>("Log files");
+    services.AddCustomerHealthChecks(builder.Configuration);
 
     // Fix Chinese character being encoded in HTML output
     services.AddSingleton(Encoder.FilmHouseHtmlEncoder);
@@ -213,8 +162,6 @@ void ConfigureServices(IServiceCollection services)
     services.AddPostgreSqlStorage(connStr!);
 
 }
-
-
 
 async Task FirstRun()
 {
@@ -244,4 +191,82 @@ async Task FirstRun()
         app.MapGet("/", _ => throw new("Start up failed: " + e.Message));
         app.Run();
     }
+}
+
+void ConfigureMiddleware()
+{
+    /*
+    if (!app.Environment.IsProduction())
+    {
+        app.Logger.LogWarning($"Running in environment: {app.Environment.EnvironmentName}. Application Insights disabled.");
+
+        var tc = app.Services.GetRequiredService<TelemetryConfiguration>();
+        tc.DisableTelemetry = true;
+        TelemetryDebugWriter.IsTracingDisabled = true;
+    }
+    */
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+    }
+    else
+    {
+        app.UseStatusCodePages(ConfigureStatusCodePages.Handler).UseExceptionHandler("/error");
+        app.UseHsts();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        OnPrepareResponse = ctx =>
+        {
+            const int durationInSeconds = 24 * 60 * 60; // 24 hours
+            ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=" + durationInSeconds;
+        }
+    });
+    app.UseCookiePolicy();
+    app.UseSecurityHeaders(builder =>
+    {
+        builder.PermissionsPolicySettings.Camera.AllowNone();
+
+        builder.CspSettings.Defaults.AllowNone();
+        builder.CspSettings.Connect.AllowSelf();
+        builder.CspSettings.Manifest.AllowSelf();
+        builder.CspSettings.Objects.AllowNone();
+        builder.CspSettings.Frame.AllowNone();
+        builder.CspSettings.Scripts.AllowSelf();
+
+        builder.CspSettings.Styles
+            .AllowSelf()
+            .AllowUnsafeInline();
+
+        builder.CspSettings.Fonts.AllowSelf();
+
+        builder.CspSettings.Images
+            .AllowSelf()
+            .Allow("https://i2.wp.com")
+            .Allow("https://www.gravatar.com");
+
+        builder.CspSettings.BaseUri.AllowNone();
+        builder.CspSettings.FormAction.AllowSelf();
+        builder.CspSettings.FrameAncestors.AllowNone();
+
+        builder.ReferrerPolicy = ReferrerPolicies.NoReferrerWhenDowngrade;
+    });
+    app.UseRequestLocalization(new RequestLocalizationOptions
+    {
+        DefaultRequestCulture = new("en-US"),
+        SupportedCultures = cultures,
+        SupportedUICultures = cultures
+    });
+    app.UseIpRateLimiting();
+    app.UseRouting();
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+#pragma warning disable ASP0014
+    app.UseEndpoints(ConfigureEndpoints.FilmHouseEndpoints);
+#pragma warning restore ASP0014
+
 }

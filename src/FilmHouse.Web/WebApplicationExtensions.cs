@@ -6,8 +6,13 @@ namespace FilmHouse.Web;
 
 public static class WebApplicationExtensions
 {
-    public static async Task<StartupInitResult> InitStartUp(this WebApplication app, string dbType)
+    public static async Task<StartupInitResult> InitStartUp(this WebApplication app, string? dbType)
     {
+        if (dbType == null)
+        {
+            throw new ArgumentOutOfRangeException(nameof(dbType));
+        }
+
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
         var env = services.GetRequiredService<IWebHostEnvironment>();

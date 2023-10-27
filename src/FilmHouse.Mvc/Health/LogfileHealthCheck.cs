@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
+﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 
 namespace FilmHouse.Mvc.Health;
