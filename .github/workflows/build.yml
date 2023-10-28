@@ -13,30 +13,13 @@ permissions:
   contents: read
 
 jobs:
-
-  pre_process:
-    runs-on: ubuntu-latest
-    steps:
-      - name: environmont settings
-        run: |
-          echo "github.ref: ${{ github.ref }}"
-          echo "github.head_ref: ${{ github.head_ref }}"
-          echo "github.base_ref: ${{ github.base_ref }}"
-          echo "github.run_id: ${{ github.run_id }}"
-          echo "github.workflow: ${{ github.workflow }}"
-          echo "github.repository: ${{ github.repository }}"
-          echo "github.repository_owner: ${{ github.repository_owner }}"
-          echo "github.api_url: ${{ github.api_url }}"
-          echo "github.sha: ${{ github.sha }}"
-
-  build_process:
-    needs: pre_process
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up .NET
+      - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
@@ -48,15 +31,4 @@ jobs:
           dotnet clean $TARGET_SOLUTION_VAR
           dotnet restore $TARGET_SOLUTION_VAR
           dotnet build $TARGET_SOLUTION_VAR -m:1 --no-restore /warnaserror
-
-      - name: dotnet publish
-        working-directory: ./src
-        run: dotnet publish -c Release -p:SourceRevisionId=${{ github.sha }} -o ${{env.DOTNET_ROOT}}/filmhouse
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: filmhouse-app
-          path: ${{env.DOTNET_ROOT}}/filmhouse
-          retention-days: 2
           
