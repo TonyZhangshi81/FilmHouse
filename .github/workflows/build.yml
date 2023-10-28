@@ -1,0 +1,44 @@
+name: .net build
+
+env:
+  TARGET_SOLUTION_VAR: 'FilmHouse.sln'
+  DOTNET_VERSION: '7.0.x'
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build with dotnet
+        working-directory: ./src
+        run: |
+          echo ${{ github.head_ref }}.${{ github.sha }}
+          dotnet clean $TARGET_SOLUTION_VAR
+          dotnet restore $TARGET_SOLUTION_VAR
+          dotnet build $TARGET_SOLUTION_VAR -m:1 --no-restore /warnaserror
+
+      - name: dotnet publish
+        working-directory: ./src
+        run: dotnet publish -c Release -p:SourceRevisionId=${{ github.sha }} -o ${{env.DOTNET_ROOT}}/tony-filmhouse
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/tony-filmhouse
+          
