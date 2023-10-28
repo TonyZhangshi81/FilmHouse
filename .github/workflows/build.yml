@@ -51,12 +51,12 @@ jobs:
 
       - name: dotnet publish
         working-directory: ./src
-        run: dotnet publish -c Release -p:SourceRevisionId=${{ github.sha }} -o ./FilmHouse
+        run: dotnet publish -c Release -p:SourceRevisionId=${{ github.sha }} -o ${{env.DOTNET_ROOT}}/filmhouse
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: filmhouse-app
-          path: ./FilmHouse
+          path: ${{env.DOTNET_ROOT}}/filmhouse
           retention-days: 2
           
