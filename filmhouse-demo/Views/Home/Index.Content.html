@@ -1,0 +1,148 @@
+
+<style>
+  #index_back {
+    position: absolute;
+    z-index: -100;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    height: 640px;
+    margin-top: 80px;
+  }
+
+    #index_back img {
+      text-align: center;
+      width: 100%;
+      min-height: 100%;
+    }
+
+  #display_back {
+    height: 640px;
+    padding-top: 90px;
+  }
+
+  #head_title {
+    font-family: 'Weston Free';
+    color: rgba(255,255,255,0.84);
+  }
+
+  @media(max-width:1280px) {
+    #index_back {
+      height: 500px;
+    }
+
+    #display_back {
+      height: 500px;
+      padding-top: 20px;
+    }
+  }
+
+  @media(max-width:960px) {
+    #index_back {
+      height: 440px;
+    }
+
+    #display_back {
+      height: 440px;
+      padding-top: 5px;
+    }
+  }
+
+  @media(max-width:768px) {
+    #head_title {
+      color: rgba(0,0,0,0.64);
+    }
+  }
+
+  @media(max-width:360px) {
+    .hidden-xxs {
+      visibility: hidden;
+    }
+  }
+</style>
+
+<div class="hidden-xs" id="index_back">
+  <img src="/Content/Discovery/20231022164431.jpg" title="雷神4：爱与雷霆">
+</div>
+
+<div class="container" id="display_back">
+  <h1 class="text-center" id="head_title">Sharing</h1>
+  <form action="/Search" class="form-horizontal" id="searchForm" method="post" role="form">
+    <div class="input-group input-group-lg col-sm-8 col-sm-offset-2" style="margin-top:20px;">
+      <input type="search" class="form-control" placeholder="搜索 电影" style="border-radius:2px 0px 0px 2px; border:1px solid #10761A; box-shadow:0;" name="search">
+      <span class="input-group-btn">
+        <a title="搜索" class="btn btn-primary" href="javascript:document.getElementById('searchForm').submit()" style="border-radius:0px 2px 2px 0px; border:1px solid #10761A;">
+          <i class="fa fa-search"></i>
+        </a>
+      </span>
+    </div>
+  </form>
+  <div class="col-sm-8 col-sm-offset-2" style="background:rgba(255, 255, 255, 0.75) !important; padding:10px; margin-top:20px;">
+    <div>
+      <a class="link-text" href="/Movie/Index?id=m0003" title="雷神4：爱与雷霆" target="_self">
+        <span class="font-large">雷神4：爱与雷霆</span>
+      </a>
+      <span class="pull-right">
+        评分:
+        <a class="clr-doubangreen" title="跳转到豆瓣电影" href="https://movie.douban.com/subject/34477861/">5.2</a>
+      </span>
+    </div>
+    <div class="font-small" style="max-height:85px; overflow:hidden; text-overflow:ellipsis;">
+      曾经的信仰崩塌，内心笃定的爱慕与崇拜转而化作足以吞噬一切的无边黑暗。虔诚的格尔（克里斯蒂安·贝尔 Christian Bale 饰）化身屠神者，将杀戮之手伸向了宇宙中每一个至高无上的神祇。雷神索尔（克里斯·海姆斯沃斯 Chris Hemsworth 饰）的平静生活终于被格尔所扰动，他和女武神（泰莎·汤普森 Tessa Thompson 饰）联手与新的对手展开对抗。而在此过程中，索尔重逢八年未见的前女友简·福斯特（娜塔莉·波特曼 Natalie Portman 饰）。此时的她身患绝症，不久于人世，却借助雷神之锤的力量恢复健康，甚至还成为了实力强悍的女雷神。
+      获得与失去，爱慕与憎恶，信仰与虚无，矛盾的情愫在宇宙的角落中萌生……
+    </div>
+    <div class="visible-xs text-overflow font-small">
+      导演：
+      <a href="/Celeb/Index?id=00000000000000000000000000000011" class="link-text" target="_self">塔伊加·维迪提</a>
+    </div>
+    <div class="visible-xs text-overflow font-small">
+      演员：
+      <a href="/Celeb/Index?id=00000000000000000000000000000011" class="link-text" target="_self">塔伊加·维迪提</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000012" class="link-text" target="_self">詹尼弗·凯廷·罗宾逊</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000013" class="link-text" target="_self">斯坦·李</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000014" class="link-text" target="_self">杰森·亚伦</a>
+    </div>
+    <div class="visible-xs text-overflow font-small">
+      类型：
+      <a href="/Celeb/Index?id=00000000000000000000000000000015" class="link-text" target="_self">克里斯·海姆斯沃斯</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000002" class="link-text" target="_self">娜塔莉·波特曼</a>
+    </div>
+  </div>
+
+  <div class="col-sm-8 col-sm-offset-2 text-center hidden-xxs" style="margin-top:30px;">
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m0003&amp;type=1&amp;returnurl=http://localhost:50229/Home/Index" title="想看"><span class="glyphicon glyphicon-time"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m0003&amp;type=2&amp;returnurl=http://localhost:50229/Home/Index" title="看过"><span class="glyphicon glyphicon-ok-circle"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m0003&amp;type=3&amp;returnurl=http://localhost:50229/Home/Index" title="喜欢"><span class="glyphicon glyphicon-heart-empty"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Home/Index?offset=1" title="上一页"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="link-glyph link-glyph-disabled" title="下一页"><span class="glyphicon glyphicon-chevron-right"></span></a>
+  </div>
+
+</div>
+
+<div class="container no-padding" style="margin-bottom:15px;">
+  <div class="col-sm-6">
+    <div class="text-left font-large">最新</div>
+    <hr>
+    <ul class="list-link">
+    </ul>
+  </div>
+  <div class="col-sm-6">
+    <div class="text-left font-large">热门</div>
+    <hr>
+    <ul class="list-link">
+
+      <li>
+        <a class="link-list-item" href="/Movie/Index?id=m0002" title="黑天鹅	Black Swan" target="_self">黑天鹅	Black Swan &nbsp;(<span style="display:inline-block;">2010</span>)</a>
+      </li>
+      <li>
+        <a class="link-list-item" href="/Movie/Index?id=m0001" title="剪刀手安德华	Edward Scissorhands" target="_self">剪刀手安德华	Edward Scissorhands &nbsp;(<span style="display:inline-block;">1990</span>)</a>
+      </li>
+      <li>
+        <a class="link-list-item" href="/Movie/Index?id=m0003" title="雷神4：爱与雷霆	Thor: Love and Thunder" target="_self">雷神4：爱与雷霆	Thor: Love and Thunder &nbsp;(<span style="display:inline-block;">2022</span>)</a>
+      </li>
+      <li>
+        <a class="link-list-item" href="/Movie/Index?id=80B84DADBC024442851963EAA00ED305" title="最幸运的女孩	Luckiest Girl Alive" target="_self">最幸运的女孩	Luckiest Girl Alive &nbsp;(<span style="display:inline-block;">2022</span>)</a>
+      </li>
+    </ul>
+  </div>
+</div>
