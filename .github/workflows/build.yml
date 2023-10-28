@@ -2,7 +2,6 @@ name: .net build
 
 env:
   TARGET_SOLUTION_VAR: 'FilmHouse.sln'
-  WORKING_DIR: ${{ github.run_id }}
   DOTNET_VERSION: '7.0.x'
 
 on:
@@ -35,11 +34,12 @@ jobs:
 
       - name: dotnet publish
         working-directory: ./src
-        run: dotnet publish -c Release -p:SourceRevisionId=${{ github.sha }} -o ${{env.WORKING_DIR}}/tony-filmhouse
+        run: dotnet publish -c Release -p:SourceRevisionId=${{ github.sha }} -o ./publish
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: filmhouse-app
-          path: ${{env.WORKING_DIR}}/tony-filmhouse
+          path: ./publish
+          retention-days: 2
           
