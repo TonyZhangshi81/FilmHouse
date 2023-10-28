@@ -245,3 +245,6 @@ ModelManifest.xml
 /src/FilmHouse.Web/DataEncrpytionKeys
 /src/FilmHouse.Web/Logs
 /src/FilmHouse.Web/wwwroot/lib
+
+/src/FilmHouse.Web/Middleware/*
+!/src/FilmHouse.Web/Middleware/.gitkeep

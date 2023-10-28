@@ -1,24 +1,23 @@
+using System.Globalization;
+using System.Net;
+using System.Text;
+using System.Text.Json.Serialization;
 using AspNetCoreRateLimit;
+using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
+using FilmHouse.Data.SqlServer;
 using FilmHouse.Mvc.Health;
 using FilmHouse.Mvc.SecurityHeaders;
 using FilmHouse.Utils;
 using FilmHouse.Utils.PasswordGenerator;
 using FilmHouse.Web;
 using FilmHouse.Web.Configuration;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 using NLog.Web;
 using Spectre.Console;
-using System.Globalization;
-using System.Net;
-using System.Text;
-using System.Text.Json.Serialization;
 using Encoder = FilmHouse.Web.Configuration.Encoder;
 
 Console.OutputEncoding = Encoding.UTF8;
@@ -98,8 +97,8 @@ void ConfigureServices(IServiceCollection services)
     services.AddLogging(logging =>
     {
         logging.ClearProviders();
-        logging.SetMinimumLevel(LogLevel.Trace);
-        logging.AddConsole();
+        //logging.SetMinimumLevel(LogLevel.Trace);
+        //logging.AddConsole();
     });
     builder.Host.UseNLog();
 
@@ -159,8 +158,19 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddTransient<IPasswordGenerator, DefaultPasswordGenerator>();
 
-    services.AddPostgreSqlStorage(connStr!);
-
+    switch (dbType!.ToLower())
+    {
+        case "mysql":
+            services.AddMySqlStorage(connStr!);
+            break;
+        case "postgresql":
+            services.AddPostgreSqlStorage(connStr!);
+            break;
+        case "sqlserver":
+        default:
+            services.AddSqlServerStorage(connStr!);
+            break;
+    }
 }
 
 async Task FirstRun()

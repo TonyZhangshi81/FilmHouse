@@ -1,15 +1,15 @@
-﻿using FilmHouse.Data.PostgreSql.Configurations;
+﻿using FilmHouse.Data.MySql.Configurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace FilmHouse.Data.PostgreSql;
+namespace FilmHouse.Data.MySql;
 
-public class PostgreSqlFilmHouseDbContext : FilmHouseDbContext
+public class MySqlFilmHouseDbContext : FilmHouseDbContext
 {
-    public PostgreSqlFilmHouseDbContext()
+    public MySqlFilmHouseDbContext()
     {
     }
 
-    public PostgreSqlFilmHouseDbContext(DbContextOptions options)
+    public MySqlFilmHouseDbContext(DbContextOptions options)
         : base(options)
     {
     }

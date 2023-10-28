@@ -5,7 +5,7 @@ namespace FilmHouse.Web.Controllers;
 public class PrivacyController : Controller
 {
     [Route("[controller]/Index")]
-    public IActionResult Privacy()
+    public IActionResult Index()
     {
         return View();
     }

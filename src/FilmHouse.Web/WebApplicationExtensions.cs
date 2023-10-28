@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using FilmHouse.Data.MySql;
+using FilmHouse.Data.SqlServer;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data;
 
@@ -6,9 +8,9 @@ namespace FilmHouse.Web;
 
 public static class WebApplicationExtensions
 {
-    public static async Task<StartupInitResult> InitStartUp(this WebApplication app, string? dbType)
+    public static async Task<StartupInitResult> InitStartUp(this WebApplication app, string dbType)
     {
-        if (dbType == null)
+        if (string.IsNullOrEmpty(dbType))
         {
             throw new ArgumentOutOfRangeException(nameof(dbType));
         }
@@ -19,8 +21,8 @@ public static class WebApplicationExtensions
 
         FilmHouseDbContext context = dbType.ToLowerInvariant() switch
         {
-            //"mysql" => services.GetRequiredService<MySqlFilmHouseDbContext>(),
-            //"sqlserver" => services.GetRequiredService<SqlServerFilmHouseDbContext>(),
+            "mysql" => services.GetRequiredService<MySqlFilmHouseDbContext>(),
+            "sqlserver" => services.GetRequiredService<SqlServerFilmHouseDbContext>(),
             "postgresql" => services.GetRequiredService<PostgreSqlFilmHouseDbContext>(),
             _ => throw new ArgumentOutOfRangeException(nameof(dbType))
         };

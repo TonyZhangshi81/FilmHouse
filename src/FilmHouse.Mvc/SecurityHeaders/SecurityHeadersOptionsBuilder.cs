@@ -98,7 +98,7 @@ public sealed class SecurityHeadersOptionsBuilder
         }
     }
 
-    private string? GetReferrerPolicyHeader()
+    private string GetReferrerPolicyHeader()
     {
         switch (this.ReferrerPolicy)
         {

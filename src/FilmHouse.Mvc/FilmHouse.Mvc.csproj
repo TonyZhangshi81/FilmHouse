@@ -2,14 +2,6 @@
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
-		<TargetFramework>net7.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<AssemblyName>FilmHouse.Mvc</AssemblyName>
-		<RootNamespace>FilmHouse.Mvc</RootNamespace>
-		<IsTestProject>false</IsTestProject>
-		<IsPackable>false</IsPackable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>
