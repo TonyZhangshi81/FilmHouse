@@ -1,15 +1,14 @@
-﻿@{
-    Layout = null;
-}
+﻿@inject Microsoft.Extensions.Options.IOptionsMonitor<DemoSettings> DemoSettings
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>DEMO</title>
+    <title>@ViewBag.Title - @DemoSettings.CurrentValue.WebsiteName</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="~/css/custom.css">
@@ -17,12 +16,7 @@
     <link rel="stylesheet" href="~/css/jquery.mThumbnailScroller.css">
     <link rel="stylesheet" href="~/css/site.css">
 
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/lib/modernizr/modernizr.js"></script>
-    <script src="~/js/respond.js"></script>
-    <script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
 
     <script>
         $(function () {
@@ -37,12 +31,12 @@
             margin-right: 8px;
         }
 
-        .link-sub:hover,
-        .link-sub:focus,
-        .link-sub:active {
-            color: #E6E6E6;
-            text-decoration: none;
-        }
+            .link-sub:hover,
+            .link-sub:focus,
+            .link-sub:active {
+                color: #E6E6E6;
+                text-decoration: none;
+            }
 
         .span-search {
             border-width: 0px;
@@ -55,21 +49,21 @@
             border-radius: 0px;
         }
 
-        .input-search:focus,
-        .input-search:active {
-            -webkit-box-shadow: 0 0 16px #10761A;
-            -moz-box-shadow: 0 0 16px #10761A;
-            box-shadow: 0 0 16px #10761A;
-        }
+            .input-search:focus,
+            .input-search:active {
+                -webkit-box-shadow: 0 0 16px #10761A;
+                -moz-box-shadow: 0 0 16px #10761A;
+                box-shadow: 0 0 16px #10761A;
+            }
 
         .btn-search {
             border-width: 0px;
             border-radius: 0px;
         }
 
-        .btn-search:hover {
-            color: #10761A;
-        }
+            .btn-search:hover {
+                color: #10761A;
+            }
     </style>
 </head>
 
@@ -86,21 +80,49 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="/">首页</a>
-                    </li>
-                    <li>
-                        <a href="/Search">选电影</a>
-                    </li>
-                    <li>
-                        <a href="/Ask">求资源</a>
-                    </li>
-                    <li>
-                        <a href="/Album">专辑</a>
-                    </li>
-                    <li>
-                        <a href="/Mine">我的主页</a>
-                    </li>
+                    @if (ViewBag.NavType == 1)
+                    {
+                        <li class="active">@Html.ActionLink("首页", "Index", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("首页", "Index", "Home")</li>
+                    }
+                    @if (ViewBag.NavType == 2)
+                    {
+                        <li class="active">@Html.ActionLink("选电影", "Index", "Search")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("选电影", "Index", "Search")</li>
+                    }
+                    @if (ViewBag.NavType == 3)
+                    {
+                        <li class="active">@Html.ActionLink("求资源", "Index", "Ask")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("求资源", "Index", "Ask")</li>
+                    }
+                    @if (ViewBag.NavType == 4)
+                    {
+                        <li class="active">@Html.ActionLink("专辑", "Index", "Album")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("专辑", "Index", "Album")</li>
+                    }
+                    @if (ViewBag.IsAuthenticated == 1)
+                    {
+                        if (ViewBag.NavType == 5)
+                        {
+                            <li class="active">@Html.ActionLink("我的主页", "Index", "Mine")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("我的主页", "Index", "Mine")</li>
+                        }
+                    }
                     <li role="separator" class="divider"></li>
                 </ul>
                 <partial name="_LoginPartial" />
@@ -150,8 +172,14 @@
         </div>
     </footer>
 
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/modernizr/modernizr.js"></script>
+    <script src="~/js/respond.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
     @RenderSection("scripts", required: false)
+
 </body>
-
-
 </html>

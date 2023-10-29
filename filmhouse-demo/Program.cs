@@ -1,10 +1,12 @@
-//using demo.Include;
+
+using demo;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-//builder.Services.AddTransient<IncludeHtmlTagHelper>();
+
+builder.Services.Configure<DemoSettings>(builder.Configuration.GetSection("DemoSettings"));
 
 var app = builder.Build();
 

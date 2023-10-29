@@ -11,6 +11,8 @@ namespace demo.Controllers
             // 未登录状态
             ViewBag.IsAuthenticated = 0;
             ViewBag.PageType = 1;
+            ViewBag.Title = "雷神4：爱与雷霆";
+            ViewBag.NavType = 1;
             return View();
         }
     }
