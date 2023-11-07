@@ -4,14 +4,13 @@ using System.Diagnostics;
 
 namespace demo.Controllers
 {
-    public class HomeController : Controller
+    public class AlbumController : Controller
     {
         public IActionResult Index(int offset = 0)
         {
-            // 未登录状态
-            ViewBag.IsAuthenticated = 0;
-            ViewBag.PageType = 1;
-            ViewBag.NavType = 1;
+            ViewBag.Title = "专辑";
+            ViewBag.PageType = 2;
+            ViewBag.NavType = 4;
             return View();
         }
     }

@@ -1,70 +1,14 @@
 
-<style>
-
-
-  #index_back {
-    position: absolute;
-    z-index: -100;
-    overflow: hidden;
-    top: 0;
-    width: 100%;
-    height: 640px;
-    margin-top: 80px;
-  }
-
-    #index_back img {
-      text-align: center;
-      width: 100%;
-      min-height: 100%;
-    }
-
-  #display_back {
-    height: 640px;
-    padding-top: 90px;
-  }
-
-  #head_title {
-    font-family: 'Weston Free';
-    color: rgba(255,255,255,0.84);
-  }
-
-  @media(max-width:1280px) {
-    #index_back {
-      height: 500px;
-    }
-
-    #display_back {
-      height: 500px;
-      padding-top: 20px;
-    }
-  }
-
-  @media(max-width:960px) {
-    #index_back {
-      height: 440px;
-    }
-
-    #display_back {
-      height: 440px;
-      padding-top: 5px;
-    }
-  }
-
-  @media(max-width:768px) {
-    #head_title {
-      color: rgba(0,0,0,0.64);
-    }
-  }
-
-  @media(max-width:360px) {
-    .hidden-xxs {
-      visibility: hidden;
-    }
-  }
-</style>
-
-<div class="hidden-xs" id="index_back">
+<div class="hidden-xs div-offset-0" id="index_back" style="display:none;">
   <img src="/Content/Discovery/p2238345947.jpg" title="雷神4：爱与雷霆">
+</div>
+
+<div class="hidden-xs div-offset-1" id="index_back" style="display:none;">
+  <img src="/Content/Discovery/p2220223845.jpg" title="黑天鹅">
+</div>
+
+<div class="hidden-xs div-offset-2" id="index_back" style="display:none;">
+  <img src="/Content/Discovery/p2305422832.jpg" title="剪刀手安德华">
 </div>
 
 <div class="container" id="display_back">
@@ -79,9 +23,10 @@
       </span>
     </div>
   </form>
-  <div class="col-sm-8 col-sm-offset-2" style="background:rgba(255, 255, 255, 0.75) !important; padding:10px; margin-top:20px;">
+
+  <div class="col-sm-8 col-sm-offset-2 div-offset-0" style="background:rgba(255, 255, 255, 0.75) !important; padding:10px; margin-top:20px; display:none;">
     <div>
-      <a class="link-text" href="/Movie/Index?id=m0003" title="雷神4：爱与雷霆" target="_self">
+      <a class="link-text" href="/Movie/Index?id=m03" title="雷神4：爱与雷霆" target="_self">
         <span class="font-large">雷神4：爱与雷霆</span>
       </a>
       <span class="pull-right">
@@ -111,12 +56,87 @@
     </div>
   </div>
 
-  <div class="col-sm-8 col-sm-offset-2 text-center hidden-xxs" style="margin-top:30px;">
-    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m0003&amp;type=1&amp;returnurl=http://localhost:50229/Home/Index" title="想看"><span class="glyphicon glyphicon-time"></span></a>
-    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m0003&amp;type=2&amp;returnurl=http://localhost:50229/Home/Index" title="看过"><span class="glyphicon glyphicon-ok-circle"></span></a>
-    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m0003&amp;type=3&amp;returnurl=http://localhost:50229/Home/Index" title="喜欢"><span class="glyphicon glyphicon-heart-empty"></span></a>
+  <div class="col-sm-8 col-sm-offset-2 div-offset-1" style="background: rgba(255, 255, 255, 0.75) !important; padding: 10px; margin-top: 20px; display: none;">
+    <div>
+      <a class="link-text" href="/Movie/Index?id=m02" title="黑天鹅" target="_self">
+        <span class="font-large">黑天鹅</span>
+      </a>
+      <span class="pull-right">
+        评分:
+        <a class="clr-doubangreen" title="跳转到豆瓣电影" href="https://movie.douban.com/subject/1978709/">8.9</a>
+      </span>
+    </div>
+    <div class="font-small" style="max-height:85px; overflow:hidden; text-overflow:ellipsis;">　　纽约剧团要重排《天鹅湖》，因前领舞Beth（薇诺娜•赖德 Winona Ryder 饰）离去，总监Thomas（文森特•卡索尔 Vincent Cassel. 饰）决定海选新领舞，且要求领舞要分饰黑天鹅与白天鹅。Nina（娜塔莉•波特曼Natalie Portman 饰）自幼练习芭蕾舞，在母亲的细心关照下，技艺出众。这次，她希望可以脱颖而出。然而，在竞争中，她发现心机颇重的Lily（米拉•库妮丝 Mila Kunis 饰）是自己的强劲对手。在选拔中，她的白天鹅表演的无可挑剔，但是黑天鹅不及Lily。她感到身心俱疲，回家还发现了背部的红斑与脚伤。她一个人找到总监，希望争取一下。总监趁机亲吻她，却被她强硬拒绝。结果，总监居然选了她。队友怀疑她靠色相上位。在酒会上，Beth甚至当众发泄。这种压力外加伤病，一直影响着她的发挥。总监启发她要释放激情，表现出黑天鹅的诱惑。在强大的心理暗示中，她似乎也滑向了黑天鹅的角色……</div>
+    <div class="visible-xs text-overflow font-small">
+      导演：
+      <a href="/Celeb/Index?id=00000000000000000000000000000007" class="link-text" target="_self">达伦·阿伦诺夫斯基</a>
+    </div>
+    <div class="visible-xs text-overflow font-small">
+      演员：
+      <a href="/Celeb/Index?id=00000000000000000000000000000008" class="link-text" target="_self">安德雷斯·海因斯</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000009" class="link-text" target="_self">马克·海曼</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000010" class="link-text" target="_self">约翰·J·麦克劳克林</a>
+    </div>
+    <div class="visible-xs text-overflow font-small">
+      类型：
+      <a href="/Celeb/Index?id=00000000000000000000000000000002" class="link-text" target="_self">娜塔莉·波特曼</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000016" class="link-text" target="_self">米拉·库尼斯</a>
+    </div>
+  </div>
+
+  <div class="col-sm-8 col-sm-offset-2 div-offset-2" style="background:rgba(255, 255, 255, 0.75) !important; padding:10px; margin-top:20px; display:none;">
+    <div>
+      <a class="link-text" href="/Movie/Index?id=m01" title="剪刀手安德华" target="_self">
+        <span class="font-large">剪刀手安德华</span>
+      </a>
+      <span class="pull-right">
+        评分:
+        <a class="clr-doubangreen" title="跳转到豆瓣电影" href="https://movie.douban.com/subject/1292370/">8.6</a>
+      </span>
+    </div>
+    <div class="font-small" style="max-height:85px; overflow:hidden; text-overflow:ellipsis;">
+      爱德华（约翰尼•戴普 饰）是一个机器人，他拥有人的心智，却有一双剪刀手，孤独地生活在古堡里，闯入古堡的化妆品推销员佩格把他带回家，让他走进了人类的世界。单纯的爱德华爱上了佩格的女儿金（薇诺娜•瑞德 饰），金也慢慢的被爱德华的善良所吸引。
+      但是，一连串的意外事情让周围的人邻居对爱德华的态度从喜欢变成无法接受，爱德华痛苦地发现，他总是好心办坏事，连自己的爱人都不能拥抱，或许，他注定就不属于这个世界。
+    </div>
+    <div class="visible-xs text-overflow font-small">
+      导演：
+      <a href="/Celeb/Index?id=00000000000000000000000000000003" class="link-text" target="_self">蒂姆·波顿</a>
+    </div>
+    <div class="visible-xs text-overflow font-small">
+      演员：
+      <a href="/Celeb/Index?id=00000000000000000000000000000003" class="link-text" target="_self">蒂姆·波顿</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000004" class="link-text" target="_self">卡罗琳·汤普森</a>
+    </div>
+    <div class="visible-xs text-overflow font-small">
+      类型：
+      <a href="/Celeb/Index?id=00000000000000000000000000000001" class="link-text" target="_self">约翰尼·德普</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000005" class="link-text" target="_self">薇诺娜·瑞德</a>
+      <a href="/Celeb/Index?id=00000000000000000000000000000006" class="link-text" target="_self">黛安·韦斯特</a>
+    </div>
+  </div>
+
+  <div class="col-sm-8 col-sm-offset-2 text-center hidden-xxs div-offset-0" style="margin-top:30px; display: none;">
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m03&amp;type=1&amp;returnurl=http://localhost:50229/Home/Index" title="想看"><span class="glyphicon glyphicon-time"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m03&amp;type=2&amp;returnurl=http://localhost:50229/Home/Index" title="看过"><span class="glyphicon glyphicon-ok-circle"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m03&amp;type=3&amp;returnurl=http://localhost:50229/Home/Index" title="喜欢"><span class="glyphicon glyphicon-heart-empty"></span></a>
     <a class="link-glyph link-glyph-default" href="/Home/Index?offset=1" title="上一页"><span class="glyphicon glyphicon-chevron-left"></span></a>
     <a class="link-glyph link-glyph-disabled" title="下一页"><span class="glyphicon glyphicon-chevron-right"></span></a>
+  </div>
+
+  <div class="col-sm-8 col-sm-offset-2 text-center hidden-xxs div-offset-1" style="margin-top: 30px; display: none;">
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m02&amp;type=1&amp;returnurl=http://localhost:50229/Home/Index?offset=1" title="想看"><span class="glyphicon glyphicon-time"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m02&amp;type=2&amp;returnurl=http://localhost:50229/Home/Index?offset=1" title="看过"><span class="glyphicon glyphicon-ok-circle"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m02&amp;type=3&amp;returnurl=http://localhost:50229/Home/Index?offset=1" title="喜欢"><span class="glyphicon glyphicon-heart-empty"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Home/Index?offset=2" title="上一页"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Home/Index?offset=0" title="下一页"><span class="glyphicon glyphicon-chevron-right"></span></a>
+  </div>
+
+  <div class="col-sm-8 col-sm-offset-2 text-center hidden-xxs div-offset-2" style="margin-top: 30px; display: none;">
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m01&amp;type=1&amp;returnurl=http://localhost:50229/Home/Index?offset=2" title="想看"><span class="glyphicon glyphicon-time"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m01&amp;type=2&amp;returnurl=http://localhost:50229/Home/Index?offset=2" title="看过"><span class="glyphicon glyphicon-ok-circle"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Mark/Create?target=m01&amp;type=3&amp;returnurl=http://localhost:50229/Home/Index?offset=2" title="喜欢"><span class="glyphicon glyphicon-heart-empty"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Home/Index?offset=0" title="上一页"><span class="glyphicon glyphicon-chevron-left"></span></a>
+    <a class="link-glyph link-glyph-default" href="/Home/Index?offset=1" title="下一页"><span class="glyphicon glyphicon-chevron-right"></span></a>
   </div>
 
 </div>
@@ -137,13 +157,13 @@
     <ul class="list-link">
 
       <li>
-        <a class="link-list-item" href="/Movie/Index?id=m0002" title="黑天鹅	Black Swan" target="_self">黑天鹅	Black Swan &nbsp;(<span style="display:inline-block;">2010</span>)</a>
+        <a class="link-list-item" href="/Movie/Index?id=m02" title="黑天鹅	Black Swan" target="_self">黑天鹅	Black Swan &nbsp;(<span style="display:inline-block;">2010</span>)</a>
       </li>
       <li>
-        <a class="link-list-item" href="/Movie/Index?id=m0001" title="剪刀手安德华	Edward Scissorhands" target="_self">剪刀手安德华	Edward Scissorhands &nbsp;(<span style="display:inline-block;">1990</span>)</a>
+        <a class="link-list-item" href="/Movie/Index?id=m01" title="剪刀手安德华	Edward Scissorhands" target="_self">剪刀手安德华	Edward Scissorhands &nbsp;(<span style="display:inline-block;">1990</span>)</a>
       </li>
       <li>
-        <a class="link-list-item" href="/Movie/Index?id=m0003" title="雷神4：爱与雷霆	Thor: Love and Thunder" target="_self">雷神4：爱与雷霆	Thor: Love and Thunder &nbsp;(<span style="display:inline-block;">2022</span>)</a>
+        <a class="link-list-item" href="/Movie/Index?id=m03" title="雷神4：爱与雷霆	Thor: Love and Thunder" target="_self">雷神4：爱与雷霆	Thor: Love and Thunder &nbsp;(<span style="display:inline-block;">2022</span>)</a>
       </li>
     </ul>
   </div>

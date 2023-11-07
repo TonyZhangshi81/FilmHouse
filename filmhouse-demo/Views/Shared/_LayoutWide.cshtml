@@ -15,50 +15,8 @@
     <link rel="stylesheet" href="~/css/custom.css" />
     <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
 
-    @RenderSection("css", false)
+    @await RenderSectionAsync("Links", required: false)
 
-    <style>
-        .link-sub {
-            padding: 0px;
-            color: #FAFAFA;
-            margin-left: 8px;
-            margin-right: 8px;
-        }
-
-            .link-sub:hover,
-            .link-sub:focus,
-            .link-sub:active {
-                color: #E6E6E6;
-                text-decoration: none;
-            }
-
-        .span-search {
-            border-width: 0px;
-            background-color: #FFFFFF;
-            border-radius: 0px;
-        }
-
-        .input-search {
-            border-width: 0px;
-            border-radius: 0px;
-        }
-
-            .input-search:focus,
-            .input-search:active {
-                -webkit-box-shadow: 0 0 16px #8FBC8F;
-                -moz-box-shadow: 0 0 16px #8FBC8F;
-                box-shadow: 0 0 16px #8FBC8F;
-            }
-
-        .btn-search {
-            border-width: 0px;
-            border-radius: 0px;
-        }
-
-            .btn-search:hover {
-                color: #8FBC8F;
-            }
-    </style>
 </head>
 
 <body>

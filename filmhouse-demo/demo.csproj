@@ -18,6 +18,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Views\Album\Index.Content.html" />
+	  <None Remove="Views\Ask\Index.Content.html" />
+	  <None Remove="Views\Error\NotAdmin.Content.html" />
+	  <None Remove="Views\Error\NotFound.Content.html" />
+	  <None Remove="Views\Movie\Movie01.Index.Content.html" />
+	  <None Remove="Views\Movie\Movie02.Index.Content.html" />
+	  <None Remove="Views\Movie\Movie03.Index.Content.html" />
+	  <None Remove="Views\Search\Index.Content.html" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Views\Search\Index.cshtml" />
 		<None Include="wwwroot\Content\Account\LoginBack.jpg" />
 		<None Include="wwwroot\Content\Album\2b1a2e70a8c5097dbee0df2aec4c6215.jpg" />
 		<None Include="wwwroot\Content\Album\3d98430f71d2d4e60c9fe0ff1ac33454.jpeg" />

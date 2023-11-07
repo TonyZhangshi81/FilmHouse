@@ -4,14 +4,14 @@ using System.Diagnostics;
 
 namespace demo.Controllers
 {
-    public class HomeController : Controller
+    public class SearchController : Controller
     {
         public IActionResult Index(int offset = 0)
         {
-            // 未登录状态
-            ViewBag.IsAuthenticated = 0;
-            ViewBag.PageType = 1;
-            ViewBag.NavType = 1;
+            ViewBag.Title = "分类结果";
+            ViewBag.PageType = 2;
+            ViewBag.NavType = 2;
+
             return View();
         }
     }

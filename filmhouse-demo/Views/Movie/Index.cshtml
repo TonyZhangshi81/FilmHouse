@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = @ViewBag.Title;
+}
+
+@{
+    Layout = "~/Views/Shared/_LayoutWide.cshtml";
+}
+
+@section Links {
+    <link rel="stylesheet" href="~/css/movie.css" />
+}
+
+@section Scripts {
+    <script src="~/lib/smoothscroll/jquery.smooth-scroll.js"></script>
+    <script src="~/lib/backstrech/jquery.backstrech.min.js"></script>
+    <script src="~/js/Movie/Index.js"></script>
+}
+
+@{
+    if (ViewBag.MovieId == "m01")
+    {
+        <include-content name="Movie01.Index.Content.html" />
+    }
+    else if (ViewBag.MovieId == "m02")
+    {
+        <include-content name="Movie02.Index.Content.html" />
+    }
+    else
+    {
+        <include-content name="Movie03.Index.Content.html" />
+    }
+}
