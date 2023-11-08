@@ -2,34 +2,33 @@
 // More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
   {
-    "outputFileName": "wwwroot/css/site.css",
+    "outputFileName": "wwwroot/dist/combined.min.css",
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/lib/bootstrap/css/bootstrap.css",
+      "wwwroot/css/site.css",
       "wwwroot/css/custom.css",
-      "wwwroot/lib/font-awesome/css/font-awesome.css",
-      "wwwroot/css/jquery.mThumbnailScroller.css"
+      "wwwroot/lib/font-awesome/css/font-awesome.css"
     ],
     "minify": {
-      "enabled": false,
+      "enabled": true,
       "adjustRelativePaths": true
     }
   },
 
   {
-    "outputFileName": "wwwroot/js/site.js",
+    "outputFileName": "wwwroot/dist/combined.min.js",
     "inputFiles": [
       "wwwroot/lib/jquery/jquery.js",
       "wwwroot/lib/bootstrap/js/bootstrap.js",
-      "wwwroot/lib/bootstrap/js/bootstrap.bundle.js",
+      "wwwroot/lib/respond/respond.js",
       "wwwroot/lib/modernizr/modernizr.js",
-      "wwwroot/js/respond.js",
-      "wwwroot/lib/jquery-validate/dist/jquery.validate.js",
+      "wwwroot/lib/jquery-validation/dist/jquery.validate.js",
       "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
     ],
     // Optionally specify minification options
     "minify": {
-      "enabled": false,
+      "enabled": true,
       "renameLocals": true
     },
     // Optionally generate .map file

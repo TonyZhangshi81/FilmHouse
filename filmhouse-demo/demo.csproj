@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<Folder Include="wwwroot\Content\Torrent\" />
+		<Folder Include="wwwroot\dist\" />
 	</ItemGroup>
 
 	<ItemGroup>
