@@ -1,4 +1,8 @@
 
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Hosting;
+
 using demo;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +11,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<DemoSettings>(builder.Configuration.GetSection("DemoSettings"));
+
+/*
+builder.WebHost.ConfigureKestrel((hostingContext, options) =>
+{
+    options.ListenAnyIP(5000, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+    });
+
+    options.ListenAnyIP(5001, listenOptions =>
+    {
+        listenOptions.Protocols = HttpProtocols.Http1;
+        listenOptions.UseHttps("path/to/certificate.pfx", "certificate-password");
+    });
+});
+*/
 
 var app = builder.Build();
 
@@ -21,6 +41,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
