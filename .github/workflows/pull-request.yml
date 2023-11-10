@@ -1,6 +1,7 @@
 name: pull-request
 
 env:
+  WORKING_DIR: ${{ github.run_id }}
   TARGET_SOLUTION_VAR: 'FilmHouse.sln'
   DOTNET_VERSION: '7.0.x'
 
@@ -18,6 +19,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with: 
+          path: ${{ env.WORKING_DIR }}
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
@@ -25,10 +28,11 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore NuGet packages
+        working-directory: ${{ env.WORKING_DIR }}
         run: nuget restore $TARGET_SOLUTION_VAR
 
       - name: Build with dotnet
-        working-directory: ./src
+        working-directory: ${{ env.WORKING_DIR }}
         run: |
           echo ${{ github.head_ref }}.${{ github.sha }}
           dotnet clean $TARGET_SOLUTION_VAR
@@ -41,11 +45,13 @@ jobs:
           }
 
       - name: Run NUnit tests
+        working-directory: ${{ env.WORKING_DIR }}
         run: |
           dotnet restore $TARGET_SOLUTION_VAR
           dotnet test $TARGET_SOLUTION_VAR --no-build --verbosity normal
 
       - name: Check test results
+        working-directory: ${{ env.WORKING_DIR }}
         id: test-results
         run: echo "::set-output name=tests-passed::$(find . -name 'TestResult.xml' -type f -exec grep -i '<test-case result=\"Passed\"' {} + | wc -l)"
 
