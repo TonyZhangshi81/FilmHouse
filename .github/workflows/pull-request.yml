@@ -31,9 +31,9 @@ jobs:
 
       - name: Build with dotnet
         run: |
-          dotnet clean ${{ env.DOTNET_VERSION }}
-          dotnet restore ${{ env.DOTNET_VERSION }}
-          dotnet build ${{ env.DOTNET_VERSION }} -m:1 --no-restore /warnaserror
+          dotnet clean ${{ env.TARGET_SOLUTION_VAR }}
+          dotnet restore ${{ env.TARGET_SOLUTION_VAR }}
+          dotnet build ${{ env.TARGET_SOLUTION_VAR }} -m:1 --no-restore /warnaserror
           if (-Not $?) {
             exit 1
           } else {
@@ -42,8 +42,8 @@ jobs:
 
       - name: Run NUnit tests
         run: |
-          dotnet restore ${{ env.DOTNET_VERSION }}
-          dotnet test ${{ env.DOTNET_VERSION }} --no-build --verbosity normal
+          dotnet restore ${{ env.TARGET_SOLUTION_VAR }}
+          dotnet test ${{ env.TARGET_SOLUTION_VAR }} --no-build --verbosity normal
 
       - name: Check test results
         working-directory: ${{ env.WORKING_DIR }}
