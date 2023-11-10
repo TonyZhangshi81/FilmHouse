@@ -1,4 +1,4 @@
-name: .net build
+name: build
 
 env:
   TARGET_SOLUTION_VAR: 'FilmHouse.sln'
