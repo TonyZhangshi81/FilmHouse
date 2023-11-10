@@ -30,6 +30,7 @@ jobs:
         run: nuget restore ${{ env.TARGET_SOLUTION_VAR }}
 
       - name: Build with dotnet
+        working-directory: ${{ env.WORKING_DIR }}
         run: |
           dotnet clean ${{ env.TARGET_SOLUTION_VAR }}
           dotnet restore ${{ env.TARGET_SOLUTION_VAR }}
@@ -41,6 +42,7 @@ jobs:
           }
 
       - name: Run NUnit tests
+        working-directory: ${{ env.WORKING_DIR }}
         run: |
           dotnet restore ${{ env.TARGET_SOLUTION_VAR }}
           dotnet test ${{ env.TARGET_SOLUTION_VAR }} --no-build --verbosity normal
