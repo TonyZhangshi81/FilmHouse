@@ -1,4 +1,4 @@
-name: .net build
+name: release-publish
 
 env:
   TARGET_SOLUTION_VAR: 'FilmHouse.sln'
@@ -58,4 +58,4 @@ jobs:
         with:
           name: filmhouse-app
           path: ${{env.DOTNET_ROOT}}/publish
-          retention-days: 2
+          retention-days: 1
