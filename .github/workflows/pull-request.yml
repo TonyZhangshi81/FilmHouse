@@ -25,13 +25,10 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore NuGet packages
-        working-directory: ./src
-        run: nuget restore FilmHouse.sln
+        run: nuget restore ${{ env.TARGET_SOLUTION_VAR }}
 
       - name: Build with dotnet
-        working-directory: ./src
         run: |
-          echo ${{ github.head_ref }}.${{ github.sha }}
           dotnet clean $TARGET_SOLUTION_VAR
           dotnet restore $TARGET_SOLUTION_VAR
           dotnet build $TARGET_SOLUTION_VAR -m:1 --no-restore /warnaserror
@@ -42,7 +39,6 @@ jobs:
           }
 
       - name: Run NUnit tests
-        working-directory: ./src
         run: |
           dotnet restore $TARGET_SOLUTION_VAR
           dotnet test $TARGET_SOLUTION_VAR --no-build --verbosity normal
