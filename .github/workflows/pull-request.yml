@@ -1,4 +1,4 @@
-name: .net build
+name: pull-request
 
 env:
   TARGET_SOLUTION_VAR: 'FilmHouse.sln'
@@ -14,9 +14,7 @@ permissions:
 
 jobs:
   build:
-    name: Build and Test
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -59,4 +57,3 @@ jobs:
           } else {
             exit 0
           }
-
