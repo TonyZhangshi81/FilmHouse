@@ -1,0 +1,62 @@
+name: .net build
+
+env:
+  TARGET_SOLUTION_VAR: 'FilmHouse.sln'
+  DOTNET_VERSION: '7.0.x'
+
+on:
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore NuGet packages
+        run: dotnet restore
+
+      - name: Build with dotnet
+        working-directory: ./src
+        run: |
+          echo ${{ github.head_ref }}.${{ github.sha }}
+          dotnet clean $TARGET_SOLUTION_VAR
+          dotnet restore $TARGET_SOLUTION_VAR
+          dotnet build $TARGET_SOLUTION_VAR -m:1 --no-restore /warnaserror
+          if (-Not $?) {
+            exit 1
+          } else {
+            exit 0
+          }
+
+      - name: Run NUnit tests
+        run: |
+          dotnet restore $TARGET_SOLUTION_VAR
+          dotnet test $TARGET_SOLUTION_VAR --no-build --verbosity normal
+
+      - name: Check test results
+        id: test-results
+        run: echo "::set-output name=tests-passed::$(find . -name 'TestResult.xml' -type f -exec grep -i '<test-case result=\"Passed\"' {} + | wc -l)"
+
+      - name: Last
+        id: is-ok
+        run: |
+          if: ${{ needs.build.outputs.test-results == '1' }} {
+            exit 1
+          } else {
+            exit 0
+          }
+
