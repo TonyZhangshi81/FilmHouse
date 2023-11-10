@@ -50,7 +50,7 @@ jobs:
       - name: Last
         id: is-ok
         run: |
-          if: ${{ needs.build.outputs.test-results == '1' }} {
+          if (${{ needs.build.outputs.test-results == '1' }}) {
             exit 1
           } else {
             exit 0
