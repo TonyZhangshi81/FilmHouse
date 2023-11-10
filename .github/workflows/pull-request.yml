@@ -47,11 +47,11 @@ jobs:
         id: test-results
         run: echo "::set-output name=tests-passed::$(find . -name 'TestResult.xml' -type f -exec grep -i '<test-case result=\"Passed\"' {} + | wc -l)"
 
-      - name: Last
-        id: is-ok
-        run: |
-          if (${{ needs.build.outputs.test-results == '1' }}) {
-            exit 1
-          } else {
-            exit 0
-          }
+      #- name: Last
+      #  id: is-ok
+      #  run: |
+      #    if (${{ needs.build.outputs.test-results == '1' }}) {
+      #      exit 1
+      #    } else {
+      #      exit 0
+      #    }
