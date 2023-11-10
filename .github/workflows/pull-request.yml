@@ -1,6 +1,7 @@
 name: pull-request
 
 env:
+  WORKING_DIR: ./src
   TARGET_SOLUTION_VAR: 'FilmHouse.sln'
   DOTNET_VERSION: '7.0.x'
 
@@ -25,14 +26,14 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore NuGet packages
-        working-directory: ./src
+        working-directory: ${{ env.WORKING_DIR }}
         run: nuget restore ${{ env.TARGET_SOLUTION_VAR }}
 
       - name: Build with dotnet
         run: |
-          dotnet clean $TARGET_SOLUTION_VAR
-          dotnet restore $TARGET_SOLUTION_VAR
-          dotnet build $TARGET_SOLUTION_VAR -m:1 --no-restore /warnaserror
+          dotnet clean ${{ env.DOTNET_VERSION }}
+          dotnet restore ${{ env.DOTNET_VERSION }}
+          dotnet build ${{ env.DOTNET_VERSION }} -m:1 --no-restore /warnaserror
           if (-Not $?) {
             exit 1
           } else {
@@ -41,11 +42,11 @@ jobs:
 
       - name: Run NUnit tests
         run: |
-          dotnet restore $TARGET_SOLUTION_VAR
-          dotnet test $TARGET_SOLUTION_VAR --no-build --verbosity normal
+          dotnet restore ${{ env.DOTNET_VERSION }}
+          dotnet test ${{ env.DOTNET_VERSION }} --no-build --verbosity normal
 
       - name: Check test results
-        working-directory: ./src
+        working-directory: ${{ env.WORKING_DIR }}
         id: test-results
         run: echo "::set-output name=tests-passed::$(find . -name 'TestResult.xml' -type f -exec grep -i '<test-case result=\"Passed\"' {} + | wc -l)"
 
