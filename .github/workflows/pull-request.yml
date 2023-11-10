@@ -25,6 +25,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore NuGet packages
+        working-directory: ./src
         run: nuget restore ${{ env.TARGET_SOLUTION_VAR }}
 
       - name: Build with dotnet
