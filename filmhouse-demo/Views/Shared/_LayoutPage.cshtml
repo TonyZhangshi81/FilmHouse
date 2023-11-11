@@ -1,5 +1,13 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutWide.cshtml";
+    Layout = "_LayoutWide";
+}
+
+@section Links {
+    @await RenderSectionAsync("Links", required: false)
+}
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
 }
 
 <div class="container">
