@@ -32,9 +32,11 @@
 	  <None Remove="Views\Celeb\Celeb08.Index.Content.html" />
 	  <None Remove="Views\Celeb\Celeb11.Index.Content.html" />
 	  <None Remove="Views\Celeb\Celeb13.Index.Content.html" />
+	  <None Remove="Views\Celeb\Celeb15.Index.Content.html" />
 	  <None Remove="Views\Celeb\Celeb16.Index.Content.html" />
 	  <None Remove="Views\Error\NotAdmin.Content.html" />
 	  <None Remove="Views\Error\NotFound.Content.html" />
+	  <None Remove="Views\Movie\Comment.Content.html" />
 	  <None Remove="Views\Movie\Movie01.Index.Content.html" />
 	  <None Remove="Views\Movie\Movie02.Index.Content.html" />
 	  <None Remove="Views\Movie\Movie03.Index.Content.html" />

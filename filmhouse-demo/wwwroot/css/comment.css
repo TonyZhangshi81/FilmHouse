@@ -1,0 +1,24 @@
+﻿.comment-item {
+    margin: 0 0 12px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #ddd;
+    overflow: hidden;
+}
+
+    .comment-item .comment {
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+
+    .comment-item .avatar {
+        float: left;
+        margin-right: 15px;
+    }
+
+    .comment-item div {
+        background: 0;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
