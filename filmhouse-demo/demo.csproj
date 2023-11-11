@@ -20,6 +20,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Views\Account\Login.Content.html" />
+	  <None Remove="Views\Account\Register.Content.html" />
 	  <None Remove="Views\Album\Index.Content.html" />
 	  <None Remove="Views\Ask\Index.Content.html" />
 	  <None Remove="Views\Celeb\Celeb01.Index.Content.html" />

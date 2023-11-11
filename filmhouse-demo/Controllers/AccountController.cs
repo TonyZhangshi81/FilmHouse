@@ -7,21 +7,19 @@ namespace demo.Controllers
 {
     public class AccountController : Controller
     {
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Mine");
             }
-            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.Title = "登录";
             return View();
         }
 
-        public IActionResult Register(string returnUrl)
+        public IActionResult Register()
         {
             ViewBag.Title = "注册";
-            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
     }

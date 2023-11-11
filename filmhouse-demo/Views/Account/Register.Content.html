@@ -1,0 +1,45 @@
+<div class="panel panel-body center-horizon panel-login" style="margin-top:20px; padding:30px 50px 20px 50px;">
+
+  <div class="text-center" style="margin:0px -50px;">
+    <text style="font-size:36px; color:#121212; font-weight:bold;">DEMO</text>
+  </div>
+  <div class="text-center" style="margin:0px -50px;">
+    <text style="font-size:20px; color:#444444; font-weight:normal; font-family:'Microsoft JhengHei UI';">For people who love movies</text>
+  </div>
+
+  <div class="input-group" style="margin-top:30px;">
+    <span class="input-group-addon bg-white" style="border-radius:2px 0px 0px 2px;">
+      <i class="fa fa-user"></i>
+    </span>
+    <input class="form-control" data-val="true" data-val-length="用户名 必须少于 20 个字符。" data-val-length-max="20" data-val-required="请输入 用户名。" id="Account" name="Account" placeholder="用户名" style="border-radius:0px 2px 2px 0px ;" type="text" value="">
+  </div>
+  <span class="field-validation-valid text-danger" data-valmsg-for="Account" data-valmsg-replace="true"></span>
+
+  <div class="input-group" style="margin-top:20px;">
+    <span class="input-group-addon bg-white" style="border-radius:2px 0px 0px 2px;">
+      <i class="fa fa-lock"></i>
+    </span>
+    <input class="form-control" data-val="true" data-val-regex="密码 必须包括字符和数字，且长度不小于6" data-val-regex-pattern="^(?=.*\d.*)(?=.*[a-zA-Z].*).{6,}$" data-val-required="请输入 密码。" id="Password" name="Password" placeholder="密码" style="border-radius:0px 2px 2px 0px ;" type="password">
+  </div>
+  <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+
+  <div class="input-group" style="margin-top:20px;">
+    <span class="input-group-addon bg-white" style="border-radius:2px 0px 0px 2px;">
+      <i class="fa fa-check-square-o"></i>
+    </span>
+    <input class="form-control" data-val="true" data-val-equalto="密码 和 确认密码 不匹配。" data-val-equalto-other="*.Password" id="ConfirmPassword" name="ConfirmPassword" placeholder="确认密码" style="border-radius:0px 2px 2px 0px ;" type="password">
+  </div>
+  <span class="field-validation-valid text-danger" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+
+  <div class="input-group full-width" style="margin-top:20px;">
+    <input type="submit" value="注册" class="btn btn-primary btn-block" style="border-radius:2px;">
+  </div>
+
+  <div class="input-group" style="margin-top:10px;">
+
+  </div>
+</div>
+
+<div class="panel panel-body center-horizon panel-login font-larger">
+  已有账号？&nbsp;&nbsp;<a class="link-text" href="/Account/Login">点此登录. </a>
+</div>
