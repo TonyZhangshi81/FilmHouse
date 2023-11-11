@@ -17,20 +17,6 @@
 }
 
 @{
-    if (ViewBag.CelebId == "01")
-    {
-        <include-content name="Celeb01.Index.Content.html" />
-    }
-    else if (ViewBag.CelebId == "03")
-    {
-        <include-content name="Celeb03.Index.Content.html" />
-    }
-    else if (ViewBag.CelebId == "04")
-    {
-        <include-content name="Celeb04.Index.Content.html" />
-    }
-    else
-    {
-        <include-content name="Celeb02.Index.Content.html" />
-    }
+    var html = $"Celeb{ViewBag.CelebId}.Index.Content.html";
+    <include-content name=@html />
 }

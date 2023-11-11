@@ -18,16 +18,6 @@
 }
 
 @{
-    if (ViewBag.MovieId == "m01")
-    {
-        <include-content name="Movie01.Index.Content.html" />
-    }
-    else if (ViewBag.MovieId == "m02")
-    {
-        <include-content name="Movie02.Index.Content.html" />
-    }
-    else
-    {
-        <include-content name="Movie03.Index.Content.html" />
-    }
+    var html = $"Movie{ViewBag.MovieId.ToString().Substring(1, 2)}.Index.Content.html";
+    <include-content name=@html />
 }
