@@ -1,256 +1,253 @@
-<div class="container">
 
-  <div class="modal fade" id="modalCmt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form action="/Comment/Create?movie=m0001&amp;returnurl=http%3A%2F%2Flocalhost%3A50229%2FMovie%2FIndex%3Fid%3Dm0001" class="form-horizontal" method="post" role="form">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              ×
-            </button>
-            <h4 class="modal-title" id="myModalLabel">
-              添加内容
-            </h4>
-          </div>
-          <div class="modal-body" style="padding:15px 50px;">
-            <label class="control-label" for="content" style="margin-top:0px;">简短评论</label>
-            <textarea name="content" id="content" class="form-control" placeholder="请输入评论内容" style="margin-top: 10px; height:99px;"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">
-              关闭
-            </button>
-            <input type="submit" class="btn btn-primary" value="提交">
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel panel-default" style="margin-top:167px;">
-    <div style="float:left; display:inline-block; margin-top:-167px; margin-left:25px; margin-right:25px; padding:3px; background-color:white; box-shadow:0px 0px 10px #999999;">
-      <img src="/Content/Movie/p480956937.jpg" class="img-responsive" title="剪刀手安德华" style="width:170px; height:240px;">
-    </div>
-    <div>
-      <div class="font-larger" style="margin-top:10px; margin-bottom:10px;">
-        <strong>剪刀手安德华&nbsp;&nbsp;&nbsp;&nbsp;Edward Scissorhands</strong><small style="display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;(1990)</small>
-      </div>
-      <div style="margin-bottom:10px;">
-        <a class="btn btn-mark" title="想看" href="/Mark/Create?target=m01&amp;type=1&amp;returnurl=http://localhost:50229/Movie/Index?id=m01"><span class="fa fa-clock-o" aria-hidden="true"></span> 想看</a>
-        <a class="btn btn-mark" title="看过" href="/Mark/Create?target=m01&amp;type=2&amp;returnurl=http://localhost:50229/Movie/Index?id=m01"><span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过</a>
-        <a class="btn btn-mark" title="喜欢" href="/Mark/Create?target=m01&amp;type=3&amp;returnurl=http://localhost:50229/Movie/Index?id=m01"><span class="fa fa-heart-o" aria-hidden="true"></span> 喜欢</a>
-      </div>
-    </div>
-
-    <div class="panel-footer text-center no-padding" style="background-color:transparent; padding:10px;">
-      <div class="list-tab">
-        <a href="#details" id="link-to-details">&nbsp;&nbsp;详情&nbsp;&nbsp;</a>
-        <a href="#summary" id="link-to-summary">&nbsp;&nbsp;简介&nbsp;&nbsp;</a>
-        <a href="#resources" id="link-to-resources">&nbsp;&nbsp;资源&nbsp;&nbsp;</a>
-        <a href="#comments" id="link-to-comments">&nbsp;&nbsp;评论&nbsp;&nbsp;</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-9 no-padding">
-
-    <div class="panel panel-default" id="details">
-      <div class="panel-heading text-center">
-        ————&nbsp;&nbsp;<strong>电影详情</strong>&nbsp;&nbsp;————
-      </div>
-      <div class="panel-body">
-        <ul style="list-style:none; padding:0px; margin:0px;">
-          <li>
-            <span style="color:#808080;">更多电影名:</span>
-            幻海奇缘(港)
-          </li>
-
-          <li>
-            <span style="color:#808080;">导演:</span>
-            <a href="/Celeb/Index?id=03" class="link-text" target="_self">蒂姆·波顿</a>
-          </li>
-
-          <li>
-            <span style="color:#808080;">编剧:</span>
-            <a href="/Celeb/Index?id=03" class="link-text" target="_self">蒂姆·波顿</a>
-            <a href="/Celeb/Index?id=04" class="link-text" target="_self">卡罗琳·汤普森</a>
-          </li>
-
-          <li>
-            <span style="color:#808080;">演员:</span>
-            <a href="/Celeb/Index?id=01" class="link-text" target="_self">约翰尼·德普</a>
-            <a href="/Celeb/Index?id=05" class="link-text" target="_self">薇诺娜·瑞德</a>
-            <a href="/Celeb/Index?id=06" class="link-text" target="_self">黛安·韦斯特</a>
-          </li>
-
-          <li>
-            <span style="color:#808080;">上映日期:</span>
-            2023-10-21(中国大陆) / 2023-05-20(戛纳电影节) / 2023-10-11(平遥国际电影展)
-          </li>
-
-          <li>
-            <span style="color:#808080;">片长:</span>
-            105分钟
-          </li>
-
-          <li>
-            <span style="color:#808080;">类型:</span>
-            剧情 / 爱情 / 奇幻
-          </li>
-
-          <li>
-            <span style="color:#808080;">制片国家/地区:</span>
-            美国
-          </li>
-
-          <li>
-            <span style="color:#808080;">语言:</span>
-            英语
-          </li>
-
-          <li>
-            <span style="color:#808080;">评分:</span>
-            8.6
-          </li>
-
-          <li>
-            <span style="color:#808080;">豆瓣链接:</span>
-            <a href="https://movie.douban.com/subject/1292370/" class="link-text" target="_self">1292370</a>
-          </li>
-
-          <li>
-            <span style="color:#808080;">IMDb链接:</span>
-            <a href="http://www.imdb.com/title/tt0099487/" class="link-text" target="_self">tt0099487</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-
-    <div class="panel panel-default" id="summary">
-      <div class="panel-heading text-center">
-        ————&nbsp;&nbsp;<strong>剧情介绍</strong>&nbsp;&nbsp;————
-      </div>
-      <div class="panel-body" id="divbody">
-        <div id="summarylong" style="display:none;">
-          <p>
-            爱德华（约翰尼•戴普 饰）是一个机器人，他拥有人的心智，却有一双剪刀手，孤独地生活在古堡里，闯入古堡的化妆品推销员佩格把他带回家，让他走进了人类的世界。单纯的爱德华爱上了佩格的女儿金（薇诺娜•瑞德 饰），金也慢慢的被爱德华的善良所吸引。
-          </p>
-          <p>　　但是，一连串的意外事情让周围的人邻居对爱德华的态度从喜欢变成无法接受，爱德华痛苦地发现，他总是好心办坏事，连自己的爱人都不能拥抱，或许，他注定就不属于这个世界。</p>
-          <a id="btnHidden" href="javascript: void(0);" class="link-text">(收起)</a>
+<div class="modal fade" id="modalCmt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/Comment/Create?movie=m0001&amp;returnurl=http%3A%2F%2Flocalhost%3A50229%2FMovie%2FIndex%3Fid%3Dm0001" class="form-horizontal" method="post" role="form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×
+          </button>
+          <h4 class="modal-title" id="myModalLabel">
+            添加内容
+          </h4>
         </div>
-        <div id="summaryshort" style="display:block;">
+        <div class="modal-body" style="padding:15px 50px;">
+          <label class="control-label" for="content" style="margin-top:0px;">简短评论</label>
+          <textarea name="content" id="content" class="form-control" placeholder="请输入评论内容" style="margin-top: 10px; height:99px;"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            关闭
+          </button>
+          <input type="submit" class="btn btn-primary" value="提交">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default" style="margin-top:167px;">
+  <div style="float:left; display:inline-block; margin-top:-167px; margin-left:25px; margin-right:25px; padding:3px; background-color:white; box-shadow:0px 0px 10px #999999;">
+    <img src="/Content/Movie/p480956937.jpg" class="img-responsive" title="剪刀手安德华" style="width:170px; height:240px;">
+  </div>
+  <div>
+    <div class="font-larger" style="margin-top:10px; margin-bottom:10px;">
+      <strong>剪刀手安德华&nbsp;&nbsp;&nbsp;&nbsp;Edward Scissorhands</strong><small style="display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;(1990)</small>
+    </div>
+    <div style="margin-bottom:10px;">
+      <a class="btn btn-mark" title="想看" href="/Mark/Create?target=m01&amp;type=1&amp;returnurl=http://localhost:50229/Movie/Index?id=m01"><span class="fa fa-clock-o" aria-hidden="true"></span> 想看</a>
+      <a class="btn btn-mark" title="看过" href="/Mark/Create?target=m01&amp;type=2&amp;returnurl=http://localhost:50229/Movie/Index?id=m01"><span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过</a>
+      <a class="btn btn-mark" title="喜欢" href="/Mark/Create?target=m01&amp;type=3&amp;returnurl=http://localhost:50229/Movie/Index?id=m01"><span class="fa fa-heart-o" aria-hidden="true"></span> 喜欢</a>
+    </div>
+  </div>
+
+  <div class="panel-footer text-center no-padding" style="background-color:transparent; padding:10px;">
+    <div class="list-tab">
+      <a href="#details" id="link-to-details">&nbsp;&nbsp;详情&nbsp;&nbsp;</a>
+      <a href="#summary" id="link-to-summary">&nbsp;&nbsp;简介&nbsp;&nbsp;</a>
+      <a href="#resources" id="link-to-resources">&nbsp;&nbsp;资源&nbsp;&nbsp;</a>
+      <a href="#comments" id="link-to-comments">&nbsp;&nbsp;评论&nbsp;&nbsp;</a>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-9 no-padding">
+
+  <div class="panel panel-default" id="details">
+    <div class="panel-heading text-center">
+      ————&nbsp;&nbsp;<strong>电影详情</strong>&nbsp;&nbsp;————
+    </div>
+    <div class="panel-body">
+      <ul style="list-style:none; padding:0px; margin:0px;">
+        <li>
+          <span style="color:#808080;">更多电影名:</span>
+          幻海奇缘(港)
+        </li>
+
+        <li>
+          <span style="color:#808080;">导演:</span>
+          <a href="/Celeb/Index?id=03" class="link-text" target="_self">蒂姆·波顿</a>
+        </li>
+
+        <li>
+          <span style="color:#808080;">编剧:</span>
+          <a href="/Celeb/Index?id=03" class="link-text" target="_self">蒂姆·波顿</a>
+          <a href="/Celeb/Index?id=04" class="link-text" target="_self">卡罗琳·汤普森</a>
+        </li>
+
+        <li>
+          <span style="color:#808080;">演员:</span>
+          <a href="/Celeb/Index?id=01" class="link-text" target="_self">约翰尼·德普</a>
+          <a href="/Celeb/Index?id=05" class="link-text" target="_self">薇诺娜·瑞德</a>
+          <a href="/Celeb/Index?id=06" class="link-text" target="_self">黛安·韦斯特</a>
+        </li>
+
+        <li>
+          <span style="color:#808080;">上映日期:</span>
+          2023-10-21(中国大陆) / 2023-05-20(戛纳电影节) / 2023-10-11(平遥国际电影展)
+        </li>
+
+        <li>
+          <span style="color:#808080;">片长:</span>
+          105分钟
+        </li>
+
+        <li>
+          <span style="color:#808080;">类型:</span>
+          剧情 / 爱情 / 奇幻
+        </li>
+
+        <li>
+          <span style="color:#808080;">制片国家/地区:</span>
+          美国
+        </li>
+
+        <li>
+          <span style="color:#808080;">语言:</span>
+          英语
+        </li>
+
+        <li>
+          <span style="color:#808080;">评分:</span>
+          8.6
+        </li>
+
+        <li>
+          <span style="color:#808080;">豆瓣链接:</span>
+          <a href="https://movie.douban.com/subject/1292370/" class="link-text" target="_self">1292370</a>
+        </li>
+
+        <li>
+          <span style="color:#808080;">IMDb链接:</span>
+          <a href="http://www.imdb.com/title/tt0099487/" class="link-text" target="_self">tt0099487</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default" id="summary">
+    <div class="panel-heading text-center">
+      ————&nbsp;&nbsp;<strong>剧情介绍</strong>&nbsp;&nbsp;————
+    </div>
+    <div class="panel-body" id="divbody">
+      <div id="summarylong" style="display:none;">
+        <p>
           爱德华（约翰尼•戴普 饰）是一个机器人，他拥有人的心智，却有一双剪刀手，孤独地生活在古堡里，闯入古堡的化妆品推销员佩格把他带回家，让他走进了人类的世界。单纯的爱德华爱上了佩格的女儿金（薇诺娜•瑞德 饰），金也慢慢的被爱德华的善良所吸引。
-          但是，一连串的意外事情让周围的人邻居对爱德华的态度从喜欢变成无法接受，爱德华痛苦地发现，他总是好心办坏事，连自己的爱人都不能拥抱，或许，他注定就不属于这个世界...
-          <a id="btnDisplay" href="javascript: void(0);" class="link-text">(展开全部)</a>
-        </div>
+        </p>
+        <p>　　但是，一连串的意外事情让周围的人邻居对爱德华的态度从喜欢变成无法接受，爱德华痛苦地发现，他总是好心办坏事，连自己的爱人都不能拥抱，或许，他注定就不属于这个世界。</p>
+        <a id="btnHidden" href="javascript: void(0);" class="link-text">(收起)</a>
       </div>
-    </div>
-
-
-    <div class="panel panel-default" id="resources">
-      <div class="panel-heading text-center">
-        ————&nbsp;&nbsp;<strong>所有资源</strong>&nbsp;&nbsp;————
-        <div class="pull-right" style="margin-top:-7px;">
-          <a class="btn btn-default btn-mark tipup" href="/Ask/Create?id=m01" title="" data-toggle="tooltip" data-placement="top" data-original-title="为 剪刀手安德华 求资源"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
-          <a class="btn btn-default btn-mark tipup" href="/Resource/Create?id=m01" title="" data-toggle="tooltip" data-placement="top" data-original-title="为 剪刀手安德华 添加资源"><i class="fa fa-plus" aria-hidden="true"></i></a>
-        </div>
-      </div>
-      <div class="panel-body">
-        <table class="table table-hover no-margin">
-          <thead>
-            <tr>
-              <th>
-                来源
-              </th>
-              <th>
-                类型
-              </th>
-              <th>
-                标题
-              </th>
-              <th>
-                大小
-              </th>
-              <th>
-                #
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <a href="/People/Index?id=0ACFC82E7D5A41FC8AB8FD4EF603C858&amp;returnurl=http://localhost:50229/Movie/Index?id=m01" class="link-text" target="_self" title="tonyzhangshi 的主页">tonyzhangshi</a>
-              </td>
-              <td>
-                <span class="fa fa-magnet" title="磁力链"></span>
-              </td>
-              <td>
-                <a title="下载" href="magnet:?xt=urn:btih:5e3e7fd6735c56ea1b936699ba7b6e549737a155蓝光国英双语中英双字" class="link-text">[电影天堂www.dygod.net].剪刀手爱德华.[中英双字.1024分辨率]</a>
-              </td>
-              <td>
-                10.95996 K
-              </td>
-              <td>
-                <a class="btn btn-xs" title="有用" href="/Resource/Favor?id=0EBEA538152F46C78F4C45C97FE35D8C&amp;returnurl=http://localhost:50229/Movie/Index?id=m01"><span class="fa fa-thumbs-o-up"></span>&nbsp;0</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-
-    <div class="panel panel-default" id="comments">
-      <div class="panel-heading text-center">
-        ————&nbsp;&nbsp;<strong>剪刀手安德华 的短评</strong>(<a class="link-text" href="/Movie/Comment?id=m01" target="_self">全部 0 条</a>)&nbsp;&nbsp;————
-      </div>
-      <div class="panel-body">
-        <div class="text-center">
-          还没有人评论过这部电影(＃￣▽￣＃)
-        </div>
+      <div id="summaryshort" style="display:block;">
+        爱德华（约翰尼•戴普 饰）是一个机器人，他拥有人的心智，却有一双剪刀手，孤独地生活在古堡里，闯入古堡的化妆品推销员佩格把他带回家，让他走进了人类的世界。单纯的爱德华爱上了佩格的女儿金（薇诺娜•瑞德 饰），金也慢慢的被爱德华的善良所吸引。
+        但是，一连串的意外事情让周围的人邻居对爱德华的态度从喜欢变成无法接受，爱德华痛苦地发现，他总是好心办坏事，连自己的爱人都不能拥抱，或许，他注定就不属于这个世界...
+        <a id="btnDisplay" href="javascript: void(0);" class="link-text">(展开全部)</a>
       </div>
     </div>
   </div>
 
-  <div class="col-sm-3 div-right">
 
-    <div class="panel panel-body">
-      <div class="col-xs-4 text-center" style="border-right:1px solid #CCCCCC;">
-        <div>0</div>
-        <div>想看</div>
-      </div>
-      <div class="col-xs-4 text-center" style="border-right:1px solid #CCCCCC;">
-        <div>0</div>
-        <div>已看</div>
-      </div>
-      <div class="col-xs-4 text-center">
-        <div>0</div>
-        <div>喜欢</div>
+  <div class="panel panel-default" id="resources">
+    <div class="panel-heading text-center">
+      ————&nbsp;&nbsp;<strong>所有资源</strong>&nbsp;&nbsp;————
+      <div class="pull-right" style="margin-top:-7px;">
+        <a class="btn btn-default btn-mark tipup" href="/Ask/Create?id=m01" title="" data-toggle="tooltip" data-placement="top" data-original-title="为 剪刀手安德华 求资源"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+        <a class="btn btn-default btn-mark tipup" href="/Resource/Create?id=m01" title="" data-toggle="tooltip" data-placement="top" data-original-title="为 剪刀手安德华 添加资源"><i class="fa fa-plus" aria-hidden="true"></i></a>
       </div>
     </div>
-
-
-    <div class="panel panel-default">
-      <div class="panel-heading text-center">
-        ————&nbsp;&nbsp;<strong>我的短评</strong>&nbsp;&nbsp;————
-      </div>
-      <div class="panel-body">
-        <p class="text-muted">Tips: 标记为已看后，可以写一句话影评。</p>
-      </div>
-    </div>
-
-
-    <div class="panel panel-default">
-      <div class="panel-heading text-center">
-        ————&nbsp;&nbsp;<strong>相关专辑</strong>&nbsp;&nbsp;————
-      </div>
-      <div class="panel-body">
-        <div class="text-center">
-          没有专辑包含这部电影(＃￣▽￣＃)
-        </div>
-      </div>
+    <div class="panel-body">
+      <table class="table table-hover no-margin">
+        <thead>
+          <tr>
+            <th>
+              来源
+            </th>
+            <th>
+              类型
+            </th>
+            <th>
+              标题
+            </th>
+            <th>
+              大小
+            </th>
+            <th>
+              #
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a href="/People/Index?id=0ACFC82E7D5A41FC8AB8FD4EF603C858&amp;returnurl=http://localhost:50229/Movie/Index?id=m01" class="link-text" target="_self" title="tonyzhangshi 的主页">tonyzhangshi</a>
+            </td>
+            <td>
+              <span class="fa fa-magnet" title="磁力链"></span>
+            </td>
+            <td>
+              <a title="下载" href="magnet:?xt=urn:btih:5e3e7fd6735c56ea1b936699ba7b6e549737a155蓝光国英双语中英双字" class="link-text">[电影天堂www.dygod.net].剪刀手爱德华.[中英双字.1024分辨率]</a>
+            </td>
+            <td>
+              10.95996 K
+            </td>
+            <td>
+              <a class="btn btn-xs" title="有用" href="/Resource/Favor?id=0EBEA538152F46C78F4C45C97FE35D8C&amp;returnurl=http://localhost:50229/Movie/Index?id=m01"><span class="fa fa-thumbs-o-up"></span>&nbsp;0</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
+
+  <div class="panel panel-default" id="comments">
+    <div class="panel-heading text-center">
+      ————&nbsp;&nbsp;<strong>剪刀手安德华 的短评</strong>(<a class="link-text" href="/Movie/Comment?id=m01" target="_self">全部 0 条</a>)&nbsp;&nbsp;————
+    </div>
+    <div class="panel-body">
+      <div class="text-center">
+        还没有人评论过这部电影(＃￣▽￣＃)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-3 div-right">
+
+  <div class="panel panel-body">
+    <div class="col-xs-4 text-center" style="border-right:1px solid #CCCCCC;">
+      <div>0</div>
+      <div>想看</div>
+    </div>
+    <div class="col-xs-4 text-center" style="border-right:1px solid #CCCCCC;">
+      <div>0</div>
+      <div>已看</div>
+    </div>
+    <div class="col-xs-4 text-center">
+      <div>0</div>
+      <div>喜欢</div>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading text-center">
+      ————&nbsp;&nbsp;<strong>我的短评</strong>&nbsp;&nbsp;————
+    </div>
+    <div class="panel-body">
+      <p class="text-muted">Tips: 标记为已看后，可以写一句话影评。</p>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading text-center">
+      ————&nbsp;&nbsp;<strong>相关专辑</strong>&nbsp;&nbsp;————
+    </div>
+    <div class="panel-body">
+      <div class="text-center">
+        没有专辑包含这部电影(＃￣▽￣＃)
+      </div>
+    </div>
+  </div>
 </div>

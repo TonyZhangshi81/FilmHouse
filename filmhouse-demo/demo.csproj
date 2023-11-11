@@ -24,7 +24,13 @@
 	  <None Remove="Views\Ask\Index.Content.html" />
 	  <None Remove="Views\Celeb\Celeb01.Index.Content.html" />
 	  <None Remove="Views\Celeb\Celeb02.Index.Content.html" />
+	  <None Remove="Views\Celeb\Celeb03.Index.Content.html" />
 	  <None Remove="Views\Celeb\Celeb05.Index.Content.html" />
+	  <None Remove="Views\Celeb\Celeb07.Index.Content.html" />
+	  <None Remove="Views\Celeb\Celeb08.Index.Content.html" />
+	  <None Remove="Views\Celeb\Celeb11.Index.Content.html" />
+	  <None Remove="Views\Celeb\Celeb13.Index.Content.html" />
+	  <None Remove="Views\Celeb\Celeb16.Index.Content.html" />
 	  <None Remove="Views\Error\NotAdmin.Content.html" />
 	  <None Remove="Views\Error\NotFound.Content.html" />
 	  <None Remove="Views\Movie\Movie01.Index.Content.html" />

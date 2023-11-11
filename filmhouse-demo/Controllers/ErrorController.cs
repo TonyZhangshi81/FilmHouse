@@ -13,5 +13,13 @@ namespace demo.Controllers
 
             return View();
         }
+
+        public IActionResult NotAdmin()
+        {
+            ViewBag.Title = "无权限，访问受限";
+            ViewBag.PageType = 2;
+
+            return View();
+        }
     }
 }
