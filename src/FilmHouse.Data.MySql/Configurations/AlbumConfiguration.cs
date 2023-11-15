@@ -4,12 +4,46 @@ using FilmHouse.Data.Entities;
 
 namespace FilmHouse.Data.MySql.Configurations;
 
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 {
     public void Configure(EntityTypeBuilder<AlbumEntity> builder)
     {
-        builder.Property(e => e.Id).ValueGeneratedNever();
-        builder.Property(e => e.Time).HasColumnType("datetime");
-        builder.Property(e => e.AlterTime).HasColumnType("datetime");
+        builder.HasKey(e => new { e.AlbumId }).HasName("album_ix00");
+
+        builder.ToTable("Album");
+
+        builder.Property(e => e.RequestId)
+            .IsRequired()
+            .HasColumnType("uuid");
+
+        builder.Property(e => e.AlbumId)
+            .IsRequired()
+            .HasColumnType("uuid");
+
+        builder.Property(e => e.Title)
+            .HasColumnType("varchar(50)")
+            .HasMaxLength(50);
+
+        builder.Property(e => e.UserId)
+            .HasColumnType("uuid");
+
+        builder.Property(e => e.Cover)
+            .HasColumnType("varchar(100)")
+            .HasMaxLength(100);
+
+        builder.Property(e => e.Item)
+            .HasColumnType("longtext");
+
+        builder.Property(e => e.Summary)
+            .HasColumnType("longtext");
+
+        builder.Property(e => e.UpDatedOn)
+            .IsRequired()
+            .HasColumnType("datetime(3)");
+
+        builder.Property(e => e.CreatedOn)
+            .HasColumnType("datetime(3)");
+
     }
 }

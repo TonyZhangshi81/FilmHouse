@@ -2,6 +2,7 @@
 
 namespace FilmHouse.Data.Infrastructure;
 
+[System.Runtime.CompilerServices.CompilerGenerated]
 public interface IRepository<T> where T : class
 {
     Task Clear(CancellationToken ct = default);

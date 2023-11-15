@@ -1,30 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FilmHouse.Data.Entities
+namespace FilmHouse.Data.Entities;
+
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+public class AlbumEntity : EntitiesBase
 {
-    public class AlbumEntity
-    {
-        public Guid Id { get; set; }
+    [Column(Order = 2)]
+    [Required]
+    public Guid AlbumId { get; set; }
 
-        public string Title { get; set; }
+    [Column(Order = 3)]
+    [Required]
+    public string Title { get; set; }
 
-        public string User { get; set; }
+    [Column(Order = 4)]
+    public Guid UserId { get; set; }
 
-        public string Item { get; set; }
+    [Column(Order = 5)]
+    public string Item { get; set; }
 
-        public string Summary { get; set; }
+    [Column(Order = 6)]
+    public string Summary { get; set; }
 
-        public DateTime Time { get; set; }
+    [Column(Order = 7)]
+    public string Cover { get; set; }
 
-        public DateTime AlterTime { get; set; }
+    [Column(Order = 8)]
+    public int Visit { get; set; }
 
-        public string Cover { get; set; }
-
-        public int Visit { get; set; }
-
-    }
 }

@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FilmHouse.Data.Infrastructure;
 
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+[System.Runtime.CompilerServices.CompilerGenerated]
 public abstract class DbContextRepository<T> : IRepository<T> where T : class
 {
     protected readonly DbContext DbContext;
@@ -44,7 +46,8 @@ public abstract class DbContextRepository<T> : IRepository<T> where T : class
     public async Task DeleteAsync(object key, CancellationToken ct = default)
     {
         var entity = await GetAsync(key, ct);
-        if (entity is not null) await DeleteAsync(entity, ct);
+        if (entity is not null)
+            await DeleteAsync(entity, ct);
     }
 
     public Task<int> CountAsync(Expression<Func<T, bool>> condition, CancellationToken ct = default) =>

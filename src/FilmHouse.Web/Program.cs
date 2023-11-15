@@ -3,6 +3,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json.Serialization;
 using AspNetCoreRateLimit;
+using FilmHouse.Business;
 using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
@@ -84,12 +85,14 @@ void WriteParameterTable()
     table.AddRow(new Markup("[blue]Database type[/]"), new Text(dbType!));
     table.AddRow(new Markup("[blue]Image storage[/]"), new Text(builder.Configuration["ImageStorage:Provider"]!));
     table.AddRow(new Markup("[blue]Editor[/]"), new Text(builder.Configuration["Editor"]!));
+    table.AddRow(new Markup("[blue]SeedMaxRetryAvailability[/]"), new Text(builder.Configuration["SeedMaxRetryAvailability"]!));
 
     AnsiConsole.Write(table);
 }
 
 void ConfigureConfiguration()
 {
+    builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("WebSiteSettings"));
 }
 
 void ConfigureServices(IServiceCollection services)
@@ -171,6 +174,24 @@ void ConfigureServices(IServiceCollection services)
             services.AddSqlServerStorage(connStr!);
             break;
     }
+
+    /*
+    services.AddIdentity<UserEntity, UserRoleEntity>(opt =>
+    {
+        opt.Password.RequireDigit = false;
+        opt.Password.RequireLowercase = false;
+        opt.Password.RequireNonAlphanumeric = false;
+        opt.Password.RequireUppercase = false;
+        opt.Password.RequiredLength = 6;
+        opt.Password.RequiredUniqueChars = 1;
+        opt.Lockout.MaxFailedAccessAttempts = 5;
+        opt.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 5, 0);
+        opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+        opt.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+    })
+        .AddDefaultTokenProviders()
+        .AddEntityFrameworkStores<FilmHouseDbContext>();
+    */
 }
 
 async Task FirstRun()

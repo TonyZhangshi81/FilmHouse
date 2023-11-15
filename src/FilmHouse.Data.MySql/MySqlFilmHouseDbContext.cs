@@ -18,6 +18,7 @@ public class MySqlFilmHouseDbContext : FilmHouseDbContext
     {
         modelBuilder.ApplyConfiguration(new AlbumConfiguration());
         modelBuilder.ApplyConfiguration(new ConfigurationConfiguration());
+        modelBuilder.ApplyConfiguration(new UserAccountConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }
