@@ -1,46 +1,46 @@
-﻿using FilmHouse.Data.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using FilmHouse.Data.Entities;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
+internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 {
-    public void Configure(EntityTypeBuilder<AlbumEntity> builder)
+    public void Configure(EntityTypeBuilder<AskEntity> builder)
     {
-        builder.HasKey(e => new { e.AlbumId });
-        builder.HasAnnotation("SqlServer:Name", "album_ix00");
+        builder.HasKey(e => new { e.AskId });
+        builder.HasAnnotation("SqlServer:Name", "ask_ix00");
 
-        builder.ToTable("Album");
+        builder.ToTable("Ask");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
             .HasColumnType("varchar(36)")
             .HasMaxLength(36);
 
-        builder.Property(e => e.AlbumId)
+        builder.Property(e => e.AskId)
             .IsRequired()
             .HasColumnType("varchar(36)")
             .HasMaxLength(36);
 
-        builder.Property(e => e.Title)
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
-
         builder.Property(e => e.UserId)
+            .IsRequired()
             .HasColumnType("varchar(36)")
             .HasMaxLength(36);
 
-        builder.Property(e => e.Cover)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+        builder.Property(e => e.RequestTime)
+            .HasColumnType("datetime");
 
-        builder.Property(e => e.Item)
+        builder.Property(e => e.RequestWith)
+            .HasColumnType("int");
+
+        builder.Property(e => e.Note)
             .HasColumnType("varchar(max)");
 
-        builder.Property(e => e.Summary)
-            .HasColumnType("varchar(max)");
+        builder.Property(e => e.State)
+            .HasDefaultValue(false)
+            .HasColumnType("bit");
 
         builder.Property(e => e.UpDatedOn)
             .IsRequired()
@@ -48,5 +48,6 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.CreatedOn)
             .HasColumnType("datetime");
+
     }
 }

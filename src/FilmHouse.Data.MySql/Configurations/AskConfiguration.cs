@@ -5,38 +5,38 @@ using FilmHouse.Data.Entities;
 namespace FilmHouse.Data.MySql.Configurations;
 
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
+internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 {
-    public void Configure(EntityTypeBuilder<AlbumEntity> builder)
+    public void Configure(EntityTypeBuilder<AskEntity> builder)
     {
-        builder.HasKey(e => new { e.AlbumId }).HasName("album_ix00");
+        builder.HasKey(e => new { e.AskId }).HasName("ask_ix00");
 
-        builder.ToTable("Album");
+        builder.ToTable("Ask");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
             .HasColumnType("uuid");
 
-        builder.Property(e => e.AlbumId)
+        builder.Property(e => e.AskId)
             .IsRequired()
             .HasColumnType("uuid");
 
-        builder.Property(e => e.Title)
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
-
         builder.Property(e => e.UserId)
+            .IsRequired()
             .HasColumnType("uuid");
 
-        builder.Property(e => e.Cover)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+        builder.Property(e => e.RequestTime)
+            .HasColumnType("datetime(3)");
 
-        builder.Property(e => e.Item)
+        builder.Property(e => e.RequestWith)
+            .HasColumnType("int");
+
+        builder.Property(e => e.Note)
             .HasColumnType("longtext");
 
-        builder.Property(e => e.Summary)
-            .HasColumnType("longtext");
+        builder.Property(e => e.State)
+            .HasDefaultValue(false)
+            .HasColumnType("tinyint");
 
         builder.Property(e => e.UpDatedOn)
             .IsRequired()

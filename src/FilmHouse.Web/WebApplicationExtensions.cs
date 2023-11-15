@@ -18,6 +18,9 @@ public static class WebApplicationExtensions
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
         var env = services.GetRequiredService<IWebHostEnvironment>();
+        var maxRetryAvailability = Convert.ToInt32(app.Configuration.GetSection("SeedMaxRetryAvailability").Value!);
+
+        //var aaa = app.Services.GetService<IConfigurationBuilder>();
 
         FilmHouseDbContext context = dbType.ToLowerInvariant() switch
         {
@@ -45,7 +48,7 @@ public static class WebApplicationExtensions
                 app.Logger.LogInformation("Seeding database...");
 
                 await context.ClearAllData();
-                await Seed.SeedAsync(context, app.Logger);
+                await Seed.SeedAsync(context, app.Logger, maxRetryAvailability);
 
                 app.Logger.LogInformation("Database seeding successfully.");
 

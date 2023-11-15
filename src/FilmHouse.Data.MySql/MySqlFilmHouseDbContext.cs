@@ -18,6 +18,10 @@ public class MySqlFilmHouseDbContext : FilmHouseDbContext
     {
         modelBuilder.ApplyConfiguration(new AlbumConfiguration());
         modelBuilder.ApplyConfiguration(new ConfigurationConfiguration());
+        modelBuilder.ApplyConfiguration(new UserAccountConfiguration());
+        modelBuilder.ApplyConfiguration(new AskConfiguration());
+        modelBuilder.ApplyConfiguration(new CommentConfiguration());
+        modelBuilder.ApplyConfiguration(new CodeMastConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

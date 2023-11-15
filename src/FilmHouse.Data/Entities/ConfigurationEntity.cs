@@ -1,24 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FilmHouse.Data.Entities;
 
-public class ConfigurationEntity
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+public class ConfigurationEntity : EntitiesBase
 {
-    public int Id { get; set; }
+    [Column(Order = 2)]
+    [Required]
+    public string Key { get; set; }
 
-    public string CfgKey { get; set; }
-
-    public string CfgValue { get; set; }
-
-    public DateTime? LastModifiedTimeUtc { get; set; }
-}
-
-
-internal class ConfigurationConfiguration : IEntityTypeConfiguration<ConfigurationEntity>
-{
-    public void Configure(EntityTypeBuilder<ConfigurationEntity> builder)
-    {
-        builder.Property(e => e.CfgKey).HasMaxLength(64);
-    }
+    [Column(Order = 3)]
+    public string Value { get; set; }
 }

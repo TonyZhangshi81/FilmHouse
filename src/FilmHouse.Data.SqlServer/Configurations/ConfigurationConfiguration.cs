@@ -1,14 +1,36 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FilmHouse.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using FilmHouse.Data.Entities;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 internal class ConfigurationConfiguration : IEntityTypeConfiguration<ConfigurationEntity>
 {
     public void Configure(EntityTypeBuilder<ConfigurationEntity> builder)
     {
-        builder.Property(e => e.Id).ValueGeneratedNever();
-        builder.Property(e => e.LastModifiedTimeUtc).HasColumnType("datetime");
+        builder.HasKey(e => new { e.Key });
+        builder.HasAnnotation("SqlServer:Name", "configuration_ix00");
+
+        builder.ToTable("Configuration");
+
+        builder.Property(e => e.RequestId)
+            .IsRequired()
+            .HasColumnType("varchar(36)")
+            .HasMaxLength(36);
+
+        builder.Property(e => e.Key)
+            .HasColumnType("varchar(64)")
+            .IsRequired()
+            .HasMaxLength(64);
+
+        builder.Property(e => e.Value)
+            .HasColumnType("varchar(max)");
+
+        builder.Property(e => e.CreatedOn)
+            .HasColumnType("datetime");
+
+        builder.Property(e => e.UpDatedOn)
+            .HasColumnType("datetime");
     }
 }
