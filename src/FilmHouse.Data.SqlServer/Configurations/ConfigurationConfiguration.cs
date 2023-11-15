@@ -16,8 +16,8 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("varchar(32)")
-            .HasMaxLength(32);
+            .HasColumnType("varchar(36)")
+            .HasMaxLength(36);
 
         builder.Property(e => e.Key)
             .HasColumnType("varchar(64)")

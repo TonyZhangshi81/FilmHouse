@@ -16,12 +16,12 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("varchar(32)")
+            .HasColumnType("varchar(36)")
             .HasMaxLength(32);
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("varchar(32)")
+            .HasColumnType("varchar(36)")
             .HasMaxLength(32);
 
         builder.Property(e => e.Account)
