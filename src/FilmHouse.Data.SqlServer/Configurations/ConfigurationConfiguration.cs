@@ -28,6 +28,7 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
             .HasColumnType("varchar(max)");
 
         builder.Property(e => e.CreatedOn)
+            .IsRequired()
             .HasColumnType("datetime");
 
         builder.Property(e => e.UpDatedOn)

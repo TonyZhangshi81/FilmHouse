@@ -35,11 +35,11 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
         builder.Property(e => e.CommentTime)
             .HasColumnType("datetime(3)");
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime(3)");
 
     }

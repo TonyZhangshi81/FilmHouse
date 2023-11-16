@@ -42,11 +42,11 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasDefaultValue(false)
             .HasColumnType("bit");
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime");
 
     }

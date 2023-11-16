@@ -33,14 +33,14 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasColumnType("text");
 
         builder.Property(e => e.CommentTime)
-            .HasColumnType("datetime(3)");
-
-        builder.Property(e => e.UpDatedOn)
-            .IsRequired()
-            .HasColumnType("datetime(3)");
+            .HasColumnType("timestamp(3)");
 
         builder.Property(e => e.CreatedOn)
-            .HasColumnType("datetime(3)");
+            .IsRequired()
+            .HasColumnType("timestamp(3)");
+
+        builder.Property(e => e.UpDatedOn)
+            .HasColumnType("timestamp(3)");
 
     }
 }

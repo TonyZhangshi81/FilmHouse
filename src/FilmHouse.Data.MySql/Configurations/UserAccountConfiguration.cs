@@ -48,10 +48,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
             .HasDefaultValue(false)
             .HasColumnType("tinyint");
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
+            .IsRequired()
             .HasColumnType("datetime(3)");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime(3)");
 
     }

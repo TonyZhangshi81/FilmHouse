@@ -48,10 +48,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
             .HasDefaultValue(false)
             .HasColumnType("boolean");
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
+            .IsRequired()
             .HasColumnType("timestamp(3)");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("timestamp(3)");
 
     }

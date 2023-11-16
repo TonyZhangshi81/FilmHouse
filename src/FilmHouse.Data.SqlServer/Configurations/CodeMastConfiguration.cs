@@ -34,11 +34,11 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
             .HasColumnType("varchar(50)")
             .HasMaxLength(50);
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime");
 
     }

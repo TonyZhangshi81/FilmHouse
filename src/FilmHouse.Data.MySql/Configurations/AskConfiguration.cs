@@ -38,11 +38,11 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasDefaultValue(false)
             .HasColumnType("tinyint");
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime(3)");
 
     }

@@ -22,9 +22,12 @@ public class FilmHouseDbContext : DbContext
      *    (Microsoft SQL Server (MS SQL) to MySQL Migration http://www.sqlines.com/sql-server-to-mysql)
      */
 
-    public virtual DbSet<AlbumEntity> Album { get; set; }
+    public virtual DbSet<AlbumEntity> Albums { get; set; }
+    public virtual DbSet<AskEntity> Asks { get; set; }
+    public virtual DbSet<CodeMastEntity> CodeMasts { get; set; }
+    public virtual DbSet<CommentEntity> Comments { get; set; }
     public virtual DbSet<ConfigurationEntity> Configuration { get; set; }
-    public virtual DbSet<UserAccountEntity> UserAccount { get; set; }
+    public virtual DbSet<UserAccountEntity> UserAccounts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,9 +38,12 @@ public static class FilmHouseDbContextExtension
 {
     public static async Task ClearAllData(this FilmHouseDbContext context)
     {
-        context.Album.RemoveRange();
+        context.Albums.RemoveRange();
+        context.Asks.RemoveRange();
+        context.CodeMasts.RemoveRange();
+        context.Comments.RemoveRange();
         context.Configuration.RemoveRange();
-        context.UserAccount.RemoveRange();
+        context.UserAccounts.RemoveRange();
 
         await context.SaveChangesAsync();
     }

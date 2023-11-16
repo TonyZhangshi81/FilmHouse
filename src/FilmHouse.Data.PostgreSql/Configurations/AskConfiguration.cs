@@ -26,7 +26,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasColumnType("uuid");
 
         builder.Property(e => e.RequestTime)
-            .HasColumnType("datetime(3)");
+            .HasColumnType("timestamp(3)");
 
         builder.Property(e => e.RequestWith)
             .HasColumnType("int");
@@ -38,12 +38,12 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasDefaultValue(false)
             .HasColumnType("boolean");
 
-        builder.Property(e => e.UpDatedOn)
-            .IsRequired()
-            .HasColumnType("datetime(3)");
-
         builder.Property(e => e.CreatedOn)
-            .HasColumnType("datetime(3)");
+            .IsRequired()
+            .HasColumnType("timestamp(3)");
+
+        builder.Property(e => e.UpDatedOn)
+            .HasColumnType("timestamp(3)");
 
     }
 }

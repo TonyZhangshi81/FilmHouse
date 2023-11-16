@@ -50,11 +50,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
         builder.Property(e => e.IsAdmin)
             .HasColumnType("bit");
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime");
     }
 }
