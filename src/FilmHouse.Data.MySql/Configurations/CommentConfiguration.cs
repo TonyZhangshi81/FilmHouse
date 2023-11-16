@@ -15,19 +15,19 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.CommentId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.MovieId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.Content)
             .HasColumnType("longtext");

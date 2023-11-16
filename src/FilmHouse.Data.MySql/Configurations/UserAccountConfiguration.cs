@@ -15,11 +15,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.Account)
             .IsRequired()

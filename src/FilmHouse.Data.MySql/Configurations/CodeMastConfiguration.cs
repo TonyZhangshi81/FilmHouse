@@ -15,7 +15,7 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.Type)
             .IsRequired()

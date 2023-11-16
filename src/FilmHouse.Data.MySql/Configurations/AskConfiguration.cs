@@ -15,15 +15,15 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.AskId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.RequestTime)
             .HasColumnType("datetime(3)");

@@ -15,18 +15,18 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.AlbumId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.Title)
             .HasColumnType("varchar(50)")
             .HasMaxLength(50);
 
         builder.Property(e => e.UserId)
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)");
 
         builder.Property(e => e.Cover)
             .HasColumnType("varchar(100)")
