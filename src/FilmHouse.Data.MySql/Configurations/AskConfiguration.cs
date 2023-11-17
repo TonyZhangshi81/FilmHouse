@@ -34,7 +34,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
         builder.Property(e => e.Note)
             .HasColumnType("longtext");
 
-        builder.Property(e => e.State)
+        builder.Property(e => e.Status)
             .HasDefaultValue(false)
             .HasColumnType("tinyint");
 

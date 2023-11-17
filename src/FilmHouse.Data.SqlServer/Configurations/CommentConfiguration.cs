@@ -16,23 +16,19 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(36);
+            .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.CommentId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(36);
+            .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(36);
+            .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.MovieId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(36);
+            .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.Content)
             .HasColumnType("varchar(max)");

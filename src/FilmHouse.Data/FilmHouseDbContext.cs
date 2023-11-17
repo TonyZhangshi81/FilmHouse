@@ -24,7 +24,8 @@ public class FilmHouseDbContext : DbContext
 
     public virtual DbSet<AlbumEntity> Albums { get; set; }
     public virtual DbSet<AskEntity> Asks { get; set; }
-    public virtual DbSet<CodeMastEntity> CodeMasts { get; set; }
+    public virtual DbSet<CelebrityEntity> Celebrities { get; set; }
+    public virtual DbSet<CodeMastEntity> CodeMast { get; set; }
     public virtual DbSet<CommentEntity> Comments { get; set; }
     public virtual DbSet<ConfigurationEntity> Configuration { get; set; }
     public virtual DbSet<UserAccountEntity> UserAccounts { get; set; }
@@ -40,7 +41,8 @@ public static class FilmHouseDbContextExtension
     {
         context.Albums.RemoveRange();
         context.Asks.RemoveRange();
-        context.CodeMasts.RemoveRange();
+        context.Celebrities.RemoveRange();
+        context.CodeMast.RemoveRange();
         context.Comments.RemoveRange();
         context.Configuration.RemoveRange();
         context.UserAccounts.RemoveRange();

@@ -15,7 +15,7 @@ public class Seed
             var sysDate = System.DateTime.Now;
 
             await dbContext.Configuration.AddRangeAsync(GetInitConfigurationSettings(uuid, sysDate));
-            await dbContext.CodeMasts.AddRangeAsync(GetInitCodeMastSettings(uuid, sysDate));
+            await dbContext.CodeMast.AddRangeAsync(GetInitCodeMastSettings(uuid, sysDate));
 
             await dbContext.SaveChangesAsync();
         }
@@ -48,22 +48,27 @@ public class Seed
     private static IEnumerable<CodeMastEntity> GetInitCodeMastSettings(Guid uuid, DateTime dateTime) =>
         new List<CodeMastEntity>
         {
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm001", CodeValue = "剧情", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm002", CodeValue = "爱情", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm003", CodeValue = "奇幻", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm004", CodeValue = "惊悚", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm005", CodeValue = "喜剧", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm006", CodeValue = "动作", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm007", CodeValue = "科幻", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm008", CodeValue = "冒险", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "gm009", CodeValue = "悬疑", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "001", CodeValue = "剧情", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "002", CodeValue = "爱情", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "003", CodeValue = "奇幻", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "004", CodeValue = "惊悚", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "005", CodeValue = "喜剧", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "006", CodeValue = "动作", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "007", CodeValue = "科幻", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "008", CodeValue = "冒险", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "009", CodeValue = "悬疑", CreatedOn  = dateTime },
 
-            new() { RequestId = uuid, Type = "Language", CodeId = "l0001", CodeValue = "英语", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "Language", CodeId = "l0002", CodeValue = "法语", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "Language", CodeId = "l0003", CodeValue = "意大利语", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "Language", CodeId = "001", CodeValue = "英语", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "Language", CodeId = "002", CodeValue = "法语", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "Language", CodeId = "003", CodeValue = "意大利语", CreatedOn  = dateTime },
 
-            new() { RequestId = uuid, Type = "Country", CodeId = "c0001", CodeValue = "美国", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "Country", CodeId = "c0002", CodeValue = "澳大利亚", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "Country", CodeId = "001", CodeValue = "美国", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "Country", CodeId = "002", CodeValue = "澳大利亚", CreatedOn  = dateTime },
+
+            new() { RequestId = uuid, Type = "Review", CodeId = "0", CodeValue = "内容有误", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "Review", CodeId = "1", CodeValue = "已经存在", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Type = "Review", CodeId = "3", CodeValue = "其他", CreatedOn  = dateTime },
+
         };
 
 }

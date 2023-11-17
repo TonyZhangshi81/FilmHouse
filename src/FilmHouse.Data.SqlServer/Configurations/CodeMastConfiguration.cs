@@ -16,18 +16,17 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(36);
+            .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.Type)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(36);
+            .HasColumnType("varchar(10)")
+            .HasMaxLength(10);
 
         builder.Property(e => e.CodeId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(36);
+            .HasColumnType("varchar(10)")
+            .HasMaxLength(10);
 
         builder.Property(e => e.CodeValue)
             .IsRequired()

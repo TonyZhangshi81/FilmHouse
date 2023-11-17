@@ -17,11 +17,12 @@ public class PostgreSqlFilmHouseDbContext : FilmHouseDbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new AlbumConfiguration());
+        modelBuilder.ApplyConfiguration(new AskConfiguration());
+        modelBuilder.ApplyConfiguration(new CelebrityConfiguration());
+        modelBuilder.ApplyConfiguration(new CodeMastConfiguration());
+        modelBuilder.ApplyConfiguration(new CommentConfiguration());
         modelBuilder.ApplyConfiguration(new ConfigurationConfiguration());
         modelBuilder.ApplyConfiguration(new UserAccountConfiguration());
-        modelBuilder.ApplyConfiguration(new AskConfiguration());
-        modelBuilder.ApplyConfiguration(new CommentConfiguration());
-        modelBuilder.ApplyConfiguration(new CodeMastConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

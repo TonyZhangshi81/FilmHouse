@@ -30,6 +30,6 @@ public class AskEntity : EntitiesBase
     public string Note { get; set; }
 
     [Column(Order = 8)]
-    public bool State { get; set; }
+    public bool Status { get; set; }
 
 }
