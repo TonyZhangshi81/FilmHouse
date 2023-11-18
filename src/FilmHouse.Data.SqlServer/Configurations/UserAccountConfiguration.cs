@@ -16,13 +16,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(32);
+            .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(32);
+            .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.Account)
             .IsRequired()
@@ -50,11 +48,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
         builder.Property(e => e.IsAdmin)
             .HasColumnType("bit");
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime");
     }
 }

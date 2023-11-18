@@ -16,8 +16,7 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("varchar(36)")
-            .HasMaxLength(36);
+            .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.Key)
             .HasColumnType("varchar(64)")
@@ -28,6 +27,7 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
             .HasColumnType("varchar(max)");
 
         builder.Property(e => e.CreatedOn)
+            .IsRequired()
             .HasColumnType("datetime");
 
         builder.Property(e => e.UpDatedOn)

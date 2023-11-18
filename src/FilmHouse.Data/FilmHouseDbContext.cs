@@ -22,9 +22,18 @@ public class FilmHouseDbContext : DbContext
      *    (Microsoft SQL Server (MS SQL) to MySQL Migration http://www.sqlines.com/sql-server-to-mysql)
      */
 
-    public virtual DbSet<AlbumEntity> Album { get; set; }
+    public virtual DbSet<AlbumEntity> Albums { get; set; }
+    public virtual DbSet<AskEntity> Asks { get; set; }
+    public virtual DbSet<CelebrityEntity> Celebrities { get; set; }
+    public virtual DbSet<CodeMastEntity> CodeMast { get; set; }
+    public virtual DbSet<CommentEntity> Comments { get; set; }
     public virtual DbSet<ConfigurationEntity> Configuration { get; set; }
-    public virtual DbSet<UserAccountEntity> UserAccount { get; set; }
+    public virtual DbSet<MarkEntity> Marks { get; set; }
+    public virtual DbSet<MovieEntity> Movies { get; set; }
+    public virtual DbSet<NoticeEntity> Notices { get; set; }
+    public virtual DbSet<ResourceEntity> Resources { get; set; }
+    public virtual DbSet<UserAccountEntity> UserAccounts { get; set; }
+    public virtual DbSet<WorkEntity> Works { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,9 +44,18 @@ public static class FilmHouseDbContextExtension
 {
     public static async Task ClearAllData(this FilmHouseDbContext context)
     {
-        context.Album.RemoveRange();
+        context.Albums.RemoveRange();
+        context.Asks.RemoveRange();
+        context.Celebrities.RemoveRange();
+        context.CodeMast.RemoveRange();
+        context.Comments.RemoveRange();
         context.Configuration.RemoveRange();
-        context.UserAccount.RemoveRange();
+        context.Marks.RemoveRange();
+        context.Movies.RemoveRange();
+        context.Notices.RemoveRange();
+        context.Resources.RemoveRange();
+        context.UserAccounts.RemoveRange();
+        context.Works.RemoveRange();
 
         await context.SaveChangesAsync();
     }

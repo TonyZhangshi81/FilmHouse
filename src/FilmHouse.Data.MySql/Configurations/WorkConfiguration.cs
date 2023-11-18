@@ -5,25 +5,20 @@ using FilmHouse.Data.Entities;
 namespace FilmHouse.Data.MySql.Configurations;
 
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
+internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 {
-    public void Configure(EntityTypeBuilder<CommentEntity> builder)
+    public void Configure(EntityTypeBuilder<WorkEntity> builder)
     {
-        builder.HasKey(e => new { e.CommentId }).HasName("comment_ix00");
+        builder.HasKey(e => new { e.WorkId }).HasName("work_ix00");
 
-        builder.ToTable("Comment");
+        builder.ToTable("Work");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
             .HasColumnType("char(36)")
             .HasMaxLength(36);
 
-        builder.Property(e => e.CommentId)
-            .IsRequired()
-            .HasColumnType("char(36)")
-            .HasMaxLength(36);
-
-        builder.Property(e => e.UserId)
+        builder.Property(e => e.WorkId)
             .IsRequired()
             .HasColumnType("char(36)")
             .HasMaxLength(36);
@@ -33,11 +28,14 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasColumnType("char(36)")
             .HasMaxLength(36);
 
-        builder.Property(e => e.Content)
-            .HasColumnType("longtext");
+        builder.Property(e => e.CelebrityId)
+            .IsRequired()
+            .HasColumnType("char(36)")
+            .HasMaxLength(36);
 
-        builder.Property(e => e.CommentTime)
-            .HasColumnType("datetime(3)");
+        builder.Property(e => e.Type)
+            .HasDefaultValue(0)
+            .HasColumnType("tinyint unsigned");
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

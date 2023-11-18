@@ -5,23 +5,19 @@ using FilmHouse.Data.Entities;
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
+internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 {
-    public void Configure(EntityTypeBuilder<CommentEntity> builder)
+    public void Configure(EntityTypeBuilder<WorkEntity> builder)
     {
-        builder.HasKey(e => new { e.CommentId }).HasName("comment_ix00");
+        builder.HasKey(e => new { e.WorkId }).HasName("work_ix00");
 
-        builder.ToTable("Comment");
+        builder.ToTable("Work");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
             .HasColumnType("uuid");
 
-        builder.Property(e => e.CommentId)
-            .IsRequired()
-            .HasColumnType("uuid");
-
-        builder.Property(e => e.UserId)
+        builder.Property(e => e.WorkId)
             .IsRequired()
             .HasColumnType("uuid");
 
@@ -29,11 +25,13 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .IsRequired()
             .HasColumnType("uuid");
 
-        builder.Property(e => e.Content)
-            .HasColumnType("text");
+        builder.Property(e => e.CelebrityId)
+            .IsRequired()
+            .HasColumnType("uuid");
 
-        builder.Property(e => e.CommentTime)
-            .HasColumnType("timestamp(3)");
+        builder.Property(e => e.Type)
+            .HasDefaultValue(0)
+            .HasColumnType("smallint");
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
