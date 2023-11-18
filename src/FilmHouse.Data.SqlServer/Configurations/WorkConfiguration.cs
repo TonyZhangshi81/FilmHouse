@@ -5,24 +5,20 @@ using FilmHouse.Data.Entities;
 namespace FilmHouse.Data.SqlServer.Configurations;
 
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
+internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 {
-    public void Configure(EntityTypeBuilder<CommentEntity> builder)
+    public void Configure(EntityTypeBuilder<WorkEntity> builder)
     {
-        builder.HasKey(e => new { e.CommentId });
-        builder.HasAnnotation("SqlServer:Name", "comment_ix00");
+        builder.HasKey(e => new { e.WorkId });
+        builder.HasAnnotation("SqlServer:Name", "work_ix00");
 
-        builder.ToTable("Comment");
+        builder.ToTable("Work");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
             .HasColumnType("uniqueidentifier");
 
-        builder.Property(e => e.CommentId)
-            .IsRequired()
-            .HasColumnType("uniqueidentifier");
-
-        builder.Property(e => e.UserId)
+        builder.Property(e => e.WorkId)
             .IsRequired()
             .HasColumnType("uniqueidentifier");
 
@@ -30,11 +26,14 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .IsRequired()
             .HasColumnType("uniqueidentifier");
 
-        builder.Property(e => e.Content)
-            .HasColumnType("varchar(max)");
 
-        builder.Property(e => e.CommentTime)
-            .HasColumnType("datetime");
+        builder.Property(e => e.CelebrityId)
+            .IsRequired()
+            .HasColumnType("uniqueidentifier");
+
+        builder.Property(e => e.Type)
+            .HasDefaultValue(0)
+            .HasColumnType("tinyint");
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

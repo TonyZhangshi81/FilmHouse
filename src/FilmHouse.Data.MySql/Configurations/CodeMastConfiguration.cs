@@ -15,7 +15,8 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)")
+            .HasMaxLength(36);
 
         builder.Property(e => e.Type)
             .IsRequired()
@@ -32,11 +33,11 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
             .HasColumnType("varchar(50)")
             .HasMaxLength(50);
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime(3)");
 
     }

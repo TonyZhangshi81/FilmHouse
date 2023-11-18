@@ -15,15 +15,18 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)")
+            .HasMaxLength(36);
 
         builder.Property(e => e.AskId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)")
+            .HasMaxLength(36);
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("char(36)")
+            .HasMaxLength(36);
 
         builder.Property(e => e.RequestTime)
             .HasColumnType("datetime(3)");
@@ -34,15 +37,15 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
         builder.Property(e => e.Note)
             .HasColumnType("longtext");
 
-        builder.Property(e => e.State)
+        builder.Property(e => e.Status)
             .HasDefaultValue(false)
             .HasColumnType("tinyint");
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)");
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime(3)");
 
     }
