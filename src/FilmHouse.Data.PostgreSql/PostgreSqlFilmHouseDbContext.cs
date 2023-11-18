@@ -22,7 +22,12 @@ public class PostgreSqlFilmHouseDbContext : FilmHouseDbContext
         modelBuilder.ApplyConfiguration(new CodeMastConfiguration());
         modelBuilder.ApplyConfiguration(new CommentConfiguration());
         modelBuilder.ApplyConfiguration(new ConfigurationConfiguration());
+        modelBuilder.ApplyConfiguration(new MarkConfiguration());
+        modelBuilder.ApplyConfiguration(new MovieConfiguration());
+        modelBuilder.ApplyConfiguration(new NoticeConfiguration());
+        modelBuilder.ApplyConfiguration(new ResourceConfiguration());
         modelBuilder.ApplyConfiguration(new UserAccountConfiguration());
+        modelBuilder.ApplyConfiguration(new WorkConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

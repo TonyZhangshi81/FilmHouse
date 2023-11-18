@@ -28,7 +28,12 @@ public class FilmHouseDbContext : DbContext
     public virtual DbSet<CodeMastEntity> CodeMast { get; set; }
     public virtual DbSet<CommentEntity> Comments { get; set; }
     public virtual DbSet<ConfigurationEntity> Configuration { get; set; }
+    public virtual DbSet<MarkEntity> Marks { get; set; }
+    public virtual DbSet<MovieEntity> Movies { get; set; }
+    public virtual DbSet<NoticeEntity> Notices { get; set; }
+    public virtual DbSet<ResourceEntity> Resources { get; set; }
     public virtual DbSet<UserAccountEntity> UserAccounts { get; set; }
+    public virtual DbSet<WorkEntity> Works { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,7 +50,12 @@ public static class FilmHouseDbContextExtension
         context.CodeMast.RemoveRange();
         context.Comments.RemoveRange();
         context.Configuration.RemoveRange();
+        context.Marks.RemoveRange();
+        context.Movies.RemoveRange();
+        context.Notices.RemoveRange();
+        context.Resources.RemoveRange();
         context.UserAccounts.RemoveRange();
+        context.Works.RemoveRange();
 
         await context.SaveChangesAsync();
     }

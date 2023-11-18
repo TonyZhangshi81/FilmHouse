@@ -5,38 +5,41 @@ using FilmHouse.Data.Entities;
 namespace FilmHouse.Data.MySql.Configurations;
 
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
+internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
 {
-    public void Configure(EntityTypeBuilder<CommentEntity> builder)
+    public void Configure(EntityTypeBuilder<MarkEntity> builder)
     {
-        builder.HasKey(e => new { e.CommentId }).HasName("comment_ix00");
+        builder.HasKey(e => new { e.MarkId });
+        builder.HasAnnotation("SqlServer:Name", "mark_ix00");
 
-        builder.ToTable("Comment");
+        builder.ToTable("Mark");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
             .HasColumnType("char(36)")
             .HasMaxLength(36);
 
-        builder.Property(e => e.CommentId)
+        builder.Property(e => e.MarkId)
             .IsRequired()
             .HasColumnType("char(36)")
             .HasMaxLength(36);
+
+        builder.Property(e => e.Type)
+            .IsRequired()
+            .HasDefaultValue(0)
+            .HasColumnType("smallint");
 
         builder.Property(e => e.UserId)
             .IsRequired()
             .HasColumnType("char(36)")
             .HasMaxLength(36);
 
-        builder.Property(e => e.MovieId)
+        builder.Property(e => e.Target)
             .IsRequired()
             .HasColumnType("char(36)")
             .HasMaxLength(36);
 
-        builder.Property(e => e.Content)
-            .HasColumnType("longtext");
-
-        builder.Property(e => e.CommentTime)
+        builder.Property(e => e.Time)
             .HasColumnType("datetime(3)");
 
         builder.Property(e => e.CreatedOn)

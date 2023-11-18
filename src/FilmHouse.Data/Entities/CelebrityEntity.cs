@@ -63,7 +63,7 @@ public class CelebrityEntity : EntitiesBase
     public Guid UserId { get; set; }
 
     [Column(Order = 19)]
-    public string ReviewStatus { get; set; }
+    public Int16 ReviewStatus { get; set; }
 
     [Column(Order = 20)]
     public string ReviewNote { get; set; }

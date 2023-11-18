@@ -80,8 +80,8 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.ReviewStatus)
-            .HasColumnType("varchar(10)")
-            .HasMaxLength(10);
+            .HasDefaultValue(0)
+            .HasColumnType("tinyint");
 
         builder.Property(e => e.ReviewNote)
             .HasColumnType("varchar(100)")

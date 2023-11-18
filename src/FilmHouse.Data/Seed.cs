@@ -65,10 +65,6 @@ public class Seed
             new() { RequestId = uuid, Type = "Country", CodeId = "001", CodeValue = "美国", CreatedOn  = dateTime },
             new() { RequestId = uuid, Type = "Country", CodeId = "002", CodeValue = "澳大利亚", CreatedOn  = dateTime },
 
-            new() { RequestId = uuid, Type = "Review", CodeId = "0", CodeValue = "内容有误", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "Review", CodeId = "1", CodeValue = "已经存在", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "Review", CodeId = "3", CodeValue = "其他", CreatedOn  = dateTime },
-
         };
 
 }

@@ -15,11 +15,13 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("char(36)");
+            .HasColumnType("char(36)")
+            .HasMaxLength(36);
 
         builder.Property(e => e.CelebrityId)
             .IsRequired()
-            .HasColumnType("char(36)");
+            .HasColumnType("char(36)")
+            .HasMaxLength(36);
 
         builder.Property(e => e.Name)
             .HasColumnType("varchar(50)")
@@ -76,11 +78,12 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("char(36)");
+            .HasColumnType("char(36)")
+            .HasMaxLength(36);
 
         builder.Property(e => e.ReviewStatus)
-            .HasColumnType("varchar(10)")
-            .HasMaxLength(10);
+            .HasDefaultValue(0)
+            .HasColumnType("tinyint unsigned");
 
         builder.Property(e => e.ReviewNote)
             .HasColumnType("varchar(100)")
