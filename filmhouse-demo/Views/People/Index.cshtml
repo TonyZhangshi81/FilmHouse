@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = @ViewBag.Title;
+}
+
+@{
+    Layout = "_LayoutWide";
+}
+
+@section Links {
+    <link rel="stylesheet" href="~/css/people.css" />
+}
+
+@section Scripts {
+    <script src="~/js/People/Index.js"></script>
+}
+
+@{
+    var html = $"{ViewBag.Account}.Index.Content.html";
+    <include-content name=@html />
+}

@@ -6,7 +6,7 @@ namespace demo.Controllers
 {
     public class AlbumController : Controller
     {
-        public IActionResult Index(int offset = 0)
+        public IActionResult Index()
         {
             ViewBag.Title = "专辑";
             ViewBag.PageType = 2;

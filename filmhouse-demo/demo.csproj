@@ -40,6 +40,10 @@
 	  <None Remove="Views\Movie\Movie01.Index.Content.html" />
 	  <None Remove="Views\Movie\Movie02.Index.Content.html" />
 	  <None Remove="Views\Movie\Movie03.Index.Content.html" />
+	  <None Remove="Views\Movie\Movie04.Index.Content.html" />
+	  <None Remove="Views\People\test01.Index.Content.html" />
+	  <None Remove="Views\People\test02.Index.Content.html" />
+	  <None Remove="Views\People\tonyzhangshi.Index.Content.html" />
 	  <None Remove="Views\Search\Index.Content.html" />
 	</ItemGroup>
 
