@@ -6,7 +6,7 @@ namespace demo.Controllers
 {
     public class AskController : Controller
     {
-        public IActionResult Index(int offset = 0)
+        public IActionResult Index()
         {
             ViewBag.Title = "求资源";
             ViewBag.PageType = 2;

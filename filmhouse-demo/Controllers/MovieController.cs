@@ -26,6 +26,9 @@ namespace demo.Controllers
                 case "m02":
                     title = "黑天鹅";
                     break;
+                case "m03":
+                    title = "雷神4：爱与雷霆";
+                    break;
                 default:
                     title = "雷神4：爱与雷霆";
                     break;
