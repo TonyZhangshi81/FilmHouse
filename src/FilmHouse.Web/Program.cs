@@ -92,7 +92,14 @@ void WriteParameterTable()
 
 void ConfigureConfiguration()
 {
-    builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("WebSiteSettings"));
+    //builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("WebSiteSettings"));
+
+    IConfiguration configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json")
+        .AddJsonFile("appsettings.Development.json")
+        .AddJsonFile("health.option.json")
+        .Build();
+    builder.Services.AddSingleton<IConfiguration>(configuration);
 }
 
 void ConfigureServices(IServiceCollection services)
@@ -144,6 +151,8 @@ void ConfigureServices(IServiceCollection services)
                 options.Conventions.AuthorizeFolder("/Settings");
             });
 
+    services.AddHealthChecksUI()
+            .AddInMemoryStorage();
     services.AddCustomerHealthChecks(builder.Configuration);
 
     // Fix Chinese character being encoded in HTML output
