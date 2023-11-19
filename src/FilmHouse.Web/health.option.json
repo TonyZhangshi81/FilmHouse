@@ -1,0 +1,16 @@
+{
+  "DiskSpace": {
+    "FriendlyName": "當前部署環境下磁盤空間檢查",
+    "Description": "验证可用磁盘空间是否大于 {0}%.",
+    "UnhealthyMessage": "當前磁盤不存在.",
+    "MinPercentageFree": 10,
+    "WarningPercentageFree": 20
+  },
+  "Memory": {
+    "FriendlyName": "當前環境下的內存狀態檢查",
+    "Description": "檢測內存使用率情況（退化[{0}% – {1}%]、不健康[over {2}%]）",
+    "UnhealthyMessage": "內存檢測中出現異常.",
+    "PercentUsedDegraded": 80,
+    "PercentUsedUnhealthy": 90
+  }
+}

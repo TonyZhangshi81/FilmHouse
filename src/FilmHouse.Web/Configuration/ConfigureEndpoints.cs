@@ -9,7 +9,9 @@ public class ConfigureEndpoints
     {
         endpoints.MapRazorPages();
 
-        endpoints.MapHealthChecks("/healthz", new HealthCheckOptions() { ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse });
+        endpoints.MapHealthChecks("/health", new HealthCheckOptions() { Predicate = _ => true, ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse });
+
+        endpoints.MapHealthChecksUI();
 
         endpoints.MapControllerRoute(name: "default", pattern: "{controller=FilmHouse}/{action=Index}/{id?}");
     };
