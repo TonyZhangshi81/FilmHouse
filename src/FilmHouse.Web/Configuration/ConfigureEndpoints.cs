@@ -3,6 +3,7 @@ using System.Text;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.IdentityModel.Abstractions;
 
 namespace FilmHouse.Web.Configuration;
 
@@ -21,9 +22,24 @@ public class ConfigureEndpoints
                 [HealthStatus.Degraded] = StatusCodes.Status200OK,
                 [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
             },
+            AllowCachingResponses = true
+        });
+
+        endpoints.MapHealthChecks("/healthz", new HealthCheckOptions()
+        {
+            Predicate = healthCheck => healthCheck.Tags.Contains("ready"),
+            ResultStatusCodes =
+            {
+                [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+            },
             AllowCachingResponses = true,
             ResponseWriter = WriteResponse//UIResponseWriter.WriteHealthCheckUIResponse
         });
+
+        // !Try sending the results to your Slack or Teams workspace
+        // https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/doc/webhooks.md
 
         endpoints.MapHealthChecksUI();
 
