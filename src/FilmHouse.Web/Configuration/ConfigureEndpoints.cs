@@ -21,6 +21,7 @@ public class ConfigureEndpoints
                 [HealthStatus.Degraded] = StatusCodes.Status200OK,
                 [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
             },
+            AllowCachingResponses = true,
             ResponseWriter = WriteResponse//UIResponseWriter.WriteHealthCheckUIResponse
         });
 
