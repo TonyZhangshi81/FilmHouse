@@ -1,9 +1,10 @@
 using System.Globalization;
 using System.Net;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using AspNetCoreRateLimit;
-using FilmHouse.Business;
 using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
@@ -14,8 +15,10 @@ using FilmHouse.Utils.PasswordGenerator;
 using FilmHouse.Web;
 using FilmHouse.Web.Configuration;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.WebEncoders;
 using Microsoft.Net.Http.Headers;
 using NLog.Web;
 using Spectre.Console;
@@ -111,6 +114,18 @@ void ConfigureServices(IServiceCollection services)
         //logging.AddConsole();
     });
     builder.Host.UseNLog();
+
+    services.Configure<WebEncoderOptions>(options =>
+    {
+        // https://www.cnblogs.com/cdaniu/p/16024229.html
+        options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
+    });
+
+    // https://www.cnblogs.com/chenxi001/p/13363786.html
+    services.AddMemoryCache();
+
+    // https://www.cnblogs.com/chenxi001/p/13308860.html
+    services.AddResponseCaching();
 
     AppDomain.CurrentDomain.Load("FilmHouse.Business");
 
@@ -235,16 +250,6 @@ async Task FirstRun()
 
 void ConfigureMiddleware()
 {
-    /*
-    if (!app.Environment.IsProduction())
-    {
-        app.Logger.LogWarning($"Running in environment: {app.Environment.EnvironmentName}. Application Insights disabled.");
-
-        var tc = app.Services.GetRequiredService<TelemetryConfiguration>();
-        tc.DisableTelemetry = true;
-        TelemetryDebugWriter.IsTracingDisabled = true;
-    }
-    */
 
     if (app.Environment.IsDevelopment())
     {
@@ -252,21 +257,50 @@ void ConfigureMiddleware()
     }
     else
     {
-        app.UseStatusCodePages(ConfigureStatusCodePages.Handler).UseExceptionHandler("/error");
-        app.UseHsts();
+        //app.UseStatusCodePages(ConfigureStatusCodePages.Handler).UseExceptionHandler("/error");
+        //app.UseHsts();
+
+        app.UseExceptionHandler(configure => configure.Run(async context =>
+        {
+            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+            if (exceptionHandlerPathFeature != null)
+            {
+                var exception = exceptionHandlerPathFeature.Error;
+                switch (exception)
+                {
+                    default:
+                        context.Response.StatusCode = 200;
+                        context.Response.Redirect("/error", true);
+                        break;
+                }
+            }
+
+            await Task.CompletedTask;
+        }));
     }
 
     app.UseHttpsRedirection();
-    // address: https://localhost:7144/healthchecks-ui#/healthchecks
-    app.UseHealthChecksUI();
     app.UseStaticFiles(new StaticFileOptions
     {
+        // https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/static-files?view=aspnetcore-7.0
         OnPrepareResponse = ctx =>
         {
-            const int durationInSeconds = 24 * 60 * 60; // 24 hours
+            const int durationInSeconds = 24 * 60 * 60;
             ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=" + durationInSeconds;
         }
     });
+
+    app.UseRequestLocalization(new RequestLocalizationOptions
+    {
+        DefaultRequestCulture = new("en-US"),
+        SupportedCultures = cultures,
+        SupportedUICultures = cultures
+    });
+
+    // address: https://localhost:7144/healthchecks-ui#/healthchecks
+    app.UseHealthChecksUI();
+
+
     app.UseCookiePolicy();
     app.UseSecurityHeaders(builder =>
     {
@@ -296,14 +330,12 @@ void ConfigureMiddleware()
 
         builder.ReferrerPolicy = ReferrerPolicies.NoReferrerWhenDowngrade;
     });
-    app.UseRequestLocalization(new RequestLocalizationOptions
-    {
-        DefaultRequestCulture = new("en-US"),
-        SupportedCultures = cultures,
-        SupportedUICultures = cultures
-    });
+
     app.UseIpRateLimiting();
     app.UseRouting();
+
+    app.UseResponseCaching();
+
     app.UseAuthentication();
     app.UseAuthorization();
 
