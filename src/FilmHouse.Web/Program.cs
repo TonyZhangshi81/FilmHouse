@@ -153,7 +153,7 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddHealthChecksUI()
             .AddInMemoryStorage();
-    services.AddCustomerHealthChecks(builder.Configuration);
+    services.AddCustomerHealthChecks();
 
     // Fix Chinese character being encoded in HTML output
     services.AddSingleton(Encoder.FilmHouseHtmlEncoder);
@@ -257,6 +257,8 @@ void ConfigureMiddleware()
     }
 
     app.UseHttpsRedirection();
+    // address: https://localhost:7144/healthchecks-ui#/healthchecks
+    app.UseHealthChecksUI();
     app.UseStaticFiles(new StaticFileOptions
     {
         OnPrepareResponse = ctx =>

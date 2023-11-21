@@ -7,9 +7,11 @@ namespace FilmHouse.Mvc.Health;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCustomerHealthChecks(this IServiceCollection services, ConfigurationManager configuration)
+    public static IServiceCollection AddCustomerHealthChecks(this IServiceCollection services)
     {
-        var connStr = configuration.GetConnectionString("FilmHouseDatabase");
+        var configuration = services.BuildServiceProvider().GetService<IConfiguration>();
+
+        var connectionString = configuration.GetConnectionString("FilmHouseDatabase");
         var dbType = configuration.GetConnectionString("DatabaseType");
 
         var hcBuilder = services.AddHealthChecks();
@@ -17,21 +19,20 @@ public static class ServiceCollectionExtensions
         switch (dbType!.ToLower())
         {
             case "mysql":
-                hcBuilder.AddMySql(connStr, name: "mysql db-connection-check", tags: new string[] { "FilmHouse" });
+                hcBuilder.AddMySql(connectionString, name: "mysql db-connection-check", tags: new string[] { "db", "sql", "mysql", "ready" });
                 break;
             case "postgresql":
-                hcBuilder.AddNpgSql(connStr, name: "postgresql db-connection-check", tags: new string[] { "FilmHouse" });
+                hcBuilder.AddNpgSql(connectionString, name: "postgresql db-connection-check", tags: new string[] { "db", "sql", "postgresql", "ready" });
                 break;
             case "sqlserver":
             default:
-                hcBuilder.AddSqlServer(connStr, name: "sqlserver db-connection-check", tags: new string[] { "FilmHouse" });
+                hcBuilder.AddSqlServer(connectionString, name: "sqlserver db-connection-check", tags: new string[] { "db", "sql", "sqlserver", "ready" });
                 break;
         }
 
-        // customer health check
-        hcBuilder.AddCheck<DiskSpaceHealthCheck>("DiskSpace Health Check");
-        hcBuilder.AddCheck<MemoryHealthCheck>("Memory Health Check");
-        hcBuilder.AddCheck<LogfileHealthCheck>("Log files");
+        hcBuilder.AddCheck<DiskSpaceHealthCheck>("diskspace health check", tags: new string[] { "system", "diskspace", "ready" });
+
+        hcBuilder.AddCheck<MemoryHealthCheck>("memory health check", tags: new string[] { "system", "memory", "ready" });
 
         return services;
     }
