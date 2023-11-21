@@ -22,30 +22,28 @@ public class ConfigureEndpoints
                 [HealthStatus.Degraded] = StatusCodes.Status200OK,
                 [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
             },
-            AllowCachingResponses = true
-        });
-
-        endpoints.MapHealthChecks("/healthz", new HealthCheckOptions()
-        {
-            Predicate = healthCheck => healthCheck.Tags.Contains("ready"),
-            ResultStatusCodes =
-            {
-                [HealthStatus.Healthy] = StatusCodes.Status200OK,
-                [HealthStatus.Degraded] = StatusCodes.Status200OK,
-                [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
-            },
             AllowCachingResponses = true,
-            ResponseWriter = WriteResponse//UIResponseWriter.WriteHealthCheckUIResponse
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
         });
 
         // !Try sending the results to your Slack or Teams workspace
         // https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/doc/webhooks.md
 
-        endpoints.MapHealthChecksUI();
+        endpoints.MapHealthChecksUI(setup =>
+        {
+            // can use custom style libraries
+            // https://github.com/Xabaril/AspNetCore.Diagnostics.HealthChecks/blob/master/doc/styles-branding.md
+            //setup.AddCustomStylesheet(@"wwwroot\css\dotnet.css");
+        });
 
         endpoints.MapControllerRoute(name: "default", pattern: "{controller=FilmHouse}/{action=Index}/{id?}");
     };
 
+    /*
+     * !
+     * Suspend the use of custom detection report information output, Using UIResponseWriter. 
+     * WriteHealthCheckUIResponse as UseHealthChecks report format standard output with UseHealthChecksUI testing information to display the page
+     * 
     private static Task WriteResponse(HttpContext context, HealthReport healthReport)
     {
         context.Response.ContentType = "application/json; charset=utf-8";
@@ -87,4 +85,5 @@ public class ConfigureEndpoints
         return context.Response.WriteAsync(
             Encoding.UTF8.GetString(memoryStream.ToArray()));
     }
+    */
 }
