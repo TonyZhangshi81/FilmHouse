@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// It is an interface for getting a value from a value object.
+    /// 它是一个从值对象获取值的接口。
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
     public interface IValue<TValue> : IValueObject
         where TValue : notnull
     {
         /// <summary>
-        /// This is a method for getting a primitive type.
+        /// 这是一个获取基本类型的方法。
         /// </summary>
         /// <returns></returns>
         TValue AsPrimitive();

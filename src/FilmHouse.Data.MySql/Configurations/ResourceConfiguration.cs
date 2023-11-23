@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.MySql.Configurations;
 
@@ -16,7 +17,8 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
         builder.Property(e => e.RequestId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.ResourceId)
             .IsRequired()
@@ -63,10 +65,12 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime(3)");
+            .HasColumnType("datetime(3)")
+            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime(3)");
+            .HasColumnType("datetime(3)")
+            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
 
     }
 }

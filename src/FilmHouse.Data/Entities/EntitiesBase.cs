@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.Entities;
 
@@ -10,14 +11,14 @@ public abstract class EntitiesBase
 {
     [Column(Order = 1)]
     [Required]
-    public Guid RequestId { get; set; }
+    public RequestIdVO RequestId { get; set; }
 
     [Column(Order = 98)]
     [Required]
-    public DateTime CreatedOn { get; set; }
+    public SysDateTimeVO CreatedOn { get; set; }
 
     [Column(Order = 99)]
-    public DateTime? UpDatedOn { get; set; }
+    public SysDateTimeVO UpDatedOn { get; set; }
 
 }
 

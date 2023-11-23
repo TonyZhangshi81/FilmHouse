@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// It is an interface to assign value objects assuming enum.
+    /// 这是一个以enum为参数赋值对象的接口。
     /// </summary>
     public interface IEnumValueObject
     {

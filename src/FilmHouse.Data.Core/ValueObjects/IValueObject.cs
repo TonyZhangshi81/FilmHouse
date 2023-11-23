@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// Value the interface that indicates that it is an object.
+    /// 值表示该接口是对象的接口。
     /// </summary>
     /// <remarks>
-    /// Types implementing this interface are treated as value objects.
-    /// This interface branches the binding process between the screen and the model.
+    /// 实现此接口的类型被视为值对象。
+    /// 这个接口分支了屏幕和模型之间的绑定过程。
     /// </remarks>
     public interface IValueObject
     {
         /// <summary>
-        /// This is a method for getting a primitive type independently of the type.
+        /// 这是一种独立于类型获取基本类型的方法。
         /// </summary>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]

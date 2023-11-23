@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -15,7 +16,8 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.AlbumId)
             .IsRequired()
@@ -40,10 +42,12 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.UpDatedOn)
             .IsRequired()
-            .HasColumnType("timestamp(3)");
+            .HasColumnType("timestamp(3)")
+            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
 
         builder.Property(e => e.CreatedOn)
-            .HasColumnType("timestamp(3)");
+            .HasColumnType("timestamp(3)")
+            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
 
     }
 }

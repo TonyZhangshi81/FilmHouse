@@ -8,19 +8,19 @@ using FilmHouse.Data.Core.Utils;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// It is an interface to include a return expression to compare the inherited class with the inherited class.
+    /// 它是一个包含返回表达式的接口，用于比较继承类与继承类。
     /// </summary>
     public interface IConvertible<TPrimitive> : IConvertible
         where TPrimitive : IConvertible
     {
         /// <summary>
-        /// Retrieves the primitive type to include.
+        /// 检索要包含的基本类型。
         /// </summary>
         /// <returns></returns>
         TPrimitive AsPrimitive();
 
         /// <summary>
-        /// Retrieves the value of the instance converted to a string.
+        /// 检索已转换为字符串的实例的值。
         /// </summary>
         /// <returns></returns>
         string ToString();
@@ -39,7 +39,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         sbyte IConvertible.ToSByte(IFormatProvider provider) => this.AsPrimitive().ToSByte(provider);
         float IConvertible.ToSingle(IFormatProvider provider) => this.AsPrimitive().ToSingle(provider);
         /// <summary>
-        /// In the case of an inherited class, it must be converted to the desired type and returned.
+        /// 在继承类的情况下，必须将其转换为所需的类型并返回。
         /// </summary>
         /// <param name="conversionType"></param>
         /// <param name="provider"></param>

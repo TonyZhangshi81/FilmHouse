@@ -7,207 +7,207 @@ using FilmHouse.Data.Core.Utils;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// <see cref="DateTime"/>を内包する値オブジェクトの、デフォルト実装を含んだインターフェースです。
+    /// <see cref="DateTime"/>包含的值对象的，包含默认实现的接口。
     /// </summary>
     /// <remarks>
-    /// <see cref="DateTime"/>が保有するプロパティやメソッドはこのインターフェイスでデフォルト実装することで提供します。
+    /// <see cref="DateTime"/>在这个界面默认实现拥有的属性和方法提供。
     /// </remarks>
     public abstract class DateTimeValueObjectBase : IFormattable, IConvertible
     {
         /// <summary>
-        /// <see cref="IValue{TValue}.AsPrimitive()"/>メソッドを内部的に呼び出すメソッド。
-        /// <see cref="DateTimeValueObjectBase"/>クラス内の処理でプリミティブ型を使用する場合に呼び出される。
+        /// <see cref="IValue{TValue}.AsPrimitive()"/>内部调用方法的方法。
+        /// <see cref="DateTimeValueObjectBase"/>在类中的处理中使用原始类型时被调用。
         /// </summary>
-        /// <returns>プリミティブ型</returns>
+        /// <returns>原始型</returns>
         protected virtual DateTime AsPrimitiveCore() => ((IValue<System.DateTime>)this).AsPrimitive();
 
         /// <summary>
-        /// このインスタンスの日付の部分を取得します。
+        /// 获取这个实例的日期部分。
         /// </summary>
         public DateTime Date { get => this.AsPrimitiveCore().Date; }
 
         /// <summary>
-        /// このインスタンスで表される月の日付を取得します。
+        /// 获取这个实例所表示的月份的日期。
         /// </summary>
         public int Day { get => this.AsPrimitiveCore().Day; }
 
         /// <summary>
-        /// このインスタンスで表される曜日を取得します。
+        /// 获取这个实例所表示的星期几。
         /// </summary>
         public DayOfWeek DayOfWeek { get => this.AsPrimitiveCore().DayOfWeek; }
 
         /// <summary>
-        /// このインスタンスで表される年間積算日を取得します。
+        /// 获得这个实例所表示的年累计日。
         /// </summary>
         public int DayOfYear { get => this.AsPrimitiveCore().DayOfYear; }
 
         /// <summary>
-        /// このインスタンスで表される日付の時間の部分を取得します。
+        /// 获得这个实例所表示的日期的时间部分。
         /// </summary>
         public int Hour { get => this.AsPrimitiveCore().Hour; }
 
         /// <summary>
-        /// このインスタンスが表す時刻の種類 (現地時刻、世界協定時刻 (UTC)、または、そのどちらでもない) を示す値を取得します。
+        /// 取得表示这个实例表示的时间的种类(当地时间，世界协定时间(UTC)，或者，两者都不是)的值。
         /// </summary>
         public DateTimeKind Kind { get => this.AsPrimitiveCore().Kind; }
 
         /// <summary>
-        /// このインスタンスで表される日付のミリ秒の部分を取得します。
+        /// 获取这个实例所表示的日期的毫秒部分。
         /// </summary>
         public int Millisecond { get => this.AsPrimitiveCore().Millisecond; }
 
         /// <summary>
-        /// このインスタンスで表される日付の分の部分を取得します。
+        /// 获得这个实例中所表示的日期的部分。
         /// </summary>
         public int Minute { get => this.AsPrimitiveCore().Minute; }
 
         /// <summary>
-        /// このインスタンスで表される日付の月の部分を取得します。
+        /// 获得这个实例所表示的日期的月份部分。
         /// </summary>
         public int Month { get => this.AsPrimitiveCore().Month; }
 
         /// <summary>
-        /// このインスタンスで表される日付の秒の部分を取得します。
+        /// 获得这个实例所表示的日期的秒的部分。
         /// </summary>
         public int Second { get => this.AsPrimitiveCore().Second; }
 
         /// <summary>
-        /// このインスタンスの日付と時刻を表すタイマー刻み数を取得します。
+        /// 获取这个实例的日期和时间的计时器刻度。
         /// </summary>
         public long Ticks { get => this.AsPrimitiveCore().Ticks; }
 
         /// <summary>
-        /// このインスタンスの時刻を取得します。
+        /// 获取这个实例的时间。
         /// </summary>
         public TimeSpan TimeOfDay { get => this.AsPrimitiveCore().TimeOfDay; }
 
         /// <summary>
-        /// このインスタンスで表される日付の年の部分を取得します。
+        /// 获得这个实例所表示的日期的年份部分。
         /// </summary>
         public int Year { get => this.AsPrimitiveCore().Year; }
 
         /// <summary>
-        /// このインスタンスの値に、指定された <see cref="TimeSpan"/> の値を加算した新しい <see cref="DateTime"/> を返します。
+        /// 对于该实例的值，指定<see cref="timespan" />的值加起来的新<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">正または負の時間間隔。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された時間間隔を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">正负时间间隔</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value" />中表示的加上时间间隔的值的对象。</returns>
         public DateTime Add(TimeSpan value) => this.AsPrimitiveCore().Add(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定された日数を加算した新しい <see cref="DateTime"/> を返します。
+        /// 该实例的值加上指定天数的新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">整数部と小数部から成る日数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された日数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">整数部分和小数部分所组成的天数。有正负两种情况。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value" />中表示的天数相加后的值的对象。</returns>
         public DateTime AddDays(double value) => this.AsPrimitiveCore().AddDays(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定された時間数を加算した新しい <see cref="DateTime"/> を返します。
+        /// 该实例的值加上指定小时数的新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">整数部と小数部から成る時間数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された時間数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">由整数部分和小数部分组成的小时数。有正负两种情况。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value"/>中所表示的时间数相加后的值的对象。</returns>
         public DateTime AddHours(double value) => this.AsPrimitiveCore().AddHours(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定されたミリ秒数を加算した新しい <see cref="DateTime"/> を返します。
+        /// 该实例的值加上指定分钟数的新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">整数部と小数部から成るミリ秒数。正または負のどちらの場合もあります。 この値は、近似値の整数に丸められます。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表されたミリ秒数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">由整数部分和小数部分组成的毫秒数。有正负两种情况。这个值被舍入近似的整数。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value"/>中表示的加上毫秒数的值的对象。</returns>
         public DateTime AddMilliseconds(double value) => this.AsPrimitiveCore().AddMilliseconds(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定された分数を加算した新しい <see cref="DateTime"/> を返します。
+        /// 该实例的值加上指定秒数的新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">整数部と小数部から成る分数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された分数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">由整数部分和小数部分组成的分数有正负两种情况。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value"/>中所表示的分数相加后的值的对象。</returns>
         public DateTime AddMinutes(double value) => this.AsPrimitiveCore().AddMinutes(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定された月数を加算した新しい <see cref="DateTime"/> を返します。
+        /// 该实例的值加上指定月数的新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="months">月数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻と <paramref name="months"/> の合計を値とするオブジェクト。</returns>
+        /// <param name="months">月数有正负两种情况。</param>
+        /// <returns>这个实例所表示的日期、时间和<paramref name="months"/>的总和为值的对象。</returns>
         public DateTime AddMonths(int months) => this.AsPrimitiveCore().AddMonths(months);
 
         /// <summary>
-        /// このインスタンスの値に、指定された秒数を加算した新しい <see cref="DateTime"/> を返します。
+        /// 该实例的值加上指定秒数的新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">整数部と小数部から成る秒数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された秒数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">由整数部分和小数部分组成的秒数。有正负两种情况。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value"/>中表示的秒数相加后的值的对象。</returns>
         public DateTime AddSeconds(double value) => this.AsPrimitiveCore().AddSeconds(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定されたタイマー刻みの数を加算した新しい <see cref="DateTime"/> を返します。
+        /// 在该实例的值上加上指定的计时器刻度的数目的新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">100 ナノ秒タイマー刻み数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された時間数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">100纳秒计时器刻度。有正负两种情况。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value"/>中所表示的时间数相加后的值的对象。</returns>
         public DateTime AddTicks(long value) => this.AsPrimitiveCore().AddTicks(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定された年数を加算した新しい <see cref="DateTime"/> を返します。
+        /// 该实例的值加上指定年数的新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">年数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された年数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">年数有正负两种情况。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value"/>中表示的年数相加后的值的对象。</returns>
         public DateTime AddYears(int value) => this.AsPrimitiveCore().AddYears(value);
 
         /// <summary>
-        /// このインスタンスが、現在のタイム ゾーンの夏時間の期間内であるかどうかを示します。
+        /// 表示这个实例是否在现在的时区的夏令时的期间内。
         /// </summary>
         /// <returns></returns>
         public bool IsDaylightSavingTime() => this.AsPrimitiveCore().IsDaylightSavingTime();
 
         /// <summary>
-        /// このインスタンスの値から指定した日時を減算した、新しい <see cref="TimeSpan"/> を返します。
+        /// 从该实例的值减去指定的日期和时间后，新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">減算する日付と時刻の値。</param>
-        /// <returns>このインスタンスで表された日付と時刻から <paramref name="value"/> で表された日付と時刻を減算した値と等しい時間間隔。</returns>
+        /// <param name="value">减去的日期和时刻的值。</param>
+        /// <returns>从这个实例所表示的日期和时间<paramref name="value"/>中表示的日期和时间相减后的值和时间间隔相等。</returns>
         public TimeSpan Subtract(DateTime value) => this.AsPrimitiveCore().Subtract(value);
 
         /// <summary>
-        /// このインスタンスの値から指定した期間を減算した、新しい <see cref="DateTime"/> を返します。
+        /// 从该实例的值减去指定的日期和时间后，新的<see cref="DateTime" />返还。
         /// </summary>
-        /// <param name="value">減算する時間間隔。</param>
-        /// <returns>このインスタンスで表された日付と時刻から <paramref name="value"/> で表された時間間隔を減算した値と等しいオブジェクト。</returns>
+        /// <param name="value">减去的时间间隔。</param>
+        /// <returns>从这个实例所表示的日期和时间<paramref name="value"/>中所表示的与减去时间间隔后的值相等的对象。</returns>
         public DateTime Subtract(TimeSpan value) => this.AsPrimitiveCore().Subtract(value);
 
         /// <summary>
-        /// 現在のインスタンスを 64 ビットのバイナリ値にシリアル化します。後で、この値を使って、<see cref="DateTime"/> オブジェクトを再構築できます。
+        /// 将当前实例串行化为64位二进制值。之后，使用这个值，<see cref="DateTime" />可以重新构建对象。
         /// </summary>
         /// <returns></returns>
         public long ToBinary() => this.AsPrimitiveCore().ToBinary();
 
         /// <summary>
-        /// 現在のインスタンスの値を現地時刻に変換します。
+        /// 将当前实例的值转换为当地时间。
         /// </summary>
         /// <returns></returns>
         public DateTime ToLocalTime() => this.AsPrimitiveCore().ToLocalTime();
 
         /// <summary>
-        /// 現在のインスタンスの値を世界協定時刻 (UTC) に変換します。
+        /// 现在的实例的值转换为世界协定时间(UTC)。
         /// </summary>
         /// <returns></returns>
         public DateTime ToUniversalTime() => this.AsPrimitiveCore().ToUniversalTime();
 
         /// <summary>
-        /// 現在のオブジェクトを表す文字列を返します。
+        /// 返回表示当前对象的字符串。
         /// </summary>
         /// <param name="format">書式文字列</param>
-        /// <returns>現在のオブジェクトを表す文字列</returns>
+        /// <returns>表示当前对象的字符串</returns>
         public virtual string ToString(string format) => this.AsPrimitiveCore().ToString(format);
 
         /// <summary>
-        /// 現在のオブジェクトを表す文字列を返します。
+        /// 返回表示当前对象的字符串。
         /// </summary>
         /// <param name="format">書式文字列</param>
         /// <param name="provider">値の書式設定に使用するプロバイダー</param>
-        /// <returns>現在のオブジェクトを表す文字列</returns>
+        /// <returns>表示当前对象的字符串</returns>
         public virtual string ToString(string format, IFormatProvider provider) => this.AsPrimitiveCore().ToString(format, provider);
 
         #region IConvertible
         /// <summary>
-        /// 現在のオブジェクトを表す文字列を返します。
+        /// 返回表示当前对象的字符串。
         /// </summary>
-        /// <param name="provider">値の書式設定に使用するプロバイダー</param>
-        /// <returns>現在のオブジェクトを表す文字列</returns>
+        /// <param name="provider">用于设定值格式的提供商</param>
+        /// <returns>表示当前对象的字符串</returns>
         public virtual string ToString(IFormatProvider provider) => this.AsPrimitiveCore().ToString(provider);
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         sbyte IConvertible.ToSByte(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToSByte(provider);
         float IConvertible.ToSingle(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToSingle(provider);
         /// <summary>
-        /// 継承元クラスの場合、求められた型に変換して返す必要がある。
+        /// 在继承元类的情况下，需要转换并返回到所求的类型。
         /// </summary>
         /// <param name="conversionType"></param>
         /// <param name="provider"></param>

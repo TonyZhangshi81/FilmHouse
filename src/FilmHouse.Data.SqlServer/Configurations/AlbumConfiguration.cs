@@ -1,4 +1,5 @@
-﻿using FilmHouse.Data.Entities;
+﻿using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,7 +17,8 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.AlbumId)
             .IsRequired()
@@ -41,9 +43,11 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.UpDatedOn)
             .IsRequired()
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
 
         builder.Property(e => e.CreatedOn)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
     }
 }

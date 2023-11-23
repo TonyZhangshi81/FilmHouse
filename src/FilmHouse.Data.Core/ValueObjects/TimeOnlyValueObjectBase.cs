@@ -7,78 +7,78 @@ using System.Threading.Tasks;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// <see cref="DateTime"/>を内包する値オブジェクトの、デフォルト実装を含んだインターフェースです。
+    /// <see cref="DateTime"/>包含的值对象的，包含默认实现的接口。
     /// </summary>
     /// <remarks>
-    /// <see cref="DateTime"/>が保有するプロパティやメソッドはこのインターフェイスでデフォルト実装することで提供します。
+    /// <see cref="DateTime"/>在这个界面默认实现拥有的属性和方法提供。
     /// </remarks>
     public abstract class TimeOnlyValueObjectBase : IFormattable
     {
         /// <summary>
-        /// <see cref="IValue{TValue}.AsPrimitive()"/>メソッドを内部的に呼び出すメソッド。
-        /// <see cref="TimeOnlyValueObjectBase"/>クラス内の処理でプリミティブ型を使用する場合に呼び出される。
+        /// <see cref="IValue{TValue}.AsPrimitive()"/>内部调用方法的方法。
+        /// <see cref="TimeOnlyValueObjectBase"/>在类中的处理中使用原始类型时被调用。
         /// </summary>
-        /// <returns>プリミティブ型</returns>
+        /// <returns>原始型</returns>
         protected virtual TimeOnly AsPrimitiveCore() => ((IValue<TimeOnly>)this).AsPrimitive();
 
         /// <summary>
-        /// このインスタンスで表される日付の時間の部分を取得します。
+        /// 获得这个实例所表示的日期的时间部分。
         /// </summary>
         public int Hour { get => this.AsPrimitiveCore().Hour; }
 
         /// <summary>
-        /// このインスタンスで表される日付のミリ秒の部分を取得します。
+        /// 获取这个实例所表示的日期的毫秒部分。
         /// </summary>
         public int Millisecond { get => this.AsPrimitiveCore().Millisecond; }
 
         /// <summary>
-        /// このインスタンスで表される日付の分の部分を取得します。
+        /// 获得这个实例中所表示的日期的部分。
         /// </summary>
         public int Minute { get => this.AsPrimitiveCore().Minute; }
 
         /// <summary>
-        /// このインスタンスで表される日付の秒の部分を取得します。
+        /// 获得这个实例所表示的日期的秒的部分。
         /// </summary>
         public int Second { get => this.AsPrimitiveCore().Second; }
 
         /// <summary>
-        /// このインスタンスの日付と時刻を表すタイマー刻み数を取得します。
+        /// 获取这个实例的日期和时间的计时器刻度。
         /// </summary>
         public long Ticks { get => this.AsPrimitiveCore().Ticks; }
 
         /// <summary>
-        /// このインスタンスの値に、指定された時間数を加算した新しい <see cref="TimeOnly"/> を返します。
+        /// 将该实例的值加上指定的时间数的新的<see cref="TimeOnly" / ></see>
         /// </summary>
-        /// <param name="value">整数部と小数部から成る時間数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された時間数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">将该实例的值加上指定的时间数的新的<cref="TimeOnly" />返还。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value" />中所表示的时间数相加后的值的对象。</returns>
         public TimeOnly AddHours(double value) => this.AsPrimitiveCore().AddHours(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定された分数を加算した新しい <see cref="TimeOnly"/> を返します。
+        /// 将该实例的值加上指定分数的新<see cref="TimeOnly" / & gt;返还。
         /// </summary>
-        /// <param name="value">整数部と小数部から成る分数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された分数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">由整数部分和小数部分组成的分数有正负两种情况。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name = "value" /></paramref>中所表示的分数相加后的值的对象。</returns>
         public TimeOnly AddMinutes(double value) => this.AsPrimitiveCore().AddMinutes(value);
 
         /// <summary>
-        /// このインスタンスを<see cref="TimeSpan"/>に変換した値を返します。
+        /// 将该实例<see cref="timespan" />返回转换后的值。
         /// </summary>
         /// <returns></returns>
         public TimeSpan ToTimeSpan() => this.AsPrimitiveCore().ToTimeSpan();
 
         /// <summary>
-        /// 現在のオブジェクトを表す文字列を返します。
+        /// 返回表示当前对象的字符串。
         /// </summary>
         /// <param name="format">書式文字列</param>
-        /// <returns>現在のオブジェクトを表す文字列</returns>
+        /// <returns>表示当前对象的字符串</returns>
         public virtual string ToString(string format) => this.AsPrimitiveCore().ToString(format);
 
         /// <summary>
-        /// 現在のオブジェクトを表す文字列を返します。
+        /// 返回表示当前对象的字符串。
         /// </summary>
-        /// <param name="format">書式文字列</param>
-        /// <param name="provider">値の書式設定に使用するプロバイダー</param>
-        /// <returns>現在のオブジェクトを表す文字列</returns>
+        /// <param name="format">回回表示当前对象的字符串。</param>
+        /// <param name="provider">用于设定值格式的提供商</param>
+        /// <returns>表示当前对象的字符串</returns>
         public virtual string ToString(string format, IFormatProvider provider) => this.AsPrimitiveCore().ToString(format, provider);
     }
 }
