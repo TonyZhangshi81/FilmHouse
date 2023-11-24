@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FilmHouse.Data.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,7 +19,7 @@ public class MarkEntity : EntitiesBase
 
     [Column(Order = 4)]
     [Required]
-    public Guid UserId { get; set; }
+    public UserIdVO UserId { get; set; }
 
     [Column(Order = 5)]
     [Required]

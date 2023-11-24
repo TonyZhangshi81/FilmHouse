@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FilmHouse.Data.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -60,7 +61,7 @@ public class CelebrityEntity : EntitiesBase
 
     [Column(Order = 18)]
     [Required]
-    public Guid UserId { get; set; }
+    public UserIdVO UserId { get; set; }
 
     [Column(Order = 19)]
     public Int16 ReviewStatus { get; set; }

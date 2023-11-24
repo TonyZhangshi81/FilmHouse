@@ -31,10 +31,10 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("timestamp(3)")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("timestamp(3)")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
     }
 }

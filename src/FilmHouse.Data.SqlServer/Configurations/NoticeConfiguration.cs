@@ -34,7 +34,8 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.Time)
             .HasColumnType("datetime");
@@ -46,11 +47,11 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

@@ -81,7 +81,8 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
         builder.Property(e => e.UserId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.ReviewStatus)
             .HasDefaultValue(0)
@@ -94,11 +95,11 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime(3)")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

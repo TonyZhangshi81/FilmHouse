@@ -13,7 +13,7 @@ public class Seed
         try
         {
             var uuid = new RequestIdVO(Guid.NewGuid());
-            var sysDate = new SysDateTimeVO(System.DateTime.Now);
+            var sysDate = new CreatedOnVO(System.DateTime.Now);
 
             await dbContext.Configuration.AddRangeAsync(GetInitConfigurationSettings(uuid, sysDate));
             await dbContext.CodeMast.AddRangeAsync(GetInitCodeMastSettings(uuid, sysDate));
@@ -35,7 +35,7 @@ public class Seed
         }
     }
 
-    private static IEnumerable<ConfigurationEntity> GetInitConfigurationSettings(RequestIdVO uuid, SysDateTimeVO dateTime) =>
+    private static IEnumerable<ConfigurationEntity> GetInitConfigurationSettings(RequestIdVO uuid, CreatedOnVO dateTime) =>
         new List<ConfigurationEntity>
         {
             new() { RequestId = uuid, Key = "WebSiteSettings:Name", Value = "DEMO", CreatedOn = dateTime },
@@ -46,7 +46,7 @@ public class Seed
             new() { RequestId = uuid, Key = "WebSiteSettings:UnobtrusiveJavaScriptEnabled", Value = "false", CreatedOn = dateTime },
         };
 
-    private static IEnumerable<CodeMastEntity> GetInitCodeMastSettings(RequestIdVO uuid, SysDateTimeVO dateTime) =>
+    private static IEnumerable<CodeMastEntity> GetInitCodeMastSettings(RequestIdVO uuid, CreatedOnVO dateTime) =>
         new List<CodeMastEntity>
         {
             new() { RequestId = uuid, Type = "GenreMovie", CodeId = "001", CodeValue = "剧情", CreatedOn  = dateTime },

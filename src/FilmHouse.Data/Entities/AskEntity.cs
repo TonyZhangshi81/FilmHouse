@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FilmHouse.Data.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,24 +11,24 @@ public class AskEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid AskId { get; set; }
+    public AskIdVO AskId { get; set; }
 
     [Column(Order = 3)]
     [Required]
-    public Guid UserId { get; set; }
+    public UserIdVO UserId { get; set; }
 
     [Column(Order = 4)]
     [Required]
-    public Guid MovieId { get; set; }
+    public MovieIdVO MovieId { get; set; }
 
     [Column(Order = 5)]
-    public DateTime RequestTime { get; set; }
+    public RequestTimeVO RequestTime { get; set; }
 
     [Column(Order = 6)]
-    public int RequestWith { get; set; }
+    public RequestWithVO RequestWith { get; set; }
 
     [Column(Order = 7)]
-    public string Note { get; set; }
+    public NoteVO Note { get; set; }
 
     [Column(Order = 8)]
     public bool Status { get; set; }

@@ -7,50 +7,50 @@ using System.Threading.Tasks;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// <see cref="DateOnly"/>を内包する値オブジェクトの、デフォルト実装を含んだインターフェースです。
+    /// <see cref="DateOnly"/>包含的值对象的，包含默认实现的接口。
     /// </summary>
     /// <remarks>
-    /// <see cref="DateOnly"/>が保有するプロパティやメソッドはこのインターフェイスでデフォルト実装することで提供します。
+    /// <see cref="DateOnly"/>在这个界面默认实现拥有的属性和方法提供。
     /// </remarks>
     public abstract class DateOnlyValueObjectBase : IFormattable
     {
         /// <summary>
-        /// <see cref="IValue{TValue}.AsPrimitive()"/>メソッドを内部的に呼び出すメソッド。
-        /// <see cref="DateOnlyValueObjectBase"/>クラス内の処理でプリミティブ型を使用する場合に呼び出される。
+        /// <see cref="IValue{TValue}.AsPrimitive()"/>内部调用方法的方法。
+        /// <see cref="DateOnlyValueObjectBase"/>在类中的处理中使用原始类型时被调用。
         /// </summary>
-        /// <returns>プリミティブ型</returns>
+        /// <returns>原始型</returns>
         protected virtual DateOnly AsPrimitiveCore() => ((IValue<System.DateOnly>)this).AsPrimitive();
 
         /// <summary>
-        /// このインスタンスで表される月の日付を取得します。
+        /// 获取这个实例所表示的月份的日期。
         /// </summary>
         public int Day { get => this.AsPrimitiveCore().Day; }
 
         /// <summary>
-        /// このインスタンスで表される曜日を取得します。
+        /// 获取这个实例所表示的星期几。
         /// </summary>
         public DayOfWeek DayOfWeek { get => this.AsPrimitiveCore().DayOfWeek; }
 
         /// <summary>
-        /// このインスタンスで表される年間積算日を取得します。
+        /// 获得这个实例所表示的年累计日。
         /// </summary>
         public int DayOfYear { get => this.AsPrimitiveCore().DayOfYear; }
 
         /// <summary>
-        /// このインスタンスで表される日付の月の部分を取得します。
+        /// 获得这个实例所表示的日期的月份部分。
         /// </summary>
         public int Month { get => this.AsPrimitiveCore().Month; }
 
         /// <summary>
-        /// このインスタンスで表される日付の年の部分を取得します。
+        /// 获得这个实例所表示的日期的年份部分。
         /// </summary>
         public int Year { get => this.AsPrimitiveCore().Year; }
 
         /// <summary>
-        /// このインスタンスの値に、指定された日数を加算した新しい <see cref="DateOnly"/> を返します。
+        /// 该实例的值加上指定天数的新的<see cref="DateOnly" />返还。
         /// </summary>
-        /// <param name="value">整数部と小数部から成る日数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された日数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">整数部分和小数部分所组成的天数。有正负两种情况。</param>
+        /// <returns>在这个实例所表示的日期和时间<paramref name="value" />中表示的天数相加后的值的对象。</returns>
         public DateOnly AddDays(int value) => this.AsPrimitiveCore().AddDays(value);
 
         /// <summary>

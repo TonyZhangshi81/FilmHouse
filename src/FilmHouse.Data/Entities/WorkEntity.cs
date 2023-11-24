@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FilmHouse.Data.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,7 +15,7 @@ public class WorkEntity : EntitiesBase
 
     [Column(Order = 3)]
     [Required]
-    public Guid MovieId { get; set; }
+    public MovieIdVO MovieId { get; set; }
 
     [Column(Order = 4)]
     [Required]

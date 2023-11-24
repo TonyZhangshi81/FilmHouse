@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FilmHouse.Data.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,10 +24,10 @@ public class ResourceEntity : EntitiesBase
     public Int64 Size { get; set; }
 
     [Column(Order = 6)]
-    public Guid UserId { get; set; }
+    public UserIdVO UserId { get; set; }
 
     [Column(Order = 7)]
-    public Guid MovieId { get; set; }
+    public MovieIdVO MovieId { get; set; }
 
     [Column(Order = 8)]
     public DateTime Time { get; set; }

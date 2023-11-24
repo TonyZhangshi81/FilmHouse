@@ -38,11 +38,11 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

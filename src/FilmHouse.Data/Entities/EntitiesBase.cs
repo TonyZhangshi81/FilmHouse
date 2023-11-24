@@ -15,10 +15,10 @@ public abstract class EntitiesBase
 
     [Column(Order = 98)]
     [Required]
-    public SysDateTimeVO CreatedOn { get; set; }
+    public CreatedOnVO CreatedOn { get; set; }
 
     [Column(Order = 99)]
-    public SysDateTimeVO UpDatedOn { get; set; }
+    public UpDatedOnVO UpDatedOn { get; set; }
 
 }
 

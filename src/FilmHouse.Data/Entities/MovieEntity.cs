@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FilmHouse.Data.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +11,7 @@ public class MovieEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid MovieId { get; set; }
+    public MovieIdVO MovieId { get; set; }
 
     [Column(Order = 3)]
     [Required]
@@ -78,7 +79,7 @@ public class MovieEntity : EntitiesBase
 
     [Column(Order = 24)]
     [Required]
-    public Guid UserId { get; set; }
+    public UserIdVO UserId { get; set; }
 
     [Column(Order = 25)]
     public Int16 ReviewStatus { get; set; }

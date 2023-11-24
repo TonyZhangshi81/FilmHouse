@@ -22,20 +22,30 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 
         builder.Property(e => e.AskId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<AskIdVO.AskIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
+
+        builder.Property(e => e.MovieId)
+            .IsRequired()
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.RequestTime)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<RequestTimeVO.RequestTimeValueConverter>();
 
         builder.Property(e => e.RequestWith)
-            .HasColumnType("int");
+            .HasColumnType("int")
+            .HasConversion<RequestWithVO.RequestWithValueConverter>();
 
         builder.Property(e => e.Note)
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(max)")
+            .HasConversion<NoteVO.NoteValueConverter>();
 
         builder.Property(e => e.Status)
             .HasDefaultValue(false)
@@ -44,11 +54,11 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

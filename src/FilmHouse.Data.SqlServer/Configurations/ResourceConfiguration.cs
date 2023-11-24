@@ -35,11 +35,13 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasColumnType("bigint");
 
         builder.Property(e => e.UserId)
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.MovieId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.Time)
             .HasColumnType("datetime");
@@ -63,11 +65,11 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

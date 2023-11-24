@@ -14,19 +14,19 @@ namespace FilmHouse.Data.Core.ValueObjects
     /// <summary>
     /// 是表示创建日期时间的值对象类。
     /// </summary>
-    [JsonConverter(typeof(SysDateTimeJsonConverter))]
-    [ValueConverter(typeof(SysDateTimeValueConverter), typeof(SysDateTimeArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(SysDateTimeTypeConverter))]
+    [JsonConverter(typeof(UpDatedOnJsonConverter))]
+    [ValueConverter(typeof(UpDatedOnValueConverter), typeof(UpDatedOnArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(UpDatedOnTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class SysDateTimeVO : DateTimeValueObjectBase, IEquatable<SysDateTimeVO>, IComparable<SysDateTimeVO>, IValue<System.DateTime>, IValueObject
+    public partial class UpDatedOnVO : DateTimeValueObjectBase, IEquatable<UpDatedOnVO>, IComparable<UpDatedOnVO>, IValue<System.DateTime>, IValueObject
     {
         private readonly System.DateTime _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "创建日期";
+        public const string TypeName = "UpDatedOn";
 
         /// <summary>
         /// 取得显示格式。
@@ -44,10 +44,10 @@ namespace FilmHouse.Data.Core.ValueObjects
         public object AsPrimitiveObject() => this.AsPrimitive();
 
         /// <summary>
-        /// <see cref="SysDateTimeVO"/>
+        /// <see cref="UpDatedOnVO"/>
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public SysDateTimeVO(System.DateTime value)
+        public UpDatedOnVO(System.DateTime value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -59,21 +59,21 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="System.DateTime"/>向<see cref="SysDateTimeVO"/>显示转型
+        /// <see cref="System.DateTime"/>向<see cref="UpDatedOnVO"/>显示转型
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator System.DateTime(SysDateTimeVO value)
+        public static explicit operator System.DateTime(UpDatedOnVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="SysDateTimeVO"/>向<see cref="System.DateTime"/>显示转型
+        /// <see cref="UpDatedOnVO"/>向<see cref="System.DateTime"/>显示转型
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator SysDateTimeVO(System.DateTime value)
+        public static explicit operator UpDatedOnVO(System.DateTime value)
         {
-            return new SysDateTimeVO(value);
+            return new UpDatedOnVO(value);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in SysDateTimeVO x, in SysDateTimeVO y)
+        internal static bool Equals(in UpDatedOnVO x, in UpDatedOnVO y)
         {
             if (x is null && y is null)
             {
@@ -100,7 +100,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(SysDateTimeVO other)
+        public bool Equals(UpDatedOnVO other)
         {
             return Equals(this, other);
         }
@@ -117,9 +117,9 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(SysDateTimeVO).IsAssignableFrom(t))
+            if (typeof(UpDatedOnVO).IsAssignableFrom(t))
             {
-                return Equals((SysDateTimeVO)obj);
+                return Equals((UpDatedOnVO)obj);
             }
             if (t == typeof(System.DateTime))
             {
@@ -150,7 +150,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 等值算子
         /// </summary>
-        public static bool operator ==(in SysDateTimeVO x, in SysDateTimeVO y)
+        public static bool operator ==(in UpDatedOnVO x, in UpDatedOnVO y)
         {
             return Equals(x, y);
         }
@@ -158,7 +158,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 非等值算子
         /// </summary>
-        public static bool operator !=(in SysDateTimeVO x, in SysDateTimeVO y)
+        public static bool operator !=(in UpDatedOnVO x, in UpDatedOnVO y)
         {
             return !Equals(x, y);
         }
@@ -166,31 +166,31 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ParseMethod
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="SysDateTimeVO" />转换成句式。
+        /// 将字符串形式的值转换为等价<see cref="UpDatedOnVO" />转换成句式。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <returns><see cref="SysDateTimeVO"/>类型值</returns>
-        public static SysDateTimeVO Parse(string s)
+        /// <returns><see cref="UpDatedOnVO"/>类型值</returns>
+        public static UpDatedOnVO Parse(string s)
         {
-            return new SysDateTimeVO(System.DateTime.Parse(s));
+            return new UpDatedOnVO(System.DateTime.Parse(s));
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="SysDateTimeVO" />转换成句式，返回表示转换成功与否的值。
+        /// 将字符串形式的值转换为等价<see cref="UpDatedOnVO" />转换成句式，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <param name="result"><see cref="SysDateTimeVO"/>类型值</param>
+        /// <param name="result"><see cref="UpDatedOnVO"/>类型值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
-        public static bool TryParse(string s, out SysDateTimeVO result)
+        public static bool TryParse(string s, out UpDatedOnVO result)
         {
             if (System.DateTime.TryParse(s, out var r))
             {
-                result = new SysDateTimeVO(r);
+                result = new UpDatedOnVO(r);
                 return true;
             }
             else
             {
-                result = default(SysDateTimeVO);
+                result = default(UpDatedOnVO);
                 return false;
             }
         }
@@ -207,7 +207,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(SysDateTimeVO other)
+        public int CompareTo(UpDatedOnVO other)
         {
             if (other == null)
             {
@@ -222,7 +222,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >(in SysDateTimeVO x, in SysDateTimeVO y)
+        public static bool operator >(in UpDatedOnVO x, in UpDatedOnVO y)
         {
             return x._value > y._value;
         }
@@ -233,7 +233,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <(in SysDateTimeVO x, in SysDateTimeVO y)
+        public static bool operator <(in UpDatedOnVO x, in UpDatedOnVO y)
         {
             return x._value < y._value;
         }
@@ -244,7 +244,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >=(in SysDateTimeVO x, in SysDateTimeVO y)
+        public static bool operator >=(in UpDatedOnVO x, in UpDatedOnVO y)
         {
             return x._value >= y._value;
         }
@@ -255,16 +255,16 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <=(in SysDateTimeVO x, in SysDateTimeVO y)
+        public static bool operator <=(in UpDatedOnVO x, in UpDatedOnVO y)
         {
             return x._value <= y._value;
         }
 
 
         // UnitGenerateOptions.JsonConverter
-        private class SysDateTimeJsonConverter : JsonConverter<SysDateTimeVO>
+        private class UpDatedOnJsonConverter : JsonConverter<UpDatedOnVO>
         {
-            public override void Write(Utf8JsonWriter writer, SysDateTimeVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, UpDatedOnVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(System.DateTime)) as JsonConverter<System.DateTime>;
                 if (converter != null)
@@ -277,7 +277,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 }
             }
 
-            public override SysDateTimeVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override UpDatedOnVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(System.DateTime)) as JsonConverter<System.DateTime>;
                 if (converter != null)
@@ -285,7 +285,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return new SysDateTimeVO(value.ToLocalTime());
+                        return new UpDatedOnVO(value.ToLocalTime());
                     }
                     catch (Exception exception)
                     {
@@ -306,24 +306,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class SysDateTimeValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SysDateTimeVO, System.DateTime?>
+        public class UpDatedOnValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<UpDatedOnVO, System.DateTime?>
         {
             /// <summary>
-            /// <see cref="SysDateTimeValueConverter"/>
+            /// <see cref="UpDatedOnValueConverter"/>
             /// </summary>
-            public SysDateTimeValueConverter()
+            public UpDatedOnValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="SysDateTimeValueConverter"/>
+            /// <see cref="UpDatedOnValueConverter"/>
             /// </summary>
             /// <param name="mappingHints"></param>
-            public SysDateTimeValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
+            public UpDatedOnValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new SysDateTimeVO(x.Value) : null,
+                        convertFromProviderExpression: x => x != null ? new UpDatedOnVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -334,7 +334,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 System.DateTime value => value,
-                SysDateTimeVO value => value._value,
+                UpDatedOnVO value => value._value,
                 _ => null,
             };
 
@@ -343,8 +343,8 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                SysDateTimeVO value => value,
-                System.DateTime value => new SysDateTimeVO(value),
+                UpDatedOnVO value => value,
+                System.DateTime value => new UpDatedOnVO(value),
                 _ => null,
             };
         }
@@ -352,24 +352,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class SysDateTimeArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SysDateTimeVO[], System.DateTime?[]>
+        public class UpDatedOnArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<UpDatedOnVO[], System.DateTime?[]>
         {
             /// <summary>
-            /// <see cref="SysDateTimeArrayValueConverter"/>
+            /// <see cref="UpDatedOnArrayValueConverter"/>
             /// </summary>
-            public SysDateTimeArrayValueConverter()
+            public UpDatedOnArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="SysDateTimeArrayValueConverter"/>
+            /// <see cref="UpDatedOnArrayValueConverter"/>
             /// </summary>
             /// <param name="mappingHints"></param>
-            public SysDateTimeArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
+            public UpDatedOnArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (System.DateTime?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new SysDateTimeVO(_.Value)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new UpDatedOnVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -380,9 +380,9 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 System.DateTime?[] values => values,
-                SysDateTimeVO[] values => values.Select(_ => _?._value).ToArray(),
+                UpDatedOnVO[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<System.DateTime?> values => values.ToArray(),
-                IEnumerable<SysDateTimeVO> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<UpDatedOnVO> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -391,18 +391,18 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                SysDateTimeVO[] values => values,
-                System.DateTime?[] values => values.Select(_ => _ == null ? null : new SysDateTimeVO(_.Value)).ToArray(),
-                IEnumerable<SysDateTimeVO> values => values.ToArray(),
-                IEnumerable<System.DateTime?> values => values.Select(_ => _ == null ? null : new SysDateTimeVO(_.Value)).ToArray(),
+                UpDatedOnVO[] values => values,
+                System.DateTime?[] values => values.Select(_ => _ == null ? null : new UpDatedOnVO(_.Value)).ToArray(),
+                IEnumerable<UpDatedOnVO> values => values.ToArray(),
+                IEnumerable<System.DateTime?> values => values.Select(_ => _ == null ? null : new UpDatedOnVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class SysDateTimeTypeConverter : System.ComponentModel.TypeConverter
+        private class UpDatedOnTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(SysDateTimeVO);
+            private static readonly Type WrapperType = typeof(UpDatedOnVO);
             private static readonly Type ValueType = typeof(System.DateTime);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -432,17 +432,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(SysDateTimeVO))
+                if (t == typeof(UpDatedOnVO))
                 {
-                    return (SysDateTimeVO)value;
+                    return (UpDatedOnVO)value;
                 }
                 if (t == typeof(System.DateTime))
                 {
-                    return new SysDateTimeVO((System.DateTime)value);
+                    return new UpDatedOnVO((System.DateTime)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new SysDateTimeVO(System.DateTime.Parse((string)value));
+                    return new UpDatedOnVO(System.DateTime.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -455,7 +455,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is SysDateTimeVO wrappedValue)
+                if (value is UpDatedOnVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

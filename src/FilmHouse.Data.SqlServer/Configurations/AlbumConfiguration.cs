@@ -29,7 +29,8 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
             .HasMaxLength(50);
 
         builder.Property(e => e.UserId)
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.Cover)
             .HasColumnType("varchar(100)")
@@ -44,10 +45,10 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
         builder.Property(e => e.UpDatedOn)
             .IsRequired()
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .HasColumnType("datetime")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
     }
 }

@@ -21,20 +21,30 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 
         builder.Property(e => e.AskId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<AskIdVO.AskIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
+
+        builder.Property(e => e.MovieId)
+            .IsRequired()
+            .HasColumnType("uuid")
+            .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.RequestTime)
-            .HasColumnType("timestamp(3)");
+            .HasColumnType("timestamp(3)")
+            .HasConversion<RequestTimeVO.RequestTimeValueConverter>();
 
         builder.Property(e => e.RequestWith)
-            .HasColumnType("int");
+            .HasColumnType("int")
+            .HasConversion<RequestWithVO.RequestWithValueConverter>();
 
         builder.Property(e => e.Note)
-            .HasColumnType("text");
+            .HasColumnType("text")
+            .HasConversion<NoteVO.NoteValueConverter>();
 
         builder.Property(e => e.Status)
             .HasDefaultValue(false)
@@ -43,11 +53,11 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("timestamp(3)")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("timestamp(3)")
-            .HasConversion<SysDateTimeVO.SysDateTimeValueConverter>();
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }
