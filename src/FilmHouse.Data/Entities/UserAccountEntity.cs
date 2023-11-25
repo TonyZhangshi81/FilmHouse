@@ -29,7 +29,7 @@ public class UserAccountEntity : EntitiesBase
     public string Avatar { get; set; }
 
     [Column(Order = 7)]
-    public string Cover { get; set; }
+    public CoverVO Cover { get; set; }
 
     [Column(Order = 8)]
     public bool IsAdmin { get; set; }

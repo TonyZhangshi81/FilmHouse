@@ -74,7 +74,9 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasMaxLength(50);
 
         builder.Property(e => e.Summary)
-            .HasColumnType("text");
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("text")
+            .HasConversion<SummaryVO.SummaryValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()

@@ -9,20 +9,21 @@ using System.Threading.Tasks;
 namespace FilmHouse.Data.Core.Utils
 {
     /// <summary>
-    /// This is a converter class that converts bool and string values.
+    /// 这是一个转换bool值和字符串值的转换器类。
     /// </summary>
     /// <remarks>
-    /// String to be converted to true is "true", "1", "-1", "Y".
-    /// Characters converted to false are "false", "0", "N".
+    /// 要转换为true的字符串是 "true", "1", "-1", "Y".
+    /// 转换为false的字符有 "false", "0", "N".
     /// Strings ignore case.
     /// </remarks>
     public class BooleanConverter : System.ComponentModel.BooleanConverter
     {
+        // 匹配时大小写不明感
         private readonly HashSet<string> _trueStrings = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         private readonly HashSet<string> _falseStrings = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
-        /// Initialize the instance.
+        /// 初始化实例。
         /// </summary>
         public BooleanConverter()
         {
@@ -37,17 +38,17 @@ namespace FilmHouse.Data.Core.Utils
         }
 
         /// <summary>
-        /// Converts from string value to bool value.
+        /// 将字符串值转换为bool值。
         /// </summary>
-        /// <param name="context">providing formatting context (IYitypedescriptorcontext)</param>
-        /// <param name="culture">Cultureinfo to use as the current culture</param>
-        /// <param name="value">String to be converted</param>
-        /// <returns>The bool value representing the converted value. <paramref name="value"/>If is null, it is false.</returns>
-        /// <exception cref="FormatException"><paramref name="value"/>It is thrown if the format is not convertible.</exception>
+        /// <param name="context">提供格式化上下文(ITypeDescriptorContext)</param>
+        /// <param name="culture">Cultureinfo用作当前区域性</param>
+        /// <param name="value">要转换的字符串</param>
+        /// <returns>表示转换值的bool值。<paramref name="value"/>如果为空，则为假。</returns>
+        /// <exception cref="FormatException"><paramref name="value"/>如果格式不可转换，则抛出该函数。</exception>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string)
-            {
+            //if (value is string)
+            //{
                 if (value == null)
                 {
                     return false;
@@ -61,17 +62,17 @@ namespace FilmHouse.Data.Core.Utils
                 {
                     return false;
                 }
-            }
+            //}
 
             return base.ConvertFrom(context, culture, value);
         }
 
         /// <summary>
-        /// Using the context specified, it returns a value indicating whether the converter can convert objects of a particular type to the converter's type.
+        /// 使用指定的上下文，它返回一个值，该值指示转换器是否可以将特定类型的对象转换为转换器的类型。
         /// </summary>
-        /// <param name="context">Provide formatting context (ITypeDescriptorContext)</param>
-        /// <param name="destinationType">The type of the transformation (Type)</param>
-        /// <returns>True if the converter can perform conversions. Otherwise, false.</returns>
+        /// <param name="context">提供格式化上下文(ITypeDescriptorContext)</param>
+        /// <param name="destinationType">转换的类型(type)</param>
+        /// <returns>如果转换器可以执行转换，则为True。否则,假的。</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             if (destinationType != null)
@@ -82,13 +83,13 @@ namespace FilmHouse.Data.Core.Utils
         }
 
         /// <summary>
-        /// Use the context and culture information specified to convert the specified value object to the specified type.
+        /// 使用指定的上下文和区域性信息将指定的值对象转换为指定的类型。
         /// </summary>
-        /// <param name="context">Provide formatting context (ITypeDescriptorContext)</param>
-        /// <param name="culture">Cultureinfo object. If a null reference (Nothing in Visual Basic) is passed, the current culture is used.</param>
-        /// <param name="value">Bool value to be converted</param>
-        /// <param name="destinationType">Value the converted Type of the parameter</param>
-        /// <returns>"1" if true, "0" if false</returns>
+        /// <param name="context">提供格式化上下文(ITypeDescriptorContext)</param>
+        /// <param name="culture"祝辞的Cultureinfo对象。如果传递空引用(Visual Basic中为Nothing)，则使用当前区域性。</param>
+        /// <param name="value">要转换的Bool值</param>
+        /// <param name="destinationType">Value转换后的参数类型</param>
+        /// <returns>true为“1”，false为“0”</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             if (value == null)

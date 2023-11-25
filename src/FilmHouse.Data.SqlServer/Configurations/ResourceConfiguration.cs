@@ -58,9 +58,10 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasDefaultValue(0)
             .HasColumnType("tinyint");
 
-        builder.Property(e => e.ReviewNote)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+        builder.Property(e => e.Note)
+            .HasColumnType("varchar(1000)")
+            .HasMaxLength(1000)
+            .HasConversion<NoteVO.NoteValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

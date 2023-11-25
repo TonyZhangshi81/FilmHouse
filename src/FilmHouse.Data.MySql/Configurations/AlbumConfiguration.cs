@@ -23,35 +23,43 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
         builder.Property(e => e.AlbumId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<AlbumIdVO.AlbumIdValueConverter>();
 
         builder.Property(e => e.Title)
             .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasConversion<AlbumTitleVO.AlbumTitleValueConverter>();
 
         builder.Property(e => e.UserId)
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
-        builder.Property(e => e.Cover)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
-
-        builder.Property(e => e.Item)
-            .HasColumnType("longtext");
+        builder.Property(e => e.Items)
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("longtext")
+            .HasConversion<AlbumJsonItemsVO.AlbumJsonItemsValueConverter>();
 
         builder.Property(e => e.Summary)
-            .HasColumnType("longtext");
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("longtext")
+            .HasConversion<SummaryVO.SummaryValueConverter>();
 
-        builder.Property(e => e.UpDatedOn)
-            .IsRequired()
-            .HasColumnType("datetime(3)")
-            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+        builder.Property(e => e.Cover)
+            .HasColumnType("varchar(100)")
+            .HasMaxLength(100)
+            .IsUnicode(false)
+            .HasConversion<CoverVO.CoverValueConverter>();
 
         builder.Property(e => e.CreatedOn)
+            .IsRequired()
             .HasColumnType("datetime(3)")
             .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
+
+        builder.Property(e => e.UpDatedOn)
+            .HasColumnType("datetime(3)")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

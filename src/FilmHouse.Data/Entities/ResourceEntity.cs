@@ -42,6 +42,6 @@ public class ResourceEntity : EntitiesBase
     public Int16 ReviewStatus { get; set; }
 
     [Column(Order = 12)]
-    public string ReviewNote { get; set; }
+    public NoteVO Note { get; set; }
 
 }

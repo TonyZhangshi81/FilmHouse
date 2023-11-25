@@ -57,7 +57,7 @@ public class CelebrityEntity : EntitiesBase
     public string IMDb { get; set; }
 
     [Column(Order = 17)]
-    public string Summary { get; set; }
+    public SummaryVO Summary { get; set; }
 
     [Column(Order = 18)]
     [Required]

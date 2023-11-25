@@ -7,21 +7,21 @@ using FilmHouse.Data.Core.ValueObjects.Serialization;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// AskId的值对象类。
+    /// AlbumId的值对象类。
     /// </summary>
-    [JsonConverter(typeof(AskIdJsonConverter))]
-    [ValueConverter(typeof(AskIdValueConverter), typeof(AskIdArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(AskIdTypeConverter))]
+    [JsonConverter(typeof(AlbumIdJsonConverter))]
+    [ValueConverter(typeof(AlbumIdValueConverter), typeof(AlbumIdArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(AlbumIdTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class AskIdVO : IEquatable<AskIdVO>, IComparable<AskIdVO>, IFormattable, IValue<System.Guid>, IValueObject
+    public partial class AlbumIdVO : IEquatable<AlbumIdVO>, IComparable<AlbumIdVO>, IFormattable, IValue<System.Guid>, IValueObject
     {
         private readonly System.Guid _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "AskId";
+        public const string TypeName = "AlbumId";
 
         /// <summary>
         /// 取得显示格式。
@@ -39,10 +39,10 @@ namespace FilmHouse.Data.Core.ValueObjects
         public object AsPrimitiveObject() => this.AsPrimitive();
 
         /// <summary>
-        /// <see cref="AskIdVO"/>
+        /// <see cref="AlbumIdVO"/>
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public AskIdVO(System.Guid value)
+        public AlbumIdVO(System.Guid value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -54,21 +54,21 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="System.Guid"/><see cref="AskIdVO"/>
+        /// <see cref="System.Guid"/><see cref="AlbumIdVO"/>
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator System.Guid(AskIdVO value)
+        public static explicit operator System.Guid(AlbumIdVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="AskIdVO"/><see cref="System.Guid"/>
+        /// <see cref="AlbumIdVO"/><see cref="System.Guid"/>
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator AskIdVO(System.Guid value)
+        public static explicit operator AlbumIdVO(System.Guid value)
         {
-            return new AskIdVO(value);
+            return new AlbumIdVO(value);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in AskIdVO x, in AskIdVO y)
+        internal static bool Equals(in AlbumIdVO x, in AlbumIdVO y)
         {
             if (x is null && y is null)
             {
@@ -95,7 +95,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(AskIdVO other)
+        public bool Equals(AlbumIdVO other)
         {
             return Equals(this, other);
         }
@@ -112,9 +112,9 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(AskIdVO).IsAssignableFrom(t))
+            if (typeof(AlbumIdVO).IsAssignableFrom(t))
             {
-                return Equals((AskIdVO)obj);
+                return Equals((AlbumIdVO)obj);
             }
             if (t == typeof(System.Guid))
             {
@@ -159,7 +159,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in AskIdVO x, in AskIdVO y)
+        public static bool operator ==(in AlbumIdVO x, in AlbumIdVO y)
         {
             return Equals(x, y);
         }
@@ -167,37 +167,37 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in AskIdVO x, in AskIdVO y)
+        public static bool operator !=(in AlbumIdVO x, in AlbumIdVO y)
         {
             return !Equals(x, y);
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="AskIdVO" />转换成句式。
+        /// 将字符串形式的值转换为等价<see cref="AlbumIdVO" />转换成句式。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <returns><see cref="AskIdVO"/>型的值</returns>
-        public static AskIdVO Parse(string s)
+        /// <returns><see cref="AlbumIdVO"/>型的值</returns>
+        public static AlbumIdVO Parse(string s)
         {
-            return new AskIdVO(System.Guid.Parse(s));
+            return new AlbumIdVO(System.Guid.Parse(s));
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="AskIdVO" />转换成句式，返回表示转换成功与否的值。
+        /// 将字符串形式的值转换为等价<see cref="AlbumIdVO" />转换成句式，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <param name="result"><see cref="AskIdVO"/>型的值</param>
+        /// <param name="result"><see cref="AlbumIdVO"/>型的值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
-        public static bool TryParse(string s, out AskIdVO result)
+        public static bool TryParse(string s, out AlbumIdVO result)
         {
             if (System.Guid.TryParse(s, out var r))
             {
-                result = new AskIdVO(r);
+                result = new AlbumIdVO(r);
                 return true;
             }
             else
             {
-                result = default(AskIdVO);
+                result = default(AlbumIdVO);
                 return false;
             }
         }
@@ -212,7 +212,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(AskIdVO other)
+        public int CompareTo(AlbumIdVO other)
         {
             if (other == null)
             {
@@ -222,9 +222,9 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
 
-        private class AskIdJsonConverter : JsonConverter<AskIdVO>
+        private class AlbumIdJsonConverter : JsonConverter<AlbumIdVO>
         {
-            public override void Write(Utf8JsonWriter writer, AskIdVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, AlbumIdVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(System.Guid)) as JsonConverter<System.Guid>;
                 if (converter != null)
@@ -237,7 +237,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 }
             }
 
-            public override AskIdVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override AlbumIdVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(System.Guid)) as JsonConverter<System.Guid>;
                 if (converter != null)
@@ -245,7 +245,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return new AskIdVO(value);
+                        return new AlbumIdVO(value);
                     }
                     catch (Exception exception)
                     {
@@ -266,24 +266,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class AskIdValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AskIdVO, System.Guid?>
+        public class AlbumIdValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AlbumIdVO, System.Guid?>
         {
             /// <summary>
-            /// <see cref="AskIdValueConverter"/>
+            /// <see cref="AlbumIdValueConverter"/>
             /// </summary>
-            public AskIdValueConverter()
+            public AlbumIdValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="AskIdValueConverter"/>
+            /// <see cref="AlbumIdValueConverter"/>
             /// </summary>
             /// <param name="mappingHints"></param>
-            public AskIdValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
+            public AlbumIdValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new AskIdVO(x.Value) : null,
+                        convertFromProviderExpression: x => x != null ? new AlbumIdVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -294,7 +294,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 System.Guid value => value,
-                AskIdVO value => value._value,
+                AlbumIdVO value => value._value,
                 _ => null,
             };
 
@@ -303,8 +303,8 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                AskIdVO value => value,
-                System.Guid value => new AskIdVO(value),
+                AlbumIdVO value => value,
+                System.Guid value => new AlbumIdVO(value),
                 _ => null,
             };
         }
@@ -312,24 +312,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class AskIdArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AskIdVO[], System.Guid?[]>
+        public class AlbumIdArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AlbumIdVO[], System.Guid?[]>
         {
             /// <summary>
-            /// <see cref="AskIdArrayValueConverter"/>
+            /// <see cref="AlbumIdArrayValueConverter"/>
             /// </summary>
-            public AskIdArrayValueConverter()
+            public AlbumIdArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="AskIdArrayValueConverter"/>
+            /// <see cref="AlbumIdArrayValueConverter"/>
             /// </summary>
             /// <param name="mappingHints"></param>
-            public AskIdArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
+            public AlbumIdArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (System.Guid?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new AskIdVO(_.Value)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new AlbumIdVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -340,9 +340,9 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 System.Guid?[] values => values,
-                AskIdVO[] values => values.Select(_ => _?._value).ToArray(),
+                AlbumIdVO[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<System.Guid?> values => values.ToArray(),
-                IEnumerable<AskIdVO> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<AlbumIdVO> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -351,18 +351,18 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                AskIdVO[] values => values,
-                System.Guid?[] values => values.Select(_ => _ == null ? null : new AskIdVO(_.Value)).ToArray(),
-                IEnumerable<AskIdVO> values => values.ToArray(),
-                IEnumerable<System.Guid?> values => values.Select(_ => _ == null ? null : new AskIdVO(_.Value)).ToArray(),
+                AlbumIdVO[] values => values,
+                System.Guid?[] values => values.Select(_ => _ == null ? null : new AlbumIdVO(_.Value)).ToArray(),
+                IEnumerable<AlbumIdVO> values => values.ToArray(),
+                IEnumerable<System.Guid?> values => values.Select(_ => _ == null ? null : new AlbumIdVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class AskIdTypeConverter : System.ComponentModel.TypeConverter
+        private class AlbumIdTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(AskIdVO);
+            private static readonly Type WrapperType = typeof(AlbumIdVO);
             private static readonly Type ValueType = typeof(System.Guid);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -392,17 +392,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(AskIdVO))
+                if (t == typeof(AlbumIdVO))
                 {
-                    return (AskIdVO)value;
+                    return (AlbumIdVO)value;
                 }
                 if (t == typeof(System.Guid))
                 {
-                    return new AskIdVO((System.Guid)value);
+                    return new AlbumIdVO((System.Guid)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new AskIdVO(System.Guid.Parse((string)value));
+                    return new AlbumIdVO(System.Guid.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -415,7 +415,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is AskIdVO wrappedValue)
+                if (value is AlbumIdVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

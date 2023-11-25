@@ -47,7 +47,9 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
 
         builder.Property(e => e.Cover)
             .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .IsUnicode(false)
+            .HasConversion<CoverVO.CoverValueConverter>();
 
         builder.Property(e => e.IsAdmin)
             .HasDefaultValue(false)

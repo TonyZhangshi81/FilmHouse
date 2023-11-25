@@ -54,39 +54,39 @@ namespace FilmHouse.Data.Core.ValueObjects
         public DateOnly AddDays(int value) => this.AsPrimitiveCore().AddDays(value);
 
         /// <summary>
-        /// このインスタンスの値に、指定された月数を加算した新しい <see cref="DateOnly"/> を返します。
+        /// 这个实例的值加上指定的月数，新的<see cref="DateOnly" />返还。
         /// </summary>
-        /// <param name="months">月数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻と <paramref name="months"/> の合計を値とするオブジェクト。</returns>
+        /// <param name="months">月数正确或负的任何情况都有。</param>
+        /// <returns>这个实例所表示的日期、时间和<paramref name="months" />的总和为值的对象。</returns>
         public DateOnly AddMonths(int months) => this.AsPrimitiveCore().AddMonths(months);
 
         /// <summary>
-        /// このインスタンスの値に、指定された年数を加算した新しい <see cref="DateOnly"/> を返します。
+        /// 将该实例的值加上指定年限的新的<see cref="DateOnly" />返还。
         /// </summary>
-        /// <param name="value">年数。正または負のどちらの場合もあります。</param>
-        /// <returns>このインスタンスで表された日付と時刻に <paramref name="value"/> で表された年数を加算した値を保持するオブジェクト。</returns>
+        /// <param name="value">年数有正负两种情况。</param>
+        /// <returns>在这个实例中表示的日期和时间保持着表示表的年数的对象。</returns>
         public DateOnly AddYears(int value) => this.AsPrimitiveCore().AddYears(value);
 
         /// <summary>
-        /// このインスタンスの日付と指定した入力時刻に設定された値を返します。
+        /// 将这个实例的日期指定的输入时间设定的值。
         /// </summary>
-        /// <param name="time">時刻</param>
-        /// <returns>構成された日時</returns>
+        /// <param name="time">时间</param>
+        /// <returns>被组成的日期</returns>
         public virtual DateTime ToDateTime(TimeOnly? time) => this.AsPrimitiveCore().ToDateTime(time ?? TimeOnly.MinValue);
 
         /// <summary>
-        /// 現在のオブジェクトを表す文字列を返します。
+        /// 返回表示当前对象的字符串。
         /// </summary>
-        /// <param name="format">書式文字列</param>
-        /// <returns>現在のオブジェクトを表す文字列</returns>
+        /// <param name="format">格式字符串</param>
+        /// <returns>表示当前对象的字符串</returns>
         public virtual string ToString(string format) => this.AsPrimitiveCore().ToString(format);
 
         /// <summary>
-        /// 現在のオブジェクトを表す文字列を返します。
+        /// 返回表示当前对象的字符串。
         /// </summary>
-        /// <param name="format">書式文字列</param>
-        /// <param name="provider">値の書式設定に使用するプロバイダー</param>
-        /// <returns>現在のオブジェクトを表す文字列</returns>
+        /// <param name="format">格式字符串</param>
+        /// <param name="provider">将值的格式设定使用的供应商</param>
+        /// <returns>表示当前对象的字符串</returns>
         public virtual string ToString(string format, IFormatProvider provider) => this.AsPrimitiveCore().ToString(format, provider);
     }
 }

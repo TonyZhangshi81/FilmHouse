@@ -10,21 +10,21 @@ using FilmHouse.Data.Core.ValueObjects.Serialization;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// RequestWith的值对象类。进行与原始型的隐性分配。
+    /// 关注量（4位长度）的值对象类。进行与原始型的隐性分配。
     /// </summary>
-    [JsonConverter(typeof(RequestWithConverter))]
-    [ValueConverter(typeof(RequestWithValueConverter), typeof(RequestWithArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(RequestWithTypeConverter))]
+    [JsonConverter(typeof(AmountAttentionConverter))]
+    [ValueConverter(typeof(AmountAttentionValueConverter), typeof(AmountAttentionArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(AmountAttentionTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class RequestWithVO : IEquatable<RequestWithVO>, IComparable<RequestWithVO>, IFormattable, IConvertible, IValue<int>, IValueObject
+    public partial class AmountAttentionVO : IEquatable<AmountAttentionVO>, IComparable<AmountAttentionVO>, IFormattable, IConvertible, IValue<int>, IValueObject
     {
         private readonly int _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "RequestWith";
+        public const string TypeName = "AmountAttention";
 
         /// <summary>
         /// 取得作为数值的最大位数。
@@ -42,10 +42,10 @@ namespace FilmHouse.Data.Core.ValueObjects
         public object AsPrimitiveObject() => this.AsPrimitive();
 
         /// <summary>
-        /// <see cref="RequestWithVO"/>
+        /// <see cref="AmountAttentionVO"/>
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public RequestWithVO(int value)
+        public AmountAttentionVO(int value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -57,21 +57,21 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="int"/>向<see cref="RequestWithVO"/>进行隐式转换
+        /// <see cref="int"/>向<see cref="AmountAttentionVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator int(RequestWithVO value)
+        public static implicit operator int(AmountAttentionVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="RequestWithVO"/>向<see cref="int"/>进行隐式转换
+        /// <see cref="AmountAttentionVO"/>向<see cref="int"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator RequestWithVO(int value)
+        public static implicit operator AmountAttentionVO(int value)
         {
-            return new RequestWithVO(value);
+            return new AmountAttentionVO(value);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in RequestWithVO x, in RequestWithVO y)
+        internal static bool Equals(in AmountAttentionVO x, in AmountAttentionVO y)
         {
             if (x is null && y is null)
             {
@@ -98,7 +98,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(RequestWithVO other)
+        public bool Equals(AmountAttentionVO other)
         {
             return Equals(this, other);
         }
@@ -115,9 +115,9 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(RequestWithVO).IsAssignableFrom(t))
+            if (typeof(AmountAttentionVO).IsAssignableFrom(t))
             {
-                return Equals((RequestWithVO)obj);
+                return Equals((AmountAttentionVO)obj);
             }
             if (t == typeof(int))
             {
@@ -264,7 +264,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in RequestWithVO x, in RequestWithVO y)
+        public static bool operator ==(in AmountAttentionVO x, in AmountAttentionVO y)
         {
             return Equals(x, y);
         }
@@ -272,7 +272,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in RequestWithVO x, in RequestWithVO y)
+        public static bool operator !=(in AmountAttentionVO x, in AmountAttentionVO y)
         {
             return !Equals(x, y);
         }
@@ -280,31 +280,31 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ParseMethod
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="RequestWithVO" />转换成句式。
+        /// 将字符串形式的值转换为等价<see cref="AmountAttentionVO" />转换成句式。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <returns><see cref="RequestWithVO"/>型的值</returns>
-        public static RequestWithVO Parse(string s)
+        /// <returns><see cref="AmountAttentionVO"/>型的值</returns>
+        public static AmountAttentionVO Parse(string s)
         {
-            return new RequestWithVO(int.Parse(s));
+            return new AmountAttentionVO(int.Parse(s));
         }
 
         /// <summary>
-        /// 将字码串形式的值转换为等价<see cref="RequestWithVO" />转换成句式，返回表示转换成功与否的值。
+        /// 将字码串形式的值转换为等价<see cref="AmountAttentionVO" />转换成句式，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <param name="result"><see cref="RequestWithVO"/>型的值</param>
+        /// <param name="result"><see cref="AmountAttentionVO"/>型的值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
-        public static bool TryParse(string s, out RequestWithVO result)
+        public static bool TryParse(string s, out AmountAttentionVO result)
         {
             if (int.TryParse(s, out var r))
             {
-                result = new RequestWithVO(r);
+                result = new AmountAttentionVO(r);
                 return true;
             }
             else
             {
-                result = default(RequestWithVO);
+                result = default(AmountAttentionVO);
                 return false;
             }
         }
@@ -318,9 +318,9 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x">最初的值</param>
         /// <param name="y">第二值</param>
         /// <returns>参数小的一方</returns>
-        public static RequestWithVO Min(RequestWithVO x, RequestWithVO y)
+        public static AmountAttentionVO Min(AmountAttentionVO x, AmountAttentionVO y)
         {
-            return new RequestWithVO(Math.Min(x._value, y._value));
+            return new AmountAttentionVO(Math.Min(x._value, y._value));
         }
 
         /// <summary>
@@ -329,9 +329,9 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x">最初的值</param>
         /// <param name="y">第二值</param>
         /// <returns>参数大的一方</returns>
-        public static RequestWithVO Max(RequestWithVO x, RequestWithVO y)
+        public static AmountAttentionVO Max(AmountAttentionVO x, AmountAttentionVO y)
         {
-            return new RequestWithVO(Math.Max(x._value, y._value));
+            return new AmountAttentionVO(Math.Max(x._value, y._value));
         }
 
 
@@ -343,11 +343,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static RequestWithVO operator ++(in RequestWithVO x)
+        public static AmountAttentionVO operator ++(in AmountAttentionVO x)
         {
             checked
             {
-                return new RequestWithVO((int)(x._value + 1));
+                return new AmountAttentionVO((int)(x._value + 1));
             }
         }
 
@@ -356,11 +356,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static RequestWithVO operator --(in RequestWithVO x)
+        public static AmountAttentionVO operator --(in AmountAttentionVO x)
         {
             checked
             {
-                return new RequestWithVO((int)(x._value - 1));
+                return new AmountAttentionVO((int)(x._value - 1));
             }
         }
 
@@ -370,11 +370,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static RequestWithVO operator +(in RequestWithVO x, in int y)
+        public static AmountAttentionVO operator +(in AmountAttentionVO x, in int y)
         {
             checked
             {
-                return new RequestWithVO((int)(x._value + y));
+                return new AmountAttentionVO((int)(x._value + y));
             }
         }
 
@@ -384,11 +384,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static RequestWithVO operator -(in RequestWithVO x, in int y)
+        public static AmountAttentionVO operator -(in AmountAttentionVO x, in int y)
         {
             checked
             {
-                return new RequestWithVO((int)(x._value - y));
+                return new AmountAttentionVO((int)(x._value - y));
             }
         }
 
@@ -398,11 +398,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static RequestWithVO operator *(in RequestWithVO x, in int y)
+        public static AmountAttentionVO operator *(in AmountAttentionVO x, in int y)
         {
             checked
             {
-                return new RequestWithVO((int)(x._value * y));
+                return new AmountAttentionVO((int)(x._value * y));
             }
         }
 
@@ -412,11 +412,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static RequestWithVO operator /(in RequestWithVO x, in int y)
+        public static AmountAttentionVO operator /(in AmountAttentionVO x, in int y)
         {
             checked
             {
-                return new RequestWithVO((int)(x._value / y));
+                return new AmountAttentionVO((int)(x._value / y));
             }
         }
 
@@ -428,7 +428,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(RequestWithVO other)
+        public int CompareTo(AmountAttentionVO other)
         {
             if (other == null)
             {
@@ -443,7 +443,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >(in RequestWithVO x, in RequestWithVO y)
+        public static bool operator >(in AmountAttentionVO x, in AmountAttentionVO y)
         {
             return x._value > y._value;
         }
@@ -454,7 +454,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <(in RequestWithVO x, in RequestWithVO y)
+        public static bool operator <(in AmountAttentionVO x, in AmountAttentionVO y)
         {
             return x._value < y._value;
         }
@@ -465,7 +465,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >=(in RequestWithVO x, in RequestWithVO y)
+        public static bool operator >=(in AmountAttentionVO x, in AmountAttentionVO y)
         {
             return x._value >= y._value;
         }
@@ -476,16 +476,16 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <=(in RequestWithVO x, in RequestWithVO y)
+        public static bool operator <=(in AmountAttentionVO x, in AmountAttentionVO y)
         {
             return x._value <= y._value;
         }
 
 
         // UnitGenerateOptions.JsonConverter
-        private class RequestWithConverter : JsonConverter<RequestWithVO>
+        private class AmountAttentionConverter : JsonConverter<AmountAttentionVO>
         {
-            public override void Write(Utf8JsonWriter writer, RequestWithVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, AmountAttentionVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
                 if (converter != null)
@@ -498,7 +498,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 }
             }
 
-            public override RequestWithVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override AmountAttentionVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
                 if (converter != null)
@@ -513,12 +513,12 @@ namespace FilmHouse.Data.Core.ValueObjects
                                 throw options.GetConvertFailureException(typeToConvert);
                             }
                             var stringValue = stringConverter.Read(ref reader, typeToConvert, options);
-                            var typeConverter = TypeDescriptor.GetConverter(typeof(RequestWithVO));
-                            return (RequestWithVO)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
+                            var typeConverter = TypeDescriptor.GetConverter(typeof(AmountAttentionVO));
+                            return (AmountAttentionVO)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
                         }
 
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return new RequestWithVO(value);
+                        return new AmountAttentionVO(value);
                     }
                     catch (Exception exception)
                     {
@@ -539,24 +539,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class RequestWithValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<RequestWithVO, int?>
+        public class AmountAttentionValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AmountAttentionVO, int?>
         {
             /// <summary>
-            /// <see cref="RequestWithValueConverter"/>
+            /// <see cref="AmountAttentionValueConverter"/>
             /// </summary>
-            public RequestWithValueConverter()
+            public AmountAttentionValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="RequestWithValueConverter"/>
+            /// <see cref="AmountAttentionValueConverter"/>
             /// </summary>
             /// <param name="mappingHints"></param>
-            public RequestWithValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
+            public AmountAttentionValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new RequestWithVO(x.Value) : null,
+                        convertFromProviderExpression: x => x != null ? new AmountAttentionVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -567,7 +567,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 int value => value,
-                RequestWithVO value => value._value,
+                AmountAttentionVO value => value._value,
                 _ => null,
             };
 
@@ -576,8 +576,8 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                RequestWithVO value => value,
-                int value => new RequestWithVO(value),
+                AmountAttentionVO value => value,
+                int value => new AmountAttentionVO(value),
                 _ => null,
             };
         }
@@ -585,24 +585,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class RequestWithArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<RequestWithVO[], int?[]>
+        public class AmountAttentionArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AmountAttentionVO[], int?[]>
         {
             /// <summary>
-            /// <see cref="RequestWithArrayValueConverter"/>
+            /// <see cref="AmountAttentionArrayValueConverter"/>
             /// </summary>
-            public RequestWithArrayValueConverter()
+            public AmountAttentionArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="RequestWithArrayValueConverter"/>
+            /// <see cref="AmountAttentionArrayValueConverter"/>
             /// </summary>
             /// <param name="mappingHints"></param>
-            public RequestWithArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
+            public AmountAttentionArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (int?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new RequestWithVO(_.Value)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new AmountAttentionVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -613,9 +613,9 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 int?[] values => values,
-                RequestWithVO[] values => values.Select(_ => _?._value).ToArray(),
+                AmountAttentionVO[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<int?> values => values.ToArray(),
-                IEnumerable<RequestWithVO> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<AmountAttentionVO> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -624,18 +624,18 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                RequestWithVO[] values => values,
-                int?[] values => values.Select(_ => _ == null ? null : new RequestWithVO(_.Value)).ToArray(),
-                IEnumerable<RequestWithVO> values => values.ToArray(),
-                IEnumerable<int?> values => values.Select(_ => _ == null ? null : new RequestWithVO(_.Value)).ToArray(),
+                AmountAttentionVO[] values => values,
+                int?[] values => values.Select(_ => _ == null ? null : new AmountAttentionVO(_.Value)).ToArray(),
+                IEnumerable<AmountAttentionVO> values => values.ToArray(),
+                IEnumerable<int?> values => values.Select(_ => _ == null ? null : new AmountAttentionVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class RequestWithTypeConverter : System.ComponentModel.TypeConverter
+        private class AmountAttentionTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(RequestWithVO);
+            private static readonly Type WrapperType = typeof(AmountAttentionVO);
             private static readonly Type ValueType = typeof(int);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -665,17 +665,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(RequestWithVO))
+                if (t == typeof(AmountAttentionVO))
                 {
-                    return (RequestWithVO)value;
+                    return (AmountAttentionVO)value;
                 }
                 if (t == typeof(int))
                 {
-                    return new RequestWithVO((int)value);
+                    return new AmountAttentionVO((int)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new RequestWithVO(int.Parse((string)value));
+                    return new AmountAttentionVO(int.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -688,7 +688,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is RequestWithVO wrappedValue)
+                if (value is AmountAttentionVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

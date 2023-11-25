@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -7,43 +7,33 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using FilmHouse.Data.Core.Utils;
 using FilmHouse.Data.Core.ValueObjects.Serialization;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 备注信息（1000位数文本）的值对象类。
+    /// 影集中收录的电影信息（json格式内容且长度可变）的值对象类。
     /// </summary>
-    [JsonConverter(typeof(NoteJsonConverter))]
-    [ValueConverter(typeof(NoteValueConverter), typeof(NoteArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(NoteTypeConverter))]
+    [JsonConverter(typeof(AlbumJsonItemsJsonConverter))]
+    [ValueConverter(typeof(AlbumJsonItemsValueConverter), typeof(AlbumJsonItemsArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(AlbumJsonItemsTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class NoteVO : IEquatable<NoteVO>, IComparable<NoteVO>, IValue<string>, IValueObject
+    public partial class AlbumJsonItemsVO : FilmHouse.Data.Core.ValueObjects.TextBase, IEquatable<AlbumJsonItemsVO>, IComparable<AlbumJsonItemsVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "Note";
-
-        public const int Size = 1000;
+        public new const string TypeName = "AlbumJsonItems(size:max)";
 
         /// <summary>
-        /// 获取值对象包含的原始类型。
-        /// </summary>
-        public string AsPrimitive() => this._value;
-        /// <summary>
-        /// 是不依赖句式而获取原始句式的方法。
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public object AsPrimitiveObject() => this.AsPrimitive();
-
-        /// <summary>
-        /// <see cref="NoteVO"/>的新实例。
+        /// <see cref="AlbumJsonItemsVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public NoteVO(string value)
+        public AlbumJsonItemsVO(string value)
+            : base(value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -55,21 +45,21 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="NoteVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="AlbumJsonItemsVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(NoteVO value)
+        public static explicit operator string(AlbumJsonItemsVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="NoteVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="AlbumJsonItemsVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator NoteVO(string value)
+        public static explicit operator AlbumJsonItemsVO(string value)
         {
-            return new NoteVO(value);
+            return new AlbumJsonItemsVO(value);
         }
 
         /// <summary>
@@ -78,7 +68,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in NoteVO? x, in NoteVO? y)
+        internal static bool Equals(in AlbumJsonItemsVO? x, in AlbumJsonItemsVO? y)
         {
             if (x is null && y is null)
             {
@@ -96,7 +86,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(NoteVO? other)
+        public bool Equals(AlbumJsonItemsVO? other)
         {
             return Equals(this, other);
         }
@@ -113,9 +103,9 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(NoteVO).IsAssignableFrom(t))
+            if (typeof(AlbumJsonItemsVO).IsAssignableFrom(t))
             {
-                return Equals((NoteVO)obj);
+                return Equals((AlbumJsonItemsVO)obj);
             }
             if (t == typeof(string))
             {
@@ -146,15 +136,15 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in NoteVO? x, in NoteVO? y)
+        public static bool operator ==(in AlbumJsonItemsVO? x, in AlbumJsonItemsVO? y)
         {
             return Equals(x, y);
         }
 
         /// <summary>
-        /// 是否不等于
+        /// 是否不相等
         /// </summary>
-        public static bool operator !=(in NoteVO? x, in NoteVO? y)
+        public static bool operator !=(in AlbumJsonItemsVO? x, in AlbumJsonItemsVO? y)
         {
             return !Equals(x, y);
         }
@@ -167,11 +157,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ComparableInterfaceOnly
 
         /// <summary>
-        /// 将该实例<paramref name="other " />和比较。
+        /// 将该实例<paramref name="other" />和比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(NoteVO? other)
+        public int CompareTo(AlbumJsonItemsVO? other)
         {
             if (other == null)
             {
@@ -182,9 +172,9 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class NoteJsonConverter : JsonConverter<NoteVO>
+        private class AlbumJsonItemsJsonConverter : JsonConverter<AlbumJsonItemsVO>
         {
-            public override void Write(Utf8JsonWriter writer, NoteVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, AlbumJsonItemsVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -197,7 +187,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 }
             }
 
-            public override NoteVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override AlbumJsonItemsVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -205,7 +195,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new NoteVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new AlbumJsonItemsVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -226,24 +216,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class NoteValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<NoteVO?, string?>
+        public class AlbumJsonItemsValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AlbumJsonItemsVO?, string?>
         {
             /// <summary>
-            /// <see cref="NoteValueConverter"/>的新实例。
+            /// <see cref="AlbumJsonItemsValueConverter"/>的新实例。
             /// </summary>
-            public NoteValueConverter()
+            public AlbumJsonItemsValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="NoteValueConverter"/>的新实例。
+            /// <see cref="AlbumJsonItemsValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public NoteValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public AlbumJsonItemsValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new NoteVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new AlbumJsonItemsVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -254,7 +244,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                NoteVO value => value._value,
+                AlbumJsonItemsVO value => value._value,
                 _ => null,
             };
 
@@ -263,8 +253,8 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                NoteVO value => value,
-                string value => new NoteVO(value),
+                AlbumJsonItemsVO value => value,
+                string value => new AlbumJsonItemsVO(value),
                 _ => null,
             };
         }
@@ -272,37 +262,37 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class NoteArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<NoteVO?[], string?[]>
+        public class AlbumJsonItemsArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AlbumJsonItemsVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="NoteArrayValueConverter"/>的新实例。
+            /// <see cref="AlbumJsonItemsArrayValueConverter"/>的新实例。
             /// </summary>
-            public NoteArrayValueConverter()
+            public AlbumJsonItemsArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="NoteArrayValueConverter"/>的新实例。
+            /// <see cref="AlbumJsonItemsArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public NoteArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public AlbumJsonItemsArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new NoteVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new AlbumJsonItemsVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
 
             /// <summary>
-            /// 在将数据写入到存储的情况下,取得转换对象的函数,并将该函数设定为,将将该函数与将对象转换成该对象的函数,并将其与与子串、框化以及非严格匹配的简单类型的一致处理。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                NoteVO?[] values => values.Select(_ => _?._value).ToArray(),
+                AlbumJsonItemsVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<NoteVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<AlbumJsonItemsVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -311,18 +301,18 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                NoteVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new NoteVO(_)).ToArray(),
-                IEnumerable<NoteVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new NoteVO(_)).ToArray(),
+                AlbumJsonItemsVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new AlbumJsonItemsVO(_)).ToArray(),
+                IEnumerable<AlbumJsonItemsVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new AlbumJsonItemsVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class NoteTypeConverter : System.ComponentModel.TypeConverter
+        private class AlbumJsonItemsTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(NoteVO);
+            private static readonly Type WrapperType = typeof(AlbumJsonItemsVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -352,13 +342,13 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(NoteVO))
+                if (t == typeof(AlbumJsonItemsVO))
                 {
-                    return (NoteVO)value;
+                    return (AlbumJsonItemsVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new NoteVO((string)value);
+                    return new AlbumJsonItemsVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -371,7 +361,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is NoteVO wrappedValue)
+                if (value is AlbumJsonItemsVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

@@ -148,7 +148,7 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         /// <summary>
-        /// 等值算子
+        /// 是否等于
         /// </summary>
         public static bool operator ==(in RequestTimeVO x, in RequestTimeVO y)
         {
@@ -156,7 +156,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 非等值算子
+        /// 是否不相等
         /// </summary>
         public static bool operator !=(in RequestTimeVO x, in RequestTimeVO y)
         {
@@ -203,7 +203,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.Comparable
 
         /// <summary>
-        /// 将该实例<paramref name="other" />和比较。
+        /// 将该实例与<paramref name="other" />比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>

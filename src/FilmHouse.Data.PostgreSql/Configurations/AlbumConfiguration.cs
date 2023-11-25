@@ -21,11 +21,13 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.AlbumId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<AlbumIdVO.AlbumIdValueConverter>();
 
         builder.Property(e => e.Title)
             .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasConversion<AlbumTitleVO.AlbumTitleValueConverter>();
 
         builder.Property(e => e.UserId)
             .HasColumnType("uuid")
@@ -33,20 +35,26 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.Cover)
             .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .IsUnicode(false)
+            .HasConversion<CoverVO.CoverValueConverter>();
 
-        builder.Property(e => e.Item)
-            .HasColumnType("text");
+        builder.Property(e => e.Items)
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("text")
+            .HasConversion<AlbumJsonItemsVO.AlbumJsonItemsValueConverter>();
 
         builder.Property(e => e.Summary)
-            .HasColumnType("text");
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("text")
+            .HasConversion<SummaryVO.SummaryValueConverter>();
 
-        builder.Property(e => e.UpDatedOn)
+        builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("timestamp(3)")
             .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
-        builder.Property(e => e.CreatedOn)
+        builder.Property(e => e.UpDatedOn)
             .HasColumnType("timestamp(3)")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
