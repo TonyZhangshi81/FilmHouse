@@ -14,6 +14,7 @@ using FilmHouse.Utils;
 using FilmHouse.Utils.PasswordGenerator;
 using FilmHouse.Web;
 using FilmHouse.Web.Configuration;
+using FilmHouse.Core.DependencyInjection;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -127,7 +128,9 @@ void ConfigureServices(IServiceCollection services)
     // https://www.cnblogs.com/chenxi001/p/13308860.html
     services.AddResponseCaching();
 
-    AppDomain.CurrentDomain.Load("FilmHouse.Business");
+    // DI的批量登录设定
+    var assemblies = StartupCore.GetAppAssemblies(true);
+    services.AddLocalService(assemblies);
 
     services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
     services.AddOptions()
@@ -344,3 +347,4 @@ void ConfigureMiddleware()
 #pragma warning restore ASP0014
 
 }
+
