@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -16,7 +17,8 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.CelebrityId)
             .IsRequired()
@@ -73,11 +75,14 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasMaxLength(50);
 
         builder.Property(e => e.Summary)
-            .HasColumnType("varchar(max)");
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("varchar(max)")
+            .HasConversion<SummaryVO.SummaryValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.ReviewStatus)
             .HasDefaultValue(0)
@@ -89,10 +94,12 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

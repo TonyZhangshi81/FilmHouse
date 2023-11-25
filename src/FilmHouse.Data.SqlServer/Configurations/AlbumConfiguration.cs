@@ -1,4 +1,5 @@
-﻿using FilmHouse.Data.Entities;
+﻿using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,34 +17,46 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.AlbumId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<AlbumIdVO.AlbumIdValueConverter>();
 
         builder.Property(e => e.Title)
             .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasConversion<AlbumTitleVO.AlbumTitleValueConverter>();
 
         builder.Property(e => e.UserId)
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.Cover)
             .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+            .HasMaxLength(100)
+            .IsUnicode(false)
+            .HasConversion<CoverVO.CoverValueConverter>();
 
-        builder.Property(e => e.Item)
-            .HasColumnType("varchar(max)");
+        builder.Property(e => e.Items)
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("varchar(max)")
+            .HasConversion<AlbumJsonItemsVO.AlbumJsonItemsValueConverter>();
 
         builder.Property(e => e.Summary)
-            .HasColumnType("varchar(max)");
-
-        builder.Property(e => e.UpDatedOn)
-            .IsRequired()
-            .HasColumnType("datetime");
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("varchar(max)")
+            .HasConversion<SummaryVO.SummaryValueConverter>();
 
         builder.Property(e => e.CreatedOn)
-            .HasColumnType("datetime");
+            .IsRequired()
+            .HasColumnType("datetime")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
+
+        builder.Property(e => e.UpDatedOn)
+            .HasColumnType("datetime")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
     }
 }

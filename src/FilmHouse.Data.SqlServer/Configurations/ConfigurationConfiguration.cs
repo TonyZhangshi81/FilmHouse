@@ -1,4 +1,5 @@
-﻿using FilmHouse.Data.Entities;
+﻿using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,7 +17,8 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.Key)
             .HasColumnType("varchar(64)")
@@ -28,9 +30,11 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -16,16 +17,19 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.MovieId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.Title)
             .IsRequired()
             .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasConversion<MovieTitleVO.MovieTitleValueConverter>();
 
         builder.Property(e => e.TitleEn)
             .HasColumnType("varchar(100)")
@@ -91,7 +95,9 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasMaxLength(50);
 
         builder.Property(e => e.Summary)
-            .HasColumnType("varchar(max)");
+            .HasComment("Variable-length character data, ⇐ 2G")
+            .HasColumnType("varchar(max)")
+            .HasConversion<SummaryVO.SummaryValueConverter>();
 
         builder.Property(e => e.Avatar)
             .HasColumnType("varchar(50)")
@@ -99,26 +105,30 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.ReviewStatus)
             .HasDefaultValue(0)
             .HasColumnType("tinyint");
 
-        builder.Property(e => e.ReviewNote)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+        builder.Property(e => e.Note)
+            .HasColumnType("varchar(1000)")
+            .HasMaxLength(1000)
+            .HasConversion<NoteVO.NoteValueConverter>();
+
+        builder.Property(e => e.PageViews)
+            .HasDefaultValue(0)
+            .HasColumnType("numeric(11)")
+            .HasConversion<PageViewsVO.PageViewsValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime");
-
-        builder.Property(e => e.VisitCount)
-            .HasDefaultValue(0)
-            .HasColumnType("bigint");
-
+            .HasColumnType("datetime")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
     }
 }

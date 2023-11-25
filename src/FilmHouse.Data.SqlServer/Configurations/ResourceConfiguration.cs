@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -16,7 +17,8 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.ResourceId)
             .IsRequired()
@@ -33,11 +35,13 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasColumnType("bigint");
 
         builder.Property(e => e.UserId)
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.MovieId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.Time)
             .HasColumnType("datetime");
@@ -54,16 +58,19 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasDefaultValue(0)
             .HasColumnType("tinyint");
 
-        builder.Property(e => e.ReviewNote)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+        builder.Property(e => e.Note)
+            .HasColumnType("varchar(1000)")
+            .HasMaxLength(1000)
+            .HasConversion<NoteVO.NoteValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }
