@@ -32,7 +32,6 @@
 		<ProjectReference Include="..\FilmHouse.Data.SqlServer\FilmHouse.Data.SqlServer.csproj" />
 		<ProjectReference Include="..\FilmHouse.Data\FilmHouse.Data.csproj" />
 		<ProjectReference Include="..\FilmHouse.Mvc\FilmHouse.Mvc.csproj" />
-		<ProjectReference Include="..\FilmHouse.Utils\FilmHouse.Utils.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

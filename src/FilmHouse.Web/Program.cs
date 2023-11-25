@@ -5,16 +5,16 @@ using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using AspNetCoreRateLimit;
+using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.Utils;
+using FilmHouse.Core.Utils.PasswordGenerator;
 using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
 using FilmHouse.Mvc.Health;
 using FilmHouse.Mvc.SecurityHeaders;
-using FilmHouse.Utils;
-using FilmHouse.Utils.PasswordGenerator;
 using FilmHouse.Web;
 using FilmHouse.Web.Configuration;
-using FilmHouse.Core.DependencyInjection;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -186,7 +186,8 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-    services.AddTransient<IPasswordGenerator, DefaultPasswordGenerator>();
+    // 以下服务通过AddLocalService进行批量注册处理
+    //services.AddTransient<IPasswordGenerator, DefaultPasswordGenerator>();
 
     switch (dbType!.ToLower())
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Utils.PasswordGenerator
+namespace FilmHouse.Core.Utils.PasswordGenerator
 {
     public class PasswordRule
     {
