@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Data.Core.Utils;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -108,7 +109,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.ReviewStatus)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("smallint");
 
         builder.Property(e => e.Note)
@@ -117,7 +118,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasConversion<NoteVO.NoteValueConverter>();
 
         builder.Property(e => e.PageViews)
-            .HasDefaultValue(0)
+            .HasDefaultValue(typeof(PageViewsVO).CreateValueObjectInstance("0"))
             .HasColumnType("numeric(11)")
             .HasConversion<PageViewsVO.PageViewsValueConverter>();
 

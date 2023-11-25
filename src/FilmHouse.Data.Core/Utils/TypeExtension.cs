@@ -14,12 +14,12 @@ namespace FilmHouse.Data.Core.Utils
     public static class TypeExtension
     {
         /// <summary>
-        /// この型が、値オブジェクトの型であるかどうかを取得します。
+        /// 获取这个类型是否是值对象的类型。
         /// </summary>
         /// <param name="valueType"></param>
         /// <returns></returns>
         /// <remarks>
-        /// <see cref="IValueObject"/>インターフェースを実装しているものを値型と判定します。
+        /// <see cref="IValueObject"/>判定正在实现接口的是值型。
         /// </remarks>
         public static bool IsValueObject(this Type valueType)
         {
@@ -27,7 +27,7 @@ namespace FilmHouse.Data.Core.Utils
         }
 
         /// <summary>
-        /// <paramref name="primitiveValue"/>をプリミティブ型とした<paramref name="valueObjectType"/>型のインスタンスを生成します。
+        /// <paramref name="primitiveValue"/>为原始型<paramref name="valueObjectType" />生成类型的实例。
         /// </summary>
         /// <param name="valueObjectType"></param>
         /// <param name="primitiveValue"></param>
@@ -36,7 +36,7 @@ namespace FilmHouse.Data.Core.Utils
         {
             if (!IsValueObject(valueObjectType))
             {
-                // プリミティブ型の場合はそのまま返す
+                // 原始型的情况下直接回复
                 return Converter.ChangeType(primitiveValue, valueObjectType)!;
             }
             var typedValue = valueObjectType.ConvertToPrimitive(primitiveValue);
@@ -45,7 +45,7 @@ namespace FilmHouse.Data.Core.Utils
         }
 
         /// <summary>
-        /// ValueObjectのプリミティブ型の値に変換します。
+        /// 转换为ValueObject的原始类型的值。
         /// </summary>
         /// <param name="valueObjectType"></param>
         /// <param name="value"></param>
@@ -82,22 +82,22 @@ namespace FilmHouse.Data.Core.Utils
             }
             catch (Exception exception)
             {
-                throw new ArgumentException($"ValueOjectのコンストラクタに渡す値 [{value}] を {parameterType.FullName} に変換することができませんでした。", nameof(value), exception);
+                throw new ArgumentException($"传递给ValueOject构造器的值 [{value}] 没能转换成 {parameterType.FullName} ", nameof(value), exception);
             }
         }
 
         /// <summary>
-        /// Nullableではない元の型を取得します。Nullable型でない場合はそのままの型を返します。
+        /// 获得非Nullable的原始类型。如果不是Nullable型，则返回原来的型。
         /// </summary>
         /// <param name="self"></param>
         /// <returns></returns>
         public static Type UnwrapNullableType(this Type self) => Nullable.GetUnderlyingType(self) ?? self;
 
         /// <summary>
-        /// ValueObjectが内包するプリミティブ型を取得します。
+        /// 获取ValueObject包含的原始类型。
         /// </summary>
         /// <param name="valueObjectType"></param>
-        /// <param name="value">コンストラクタを特定するための引数がある場合に指定</param>
+        /// <param name="value">指定用于指定构造函数的自变量</param>
         /// <returns></returns>
         public static Type GetValueObjectPrimitiveType(this Type valueObjectType, object value = null)
         {
@@ -109,7 +109,7 @@ namespace FilmHouse.Data.Core.Utils
             var ctors = valueObjectType.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
             if (ctors.Length == 0)
             {
-                throw new ArgumentException("ValueObjectにはプリミティブ型をひとつだけ設定可能なコンストラクタが、ひとつだけ存在する必要があります。", nameof(valueObjectType));
+                throw new ArgumentException("ValueObject需要有一个可以设定一个原始类型的构造器。", nameof(valueObjectType));
             }
             var ctor = ctors.FirstOrDefault(_ => _.GetParameters().Length == 1);
             if (value != null)
@@ -122,7 +122,7 @@ namespace FilmHouse.Data.Core.Utils
             }
             if (ctor == null)
             {
-                throw new ArgumentException("ValueObjectにはプリミティブ型をひとつだけ設定可能なコンストラクタが、ひとつだけ存在する必要があります。", nameof(valueObjectType));
+                throw new ArgumentException("ValueObject需要有一个可以设定一个原始类型的构造器。", nameof(valueObjectType));
             }
             var parameterType = ctor.GetParameters()[0].ParameterType;
 

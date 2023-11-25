@@ -41,7 +41,7 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
             .HasColumnType("datetime");
 
         builder.Property(e => e.Flag)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("tinyint");
 
         builder.Property(e => e.CreatedOn)

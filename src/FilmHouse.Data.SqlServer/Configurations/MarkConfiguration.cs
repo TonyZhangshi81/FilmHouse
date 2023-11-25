@@ -26,7 +26,7 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
 
         builder.Property(e => e.Type)
             .IsRequired()
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("tinyint");
 
         builder.Property(e => e.UserId)

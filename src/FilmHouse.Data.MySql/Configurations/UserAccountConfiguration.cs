@@ -52,7 +52,7 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
             .HasConversion<CoverVO.CoverValueConverter>();
 
         builder.Property(e => e.IsAdmin)
-            .HasDefaultValue(false)
+            .HasDefaultValue("false")
             .HasColumnType("tinyint");
 
         builder.Property(e => e.CreatedOn)

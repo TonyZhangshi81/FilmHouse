@@ -34,7 +34,7 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
             .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.Type)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("tinyint");
 
         builder.Property(e => e.CreatedOn)

@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data.MySql", "Fil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data.Core", "FilmHouse.Data.Core\FilmHouse.Data.Core.csproj", "{2844D765-2149-4990-BBBD-2F8D81F67CC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmHouse.Core", "FilmHouse.Core\FilmHouse.Core.csproj", "{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{2844D765-2149-4990-BBBD-2F8D81F67CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2844D765-2149-4990-BBBD-2F8D81F67CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2844D765-2149-4990-BBBD-2F8D81F67CC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +98,7 @@ Global
 		{B77928F8-9424-4A7B-93C7-558BA3007F2B} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 		{DAA1E7E4-C366-410D-AA3E-ECEF513D29E8} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 		{2844D765-2149-4990-BBBD-2F8D81F67CC8} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
+		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61B11A56-C8F0-4E30-8F0C-E5D1F40D52FA}

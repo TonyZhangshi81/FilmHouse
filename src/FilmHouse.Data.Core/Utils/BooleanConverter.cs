@@ -47,8 +47,8 @@ namespace FilmHouse.Data.Core.Utils
         /// <exception cref="FormatException"><paramref name="value"/>如果格式不可转换，则抛出该函数。</exception>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            //if (value is string)
-            //{
+            if (value is string)
+            {
                 if (value == null)
                 {
                     return false;
@@ -62,7 +62,7 @@ namespace FilmHouse.Data.Core.Utils
                 {
                     return false;
                 }
-            //}
+            }
 
             return base.ConvertFrom(context, culture, value);
         }

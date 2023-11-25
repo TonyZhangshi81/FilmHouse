@@ -33,7 +33,7 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
             .HasColumnType("uuid");
 
         builder.Property(e => e.Type)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("smallint");
 
         builder.Property(e => e.CreatedOn)

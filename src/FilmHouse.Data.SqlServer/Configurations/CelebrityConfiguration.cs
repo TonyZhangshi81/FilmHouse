@@ -85,7 +85,7 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.ReviewStatus)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("tinyint");
 
         builder.Property(e => e.ReviewNote)

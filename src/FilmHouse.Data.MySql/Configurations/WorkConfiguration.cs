@@ -37,7 +37,7 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
             .HasMaxLength(36);
 
         builder.Property(e => e.Type)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("tinyint unsigned");
 
         builder.Property(e => e.CreatedOn)

@@ -10,7 +10,7 @@ namespace FilmHouse.Data.Core.Utils
     public static class ObjectExtension
     {
         /// <summary>
-        /// Returns the result of conversion to the specified type.
+        /// 返回到指定类型的转换结果。
         /// </summary>
         /// <param name="self"></param>
         /// <param name="castToType"></param>
@@ -30,7 +30,7 @@ namespace FilmHouse.Data.Core.Utils
         }
 
         /// <summary>
-        /// Returns the result of conversion to the specified type.
+        /// 返回到指定类型的转换结果。
         /// </summary>
         /// <param name="self"></param>
         public static T CastTo<T>(this object self)

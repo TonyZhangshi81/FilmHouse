@@ -50,15 +50,15 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasColumnType("datetime(3)");
 
         builder.Property(e => e.FavorCount)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("int");
 
         builder.Property(e => e.Type)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("tinyint unsigned");
 
         builder.Property(e => e.ReviewStatus)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("tinyint unsigned");
 
         builder.Property(e => e.Note)

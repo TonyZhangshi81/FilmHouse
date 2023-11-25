@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Data.Core.Utils;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -33,12 +34,6 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
             .HasColumnType("uuid")
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
-        builder.Property(e => e.Cover)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100)
-            .IsUnicode(false)
-            .HasConversion<CoverVO.CoverValueConverter>();
-
         builder.Property(e => e.Items)
             .HasComment("Variable-length character data, ⇐ 2G")
             .HasColumnType("text")
@@ -48,6 +43,17 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
             .HasComment("Variable-length character data, ⇐ 2G")
             .HasColumnType("text")
             .HasConversion<SummaryVO.SummaryValueConverter>();
+
+        builder.Property(e => e.Cover)
+            .HasColumnType("varchar(100)")
+            .HasMaxLength(100)
+            .IsUnicode(false)
+            .HasConversion<CoverVO.CoverValueConverter>();
+
+        builder.Property(e => e.AmountAttention)
+            .HasDefaultValue(typeof(AmountAttentionVO).CreateValueObjectInstance("0"))
+            .HasColumnType("numeric(4)")
+            .HasConversion<AmountAttentionVO.AmountAttentionValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

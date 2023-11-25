@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Data.Core.Utils;
 
 namespace FilmHouse.Data.MySql.Configurations;
 
@@ -51,6 +52,11 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
             .HasMaxLength(100)
             .IsUnicode(false)
             .HasConversion<CoverVO.CoverValueConverter>();
+
+        builder.Property(e => e.AmountAttention)
+            .HasDefaultValue(typeof(AmountAttentionVO).CreateValueObjectInstance("0"))
+            .HasColumnType("numeric(4)")
+            .HasConversion<AmountAttentionVO.AmountAttentionValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

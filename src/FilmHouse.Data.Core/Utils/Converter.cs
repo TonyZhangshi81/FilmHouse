@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FilmHouse.Data.Core.Utils
 {
     /// <summary>
-    /// <see cref="Convert.ChangeType(object, Type)"/>use、<see cref="DateOnly"/>A class with a transformation added.
+    /// 向<see cref="Convert.ChangeType(object, Type)"/>添加转换类<see cref="DateOnly"/>
     /// </summary>
     public static class Converter
     {
