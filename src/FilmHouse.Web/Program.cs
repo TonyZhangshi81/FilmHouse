@@ -231,7 +231,7 @@ async Task FirstRun()
         if (startUpResut == StartupInitResult.DatabaseConnectionFail)
         {
             app.MapGet("/", () => Results.Problem(
-                detail: "Database connection test failed, please check your connection string and firewall settings, then RESTART FilmHouse manually.",
+                detail: "数据库连接测试失败，请检查您的连接字符串和防火墙设置，然后手动重启FilmHouse",
                 statusCode: 500
                 ));
             app.Run();
@@ -239,7 +239,15 @@ async Task FirstRun()
         else if (startUpResut == StartupInitResult.DatabaseSetupFail)
         {
             app.MapGet("/", () => Results.Problem(
-                detail: "Database setup failed, please check error log, then RESTART FilmHouse manually.",
+                detail: "数据库设置失败，请检查错误日志，然后手动重启FilmHouse",
+                statusCode: 500
+            ));
+            app.Run();
+        }
+        else if (startUpResut == StartupInitResult.CodeDataCacheFail)
+        {
+            app.MapGet("/", () => Results.Problem(
+                detail: "数据缓存处理出错，请检查错误日志，然后手动重启FilmHouse",
                 statusCode: 500
             ));
             app.Run();
@@ -247,14 +255,13 @@ async Task FirstRun()
     }
     catch (Exception e)
     {
-        app.MapGet("/", _ => throw new("Start up failed: " + e.Message));
+        app.MapGet("/", _ => throw new("启动失败: " + e.Message));
         app.Run();
     }
 }
 
 void ConfigureMiddleware()
 {
-
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
@@ -263,7 +270,6 @@ void ConfigureMiddleware()
     {
         //app.UseStatusCodePages(ConfigureStatusCodePages.Handler).UseExceptionHandler("/error");
         //app.UseHsts();
-
         app.UseExceptionHandler(configure => configure.Run(async context =>
         {
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();

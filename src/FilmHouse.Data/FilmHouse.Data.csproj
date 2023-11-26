@@ -17,5 +17,8 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\FilmHouse.Data.Core\FilmHouse.Data.Core.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Infrastructure\Services\Codes\" />
+	</ItemGroup>
 
 </Project>
