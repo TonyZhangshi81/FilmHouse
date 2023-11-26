@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -192,7 +193,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="format">書式文字列</param>
         /// <returns>表示当前对象的字符串</returns>
-        public virtual string ToString(string format) => this.AsPrimitiveCore().ToString(format);
+        public virtual string ToString(string? format) => this.AsPrimitiveCore().ToString(format);
 
         /// <summary>
         /// 返回表示当前对象的字符串。
@@ -200,7 +201,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="format">書式文字列</param>
         /// <param name="provider">値の書式設定に使用するプロバイダー</param>
         /// <returns>表示当前对象的字符串</returns>
-        public virtual string ToString(string format, IFormatProvider provider) => this.AsPrimitiveCore().ToString(format, provider);
+        public virtual string ToString(string? format, IFormatProvider? provider) => this.AsPrimitiveCore().ToString(format, provider);
 
         #region IConvertible
         /// <summary>
@@ -208,31 +209,31 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="provider">用于设定值格式的提供商</param>
         /// <returns>表示当前对象的字符串</returns>
-        public virtual string ToString(IFormatProvider provider) => this.AsPrimitiveCore().ToString(provider);
+        public virtual string ToString(IFormatProvider? provider) => this.AsPrimitiveCore().ToString(provider);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public TypeCode GetTypeCode() => this.AsPrimitiveCore().GetTypeCode();
-        bool IConvertible.ToBoolean(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToBoolean(provider);
-        byte IConvertible.ToByte(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToByte(provider);
-        char IConvertible.ToChar(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToChar(provider);
-        DateTime IConvertible.ToDateTime(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToDateTime(provider);
-        decimal IConvertible.ToDecimal(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToDecimal(provider);
-        double IConvertible.ToDouble(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToDouble(provider);
-        short IConvertible.ToInt16(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToInt16(provider);
-        int IConvertible.ToInt32(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToInt32(provider);
-        long IConvertible.ToInt64(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToInt64(provider);
-        sbyte IConvertible.ToSByte(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToSByte(provider);
-        float IConvertible.ToSingle(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToSingle(provider);
+        bool IConvertible.ToBoolean(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToBoolean(provider);
+        byte IConvertible.ToByte(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToByte(provider);
+        char IConvertible.ToChar(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToChar(provider);
+        DateTime IConvertible.ToDateTime(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToDateTime(provider);
+        decimal IConvertible.ToDecimal(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToDecimal(provider);
+        double IConvertible.ToDouble(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToDouble(provider);
+        short IConvertible.ToInt16(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToInt16(provider);
+        int IConvertible.ToInt32(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToInt32(provider);
+        long IConvertible.ToInt64(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToInt64(provider);
+        sbyte IConvertible.ToSByte(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToSByte(provider);
+        float IConvertible.ToSingle(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToSingle(provider);
         /// <summary>
         /// 在继承元类的情况下，需要转换并返回到所求的类型。
         /// </summary>
         /// <param name="conversionType"></param>
         /// <param name="provider"></param>
         /// <returns></returns>
-        object IConvertible.ToType(Type conversionType, IFormatProvider provider)
+        object IConvertible.ToType(Type conversionType, IFormatProvider? provider)
         {
             if (this.GetType().IsAssignableFrom(conversionType))
             {
@@ -240,9 +241,9 @@ namespace FilmHouse.Core.ValueObjects
             }
             return ((IConvertible)this.AsPrimitiveCore()).ToType(conversionType, provider);
         }
-        ushort IConvertible.ToUInt16(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToUInt16(provider);
-        uint IConvertible.ToUInt32(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToUInt32(provider);
-        ulong IConvertible.ToUInt64(IFormatProvider provider) => ((IConvertible)this.AsPrimitiveCore()).ToUInt64(provider);
+        ushort IConvertible.ToUInt16(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToUInt16(provider);
+        uint IConvertible.ToUInt32(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToUInt32(provider);
+        ulong IConvertible.ToUInt64(IFormatProvider? provider) => ((IConvertible)this.AsPrimitiveCore()).ToUInt64(provider);
         #endregion
     }
 }

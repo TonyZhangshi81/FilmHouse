@@ -71,12 +71,16 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasMaxLength(200);
 
         builder.Property(e => e.Genres)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+            .HasColumnType("varchar(400)")
+            .HasMaxLength(400)
+            .IsUnicode(false)
+            .HasConversion<GenresVO.GenresValueConverter>();
 
         builder.Property(e => e.Languages)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+            .HasColumnType("varchar(400)")
+            .HasMaxLength(400)
+            .IsUnicode(false)
+            .HasConversion<LanguagesVO.LanguagesValueConverter>();
 
         builder.Property(e => e.Countries)
             .HasColumnType("varchar(100)")

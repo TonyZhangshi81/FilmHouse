@@ -49,10 +49,10 @@ public class MovieEntity : EntitiesBase
     public string Durations { get; set; }
 
     [Column(Order = 15)]
-    public string Genres { get; set; }
+    public GenresVO Genres { get; set; }
 
     [Column(Order = 16)]
-    public string Languages { get; set; }
+    public LanguagesVO Languages { get; set; }
 
     [Column(Order = 17)]
     public string Countries { get; set; }
