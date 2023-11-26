@@ -11,7 +11,7 @@ public class ConfigureEndpoints
 {
     public static Action<IEndpointRouteBuilder> FilmHouseEndpoints => endpoints =>
     {
-        endpoints.MapRazorPages();
+        //endpoints.MapRazorPages();
 
         endpoints.MapHealthChecks("/health", new HealthCheckOptions()
         {

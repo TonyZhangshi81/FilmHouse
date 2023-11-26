@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Data.Core.Utils
+namespace FilmHouse.Core.Utils.Data
 {
     /// <summary>
     /// 这是一个转换bool值和字符串值的转换器类。

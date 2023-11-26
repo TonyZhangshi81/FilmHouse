@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using FilmHouse.Data.Core.Utils;
-using FilmHouse.Data.Core.ValueObjects.Serialization;
+using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects;
 
 namespace Isid.Ilex.Core.Domain.ValueObjects
 {
@@ -382,7 +383,7 @@ namespace Isid.Ilex.Core.Domain.ValueObjects
                             {
                                 return null;
                             }
-                            var typeConverter = new FilmHouse.Data.Core.Utils.BooleanConverter();
+                            var typeConverter = new FilmHouse.Core.Utils.Data.BooleanConverter();
                             var booleanValue = (bool?)typeConverter.ConvertFrom(stringValue);
                             return booleanValue == null ? null : new AskStatusVO(booleanValue.Value);
                         }

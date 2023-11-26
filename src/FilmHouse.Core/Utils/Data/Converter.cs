@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Data.Core.Utils
+namespace FilmHouse.Core.Utils.Data
 {
     /// <summary>
     /// 向<see cref="Convert.ChangeType(object, Type)"/>添加转换类<see cref="DateOnly"/>

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FilmHouse.Data.Core.Utils;
+using FilmHouse.Core.Utils.Data;
 
-namespace FilmHouse.Data.Core.ValueObjects
+namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
     /// 它是一个包含返回表达式的接口，用于比较继承类与继承类。

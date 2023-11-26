@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Data.Core.ValueObjects
+namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
     /// 这是一个以enum为参数赋值对象的接口。

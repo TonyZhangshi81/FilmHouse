@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace FilmHouse.Data.Core.ValueObjects
+namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
     /// <see cref="DateTime"/>包含的值对象的，包含默认实现的接口。

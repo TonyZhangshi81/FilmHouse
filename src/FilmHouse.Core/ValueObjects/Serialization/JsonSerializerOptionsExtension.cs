@@ -5,7 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Data.Core.ValueObjects.Serialization
+namespace FilmHouse.Core.ValueObjects.Serialization
 {
     /// <summary>
     ///	是用于帮助JSON字符串的转换处理的扩展方法。

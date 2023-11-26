@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using FilmHouse.Data.Core.Utils;
-using FilmHouse.Data.Core.ValueObjects.Serialization;
+using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects.Serialization;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {

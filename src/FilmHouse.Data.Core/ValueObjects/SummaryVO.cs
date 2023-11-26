@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using FilmHouse.Data.Core.Utils;
-using FilmHouse.Data.Core.ValueObjects.Serialization;
+using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
@@ -19,7 +20,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(SummaryTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class SummaryVO : FilmHouse.Data.Core.ValueObjects.TextBase, IEquatable<SummaryVO>, IComparable<SummaryVO>, IValue<string>, IValueObject
+    public partial class SummaryVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<SummaryVO>, IComparable<SummaryVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 

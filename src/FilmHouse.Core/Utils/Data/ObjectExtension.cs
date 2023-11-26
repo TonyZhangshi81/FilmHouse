@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects;
 
-namespace FilmHouse.Data.Core.Utils
+namespace FilmHouse.Core.Utils.Data
 {
     public static class ObjectExtension
     {

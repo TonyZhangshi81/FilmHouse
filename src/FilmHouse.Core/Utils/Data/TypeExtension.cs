@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects;
 
-namespace FilmHouse.Data.Core.Utils
+namespace FilmHouse.Core.Utils.Data
 {
     /// <summary>
     /// 
@@ -58,7 +58,7 @@ namespace FilmHouse.Data.Core.Utils
             {
                 if (parameterType == typeof(bool))
                 {
-                    var booleanConverter = new Utils.BooleanConverter();
+                    var booleanConverter = new Utils.Data.BooleanConverter();
                     var typedValue = booleanConverter.ConvertFrom(value);
                     return typedValue!;
                 }

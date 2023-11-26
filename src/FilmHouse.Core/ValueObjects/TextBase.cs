@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using FilmHouse.Data.Core.Utils;
-using FilmHouse.Data.Core.ValueObjects.Serialization;
-using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects.Serialization;
+using FilmHouse.Core.ValueObjects;
 
-namespace FilmHouse.Data.Core.ValueObjects
+namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
     /// 是表示文本基本类型的值对象类。

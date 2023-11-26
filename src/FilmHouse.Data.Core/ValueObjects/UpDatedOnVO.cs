@@ -6,8 +6,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FilmHouse.Data.Core.Utils;
-using FilmHouse.Data.Core.ValueObjects.Serialization;
+using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects.Serialization;
+using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
@@ -19,7 +20,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(UpDatedOnTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class UpDatedOnVO : DateTimeValueObjectBase, IEquatable<UpDatedOnVO>, IComparable<UpDatedOnVO>, IValue<System.DateTime>, IValueObject
+    public partial class UpDatedOnVO : FilmHouse.Core.ValueObjects.DateTimeValueObjectBase, IEquatable<UpDatedOnVO>, IComparable<UpDatedOnVO>, IValue<System.DateTime>, IValueObject
     {
         private readonly System.DateTime _value;
 

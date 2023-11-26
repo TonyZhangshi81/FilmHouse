@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Data.Core.ValueObjects
+namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
     /// 它是一个从值对象获取值的接口。

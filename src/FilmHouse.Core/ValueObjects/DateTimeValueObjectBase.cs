@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FilmHouse.Data.Core.Utils;
+using FilmHouse.Core.Utils.Data;
 
-namespace FilmHouse.Data.Core.ValueObjects
+namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
     /// <see cref="DateTime"/>包含的值对象的，包含默认实现的接口。

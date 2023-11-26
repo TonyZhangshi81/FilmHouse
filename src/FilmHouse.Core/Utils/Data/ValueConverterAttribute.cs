@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Data.Core.Utils
+namespace FilmHouse.Core.Utils.Data
 {
     /// <summary>
     /// 为了指定能在EFCore中使用的ValueCoverter的属性。
