@@ -21,18 +21,18 @@
 
 <a id="jump_Album"></a>
 ### [影集] Album
-| 列明      |   类型   | 长度 | 标度 | 精度 | 非空 |  PK | 默认值 | 业务描述                                                     |
-| :-------- | :------: | ---: | ---: | ---: | ---: | --: | -----: | :----------------------------------------------------------- |
-| RequestId | varchar  |   36 |      |      |    v |     |        | GUID                                                         |
-| AlbumId   | varchar  |   50 |      |      |    v |   v |        | 主键                                                         |
-| Title     | nvarchar |   50 |      |      |    v |     |        | 影集名称                                                     |
-| UserId    | varchar  |   50 |      |      |    v |     |        | 登录者ID（与 UserAccount.Id 有外键关系）                     |
-| Item      | nvarchar |   -1 |      |      |      |     |        | 电影对象（以json格式保存的电影集合，与 Movie.Id 有外键关系） |
-| Summary   | nvarchar |   -1 |      |      |      |     |        | 简介                                                         |
-| Cover     | nvarchar |  100 |      |      |      |     |        | 封面（带扩展名）                                             |
-| Visit     |   int    |    4 |      |   10 |      |     |        | 关注数                                                       |
-| CreatedOn | datetime |    8 |    3 |   23 |    v |     |        | 创建时间                                                     |
-| UpDatedOn | datetime |    8 |    3 |   23 |      |     |        | 修改时间                                                     |
+| 列明            |   类型   | 长度 | 标度 | 精度 | 非空 |  PK | 默认值 | 业务描述                                                     |
+| :-------------- | :------: | ---: | ---: | ---: | ---: | --: | -----: | :----------------------------------------------------------- |
+| RequestId       | varchar  |   36 |      |      |    v |     |        | GUID                                                         |
+| AlbumId         | varchar  |   50 |      |      |    v |   v |        | 主键                                                         |
+| Title           | nvarchar |   50 |      |      |    v |     |        | 影集名称                                                     |
+| UserId          | varchar  |   50 |      |      |    v |     |        | 登录者ID（与 UserAccount.Id 有外键关系）                     |
+| Items           | nvarchar |   -1 |      |      |      |     |        | 电影对象（以json格式保存的电影集合，与 Movie.Id 有外键关系） |
+| Summary         | nvarchar |   -1 |      |      |      |     |        | 简介                                                         |
+| Cover           | nvarchar |  100 |      |      |      |     |        | 封面（带扩展名）                                             |
+| AmountAttention |   int    |    4 |      |   10 |      |     |        | 关注数                                                       |
+| CreatedOn       | datetime |    8 |    3 |   23 |    v |     |        | 创建时间                                                     |
+| UpDatedOn       | datetime |    8 |    3 |   23 |      |     |        | 修改时间                                                     |
 
 - Item的数据规则
   - ```[{"Movie":"m0002","Note":"","Time":"2023/10/23 23:21:03","MovieInfo":null},{"Movie":"m0003","Note":"","Time":"2023/10/23 23:39:22","MovieInfo":null}]```
@@ -140,7 +140,7 @@
 | Create      | varchar  |   50 |      |      |      |     |        | 登录者ID（与 UserAccount.Id 有外键关系）                                 |
 | Status      | tinyint  |    1 |      |      |      |     |      0 | 状态（0:默认值 1:评审不通过 2:通过）                                     |
 | Note        | nvarchar |  100 |      |      |      |     |        | 评审信息（0:内容有误 1:已经存在 other:其他）                             |
-| VisitCount  |   int    |    4 |      |   10 |      |     |        | 浏览量                                                                   |
+| PageViews   |   int    |   11 |      |   10 |      |     |        | 浏览量                                                                   |
 | CreatedOn   | datetime |    8 |    3 |   23 |    v |     |        | 创建时间                                                                 |
 | UpDatedOn   | datetime |    8 |    3 |   23 |      |     |        | 修改时间                                                                 |
 
@@ -161,8 +161,8 @@
   - 评审电影信息时（不通过）：Status = 1 && Note = "（0:内容有误 1:已经存在 other:其他）"
 
 - 电影最新与热门的数据规则
-  - 最新：Status = 1（以 Time 降序取前20件数据）
-  - 热门：Status = 2（以 VisitCount 降序取前20件数据）
+  - 最新：Status = 1（以 CreatedOn 降序取前20件数据）
+  - 热门：Status = 2（以 PageViews 降序取前20件数据）
   
 
 #### <span style="display:block;color:orangered;">(Country、GenreMovie、Language 这三个实体使用CodeMast进行管理)</span>

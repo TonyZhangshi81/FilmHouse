@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -9,36 +10,47 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
 {
     public void Configure(EntityTypeBuilder<CodeMastEntity> builder)
     {
-        builder.HasKey(e => new { e.Type, e.CodeId });
-        builder.HasAnnotation("SqlServer:Name", "type_codeid_ix00");
+        builder.HasKey(e => new { e.Group, e.Code });
+        builder.HasAnnotation("SqlServer:Name", "group_code_ix00");
 
         builder.ToTable("CodeMast");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
-        builder.Property(e => e.Type)
+        builder.Property(e => e.Group)
             .IsRequired()
-            .HasColumnType("varchar(10)")
-            .HasMaxLength(10);
+            .HasColumnType("varchar(20)")
+            .HasMaxLength(20)
+            .HasConversion<CodeGroupVO.CodeGroupValueConverter>();
 
-        builder.Property(e => e.CodeId)
+        builder.Property(e => e.Code)
             .IsRequired()
-            .HasColumnType("varchar(10)")
-            .HasMaxLength(10);
+            .HasColumnType("varchar(20)")
+            .HasMaxLength(20)
+            .HasConversion<CodeKeyVO.CodeKeyValueConverter>();
 
-        builder.Property(e => e.CodeValue)
+        builder.Property(e => e.Name)
             .IsRequired()
             .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasConversion<CodeValueVO.CodeValueConverter>();
+
+        builder.Property(e => e.Order)
+            .IsRequired()
+            .HasColumnType("numeric(3)")
+            .HasConversion<SortOrderVO.SortOrderValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

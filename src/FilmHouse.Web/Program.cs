@@ -1,21 +1,25 @@
 using System.Globalization;
 using System.Net;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using AspNetCoreRateLimit;
-using FilmHouse.Business;
+using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.Utils;
+using FilmHouse.Core.Utils.PasswordGenerator;
 using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
 using FilmHouse.Mvc.Health;
 using FilmHouse.Mvc.SecurityHeaders;
-using FilmHouse.Utils;
-using FilmHouse.Utils.PasswordGenerator;
 using FilmHouse.Web;
 using FilmHouse.Web.Configuration;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.WebEncoders;
 using Microsoft.Net.Http.Headers;
 using NLog.Web;
 using Spectre.Console;
@@ -112,7 +116,21 @@ void ConfigureServices(IServiceCollection services)
     });
     builder.Host.UseNLog();
 
-    AppDomain.CurrentDomain.Load("FilmHouse.Business");
+    services.Configure<WebEncoderOptions>(options =>
+    {
+        // https://www.cnblogs.com/cdaniu/p/16024229.html
+        options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
+    });
+
+    // https://www.cnblogs.com/chenxi001/p/13363786.html
+    services.AddMemoryCache();
+
+    // https://www.cnblogs.com/chenxi001/p/13308860.html
+    services.AddResponseCaching();
+
+    // DI的批量登录设定
+    var assemblies = StartupCore.GetAppAssemblies(true);
+    services.AddLocalService(assemblies);
 
     services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
     services.AddOptions()
@@ -153,7 +171,7 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddHealthChecksUI()
             .AddInMemoryStorage();
-    services.AddCustomerHealthChecks(builder.Configuration);
+    services.AddCustomerHealthChecks();
 
     // Fix Chinese character being encoded in HTML output
     services.AddSingleton(Encoder.FilmHouseHtmlEncoder);
@@ -168,7 +186,8 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-    services.AddTransient<IPasswordGenerator, DefaultPasswordGenerator>();
+    // 以下服务通过AddLocalService进行批量注册处理
+    //services.AddTransient<IPasswordGenerator, DefaultPasswordGenerator>();
 
     switch (dbType!.ToLower())
     {
@@ -212,7 +231,7 @@ async Task FirstRun()
         if (startUpResut == StartupInitResult.DatabaseConnectionFail)
         {
             app.MapGet("/", () => Results.Problem(
-                detail: "Database connection test failed, please check your connection string and firewall settings, then RESTART FilmHouse manually.",
+                detail: "数据库连接测试失败，请检查您的连接字符串和防火墙设置，然后手动重启FilmHouse",
                 statusCode: 500
                 ));
             app.Run();
@@ -220,7 +239,15 @@ async Task FirstRun()
         else if (startUpResut == StartupInitResult.DatabaseSetupFail)
         {
             app.MapGet("/", () => Results.Problem(
-                detail: "Database setup failed, please check error log, then RESTART FilmHouse manually.",
+                detail: "数据库设置失败，请检查错误日志，然后手动重启FilmHouse",
+                statusCode: 500
+            ));
+            app.Run();
+        }
+        else if (startUpResut == StartupInitResult.CodeDataCacheFail)
+        {
+            app.MapGet("/", () => Results.Problem(
+                detail: "数据缓存处理出错，请检查错误日志，然后手动重启FilmHouse",
                 statusCode: 500
             ));
             app.Run();
@@ -228,43 +255,62 @@ async Task FirstRun()
     }
     catch (Exception e)
     {
-        app.MapGet("/", _ => throw new("Start up failed: " + e.Message));
+        app.MapGet("/", _ => throw new("启动失败: " + e.Message));
         app.Run();
     }
 }
 
 void ConfigureMiddleware()
 {
-    /*
-    if (!app.Environment.IsProduction())
-    {
-        app.Logger.LogWarning($"Running in environment: {app.Environment.EnvironmentName}. Application Insights disabled.");
-
-        var tc = app.Services.GetRequiredService<TelemetryConfiguration>();
-        tc.DisableTelemetry = true;
-        TelemetryDebugWriter.IsTracingDisabled = true;
-    }
-    */
-
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
     }
     else
     {
-        app.UseStatusCodePages(ConfigureStatusCodePages.Handler).UseExceptionHandler("/error");
-        app.UseHsts();
+        //app.UseStatusCodePages(ConfigureStatusCodePages.Handler).UseExceptionHandler("/error");
+        //app.UseHsts();
+        app.UseExceptionHandler(configure => configure.Run(async context =>
+        {
+            var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+            if (exceptionHandlerPathFeature != null)
+            {
+                var exception = exceptionHandlerPathFeature.Error;
+                switch (exception)
+                {
+                    default:
+                        context.Response.StatusCode = 200;
+                        context.Response.Redirect("/error", true);
+                        break;
+                }
+            }
+
+            await Task.CompletedTask;
+        }));
     }
 
     app.UseHttpsRedirection();
     app.UseStaticFiles(new StaticFileOptions
     {
+        // https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/static-files?view=aspnetcore-7.0
         OnPrepareResponse = ctx =>
         {
-            const int durationInSeconds = 24 * 60 * 60; // 24 hours
+            const int durationInSeconds = 24 * 60 * 60;
             ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=" + durationInSeconds;
         }
     });
+
+    app.UseRequestLocalization(new RequestLocalizationOptions
+    {
+        DefaultRequestCulture = new("en-US"),
+        SupportedCultures = cultures,
+        SupportedUICultures = cultures
+    });
+
+    // address: https://localhost:7144/healthchecks-ui#/healthchecks
+    app.UseHealthChecksUI();
+
+
     app.UseCookiePolicy();
     app.UseSecurityHeaders(builder =>
     {
@@ -294,14 +340,12 @@ void ConfigureMiddleware()
 
         builder.ReferrerPolicy = ReferrerPolicies.NoReferrerWhenDowngrade;
     });
-    app.UseRequestLocalization(new RequestLocalizationOptions
-    {
-        DefaultRequestCulture = new("en-US"),
-        SupportedCultures = cultures,
-        SupportedUICultures = cultures
-    });
+
     app.UseIpRateLimiting();
     app.UseRouting();
+
+    app.UseResponseCaching();
+
     app.UseAuthentication();
     app.UseAuthorization();
 
@@ -310,3 +354,4 @@ void ConfigureMiddleware()
 #pragma warning restore ASP0014
 
 }
+

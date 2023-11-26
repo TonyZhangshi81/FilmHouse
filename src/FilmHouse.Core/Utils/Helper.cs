@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace FilmHouse.Utils;
+namespace FilmHouse.Core.Utils;
 
 public static class Helper
 {

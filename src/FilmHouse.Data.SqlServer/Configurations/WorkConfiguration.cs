@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -16,7 +17,8 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.WorkId)
             .IsRequired()
@@ -24,23 +26,25 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 
         builder.Property(e => e.MovieId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
-
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.CelebrityId)
             .IsRequired()
             .HasColumnType("uniqueidentifier");
 
         builder.Property(e => e.Type)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("tinyint");
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

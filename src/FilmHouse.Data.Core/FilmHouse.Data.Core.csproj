@@ -3,16 +3,23 @@
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Utils\**" />
+	  <EmbeddedResource Remove="Utils\**" />
+	  <None Remove="Utils\**" />
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.13" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.13" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 		<PackageReference Include="NLog" Version="5.2.5" />
 		<PackageReference Include="NLog.Extensions.Logging" Version="5.3.5" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="DataAnnotations\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\FilmHouse.Core\FilmHouse.Core.csproj" />
 	</ItemGroup>
 
 </Project>

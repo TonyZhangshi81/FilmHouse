@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -16,7 +17,8 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.CommentId)
             .IsRequired()
@@ -24,11 +26,13 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.MovieId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.Content)
             .HasColumnType("varchar(max)");
@@ -38,10 +42,12 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

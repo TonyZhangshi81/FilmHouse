@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -15,7 +16,8 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
 
         builder.Property(e => e.RequestId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.NoticeId)
             .IsRequired()
@@ -31,21 +33,24 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
 
         builder.Property(e => e.UserId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.Time)
             .HasColumnType("timestamp(3)");
 
         builder.Property(e => e.Flag)
-            .HasDefaultValue(0)
+            .HasDefaultValue("0")
             .HasColumnType("smallint");
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("timestamp(3)");
+            .HasColumnType("timestamp(3)")
+            .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("timestamp(3)");
+            .HasColumnType("timestamp(3)")
+            .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
 }

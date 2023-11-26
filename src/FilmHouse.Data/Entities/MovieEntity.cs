@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.Entities;
 
@@ -10,11 +9,11 @@ public class MovieEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid MovieId { get; set; }
+    public MovieIdVO MovieId { get; set; }
 
     [Column(Order = 3)]
     [Required]
-    public string Title { get; set; }
+    public MovieTitleVO Title { get; set; }
 
     [Column(Order = 4)]
     public string TitleEn { get; set; }
@@ -50,10 +49,10 @@ public class MovieEntity : EntitiesBase
     public string Durations { get; set; }
 
     [Column(Order = 15)]
-    public string Genres { get; set; }
+    public GenresVO Genres { get; set; }
 
     [Column(Order = 16)]
-    public string Languages { get; set; }
+    public LanguagesVO Languages { get; set; }
 
     [Column(Order = 17)]
     public string Countries { get; set; }
@@ -71,22 +70,22 @@ public class MovieEntity : EntitiesBase
     public string IMDb { get; set; }
 
     [Column(Order = 22)]
-    public string Summary { get; set; }
+    public SummaryVO Summary { get; set; }
 
     [Column(Order = 23)]
     public string Avatar { get; set; }
 
     [Column(Order = 24)]
     [Required]
-    public Guid UserId { get; set; }
+    public UserIdVO UserId { get; set; }
 
     [Column(Order = 25)]
     public Int16 ReviewStatus { get; set; }
 
     [Column(Order = 26)]
-    public string ReviewNote { get; set; }
+    public NoteVO Note { get; set; }
 
     [Column(Order = 27)]
-    public Int64 VisitCount { get; set; }
-
+    public PageViewsVO PageViews { get; set; }
+    
 }

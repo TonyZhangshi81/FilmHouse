@@ -1,4 +1,5 @@
-﻿using FilmHouse.Data.Entities;
+﻿using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Data.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace FilmHouse.Data;
@@ -11,8 +12,8 @@ public class Seed
 
         try
         {
-            var uuid = Guid.NewGuid();
-            var sysDate = System.DateTime.Now;
+            var uuid = new RequestIdVO(Guid.NewGuid());
+            var sysDate = new CreatedOnVO(System.DateTime.Now);
 
             await dbContext.Configuration.AddRangeAsync(GetInitConfigurationSettings(uuid, sysDate));
             await dbContext.CodeMast.AddRangeAsync(GetInitCodeMastSettings(uuid, sysDate));
@@ -34,7 +35,7 @@ public class Seed
         }
     }
 
-    private static IEnumerable<ConfigurationEntity> GetInitConfigurationSettings(Guid uuid, DateTime dateTime) =>
+    private static IEnumerable<ConfigurationEntity> GetInitConfigurationSettings(RequestIdVO uuid, CreatedOnVO dateTime) =>
         new List<ConfigurationEntity>
         {
             new() { RequestId = uuid, Key = "WebSiteSettings:Name", Value = "DEMO", CreatedOn = dateTime },
@@ -45,25 +46,25 @@ public class Seed
             new() { RequestId = uuid, Key = "WebSiteSettings:UnobtrusiveJavaScriptEnabled", Value = "false", CreatedOn = dateTime },
         };
 
-    private static IEnumerable<CodeMastEntity> GetInitCodeMastSettings(Guid uuid, DateTime dateTime) =>
+    private static IEnumerable<CodeMastEntity> GetInitCodeMastSettings(RequestIdVO uuid, CreatedOnVO dateTime) =>
         new List<CodeMastEntity>
         {
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "001", CodeValue = "剧情", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "002", CodeValue = "爱情", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "003", CodeValue = "奇幻", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "004", CodeValue = "惊悚", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "005", CodeValue = "喜剧", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "006", CodeValue = "动作", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "007", CodeValue = "科幻", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "008", CodeValue = "冒险", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "GenreMovie", CodeId = "009", CodeValue = "悬疑", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("001"), Name = new CodeValueVO("剧情"), Order = new SortOrderVO(1), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("002"), Name = new CodeValueVO("爱情"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("003"), Name = new CodeValueVO("奇幻"), Order = new SortOrderVO(3), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("004"), Name = new CodeValueVO("惊悚"), Order = new SortOrderVO(4), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("005"), Name = new CodeValueVO("喜剧"), Order = new SortOrderVO(5), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("006"), Name = new CodeValueVO("动作"), Order = new SortOrderVO(6), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("007"), Name = new CodeValueVO("科幻"), Order = new SortOrderVO(7), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("008"), Name = new CodeValueVO("冒险"), Order = new SortOrderVO(8), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("GenreMovie"), Code = new CodeKeyVO("009"), Name = new CodeValueVO("悬疑"), Order = new SortOrderVO(9), CreatedOn  = dateTime },
 
-            new() { RequestId = uuid, Type = "Language", CodeId = "001", CodeValue = "英语", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "Language", CodeId = "002", CodeValue = "法语", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "Language", CodeId = "003", CodeValue = "意大利语", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("Language"), Code = new CodeKeyVO("001"), Name = new CodeValueVO("英语"), Order = new SortOrderVO(1), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("Language"), Code = new CodeKeyVO("002"), Name = new CodeValueVO("法语"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("Language"), Code = new CodeKeyVO("003"), Name = new CodeValueVO("意大利语"), Order = new SortOrderVO(3), CreatedOn  = dateTime },
 
-            new() { RequestId = uuid, Type = "Country", CodeId = "001", CodeValue = "美国", CreatedOn  = dateTime },
-            new() { RequestId = uuid, Type = "Country", CodeId = "002", CodeValue = "澳大利亚", CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("Country"), Code = new CodeKeyVO("001"), Name = new CodeValueVO("美国"), Order = new SortOrderVO(1), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = new CodeGroupVO("Country"), Code = new CodeKeyVO("002"), Name = new CodeValueVO("澳大利亚"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
 
         };
 
