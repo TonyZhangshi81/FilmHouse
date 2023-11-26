@@ -193,13 +193,14 @@
 | 列明      |   类型   | 长度 | 标度 | 精度 | 非空 |  PK | 默认值 | 业务描述 |
 | :-------- | :------: | ---: | ---: | ---: | ---: | --: | -----: | :------- |
 | RequestId | varchar  |   36 |      |      |    v |     |        | GUID     |
-| Type      | varchar  |    1 |      |    3 |    v |   v |        | 类别     |
-| CodeId    | varchar  |   50 |      |      |    v |     |        | KEY      |
-| CodeValue | varchar  |   50 |      |      |    v |     |        | VALUE    |
+| Group     | varchar  |    1 |      |    3 |    v |   v |        | 类别     |
+| Code      | varchar  |   50 |      |      |    v |     |        | KEY      |
+| Name      | varchar  |   50 |      |      |    v |     |        | 值       |
+| Order     |   int    |    3 |      |      |    v |     |        | 排序顺   |
 | CreatedOn | datetime |    8 |    3 |   23 |    v |     |        | 创建时间 |
 | UpDatedOn | datetime |    8 |    3 |   23 |      |     |        | 修改时间 |
 
-- 以下是 Type 的分类规则
+- 以下是 Group 的分类规则
   - Country 代表国家/地区（001:剧情; 002:爱情; 003:奇幻; 004:惊悚...... ）
   - GenreMovie 电影类型（001:英语; 002:法语; 003:意大利语...... ）
   - Language 代表语言（001:美国; 002:澳大利亚......）
