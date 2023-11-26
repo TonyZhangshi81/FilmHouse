@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -12,27 +12,31 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// AskStatus的值对象类。
+    /// 表示排序的值对象类。进行与原始型的隐性分配。
     /// </summary>
-    [JsonConverter(typeof(AskStatusJsonConverter))]
-    [ValueConverter(typeof(AskStatusValueConverter), typeof(AskStatusArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(AskStatusTypeConverter))]
+    [JsonConverter(typeof(SortOrderJsonConverter))]
+    [ValueConverter(typeof(SortOrderValueConverter), typeof(SortOrderArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(SortOrderTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class AskStatusVO : IEquatable<AskStatusVO>, IComparable<AskStatusVO>, IConvertible, IValue<bool>, IValueObject
+    public partial class SortOrderVO : IEquatable<SortOrderVO>, IComparable<SortOrderVO>, IFormattable, IConvertible, IValue<int>, IValueObject
     {
-        private readonly bool _value;
+        private readonly int _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "AskStatus";
+        public const string TypeName = "SortOrder";
 
+        /// <summary>
+        /// 取得作为数值的最大位数。
+        /// </summary>
+        public const int Precision = 3;
 
         /// <summary>
         /// 获取值对象包含的原始类型。
         /// </summary>
-        public bool AsPrimitive() => this._value;
+        public int AsPrimitive() => this._value;
         /// <summary>
         /// 是不依赖句式而获取原始句式的方法。
         /// </summary>
@@ -40,36 +44,36 @@ namespace FilmHouse.Data.Core.ValueObjects
         public object AsPrimitiveObject() => this.AsPrimitive();
 
         /// <summary>
-        /// <see cref="AskStatusVO"/>的新实例。
+        /// <see cref="SortOrderVO"/>是不依赖句式而取得原始句式的方法。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public AskStatusVO(bool value)
+        public SortOrderVO(int value)
         {
             this.PreProcess(ref value);
             this._value = value;
             this.Validate();
         }
 
-        partial void PreProcess(ref bool value);
+        partial void PreProcess(ref int value);
 
         partial void Validate();
 
         /// <summary>
-        /// <see cref="bool"/>向<see cref="AskStatusVO"/>进行隐式转换
+        /// <see cref="int"/>向<see cref="SortOrderVO"/>对的隐性的角色扮演。
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator bool(AskStatusVO value)
+        public static implicit operator int(SortOrderVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="AskStatusVO"/>向<see cref="bool"/>进行隐式转换
+        /// <see cref="SortOrderVO"/>向<see cref="int"/>对的隐性的角色扮演。
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator AskStatusVO(bool value)
+        public static implicit operator SortOrderVO(int value)
         {
-            return new AskStatusVO(value);
+            return new SortOrderVO(value);
         }
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in AskStatusVO? x, in AskStatusVO? y)
+        internal static bool Equals(in SortOrderVO? x, in SortOrderVO? y)
         {
             if (x is null && y is null)
             {
@@ -92,11 +96,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// <see cref="bool"/>对句式和包含的原始句式进行比较处理。
+        /// 对<see cref="int"/>型和包含的原始型进行比较处理。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(AskStatusVO? other)
+        public bool Equals(SortOrderVO? other)
         {
             return Equals(this, other);
         }
@@ -113,13 +117,13 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(AskStatusVO).IsAssignableFrom(t))
+            if (typeof(SortOrderVO).IsAssignableFrom(t))
             {
-                return Equals((AskStatusVO)obj);
+                return Equals((SortOrderVO)obj);
             }
-            if (t == typeof(bool))
+            if (t == typeof(int))
             {
-                return this._value.Equals((bool)obj);
+                return this._value.Equals((int)obj);
             }
 
             return this._value.Equals(obj);
@@ -141,6 +145,20 @@ namespace FilmHouse.Data.Core.ValueObjects
             return string.Format("{0}", this._value);
         }
 
+        /// <summary>
+        /// 返回表示当前对象的字符串。
+        /// </summary>
+        /// <param name="format">格式字符串</param>
+        /// <returns>表示当前对象的字符串</returns>
+        public virtual string ToString(string? format) => this.AsPrimitive().ToString(format);
+
+        /// <summary>
+        /// 返回表示当前对象的字符串。
+        /// </summary>
+        /// <param name="format">格式字符串</param>
+        /// <param name="provider">用于设定值格式的提供商</param>
+        /// <returns>表示当前对象的字符串</returns>
+        public virtual string ToString(string? format, IFormatProvider? provider) => this.AsPrimitive().ToString(format, provider);
 
         /// <summary>
         /// 
@@ -246,17 +264,17 @@ namespace FilmHouse.Data.Core.ValueObjects
         ulong IConvertible.ToUInt64(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToUInt64(provider);
 
         /// <summary>
-        /// 是否等于
+        /// 是否相等
         /// </summary>
-        public static bool operator ==(in AskStatusVO? x, in AskStatusVO? y)
+        public static bool operator ==(in SortOrderVO? x, in SortOrderVO? y)
         {
             return Equals(x, y);
         }
 
         /// <summary>
-        /// 是否不等于
+        /// 是否不相等
         /// </summary>
-        public static bool operator !=(in AskStatusVO? x, in AskStatusVO? y)
+        public static bool operator !=(in SortOrderVO? x, in SortOrderVO? y)
         {
             return !Equals(x, y);
         }
@@ -264,80 +282,155 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ParseMethod
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="AskStatusVO" />转换成句式。
+        /// 将字符串形式的值转换为等价的<see cref="SortOrderVO"/>型。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <returns><see cref="AskStatusVO"/>型的值</returns>
-        public static AskStatusVO Parse(string s)
+        /// <returns><see cref="SortOrderVO"/>型的值</returns>
+        public static SortOrderVO Parse(string s)
         {
-            return new AskStatusVO(bool.Parse(s));
+            return new SortOrderVO(int.Parse(s));
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="AskStatusVO" />转换成句式，返回表示转换成功与否的值。
+        /// 将字符串形式的值转换为等价的<see cref="SortOrderVO"/>型，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <param name="result"><see cref="AskStatusVO"/>型的值</param>
+        /// <param name="result"><see cref="SortOrderVO"/>型的值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
-        public static bool TryParse(string s, out AskStatusVO? result)
+        public static bool TryParse(string s, out SortOrderVO? result)
         {
-            if (bool.TryParse(s, out var r))
+            if (int.TryParse(s, out var r))
             {
-                result = new AskStatusVO(r);
+                result = new SortOrderVO(r);
                 return true;
             }
             else
             {
-                result = default(AskStatusVO);
+                result = default(SortOrderVO);
                 return false;
             }
         }
 
 
-
-        // Default
+        // UnitGenerateOptions.MinMaxMethod
 
         /// <summary>
-        /// true 运算符
+        /// 小さい方を返します。
         /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public static bool operator true(AskStatusVO x)
+        /// <param name="x">最初の値</param>
+        /// <param name="y">2番目の値</param>
+        /// <returns>パラメーターのいずれか小さい方</returns>
+        public static SortOrderVO Min(SortOrderVO x, SortOrderVO y)
         {
-            return x._value;
+            return new SortOrderVO(Math.Min(x._value, y._value));
         }
 
         /// <summary>
-        /// false 运算符
+        /// 大きい方を返します。
         /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public static bool operator false(AskStatusVO x)
+        /// <param name="x">最初の値</param>
+        /// <param name="y">2番目の値</param>
+        /// <returns>パラメーターのいずれか大きい方</returns>
+        public static SortOrderVO Max(SortOrderVO x, SortOrderVO y)
         {
-            return !x._value;
-        }
-
-        /// <summary>
-        /// not 运算符
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public static bool operator !(AskStatusVO x)
-        {
-            return !x._value;
+            return new SortOrderVO(Math.Max(x._value, y._value));
         }
 
 
 
-
-        // UnitGenerateOptions.ComparableInterfaceOnly
+        // UnitGenerateOptions.ValueArithmeticOperator
 
         /// <summary>
-        /// 将该实例<paramref name="other" />和比较。
+        /// インクリメント演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static SortOrderVO operator ++(in SortOrderVO x)
+        {
+            checked
+            {
+                return new SortOrderVO((int)(x._value + 1));
+            }
+        }
+
+        /// <summary>
+        /// デクリメント演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static SortOrderVO operator --(in SortOrderVO x)
+        {
+            checked
+            {
+                return new SortOrderVO((int)(x._value - 1));
+            }
+        }
+
+        /// <summary>
+        /// 加算演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static SortOrderVO operator +(in SortOrderVO x, in int y)
+        {
+            checked
+            {
+                return new SortOrderVO((int)(x._value + y));
+            }
+        }
+
+        /// <summary>
+        /// 減算演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static SortOrderVO operator -(in SortOrderVO x, in int y)
+        {
+            checked
+            {
+                return new SortOrderVO((int)(x._value - y));
+            }
+        }
+
+        /// <summary>
+        /// 乗算演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static SortOrderVO operator *(in SortOrderVO x, in int y)
+        {
+            checked
+            {
+                return new SortOrderVO((int)(x._value * y));
+            }
+        }
+
+        /// <summary>
+        /// 除算演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static SortOrderVO operator /(in SortOrderVO x, in int y)
+        {
+            checked
+            {
+                return new SortOrderVO((int)(x._value / y));
+            }
+        }
+
+
+        // UnitGenerateOptions.Comparable
+
+        /// <summary>
+        /// このインスタンスを<paramref name="other"/>と比較します。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(AskStatusVO? other)
+        public int CompareTo(SortOrderVO? other)
         {
             if (other == null)
             {
@@ -346,31 +439,75 @@ namespace FilmHouse.Data.Core.ValueObjects
             return this._value.CompareTo(other._value);
         }
 
+        /// <summary>
+        /// 大なり演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool operator >(in SortOrderVO x, in SortOrderVO y)
+        {
+            return x._value > y._value;
+        }
+
+        /// <summary>
+        /// 小なり演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool operator <(in SortOrderVO x, in SortOrderVO y)
+        {
+            return x._value < y._value;
+        }
+
+        /// <summary>
+        /// 以上演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool operator >=(in SortOrderVO x, in SortOrderVO y)
+        {
+            return x._value >= y._value;
+        }
+
+        /// <summary>
+        /// 以下演算子
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool operator <=(in SortOrderVO x, in SortOrderVO y)
+        {
+            return x._value <= y._value;
+        }
+
 
         // UnitGenerateOptions.JsonConverter
-        private class AskStatusJsonConverter : JsonConverter<AskStatusVO>
+        private class SortOrderJsonConverter : JsonConverter<SortOrderVO>
         {
-            public override void Write(Utf8JsonWriter writer, AskStatusVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, SortOrderVO value, JsonSerializerOptions options)
             {
-                var converter = options.GetConverter(typeof(bool)) as JsonConverter<bool>;
+                var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
                 if (converter != null)
                 {
                     converter.Write(writer, value._value, options);
                 }
                 else
                 {
-                    throw new JsonException($"{typeof(bool)} converter does not found.");
+                    throw new JsonException($"{typeof(int)} converter does not found.");
                 }
             }
 
-            public override AskStatusVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override SortOrderVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var converter = options.GetConverter(typeof(bool)) as JsonConverter<bool>;
+                var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
                 if (converter != null)
                 {
                     try
                     {
-                        if (reader.TokenType == JsonTokenType.String)
+                        if (reader.TokenType == JsonTokenType.String && (JsonNumberHandling.AllowReadingFromString & options.NumberHandling) != 0)
                         {
                             var stringConverter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                             if (stringConverter == null)
@@ -378,21 +515,16 @@ namespace FilmHouse.Data.Core.ValueObjects
                                 throw options.GetConvertFailureException(typeToConvert);
                             }
                             var stringValue = stringConverter.Read(ref reader, typeToConvert, options);
-                            if (stringValue == null)
-                            {
-                                return null;
-                            }
-                            var typeConverter = new FilmHouse.Core.Utils.Data.BooleanConverter();
-                            var booleanValue = (bool?)typeConverter.ConvertFrom(stringValue);
-                            return booleanValue == null ? null : new AskStatusVO(booleanValue.Value);
+                            var typeConverter = TypeDescriptor.GetConverter(typeof(SortOrderVO));
+                            return (SortOrderVO?)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
                         }
 
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return new AskStatusVO(value);
+                        return new SortOrderVO(value);
                     }
                     catch (Exception exception)
                     {
-                        throw options.GetInvalidValueException(ref reader, typeof(bool), exception);
+                        throw options.GetInvalidValueException(ref reader, typeof(int), exception);
                     }
                 }
                 else
@@ -407,106 +539,106 @@ namespace FilmHouse.Data.Core.ValueObjects
 
         // UnitGenerateOptions.EntityFrameworkValueConverter
         /// <summary>
-        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
+        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
         /// </summary>
-        public class AskStatusValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AskStatusVO?, bool?>
+        public class SortOrderValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SortOrderVO?, int?>
         {
             /// <summary>
-            /// <see cref="AskStatusValueConverter"/>的新实例。
+            /// <see cref="SortOrderValueConverter"/>是不依赖句式而取得原始句式的方法。
             /// </summary>
-            public AskStatusValueConverter()
+            public SortOrderValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="AskStatusValueConverter"/>的新实例。
+            /// <see cref="SortOrderValueConverter"/>是不依赖句式而取得原始句式的方法。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public AskStatusValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public SortOrderValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new AskStatusVO(x.Value) : null,
+                        convertFromProviderExpression: x => x != null ? new SortOrderVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
 
             /// <summary>
-            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
+            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
-                bool value => value,
-                AskStatusVO value => value._value,
+                int value => value,
+                SortOrderVO value => value._value,
                 _ => null,
             };
 
             /// <summary>
-            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
+            /// ストアからデータを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                AskStatusVO value => value,
-                bool value => new AskStatusVO(value),
+                SortOrderVO value => value,
+                int value => new SortOrderVO(value),
                 _ => null,
             };
         }
 
         /// <summary>
-        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
+        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
         /// </summary>
-        public class AskStatusArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<AskStatusVO?[], bool?[]>
+        public class SortOrderArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SortOrderVO?[], int?[]>
         {
             /// <summary>
-            /// <see cref="AskStatusArrayValueConverter"/>的新实例。
+            /// <see cref="SortOrderArrayValueConverter"/>是不依赖句式而取得原始句式的方法。
             /// </summary>
-            public AskStatusArrayValueConverter()
+            public SortOrderArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="AskStatusArrayValueConverter"/>的新实例。
+            /// <see cref="SortOrderArrayValueConverter"/>是不依赖句式而取得原始句式的方法。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public AskStatusArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public SortOrderArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
-                        convertToProviderExpression: x => x.Select(_ => _ == null ? (bool?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new AskStatusVO(_.Value)).ToArray(),
+                        convertToProviderExpression: x => x.Select(_ => _ == null ? (int?)null : _._value).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
 
             /// <summary>
-            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
+            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
-                bool?[] values => values,
-                AskStatusVO?[] values => values.Select(_ => _?._value).ToArray(),
-                IEnumerable<bool?> values => values.ToArray(),
-                IEnumerable<AskStatusVO?> values => values.Select(_ => _?._value).ToArray(),
+                int?[] values => values,
+                SortOrderVO?[] values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<int?> values => values.ToArray(),
+                IEnumerable<SortOrderVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
             /// <summary>
-            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
+            /// ストアからデータを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                AskStatusVO?[] values => values,
-                bool?[] values => values.Select(_ => _ == null ? null : new AskStatusVO(_.Value)).ToArray(),
-                IEnumerable<AskStatusVO?> values => values.ToArray(),
-                IEnumerable<bool?> values => values.Select(_ => _ == null ? null : new AskStatusVO(_.Value)).ToArray(),
+                SortOrderVO?[] values => values,
+                int?[] values => values.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
+                IEnumerable<SortOrderVO?> values => values.ToArray(),
+                IEnumerable<int?> values => values.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class AskStatusTypeConverter : System.ComponentModel.TypeConverter
+        private class SortOrderTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(AskStatusVO);
-            private static readonly Type ValueType = typeof(bool);
+            private static readonly Type WrapperType = typeof(SortOrderVO);
+            private static readonly Type ValueType = typeof(int);
             private static readonly Type BindingValueType = typeof(string);
 
             public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, Type sourceType)
@@ -535,17 +667,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(AskStatusVO))
+                if (t == typeof(SortOrderVO))
                 {
-                    return (AskStatusVO)value;
+                    return (SortOrderVO)value;
                 }
-                if (t == typeof(bool))
+                if (t == typeof(int))
                 {
-                    return new AskStatusVO((bool)value);
+                    return new SortOrderVO((int)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new AskStatusVO(bool.Parse((string)value));
+                    return new SortOrderVO(int.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -558,7 +690,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is AskStatusVO wrappedValue)
+                if (value is SortOrderVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

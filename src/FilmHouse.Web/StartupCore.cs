@@ -13,7 +13,7 @@ namespace FilmHouse.Web
         /// 列举应用程序的运行路径和下面的文件夹中的配件。
         /// </summary>
         /// <param name="distinct">是否排除重复的组合件文件名</param>
-        /// <returns>列举的组合件。列举顺序是按照组合件名称的长短顺序。(为了让Isid.Ilex.Core系统最先被读取)</returns>
+        /// <returns>列举的组合件。列举顺序是按照组合件名称的长短顺序。(为了让FilmHouse系统最先被读取)</returns>
         internal static IEnumerable<Assembly> GetAppAssemblies(bool distinct)
         {
             var rootDir = AppDomain.CurrentDomain.BaseDirectory;

@@ -545,7 +545,7 @@ namespace FilmHouse.Data.Core.ValueObjects
 
         // UnitGenerateOptions.EntityFrameworkValueConverter
         /// <summary>
-        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
+        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
         public class PageViewsValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<PageViewsVO?, long?>
         {
@@ -570,7 +570,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             }
 
             /// <summary>
-            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
@@ -580,7 +580,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             };
 
             /// <summary>
-            /// ストア向データを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当读取存储数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
@@ -591,7 +591,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
+        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
         public class PageViewsArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<PageViewsVO?[], long?[]>
         {
@@ -616,7 +616,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             }
 
             /// <summary>
-            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
@@ -628,7 +628,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             };
 
             /// <summary>
-            /// ストア向データを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当读取存储数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
