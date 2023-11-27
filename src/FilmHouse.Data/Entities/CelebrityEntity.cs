@@ -11,50 +11,50 @@ public class CelebrityEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid CelebrityId { get; set; }
+    public CelebrityIdVO CelebrityId { get; set; }
 
     [Column(Order = 3)]
     [Required]
-    public string Name { get; set; }
+    public CelebrityNameVO Name { get; set; }
 
     [Column(Order = 4)]
-    public string Aka { get; set; }
+    public CelebrityAkaVO Aka { get; set; }
 
     [Column(Order = 5)]
-    public string NameEn { get; set; }
+    public CelebrityNameEnVO NameEn { get; set; }
 
     [Column(Order = 6)]
-    public string AkaEn { get; set; }
+    public CelebrityAkaEnVO AkaEn { get; set; }
 
     [Column(Order = 7)]
-    public int Gender { get; set; }
+    public GenderVO Gender { get; set; }
 
     [Column(Order = 8)]
-    public string Occupation { get; set; }
+    public ProfessionsVO Professions { get; set; }
 
     [Column(Order = 9)]
-    public string Birthday { get; set; }
+    public BirthdayVO Birthday { get; set; }
 
     [Column(Order = 10)]
-    public string Deathday { get; set; }
+    public DeathdayVO Deathday { get; set; }
 
     [Column(Order = 11)]
-    public string BornPlace { get; set; }
+    public BornPlaceVO BornPlace { get; set; }
 
     [Column(Order = 12)]
-    public string Family { get; set; }
+    public FamilyVO Family { get; set; }
 
     [Column(Order = 13)]
-    public string Avatar { get; set; }
+    public AvatarVO Avatar { get; set; }
 
     [Column(Order = 14)]
-    public string Works { get; set; }
+    public WorksVO Works { get; set; }
 
     [Column(Order = 15)]
-    public string DoubanID { get; set; }
+    public DoubanIDVO DoubanID { get; set; }
 
     [Column(Order = 16)]
-    public string IMDb { get; set; }
+    public IMDbVO IMDb { get; set; }
 
     [Column(Order = 17)]
     public SummaryVO Summary { get; set; }
@@ -64,9 +64,9 @@ public class CelebrityEntity : EntitiesBase
     public UserIdVO UserId { get; set; }
 
     [Column(Order = 19)]
-    public Int16 ReviewStatus { get; set; }
+    public ReviewStatusVO ReviewStatus { get; set; }
 
     [Column(Order = 20)]
-    public string ReviewNote { get; set; }
+    public NoteVO Note { get; set; }
 
 }

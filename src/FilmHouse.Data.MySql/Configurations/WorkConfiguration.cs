@@ -34,7 +34,8 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
         builder.Property(e => e.CelebrityId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<CelebrityIdVO.CelebrityIdValueConverter>();
 
         builder.Property(e => e.Type)
             .HasDefaultValue("0")

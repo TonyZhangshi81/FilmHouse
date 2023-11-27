@@ -30,7 +30,8 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 
         builder.Property(e => e.CelebrityId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<CelebrityIdVO.CelebrityIdValueConverter>();
 
         builder.Property(e => e.Type)
             .HasDefaultValue("0")

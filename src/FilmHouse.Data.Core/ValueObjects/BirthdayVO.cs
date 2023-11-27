@@ -8,65 +8,59 @@ using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Data.Core.Services.Codes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 电影种类信息的值对象类。
+    /// 出生年月的值对象类。
     /// </summary>
-    [JsonConverter(typeof(GenresJsonConverter))]
-    [ValueConverter(typeof(GenresValueConverter), typeof(GenresArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(GenresTypeConverter))]
+    [JsonConverter(typeof(BirthdayJsonConverter))]
+    [ValueConverter(typeof(BirthdayValueConverter), typeof(BirthdayArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(BirthdayTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class GenresVO : FilmHouse.Data.Core.ValueObjects.CodeId, IEquatable<GenresVO>, IComparable<GenresVO>, IValue<string>, IValueObject
+    public partial class BirthdayVO : FilmHouse.Core.ValueObjects.Date, IEquatable<BirthdayVO>, IComparable<BirthdayVO>, IValue<System.DateOnly>, IValueObject
     {
-        private readonly string _value;
+        private readonly System.DateOnly _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "Genres";
+        public new const string TypeName = "出生年月";
+
 
         /// <summary>
-        /// "电影种类"区分的代码组。
-        /// </summary>
-        public new static readonly CodeGroupVO Group = new("Genres");
-
-        /// <summary>
-        /// <see cref="GenresVO"/>的新实例。
+        /// <see cref="BirthdayVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public GenresVO(string value)
-            :base(value)
+        public BirthdayVO(System.DateOnly value)
+            : base(value)
         {
             this.PreProcess(ref value);
             this._value = value;
             this.Validate();
         }
 
-        partial void PreProcess(ref string value);
+        partial void PreProcess(ref System.DateOnly value);
 
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="GenresVO"/>进行隐式转换
+        /// <see cref="System.DateOnly"/>向<see cref="BirthdayVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(GenresVO value)
+        public static explicit operator System.DateOnly(BirthdayVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="GenresVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="BirthdayVO"/>向<see cref="System.DateOnly"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator GenresVO(string value)
+        public static explicit operator BirthdayVO(System.DateOnly value)
         {
-            return new GenresVO(value);
+            return new BirthdayVO(value);
         }
 
         /// <summary>
@@ -75,7 +69,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in GenresVO? x, in GenresVO? y)
+        internal static bool Equals(in BirthdayVO? x, in BirthdayVO? y)
         {
             if (x is null && y is null)
             {
@@ -89,11 +83,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// <see cref="string"/>对句式和包含的原始句式进行比较处理。
+        /// 对<see cref="System.DateOnly"/>型和包含的原始型进行比较处理。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(GenresVO? other)
+        public bool Equals(BirthdayVO? other)
         {
             return Equals(this, other);
         }
@@ -110,13 +104,13 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(GenresVO).IsAssignableFrom(t))
+            if (typeof(BirthdayVO).IsAssignableFrom(t))
             {
-                return Equals((GenresVO)obj);
+                return Equals((BirthdayVO)obj);
             }
-            if (t == typeof(string))
+            if (t == typeof(System.DateOnly))
             {
-                return this._value.Equals((string)obj);
+                return this._value.Equals((System.DateOnly)obj);
             }
 
             return this._value.Equals(obj);
@@ -135,25 +129,57 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         public override string ToString()
         {
-            return string.Format("{0}", this._value);
+            return string.Format(DisplayFormat, this._value);
         }
 
 
 
         /// <summary>
-        /// 是否等于
+        /// 是否相等
         /// </summary>
-        public static bool operator ==(in GenresVO? x, in GenresVO? y)
+        public static bool operator ==(in BirthdayVO? x, in BirthdayVO? y)
         {
             return Equals(x, y);
         }
 
         /// <summary>
-        /// 是否不等于
+        /// 是否不相等
         /// </summary>
-        public static bool operator !=(in GenresVO? x, in GenresVO? y)
+        public static bool operator !=(in BirthdayVO? x, in BirthdayVO? y)
         {
             return !Equals(x, y);
+        }
+
+        // UnitGenerateOptions.ParseMethod
+
+        /// <summary>
+        /// 将字符串形式的值转换为等价的<see cref="BirthdayVO"/>类型。
+        /// </summary>
+        /// <param name="s">字符串</param>
+        /// <returns><see cref="BirthdayVO"/>型的值</returns>
+        public new static BirthdayVO Parse(string s)
+        {
+            return new BirthdayVO(System.DateOnly.Parse(s));
+        }
+
+        /// <summary>
+        /// 将字符串形式的值转换为等价的<see cref="BirthdayVO"/>型，返回表示转换是否成功的值。
+        /// </summary>
+        /// <param name="s">字符串</param>
+        /// <param name="result"><see cref="BirthdayVO"/>型的值</param>
+        /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
+        public static bool TryParse(string s, out BirthdayVO? result)
+        {
+            if (System.DateOnly.TryParse(s, out var r))
+            {
+                result = new BirthdayVO(r);
+                return true;
+            }
+            else
+            {
+                result = default(BirthdayVO);
+                return false;
+            }
         }
 
 
@@ -161,14 +187,14 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
 
-        // UnitGenerateOptions.ComparableInterfaceOnly
+        // UnitGenerateOptions.Comparable
 
         /// <summary>
-        /// 将该实例<paramref name="other " />和比较。
+        /// 将该实例<paramref name="other" />和比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(GenresVO? other)
+        public int CompareTo(BirthdayVO? other)
         {
             if (other == null)
             {
@@ -177,36 +203,80 @@ namespace FilmHouse.Data.Core.ValueObjects
             return this._value.CompareTo(other._value);
         }
 
+        /// <summary>
+        /// 大于运算符
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool operator >(in BirthdayVO x, in BirthdayVO y)
+        {
+            return x._value > y._value;
+        }
+
+        /// <summary>
+        /// 小于运算符
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool operator <(in BirthdayVO x, in BirthdayVO y)
+        {
+            return x._value < y._value;
+        }
+
+        /// <summary>
+        /// 大于等于运算符
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool operator >=(in BirthdayVO x, in BirthdayVO y)
+        {
+            return x._value >= y._value;
+        }
+
+        /// <summary>
+        /// 小于等于运算符
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static bool operator <=(in BirthdayVO x, in BirthdayVO y)
+        {
+            return x._value <= y._value;
+        }
+
 
         // UnitGenerateOptions.JsonConverter
-        private class GenresJsonConverter : JsonConverter<GenresVO>
+        private class BirthdayJsonConverter : JsonConverter<BirthdayVO>
         {
-            public override void Write(Utf8JsonWriter writer, GenresVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, BirthdayVO value, JsonSerializerOptions options)
             {
-                var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
+                var converter = options.GetConverter(typeof(System.DateOnly)) as JsonConverter<System.DateOnly>;
                 if (converter != null)
                 {
-                    converter.Write(writer, value._value.Replace("\r\n", "\n"), options);
+                    converter.Write(writer, value._value, options);
                 }
                 else
                 {
-                    throw new JsonException($"{typeof(string)} converter does not found.");
+                    throw new JsonException($"{typeof(System.DateOnly)} converter does not found.");
                 }
             }
 
-            public override GenresVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override BirthdayVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
+                var converter = options.GetConverter(typeof(System.DateOnly)) as JsonConverter<System.DateOnly>;
                 if (converter != null)
                 {
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new GenresVO(value.Replace("\r\n", "\n")) : null;
+                        return new BirthdayVO(value);
                     }
                     catch (Exception exception)
                     {
-                        throw options.GetInvalidValueException(ref reader, typeof(string), exception);
+                        throw options.GetInvalidValueException(ref reader, typeof(System.DateOnly), exception);
                     }
                 }
                 else
@@ -223,24 +293,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class GenresValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<GenresVO?, string?>
+        public class BirthdayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<BirthdayVO?, System.DateOnly?>
         {
             /// <summary>
-            /// <see cref="GenresValueConverter"/>的新实例。
+            /// <see cref="BirthdayValueConverter"/>的新实例。
             /// </summary>
-            public GenresValueConverter()
+            public BirthdayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="GenresValueConverter"/>的新实例。
+            /// <see cref="BirthdayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public GenresValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public BirthdayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new GenresVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new BirthdayVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -250,8 +320,8 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
-                string value => value,
-                GenresVO value => value._value,
+                System.DateOnly value => value,
+                BirthdayVO value => value._value,
                 _ => null,
             };
 
@@ -260,8 +330,8 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                GenresVO value => value,
-                string value => new GenresVO(value),
+                BirthdayVO value => value,
+                System.DateOnly value => new BirthdayVO(value),
                 _ => null,
             };
         }
@@ -269,37 +339,37 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class GenresArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<GenresVO?[], string?[]>
+        public class BirthdayArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<BirthdayVO?[], System.DateOnly?[]>
         {
             /// <summary>
-            /// <see cref="GenresArrayValueConverter"/>的新实例。
+            /// <see cref="BirthdayArrayValueConverter"/>的新实例。
             /// </summary>
-            public GenresArrayValueConverter()
+            public BirthdayArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="GenresArrayValueConverter"/>的新实例。
+            /// <see cref="BirthdayArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public GenresArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public BirthdayArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
-                        convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new GenresVO(_)).ToArray(),
+                        convertToProviderExpression: x => x.Select(_ => _ == null ? (System.DateOnly?)null : _._value).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new BirthdayVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
 
             /// <summary>
-            /// 在将数据写入到存储的情况下,取得转换对象的函数,并将该函数设定为,将将该函数与将对象转换成该对象的函数,并将其与与子串、框化以及非严格匹配的简单类型的一致处理。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
-                string?[] values => values,
-                GenresVO?[] values => values.Select(_ => _?._value).ToArray(),
-                IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<GenresVO?> values => values.Select(_ => _?._value).ToArray(),
+                System.DateOnly?[] values => values,
+                BirthdayVO?[] values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<System.DateOnly?> values => values.ToArray(),
+                IEnumerable<BirthdayVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -308,19 +378,19 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                GenresVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new GenresVO(_)).ToArray(),
-                IEnumerable<GenresVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new GenresVO(_)).ToArray(),
+                BirthdayVO?[] values => values,
+                System.DateOnly?[] values => values.Select(_ => _ == null ? null : new BirthdayVO(_.Value)).ToArray(),
+                IEnumerable<BirthdayVO?> values => values.ToArray(),
+                IEnumerable<System.DateOnly?> values => values.Select(_ => _ == null ? null : new BirthdayVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class GenresTypeConverter : System.ComponentModel.TypeConverter
+        private class BirthdayTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(GenresVO);
-            private static readonly Type ValueType = typeof(string);
+            private static readonly Type WrapperType = typeof(BirthdayVO);
+            private static readonly Type ValueType = typeof(System.DateOnly);
             private static readonly Type BindingValueType = typeof(string);
 
             public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, Type sourceType)
@@ -349,13 +419,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(GenresVO))
+                if (t == typeof(BirthdayVO))
                 {
-                    return (GenresVO)value;
+                    return (BirthdayVO)value;
+                }
+                if (t == typeof(System.DateOnly))
+                {
+                    return new BirthdayVO((System.DateOnly)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new GenresVO((string)value);
+                    return new BirthdayVO(System.DateOnly.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -368,7 +442,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is GenresVO wrappedValue)
+                if (value is BirthdayVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

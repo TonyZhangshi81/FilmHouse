@@ -12,7 +12,7 @@ using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Core.Services.Codes;
 using System.Text.RegularExpressions;
 
-namespace Isid.Ilex.Core.Domain.ValueObjects
+namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
     /// 代码ID的值对象类。
@@ -185,7 +185,7 @@ namespace Isid.Ilex.Core.Domain.ValueObjects
         }
 
         /// <summary>
-        /// 現在のオブジェクトを表す文字列を返します。
+        /// 現在のオブジェクトを表す字符串を返します。
         /// </summary>
         public override string ToString()
         {
@@ -203,7 +203,7 @@ namespace Isid.Ilex.Core.Domain.ValueObjects
         }
 
         /// <summary>
-        /// 非等値演算子
+        /// 是否不相等
         /// </summary>
         public static bool operator !=(in CodeId? x, in CodeId? y)
         {
