@@ -69,7 +69,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 返回表示当前对象的字符串。
         /// </summary>
-        /// <param name="format">書式文字列</param>
+        /// <param name="format">書式字符串</param>
         /// <returns>表示当前对象的字符串</returns>
         public virtual string ToString(string format) => this.AsPrimitiveCore().ToString(format);
 

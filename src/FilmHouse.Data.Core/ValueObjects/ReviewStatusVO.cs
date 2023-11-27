@@ -7,42 +7,55 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
-using FilmHouse.Data.Core.ValueObjects;
 using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 浏览数（11位长度）的值对象类。进行与原始型的隐性分配。
+    /// 评价状态的值对象类。进行与原始型的隐性分配。
     /// </summary>
-    [JsonConverter(typeof(PageViewsJsonConverter))]
-    [ValueConverter(typeof(PageViewsValueConverter), typeof(PageViewsArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(PageViewsTypeConverter))]
+    [JsonConverter(typeof(ReviewStatusJsonConverter))]
+    [ValueConverter(typeof(ReviewStatusValueConverter), typeof(ReviewStatusArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(ReviewStatusTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class PageViewsVO : IEquatable<PageViewsVO>, IComparable<PageViewsVO>, IFormattable, IConvertible, IValue<long>, IValueObject
+    public partial class ReviewStatusVO : IEquatable<ReviewStatusVO>, IComparable<ReviewStatusVO>, IFormattable, IConvertible, IValue<int>, IValueObject
     {
-        private readonly long _value;
+        private readonly int _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "PageViews";
+        public const string TypeName = "ReviewStatus";
 
         /// <summary>
         /// 取得作为数值的最大位数。
         /// </summary>
-        public const int Precision = 11;
+        public const int Precision = 1;
 
         /// <summary>
-        /// 取得显示格式。
+        /// 提供代码组持有的代码值的常数定义。
         /// </summary>
-        public const string DisplayFormat = @"{0:##,###,###,###}";
+        public static class Codes
+        {
+            /// <summary>
+            /// 「0:默认值」
+            /// </summary>
+            public static readonly ReviewStatusVO ReviewStatusCode0 = new(0);
+            /// <summary>
+            /// 「1:评审不通过」
+            /// </summary>
+            public static readonly ReviewStatusVO ReviewStatusCode1 = new(1);
+            /// <summary>
+            /// 「2:通过」
+            /// </summary>
+            public static readonly ReviewStatusVO ReviewStatusCode2 = new(2);
+        }
 
         /// <summary>
         /// 获取值对象包含的原始类型。
         /// </summary>
-        public long AsPrimitive() => this._value;
+        public int AsPrimitive() => this._value;
         /// <summary>
         /// 是不依赖句式而获取原始句式的方法。
         /// </summary>
@@ -50,36 +63,36 @@ namespace FilmHouse.Data.Core.ValueObjects
         public object AsPrimitiveObject() => this.AsPrimitive();
 
         /// <summary>
-        /// <see cref="PageViewsVO"/>的新实例。
+        /// <see cref="ReviewStatusVO"/>是不依赖句式而取得原始句式的方法。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public PageViewsVO(long value)
+        public ReviewStatusVO(int value)
         {
             this.PreProcess(ref value);
             this._value = value;
             this.Validate();
         }
 
-        partial void PreProcess(ref long value);
+        partial void PreProcess(ref int value);
 
         partial void Validate();
 
         /// <summary>
-        /// <see cref="long"/>向<see cref="PageViewsVO"/>进行隐式转换
+        /// <see cref="int"/>向<see cref="ReviewStatusVO"/>对的隐性的角色扮演。
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator long(PageViewsVO value)
+        public static implicit operator int(ReviewStatusVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="PageViewsVO"/>向<see cref="long"/>进行隐式转换
+        /// <see cref="ReviewStatusVO"/>向<see cref="int"/>对的隐性的角色扮演。
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator PageViewsVO(long value)
+        public static implicit operator ReviewStatusVO(int value)
         {
-            return new PageViewsVO(value);
+            return new ReviewStatusVO(value);
         }
 
         /// <summary>
@@ -88,7 +101,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in PageViewsVO? x, in PageViewsVO? y)
+        internal static bool Equals(in ReviewStatusVO? x, in ReviewStatusVO? y)
         {
             if (x is null && y is null)
             {
@@ -102,11 +115,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// <see cref="long"/>对句式和包含的原始句式进行比较处理。
+        /// 对<see cref="int"/>型和包含的原始型进行比较处理。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(PageViewsVO? other)
+        public bool Equals(ReviewStatusVO? other)
         {
             return Equals(this, other);
         }
@@ -123,13 +136,13 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(PageViewsVO).IsAssignableFrom(t))
+            if (typeof(ReviewStatusVO).IsAssignableFrom(t))
             {
-                return Equals((PageViewsVO)obj);
+                return Equals((ReviewStatusVO)obj);
             }
-            if (t == typeof(long))
+            if (t == typeof(int))
             {
-                return this._value.Equals((long)obj);
+                return this._value.Equals((int)obj);
             }
 
             return this._value.Equals(obj);
@@ -148,7 +161,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         public override string ToString()
         {
-            return string.Format(DisplayFormat, this._value);
+            return string.Format("{0}", this._value);
         }
 
         /// <summary>
@@ -272,7 +285,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否相等
         /// </summary>
-        public static bool operator ==(in PageViewsVO? x, in PageViewsVO? y)
+        public static bool operator ==(in ReviewStatusVO? x, in ReviewStatusVO? y)
         {
             return Equals(x, y);
         }
@@ -280,7 +293,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in PageViewsVO? x, in PageViewsVO? y)
+        public static bool operator !=(in ReviewStatusVO? x, in ReviewStatusVO? y)
         {
             return !Equals(x, y);
         }
@@ -288,31 +301,31 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ParseMethod
 
         /// <summary>
-        /// 将字符串形式的值转换为等价&lt;see cref = " PageViewsvo " / & gt;转换成句式。
+        /// 将字符串形式的值转换为等价的<see cref="ReviewStatusVO"/>型。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <returns><see cref="PageViewsVO"/>型的值</returns>
-        public static PageViewsVO Parse(string s)
+        /// <returns><see cref="ReviewStatusVO"/>型的值</returns>
+        public static ReviewStatusVO Parse(string s)
         {
-            return new PageViewsVO(long.Parse(s));
+            return new ReviewStatusVO(int.Parse(s));
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价&lt;see cref = " PageViewsvo " / & gt;转换成句式，返回表示转换成功与否的值。
+        /// 将字符串形式的值转换为等价的<see cref="ReviewStatusVO"/>型，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <param name="result"><see cref="PageViewsVO"/>型的值</param>
+        /// <param name="result"><see cref="ReviewStatusVO"/>型的值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
-        public static bool TryParse(string s, out PageViewsVO? result)
+        public static bool TryParse(string s, out ReviewStatusVO? result)
         {
-            if (long.TryParse(s, out var r))
+            if (int.TryParse(s, out var r))
             {
-                result = new PageViewsVO(r);
+                result = new ReviewStatusVO(r);
                 return true;
             }
             else
             {
-                result = default(PageViewsVO);
+                result = default(ReviewStatusVO);
                 return false;
             }
         }
@@ -321,25 +334,25 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.MinMaxMethod
 
         /// <summary>
-        /// 返回小的值
+        /// 小さい方を返します。
         /// </summary>
-        /// <param name="x">最初的值</param>
-        /// <param name="y">第二值</param>
-        /// <returns>参数小的一方</returns>
-        public static PageViewsVO Min(PageViewsVO x, PageViewsVO y)
+        /// <param name="x">最初の値</param>
+        /// <param name="y">2番目の値</param>
+        /// <returns>パラメーターのいずれか小さい方</returns>
+        public static ReviewStatusVO Min(ReviewStatusVO x, ReviewStatusVO y)
         {
-            return new PageViewsVO(Math.Min(x._value, y._value));
+            return new ReviewStatusVO(Math.Min(x._value, y._value));
         }
 
         /// <summary>
-        /// 返回大的值
+        /// 大きい方を返します。
         /// </summary>
-        /// <param name="x">最初的值</param>
-        /// <param name="y">第二值</param>
-        /// <returns>参数大的一方</returns>
-        public static PageViewsVO Max(PageViewsVO x, PageViewsVO y)
+        /// <param name="x">最初の値</param>
+        /// <param name="y">2番目の値</param>
+        /// <returns>パラメーターのいずれか大きい方</returns>
+        public static ReviewStatusVO Max(ReviewStatusVO x, ReviewStatusVO y)
         {
-            return new PageViewsVO(Math.Max(x._value, y._value));
+            return new ReviewStatusVO(Math.Max(x._value, y._value));
         }
 
 
@@ -347,84 +360,84 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ValueArithmeticOperator
 
         /// <summary>
-        /// 递增算子
+        /// インクリメント演算子
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static PageViewsVO operator ++(in PageViewsVO x)
+        public static ReviewStatusVO operator ++(in ReviewStatusVO x)
         {
             checked
             {
-                return new PageViewsVO((long)(x._value + 1));
+                return new ReviewStatusVO((int)(x._value + 1));
             }
         }
 
         /// <summary>
-        /// 消去运算符
+        /// デクリメント演算子
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static PageViewsVO operator --(in PageViewsVO x)
+        public static ReviewStatusVO operator --(in ReviewStatusVO x)
         {
             checked
             {
-                return new PageViewsVO((long)(x._value - 1));
+                return new ReviewStatusVO((int)(x._value - 1));
             }
         }
 
         /// <summary>
-        /// 加法运算符
+        /// 加算演算子
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static PageViewsVO operator +(in PageViewsVO x, in long y)
+        public static ReviewStatusVO operator +(in ReviewStatusVO x, in int y)
         {
             checked
             {
-                return new PageViewsVO((long)(x._value + y));
+                return new ReviewStatusVO((int)(x._value + y));
             }
         }
 
         /// <summary>
-        /// 减法运算符
+        /// 減算演算子
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static PageViewsVO operator -(in PageViewsVO x, in long y)
+        public static ReviewStatusVO operator -(in ReviewStatusVO x, in int y)
         {
             checked
             {
-                return new PageViewsVO((long)(x._value - y));
+                return new ReviewStatusVO((int)(x._value - y));
             }
         }
 
         /// <summary>
-        /// 乘法运算符
+        /// 乗算演算子
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static PageViewsVO operator *(in PageViewsVO x, in long y)
+        public static ReviewStatusVO operator *(in ReviewStatusVO x, in int y)
         {
             checked
             {
-                return new PageViewsVO((long)(x._value * y));
+                return new ReviewStatusVO((int)(x._value * y));
             }
         }
 
         /// <summary>
-        /// 除法运算符
+        /// 除算演算子
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static PageViewsVO operator /(in PageViewsVO x, in long y)
+        public static ReviewStatusVO operator /(in ReviewStatusVO x, in int y)
         {
             checked
             {
-                return new PageViewsVO((long)(x._value / y));
+                return new ReviewStatusVO((int)(x._value / y));
             }
         }
 
@@ -432,11 +445,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.Comparable
 
         /// <summary>
-        /// 将该实例&lt;paramref name = " other " / & gt;和比较。
+        /// このインスタンスを<paramref name="other"/>と比較します。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(PageViewsVO? other)
+        public int CompareTo(ReviewStatusVO? other)
         {
             if (other == null)
             {
@@ -451,7 +464,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >(in PageViewsVO x, in PageViewsVO y)
+        public static bool operator >(in ReviewStatusVO x, in ReviewStatusVO y)
         {
             return x._value > y._value;
         }
@@ -462,7 +475,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <(in PageViewsVO x, in PageViewsVO y)
+        public static bool operator <(in ReviewStatusVO x, in ReviewStatusVO y)
         {
             return x._value < y._value;
         }
@@ -473,7 +486,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >=(in PageViewsVO x, in PageViewsVO y)
+        public static bool operator >=(in ReviewStatusVO x, in ReviewStatusVO y)
         {
             return x._value >= y._value;
         }
@@ -484,31 +497,31 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <=(in PageViewsVO x, in PageViewsVO y)
+        public static bool operator <=(in ReviewStatusVO x, in ReviewStatusVO y)
         {
             return x._value <= y._value;
         }
 
 
         // UnitGenerateOptions.JsonConverter
-        private class PageViewsJsonConverter : JsonConverter<PageViewsVO>
+        private class ReviewStatusJsonConverter : JsonConverter<ReviewStatusVO>
         {
-            public override void Write(Utf8JsonWriter writer, PageViewsVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ReviewStatusVO value, JsonSerializerOptions options)
             {
-                var converter = options.GetConverter(typeof(long)) as JsonConverter<long>;
+                var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
                 if (converter != null)
                 {
                     converter.Write(writer, value._value, options);
                 }
                 else
                 {
-                    throw new JsonException($"{typeof(long)} converter does not found.");
+                    throw new JsonException($"{typeof(int)} converter does not found.");
                 }
             }
 
-            public override PageViewsVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ReviewStatusVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var converter = options.GetConverter(typeof(long)) as JsonConverter<long>;
+                var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
                 if (converter != null)
                 {
                     try
@@ -521,16 +534,16 @@ namespace FilmHouse.Data.Core.ValueObjects
                                 throw options.GetConvertFailureException(typeToConvert);
                             }
                             var stringValue = stringConverter.Read(ref reader, typeToConvert, options);
-                            var typeConverter = TypeDescriptor.GetConverter(typeof(PageViewsVO));
-                            return (PageViewsVO?)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
+                            var typeConverter = TypeDescriptor.GetConverter(typeof(ReviewStatusVO));
+                            return (ReviewStatusVO?)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
                         }
 
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return new PageViewsVO(value);
+                        return new ReviewStatusVO(value);
                     }
                     catch (Exception exception)
                     {
-                        throw options.GetInvalidValueException(ref reader, typeof(long), exception);
+                        throw options.GetInvalidValueException(ref reader, typeof(int), exception);
                     }
                 }
                 else
@@ -545,106 +558,106 @@ namespace FilmHouse.Data.Core.ValueObjects
 
         // UnitGenerateOptions.EntityFrameworkValueConverter
         /// <summary>
-        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
+        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
         /// </summary>
-        public class PageViewsValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<PageViewsVO?, long?>
+        public class ReviewStatusValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ReviewStatusVO?, int?>
         {
             /// <summary>
-            /// <see cref="PageViewsValueConverter"/>的新实例。
+            /// <see cref="ReviewStatusValueConverter"/>是不依赖句式而取得原始句式的方法。
             /// </summary>
-            public PageViewsValueConverter()
+            public ReviewStatusValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="PageViewsValueConverter"/>的新实例。
+            /// <see cref="ReviewStatusValueConverter"/>是不依赖句式而取得原始句式的方法。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public PageViewsValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public ReviewStatusValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new PageViewsVO(x.Value) : null,
+                        convertFromProviderExpression: x => x != null ? new ReviewStatusVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
 
             /// <summary>
-            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
+            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
-                long value => value,
-                PageViewsVO value => value._value,
+                int value => value,
+                ReviewStatusVO value => value._value,
                 _ => null,
             };
 
             /// <summary>
-            /// 当读取存储数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
+            /// ストアからデータを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                PageViewsVO value => value,
-                long value => new PageViewsVO(value),
+                ReviewStatusVO value => value,
+                int value => new ReviewStatusVO(value),
                 _ => null,
             };
         }
 
         /// <summary>
-        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
+        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
         /// </summary>
-        public class PageViewsArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<PageViewsVO?[], long?[]>
+        public class ReviewStatusArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ReviewStatusVO?[], int?[]>
         {
             /// <summary>
-            /// <see cref="PageViewsArrayValueConverter"/>的新实例。
+            /// <see cref="ReviewStatusArrayValueConverter"/>是不依赖句式而取得原始句式的方法。
             /// </summary>
-            public PageViewsArrayValueConverter()
+            public ReviewStatusArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="PageViewsArrayValueConverter"/>的新实例。
+            /// <see cref="ReviewStatusArrayValueConverter"/>是不依赖句式而取得原始句式的方法。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public PageViewsArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public ReviewStatusArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
-                        convertToProviderExpression: x => x.Select(_ => _ == null ? (long?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new PageViewsVO(_.Value)).ToArray(),
+                        convertToProviderExpression: x => x.Select(_ => _ == null ? (int?)null : _._value).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new ReviewStatusVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
 
             /// <summary>
-            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
+            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
-                long?[] values => values,
-                PageViewsVO?[] values => values.Select(_ => _?._value).ToArray(),
-                IEnumerable<long?> values => values.ToArray(),
-                IEnumerable<PageViewsVO?> values => values.Select(_ => _?._value).ToArray(),
+                int?[] values => values,
+                ReviewStatusVO?[] values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<int?> values => values.ToArray(),
+                IEnumerable<ReviewStatusVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
             /// <summary>
-            /// 当读取存储数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
+            /// ストアからデータを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                PageViewsVO?[] values => values,
-                long?[] values => values.Select(_ => _ == null ? null : new PageViewsVO(_.Value)).ToArray(),
-                IEnumerable<PageViewsVO?> values => values.ToArray(),
-                IEnumerable<long?> values => values.Select(_ => _ == null ? null : new PageViewsVO(_.Value)).ToArray(),
+                ReviewStatusVO?[] values => values,
+                int?[] values => values.Select(_ => _ == null ? null : new ReviewStatusVO(_.Value)).ToArray(),
+                IEnumerable<ReviewStatusVO?> values => values.ToArray(),
+                IEnumerable<int?> values => values.Select(_ => _ == null ? null : new ReviewStatusVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class PageViewsTypeConverter : System.ComponentModel.TypeConverter
+        private class ReviewStatusTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(PageViewsVO);
-            private static readonly Type ValueType = typeof(long);
+            private static readonly Type WrapperType = typeof(ReviewStatusVO);
+            private static readonly Type ValueType = typeof(int);
             private static readonly Type BindingValueType = typeof(string);
 
             public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, Type sourceType)
@@ -673,17 +686,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(PageViewsVO))
+                if (t == typeof(ReviewStatusVO))
                 {
-                    return (PageViewsVO)value;
+                    return (ReviewStatusVO)value;
                 }
-                if (t == typeof(long))
+                if (t == typeof(int))
                 {
-                    return new PageViewsVO((long)value);
+                    return new ReviewStatusVO((int)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new PageViewsVO(long.Parse((string)value));
+                    return new ReviewStatusVO(int.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -696,7 +709,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is PageViewsVO wrappedValue)
+                if (value is ReviewStatusVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

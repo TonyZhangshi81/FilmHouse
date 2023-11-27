@@ -186,7 +186,7 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-    // 以下服务通过AddLocalService进行批量注册处理
+    // * 以下服务通过AddLocalService进行批量注册处理
     //services.AddTransient<IPasswordGenerator, DefaultPasswordGenerator>();
 
     switch (dbType!.ToLower())
@@ -195,6 +195,8 @@ void ConfigureServices(IServiceCollection services)
             services.AddMySqlStorage(connStr!);
             break;
         case "postgresql":
+            // 在这里切换EFCore中是否禁用postgresql infinity的选项设置
+            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
             services.AddPostgreSqlStorage(connStr!);
             break;
         case "sqlserver":

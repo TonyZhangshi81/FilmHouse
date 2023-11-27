@@ -10,7 +10,6 @@ using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Core.Services.Codes;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using Isid.Ilex.Core.Domain.ValueObjects;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
@@ -22,7 +21,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(LanguagesTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class LanguagesVO : CodeId, IEquatable<LanguagesVO>, IComparable<LanguagesVO>, IValue<string>, IValueObject
+    public partial class LanguagesVO : FilmHouse.Data.Core.ValueObjects.CodeId, IEquatable<LanguagesVO>, IComparable<LanguagesVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
