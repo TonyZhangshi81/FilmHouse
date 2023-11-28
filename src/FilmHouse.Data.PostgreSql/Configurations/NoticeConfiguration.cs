@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -21,27 +22,30 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
 
         builder.Property(e => e.NoticeId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<NoticeIdVO.NoticeIdValueConverter>();
 
         builder.Property(e => e.Content)
             .IsRequired()
-            .HasColumnType("text");
+            .HasColumnType("text")
+            .HasConversion<ContentVO.ContentValueConverter>();
 
         builder.Property(e => e.ResourceId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<ResourceIdVO.ResourceIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
             .HasColumnType("uuid")
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
-        builder.Property(e => e.Time)
-            .HasColumnType("timestamp(3)");
-
         builder.Property(e => e.Flag)
+            .HasDefaultValue(typeof(NoticeFlagVO).CreateValueObjectInstance("0"))
             .HasDefaultValue("0")
-            .HasColumnType("smallint");
+            .HasColumnType("smallint")
+            .HasMaxLength(1)
+            .HasConversion<NoticeFlagVO.NoticeFlagValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

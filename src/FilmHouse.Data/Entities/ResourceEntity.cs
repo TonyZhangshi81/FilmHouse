@@ -11,7 +11,7 @@ public class ResourceEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid ResourceId { get; set; }
+    public ResourceIdVO ResourceId { get; set; }
 
     [Column(Order = 3)]
     public string Name { get; set; }

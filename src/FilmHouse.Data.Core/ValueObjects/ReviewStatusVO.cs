@@ -336,20 +336,20 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 小さい方を返します。
         /// </summary>
-        /// <param name="x">最初の値</param>
-        /// <param name="y">2番目の値</param>
-        /// <returns>パラメーターのいずれか小さい方</returns>
+        /// <param name="x">初值</param>
+        /// <param name="y">第二个值</param>
+        /// <returns>参数小的一方</returns>
         public static ReviewStatusVO Min(ReviewStatusVO x, ReviewStatusVO y)
         {
             return new ReviewStatusVO(Math.Min(x._value, y._value));
         }
 
         /// <summary>
-        /// 大きい方を返します。
+        /// 返回最大值
         /// </summary>
-        /// <param name="x">最初の値</param>
-        /// <param name="y">2番目の値</param>
-        /// <returns>パラメーターのいずれか大きい方</returns>
+        /// <param name="x">初值</param>
+        /// <param name="y">第二个值</param>
+        /// <returns>参数大的一方</returns>
         public static ReviewStatusVO Max(ReviewStatusVO x, ReviewStatusVO y)
         {
             return new ReviewStatusVO(Math.Max(x._value, y._value));
@@ -360,7 +360,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ValueArithmeticOperator
 
         /// <summary>
-        /// インクリメント演算子
+        /// 递增运算符
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
@@ -373,7 +373,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// デクリメント演算子
+        /// 减缩运算符
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
@@ -386,7 +386,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 加算演算子
+        /// 加法运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -400,7 +400,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 減算演算子
+        /// 减法运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -414,7 +414,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 乗算演算子
+        /// 乘法运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -428,7 +428,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 除算演算子
+        /// 除法运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -445,7 +445,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.Comparable
 
         /// <summary>
-        /// このインスタンスを<paramref name="other"/>と比較します。
+        /// 将这个实例与<paramref name="other"/>进行比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
@@ -459,7 +459,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 大なり演算子
+        /// 大于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -470,7 +470,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 小なり演算子
+        /// 小于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -481,7 +481,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 以上演算子
+        /// 大于等于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -492,7 +492,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 以下演算子
+        /// 小于等于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -558,7 +558,7 @@ namespace FilmHouse.Data.Core.ValueObjects
 
         // UnitGenerateOptions.EntityFrameworkValueConverter
         /// <summary>
-        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
+        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
         public class ReviewStatusValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ReviewStatusVO?, int?>
         {
@@ -583,7 +583,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             }
 
             /// <summary>
-            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
@@ -593,7 +593,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             };
 
             /// <summary>
-            /// ストアからデータを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
@@ -604,7 +604,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
+        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
         public class ReviewStatusArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ReviewStatusVO?[], int?[]>
         {
@@ -629,7 +629,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             }
 
             /// <summary>
-            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
@@ -641,7 +641,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             };
 
             /// <summary>
-            /// ストアからデータを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
