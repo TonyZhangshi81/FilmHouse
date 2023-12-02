@@ -1,4 +1,4 @@
-using System.Globalization;
+ï»¿using System.Globalization;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -128,7 +128,7 @@ void ConfigureServices(IServiceCollection services)
     // https://www.cnblogs.com/chenxi001/p/13308860.html
     services.AddResponseCaching();
 
-    // DIµÄÅúÁ¿µÇÂ¼Éè¶¨
+    // DIçš„æ‰¹é‡ç™»å½•è®¾å®š
     var assemblies = StartupCore.GetAppAssemblies(true);
     services.AddLocalService(assemblies);
 
@@ -150,12 +150,15 @@ void ConfigureServices(IServiceCollection services)
         options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.None;
     });
 
+    /*
+     * å·²ç»ç§»åŠ¨è‡³ConfigureMiddlewareä¸­ç»Ÿä¸€å¤„ç†ä¸­é—´ä»¶
     services.Configure<RequestLocalizationOptions>(options =>
     {
         options.DefaultRequestCulture = new("en-US");
         options.SupportedCultures = cultures;
         options.SupportedUICultures = cultures;
     });
+    */
 
     services.AddLocalization(options => options.ResourcesPath = "Resources");
     services.AddControllers(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))
@@ -186,7 +189,7 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-    // * ÒÔÏÂ·şÎñÍ¨¹ıAddLocalService½øĞĞÅúÁ¿×¢²á´¦Àí
+    // * ä»¥ä¸‹æœåŠ¡é€šè¿‡AddLocalServiceè¿›è¡Œæ‰¹é‡æ³¨å†Œå¤„ç†
     //services.AddTransient<IPasswordGenerator, DefaultPasswordGenerator>();
 
     switch (dbType!.ToLower())
@@ -195,7 +198,7 @@ void ConfigureServices(IServiceCollection services)
             services.AddMySqlStorage(connStr!);
             break;
         case "postgresql":
-            // ÔÚÕâÀïÇĞ»»EFCoreÖĞÊÇ·ñ½ûÓÃpostgresql infinityµÄÑ¡ÏîÉèÖÃ
+            // åœ¨è¿™é‡Œåˆ‡æ¢EFCoreä¸­æ˜¯å¦ç¦ç”¨postgresql infinityçš„é€‰é¡¹è®¾ç½®
             AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
             services.AddPostgreSqlStorage(connStr!);
             break;
@@ -233,7 +236,7 @@ async Task FirstRun()
         if (startUpResut == StartupInitResult.DatabaseConnectionFail)
         {
             app.MapGet("/", () => Results.Problem(
-                detail: "Êı¾İ¿âÁ¬½Ó²âÊÔÊ§°Ü£¬Çë¼ì²éÄúµÄÁ¬½Ó×Ö·û´®ºÍ·À»ğÇ½ÉèÖÃ£¬È»ºóÊÖ¶¯ÖØÆôFilmHouse",
+                detail: "Database connection test failed, please check your connection string and firewall settings, then RESTART Moonglade manually.",
                 statusCode: 500
                 ));
             app.Run();
@@ -241,7 +244,7 @@ async Task FirstRun()
         else if (startUpResut == StartupInitResult.DatabaseSetupFail)
         {
             app.MapGet("/", () => Results.Problem(
-                detail: "Êı¾İ¿âÉèÖÃÊ§°Ü£¬Çë¼ì²é´íÎóÈÕÖ¾£¬È»ºóÊÖ¶¯ÖØÆôFilmHouse",
+                detail: "Database setup failed, please check error log, then RESTART Moonglade manually.",
                 statusCode: 500
             ));
             app.Run();
@@ -249,7 +252,7 @@ async Task FirstRun()
         else if (startUpResut == StartupInitResult.CodeDataCacheFail)
         {
             app.MapGet("/", () => Results.Problem(
-                detail: "Êı¾İ»º´æ´¦Àí³ö´í£¬Çë¼ì²é´íÎóÈÕÖ¾£¬È»ºóÊÖ¶¯ÖØÆôFilmHouse",
+                detail: "Data cache processing error,please check error log, then RESTART Moonglade manually.",
                 statusCode: 500
             ));
             app.Run();
@@ -257,7 +260,7 @@ async Task FirstRun()
     }
     catch (Exception e)
     {
-        app.MapGet("/", _ => throw new("Æô¶¯Ê§°Ü: " + e.Message));
+        app.MapGet("/", _ => throw new("Start up failed:" + e.Message));
         app.Run();
     }
 }
@@ -311,7 +314,6 @@ void ConfigureMiddleware()
 
     // address: https://localhost:7144/healthchecks-ui#/healthchecks
     app.UseHealthChecksUI();
-
 
     app.UseCookiePolicy();
     app.UseSecurityHeaders(builder =>

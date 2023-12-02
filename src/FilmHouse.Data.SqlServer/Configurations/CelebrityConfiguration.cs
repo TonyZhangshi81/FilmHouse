@@ -4,7 +4,7 @@ using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
 using FilmHouse.Core.Utils.Data;
 
-namespace FilmHouse.Data.PostgreSql.Configurations;
+namespace FilmHouse.Data.SqlServer.Configurations;
 
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity>
