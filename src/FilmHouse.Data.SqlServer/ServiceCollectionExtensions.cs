@@ -1,6 +1,5 @@
 ﻿using FilmHouse.Data.Infrastructure;
 using FilmHouse.Data.SqlServer.Infrastructure;
-using FilmHouse.Data.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
