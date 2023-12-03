@@ -41,6 +41,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasConversion<RequestTimeVO.RequestTimeValueConverter>();
 
         builder.Property(e => e.RequestWith)
+            .HasDefaultValue(typeof(RequestWithVO).CreateValueObjectInstance("0"))
             .HasColumnType("numeric(4)")
             .HasConversion<RequestWithVO.RequestWithValueConverter>();
 
@@ -51,7 +52,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 
         builder.Property(e => e.Status)
             .HasDefaultValue(typeof(AskStatusVO).CreateValueObjectInstance("false"))
-            .HasColumnType("numeric(1)")
+            .HasColumnType("bit")
             .HasConversion<AskStatusVO.AskStatusValueConverter>();
 
         builder.Property(e => e.CreatedOn)

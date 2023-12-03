@@ -446,7 +446,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 大なり演算子
+        /// 大于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -457,7 +457,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 小なり演算子
+        /// 小于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -468,7 +468,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 以上演算子
+        /// 大于等于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -479,7 +479,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 以下演算子
+        /// 小于等于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>

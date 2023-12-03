@@ -20,12 +20,15 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
             .HasConversion<RequestIdVO.RequestIdValueConverter>();
 
         builder.Property(e => e.Key)
-            .HasColumnType("varchar(64)")
+            .HasColumnType("varchar(50)")
             .IsRequired()
-            .HasMaxLength(64);
+            .HasMaxLength(50)
+            .HasConversion<ConfigKeyVO.ConfigKeyValueConverter>();
 
         builder.Property(e => e.Value)
-            .HasColumnType("text");
+            .HasColumnType("varchar(50)")
+            .HasMaxLength(50)
+            .HasConversion<ConfigValueVO.ConfigValueValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

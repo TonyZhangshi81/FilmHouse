@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.AccessControl;
+using Castle.Core.Resource;
 using FilmHouse.Data.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,17 +13,18 @@ public class ResourceEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid ResourceId { get; set; }
+    public ResourceIdVO ResourceId { get; set; }
 
     [Column(Order = 3)]
-    public string Name { get; set; }
+    [Required]
+    public ResourceNameVO Name { get; set; }
 
     [Column(Order = 4)]
     [Required]
-    public string Content { get; set; }
+    public ResourceContentVO Content { get; set; }
 
     [Column(Order = 5)]
-    public Int64 Size { get; set; }
+    public ResourceSizeVO Size { get; set; }
 
     [Column(Order = 6)]
     public UserIdVO UserId { get; set; }
@@ -30,18 +33,15 @@ public class ResourceEntity : EntitiesBase
     public MovieIdVO MovieId { get; set; }
 
     [Column(Order = 8)]
-    public DateTime Time { get; set; }
+    public FavorCountVO FavorCount { get; set; }
 
     [Column(Order = 9)]
-    public int FavorCount { get; set; }
+    public ResourceTypeVO Type { get; set; }
 
     [Column(Order = 10)]
-    public Int16 Type { get; set; }
+    public ReviewStatusVO ReviewStatus { get; set; }
 
     [Column(Order = 11)]
-    public Int16 ReviewStatus { get; set; }
-
-    [Column(Order = 12)]
     public NoteVO Note { get; set; }
 
 }

@@ -11,7 +11,7 @@ public class CommentEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid CommentId { get; set; }
+    public CommentIdVO CommentId { get; set; }
 
     [Column(Order = 3)]
     [Required]

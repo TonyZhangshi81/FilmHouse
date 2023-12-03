@@ -177,7 +177,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 既定のハッシュ関数として機能します。
+        /// 作为既定的散列函数发挥作用。
         /// </summary>
         public override int GetHashCode()
         {
@@ -185,7 +185,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 現在のオブジェクトを表す字符串を返します。
+        /// 返回表示当前对象的字串。
         /// </summary>
         public override string ToString()
         {
@@ -195,7 +195,7 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         /// <summary>
-        /// 等値演算子
+        /// 是否相等
         /// </summary>
         public static bool operator ==(in CodeId? x, in CodeId? y)
         {
@@ -218,7 +218,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ComparableInterfaceOnly
 
         /// <summary>
-        /// このインスタンスを<paramref name="other"/>と比較します。
+        /// 将这个实例与<paramref name="other"/>进行比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
@@ -275,7 +275,7 @@ namespace FilmHouse.Data.Core.ValueObjects
 
         // UnitGenerateOptions.EntityFrameworkValueConverter
         /// <summary>
-        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
+        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
         public class CodeIdValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CodeId?, string?>
         {
@@ -300,7 +300,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             }
 
             /// <summary>
-            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
@@ -321,7 +321,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// EntityFrameworkCoreと値オブジェクトの相互変換を行うためのコンバータクラスです。
+        /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
         public class CodeIdArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CodeId?[], string?[]>
         {
@@ -346,7 +346,7 @@ namespace FilmHouse.Data.Core.ValueObjects
             }
 
             /// <summary>
-            /// データをストアに書き込むときにオブジェクトを変換する関数を取得し、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FilmHouse.Core.Utils;
+using FilmHouse.Core.Utils.Data;
 using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.Core.Services.Codes

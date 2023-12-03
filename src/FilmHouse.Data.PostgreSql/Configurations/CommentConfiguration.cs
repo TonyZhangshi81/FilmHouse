@@ -21,7 +21,8 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.CommentId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<CommentIdVO.CommentIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()

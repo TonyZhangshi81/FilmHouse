@@ -11,7 +11,7 @@ public class WorkEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid WorkId { get; set; }
+    public WorkIdVO WorkId { get; set; }
 
     [Column(Order = 3)]
     [Required]
@@ -22,6 +22,6 @@ public class WorkEntity : EntitiesBase
     public CelebrityIdVO CelebrityId { get; set; }
 
     [Column(Order = 5)]
-    public Int16 Type { get; set; }
+    public WorkTypeVO Type { get; set; }
 
 }

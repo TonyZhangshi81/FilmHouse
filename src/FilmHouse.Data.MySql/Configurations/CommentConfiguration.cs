@@ -19,11 +19,12 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<RequestIdVO.RequestIdValueConverter>();
-
+        
         builder.Property(e => e.CommentId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<CommentIdVO.CommentIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()

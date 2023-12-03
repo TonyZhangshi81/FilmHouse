@@ -38,12 +38,12 @@ public class Seed
     private static IEnumerable<ConfigurationEntity> GetInitConfigurationSettings(RequestIdVO uuid, CreatedOnVO dateTime) =>
         new List<ConfigurationEntity>
         {
-            new() { RequestId = uuid, Key = "WebSiteSettings:Name", Value = "DEMO", CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = "WebSiteSettings:SubTitle", Value = "DEMO", CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = "WebSiteSettings:Version", Value = "0.2.0.0", CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = "WebSiteSettings:WebpagesEnabled", Value = "false", CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = "WebSiteSettings:ClientValidationEnabled", Value = "true", CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = "WebSiteSettings:UnobtrusiveJavaScriptEnabled", Value = "false", CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = new("WebSiteSettings:Name"), Value = new("DEMO"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = new("WebSiteSettings:SubTitle"), Value = new("DEMO"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = new("WebSiteSettings:Version"), Value = new("0.2.0.0"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = new("WebSiteSettings:WebpagesEnabled"), Value = new("false"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = new("WebSiteSettings:ClientValidationEnabled"), Value = new("true"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = new("WebSiteSettings:UnobtrusiveJavaScriptEnabled"), Value = new("false"), CreatedOn = dateTime },
         };
 
     private static IEnumerable<CodeMastEntity> GetInitCodeMastSettings(RequestIdVO uuid, CreatedOnVO dateTime) =>
