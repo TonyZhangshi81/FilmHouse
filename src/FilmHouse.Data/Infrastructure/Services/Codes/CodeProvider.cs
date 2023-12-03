@@ -4,7 +4,7 @@ using FilmHouse.Data.Core.Services.Codes;
 using FilmHouse.Data.Core.ValueObjects;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Isid.Ilex.Core.Infrastructure.Services.Codes
+namespace FilmHouse.Data.Infrastructure.Services.Codes
 {
     /// <summary>
     /// 用于管理从代码管理表获取的信息的类。

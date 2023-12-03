@@ -19,11 +19,12 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<RequestIdVO.RequestIdValueConverter>();
-
+        
         builder.Property(e => e.CommentId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<CommentIdVO.CommentIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
@@ -36,12 +37,14 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<MovieIdVO.MovieIdValueConverter>();
-
+        
         builder.Property(e => e.Content)
-            .HasColumnType("longtext");
+            .HasColumnType("longtext")
+            .HasConversion<ContentVO.ContentValueConverter>();
 
         builder.Property(e => e.CommentTime)
-            .HasColumnType("datetime(3)");
+            .HasColumnType("datetime(3)")
+            .HasConversion<CommentTimeVO.CommentTimeValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

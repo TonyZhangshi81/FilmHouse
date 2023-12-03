@@ -11,7 +11,7 @@ public class CommentEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid CommentId { get; set; }
+    public CommentIdVO CommentId { get; set; }
 
     [Column(Order = 3)]
     [Required]
@@ -22,9 +22,9 @@ public class CommentEntity : EntitiesBase
     public MovieIdVO MovieId { get; set; }
 
     [Column(Order = 5)]
-    public string Content { get; set; }
+    public ContentVO Content { get; set; }
 
     [Column(Order = 6)]
-    public DateTime CommentTime { get; set; }
+    public CommentTimeVO CommentTime { get; set; }
 
 }

@@ -22,7 +22,8 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.CommentId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<CommentIdVO.CommentIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
@@ -35,10 +36,12 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.Content)
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(max)")
+            .HasConversion<ContentVO.ContentValueConverter>();
 
         builder.Property(e => e.CommentTime)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CommentTimeVO.CommentTimeValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

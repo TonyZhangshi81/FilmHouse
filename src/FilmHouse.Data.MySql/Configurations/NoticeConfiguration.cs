@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.MySql.Configurations;
 
@@ -19,20 +20,23 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<RequestIdVO.RequestIdValueConverter>();
-
+        
         builder.Property(e => e.NoticeId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<NoticeIdVO.NoticeIdValueConverter>();
 
         builder.Property(e => e.Content)
             .IsRequired()
-            .HasColumnType("longtext");
+            .HasColumnType("longtext")
+            .HasConversion<ContentVO.ContentValueConverter>();
 
         builder.Property(e => e.ResourceId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<ResourceIdVO.ResourceIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
@@ -40,12 +44,10 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
             .HasMaxLength(36)
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
-        builder.Property(e => e.Time)
-            .HasColumnType("datetime(3)");
-
         builder.Property(e => e.Flag)
-            .HasDefaultValue("0")
-            .HasColumnType("smallint");
+            .HasDefaultValue(typeof(NoticeFlagVO).CreateValueObjectInstance("false"))
+            .HasColumnType("bit")
+            .HasConversion<NoticeFlagVO.NoticeFlagValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

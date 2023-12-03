@@ -10,19 +10,18 @@ using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Core.Services.Codes;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using Isid.Ilex.Core.Domain.ValueObjects;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 类型信息（400位数文本）的值对象类。
+    /// 电影种类信息的值对象类。
     /// </summary>
     [JsonConverter(typeof(GenresJsonConverter))]
     [ValueConverter(typeof(GenresValueConverter), typeof(GenresArrayValueConverter))]
     [System.ComponentModel.TypeConverter(typeof(GenresTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class GenresVO : CodeId, IEquatable<GenresVO>, IComparable<GenresVO>, IValue<string>, IValueObject
+    public partial class GenresVO : FilmHouse.Data.Core.ValueObjects.CodeId, IEquatable<GenresVO>, IComparable<GenresVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
@@ -32,7 +31,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         public new const string TypeName = "Genres";
 
         /// <summary>
-        /// "语言"区分的代码组。
+        /// "电影种类"区分的代码组。
         /// </summary>
         public new static readonly CodeGroupVO Group = new("Genres");
 

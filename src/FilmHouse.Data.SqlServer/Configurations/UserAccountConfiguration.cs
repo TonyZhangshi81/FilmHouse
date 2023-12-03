@@ -1,4 +1,5 @@
-﻿using FilmHouse.Data.Core.ValueObjects;
+﻿using FilmHouse.Core.Utils.Data;
+using FilmHouse.Data.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -28,21 +29,25 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
         builder.Property(e => e.Account)
             .IsRequired()
             .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasConversion<AccountNameVO.AccountNameValueConverter>();
 
         builder.Property(e => e.Password)
             .IsRequired()
             .HasColumnType("varchar(200)")
-            .HasMaxLength(200);
+            .HasMaxLength(200)
+            .HasConversion<PasswordVO.PasswordVOValueConverter>();
 
         builder.Property(e => e.EmailAddress)
             .IsRequired()
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasColumnType("varchar(256)")
+            .HasMaxLength(256)
+            .HasConversion<EmailAddressVO.EmailAddressVOValueConverter>();
 
         builder.Property(e => e.Avatar)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+            .HasColumnType("varchar(256)")
+            .HasMaxLength(256)
+            .HasConversion<UserAvatarVO.UserAvatarVOValueConverter>();
 
         builder.Property(e => e.Cover)
             .HasColumnType("varchar(100)")
@@ -51,7 +56,9 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
             .HasConversion<CoverVO.CoverValueConverter>();
 
         builder.Property(e => e.IsAdmin)
-            .HasColumnType("bit");
+            .HasDefaultValue(typeof(IsAdminVO).CreateValueObjectInstance("false"))
+            .HasColumnType("bit")
+            .HasConversion<IsAdminVO.IsAdminVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

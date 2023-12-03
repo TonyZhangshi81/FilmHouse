@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -21,12 +22,14 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
 
         builder.Property(e => e.MarkId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<MarkIdVO.MarkIdValueConverter>();
 
         builder.Property(e => e.Type)
             .IsRequired()
-            .HasDefaultValue("0")
-            .HasColumnType("smallint");
+            .HasDefaultValue(typeof(MarkTypeVO).CreateValueObjectInstance("0"))
+            .HasColumnType("smallint")
+            .HasConversion<MarkTypeVO.MarkTypeValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
@@ -35,10 +38,8 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
 
         builder.Property(e => e.Target)
             .IsRequired()
-            .HasColumnType("uuid");
-
-        builder.Property(e => e.Time)
-            .HasColumnType("timestamp(3)");
+            .HasColumnType("uuid")
+            .HasConversion<MarkTargetVO.MarkTargetValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

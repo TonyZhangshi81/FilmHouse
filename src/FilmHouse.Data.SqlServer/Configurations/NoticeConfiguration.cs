@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -22,27 +23,28 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
 
         builder.Property(e => e.NoticeId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<NoticeIdVO.NoticeIdValueConverter>();
 
         builder.Property(e => e.Content)
             .IsRequired()
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(max)")
+            .HasConversion<ContentVO.ContentValueConverter>();
 
         builder.Property(e => e.ResourceId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<ResourceIdVO.ResourceIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
             .HasColumnType("uniqueidentifier")
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
-        builder.Property(e => e.Time)
-            .HasColumnType("datetime");
-
         builder.Property(e => e.Flag)
-            .HasDefaultValue("0")
-            .HasColumnType("tinyint");
+            .HasDefaultValue(typeof(NoticeFlagVO).CreateValueObjectInstance("false"))
+            .HasColumnType("bit")
+            .HasConversion<NoticeFlagVO.NoticeFlagValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

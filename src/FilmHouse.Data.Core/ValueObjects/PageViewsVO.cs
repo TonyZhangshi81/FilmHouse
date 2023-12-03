@@ -290,7 +290,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 将字符串形式的值转换为等价&lt;see cref = " PageViewsvo " / & gt;转换成句式。
         /// </summary>
-        /// <param name="s">文字列</param>
+        /// <param name="s">字符串</param>
         /// <returns><see cref="PageViewsVO"/>型的值</returns>
         public static PageViewsVO Parse(string s)
         {
@@ -300,7 +300,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 将字符串形式的值转换为等价&lt;see cref = " PageViewsvo " / & gt;转换成句式，返回表示转换成功与否的值。
         /// </summary>
-        /// <param name="s">文字列</param>
+        /// <param name="s">字符串</param>
         /// <param name="result"><see cref="PageViewsVO"/>型的值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
         public static bool TryParse(string s, out PageViewsVO? result)
@@ -446,7 +446,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 大なり演算子
+        /// 大于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -457,7 +457,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 小なり演算子
+        /// 小于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -468,7 +468,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 以上演算子
+        /// 大于等于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -479,7 +479,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 以下演算子
+        /// 小于等于运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>

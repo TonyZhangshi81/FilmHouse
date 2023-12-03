@@ -16,37 +16,37 @@ public class MovieEntity : EntitiesBase
     public MovieTitleVO Title { get; set; }
 
     [Column(Order = 4)]
-    public string TitleEn { get; set; }
+    public MovieTitleEnVO TitleEn { get; set; }
 
     [Column(Order = 5)]
-    public string Aka { get; set; }
+    public MovieAkaVO Aka { get; set; }
 
     [Column(Order = 6)]
-    public string Directors { get; set; }
+    public DirectorNamesVO Directors { get; set; }
 
     [Column(Order = 7)]
-    public string Writers { get; set; }
+    public WritersNamesVO Writers { get; set; }
 
     [Column(Order = 8)]
-    public string Casts { get; set; }
+    public CastsNamesVO Casts { get; set; }
 
     [Column(Order = 9)]
-    public string DirectorsId { get; set; }
+    public DirectorsIdVO DirectorsId { get; set; }
 
     [Column(Order = 10)]
-    public string WritersId { get; set; }
+    public WritersIdVO WritersId { get; set; }
 
     [Column(Order = 11)]
-    public string CastsId { get; set; }
+    public CastsIdVO CastsId { get; set; }
 
     [Column(Order = 12)]
-    public string Year { get; set; }
+    public YearVO Year { get; set; }
 
     [Column(Order = 13)]
-    public string Pubdates { get; set; }
+    public PubdatesVO Pubdates { get; set; }
 
     [Column(Order = 14)]
-    public string Durations { get; set; }
+    public DurationsVO Durations { get; set; }
 
     [Column(Order = 15)]
     public GenresVO Genres { get; set; }
@@ -55,32 +55,32 @@ public class MovieEntity : EntitiesBase
     public LanguagesVO Languages { get; set; }
 
     [Column(Order = 17)]
-    public string Countries { get; set; }
+    public CountriesVO Countries { get; set; }
 
     [Column(Order = 18)]
-    public decimal Rating { get; set; }
+    public RatingVO Rating { get; set; }
 
     [Column(Order = 19)]
-    public int RatingCount { get; set; }
+    public RatingCountVO RatingCount { get; set; }
 
     [Column(Order = 20)]
-    public string DoubanID { get; set; }
+    public DoubanIDVO DoubanID { get; set; }
 
     [Column(Order = 21)]
-    public string IMDb { get; set; }
+    public IMDbVO IMDb { get; set; }
 
     [Column(Order = 22)]
     public SummaryVO Summary { get; set; }
 
     [Column(Order = 23)]
-    public string Avatar { get; set; }
+    public MovieAvatarVO Avatar { get; set; }
 
     [Column(Order = 24)]
     [Required]
     public UserIdVO UserId { get; set; }
 
     [Column(Order = 25)]
-    public Int16 ReviewStatus { get; set; }
+    public ReviewStatusVO ReviewStatus { get; set; }
 
     [Column(Order = 26)]
     public NoteVO Note { get; set; }

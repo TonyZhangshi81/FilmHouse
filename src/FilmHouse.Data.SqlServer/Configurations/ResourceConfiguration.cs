@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -22,17 +23,25 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 
         builder.Property(e => e.ResourceId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<ResourceIdVO.ResourceIdValueConverter>();
 
         builder.Property(e => e.Name)
-            .HasColumnType("varchar(max)");
+            .IsRequired()
+            .HasColumnType("varchar(50)")
+            .HasMaxLength(50)
+            .HasConversion<ResourceNameVO.ResourceNameValueConverter>();
 
         builder.Property(e => e.Content)
             .IsRequired()
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(400)")
+            .HasMaxLength(400)
+            .HasConversion<ResourceContentVO.ResourceContentValueConverter>();
 
         builder.Property(e => e.Size)
-            .HasColumnType("bigint");
+            .HasDefaultValue(typeof(ResourceSizeVO).CreateValueObjectInstance("0"))
+            .HasColumnType("numeric(11)")
+            .HasConversion<ResourceSizeVO.ResourceSizeValueConverter>();
 
         builder.Property(e => e.UserId)
             .HasColumnType("uniqueidentifier")
@@ -43,20 +52,20 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasColumnType("uniqueidentifier")
             .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
-        builder.Property(e => e.Time)
-            .HasColumnType("datetime");
-
         builder.Property(e => e.FavorCount)
-            .HasDefaultValue("0")
-            .HasColumnType("int");
+            .HasDefaultValue(typeof(FavorCountVO).CreateValueObjectInstance("0"))
+            .HasColumnType("numeric(4)")
+            .HasConversion<FavorCountVO.FavorCountValueConverter>();
 
         builder.Property(e => e.Type)
-            .HasDefaultValue("0")
-            .HasColumnType("tinyint");
+            .HasDefaultValue(typeof(ResourceTypeVO).CreateValueObjectInstance("0"))
+            .HasColumnType("tinyint")
+            .HasConversion<ResourceTypeVO.ResourceTypeValueConverter>();
 
         builder.Property(e => e.ReviewStatus)
-            .HasDefaultValue("0")
-            .HasColumnType("tinyint");
+            .HasDefaultValue(typeof(ReviewStatusVO).CreateValueObjectInstance("0"))
+            .HasColumnType("tinyint")
+            .HasConversion<ReviewStatusVO.ReviewStatusValueConverter>();
 
         builder.Property(e => e.Note)
             .HasColumnType("varchar(1000)")

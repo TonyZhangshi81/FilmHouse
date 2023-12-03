@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -22,7 +23,8 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 
         builder.Property(e => e.WorkId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<WorkIdVO.WorkIdVOValueConverter>();
 
         builder.Property(e => e.MovieId)
             .IsRequired()
@@ -31,11 +33,13 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 
         builder.Property(e => e.CelebrityId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<CelebrityIdVO.CelebrityIdValueConverter>();
 
         builder.Property(e => e.Type)
-            .HasDefaultValue("0")
-            .HasColumnType("tinyint");
+            .HasDefaultValue(typeof(WorkTypeVO).CreateValueObjectInstance("0"))
+            .HasColumnType("tinyint")
+            .HasConversion<WorkTypeVO.WorkTypeVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

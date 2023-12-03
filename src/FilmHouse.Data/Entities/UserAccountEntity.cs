@@ -1,8 +1,6 @@
-﻿using FilmHouse.Data.Core.ValueObjects;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FilmHouse.Data.Core.ValueObjects;
 
 namespace FilmHouse.Data.Entities;
 
@@ -15,23 +13,23 @@ public class UserAccountEntity : EntitiesBase
 
     [Column(Order = 3)]
     [Required]
-    public string Account { get; set; }
+    public AccountNameVO Account { get; set; }
 
     [Column(Order = 4)]
     [Required]
-    public string Password { get; set; }
+    public PasswordVO Password { get; set; }
 
     [Column(Order = 5)]
     [Required]
-    public string EmailAddress { get; set; }
+    public EmailAddressVO EmailAddress { get; set; }
 
     [Column(Order = 6)]
-    public string Avatar { get; set; }
+    public UserAvatarVO Avatar { get; set; }
 
     [Column(Order = 7)]
     public CoverVO Cover { get; set; }
 
     [Column(Order = 8)]
-    public bool IsAdmin { get; set; }
+    public IsAdminVO IsAdmin { get; set; }
 }
 

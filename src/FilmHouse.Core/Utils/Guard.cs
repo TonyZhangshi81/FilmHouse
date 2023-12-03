@@ -22,7 +22,7 @@ namespace FilmHouse.Core.Utils
         {
             if (value == null)
             {
-                throw new InvalidOperationException($"{propertyName}没有被初始化。");
+                throw new InvalidOperationException($"{propertyName} Not initialized.");
             }
             return value;
         }
@@ -41,7 +41,7 @@ namespace FilmHouse.Core.Utils
         {
             if (value == null)
             {
-                throw new InvalidOperationException($"{propertyName}没有被初始化。");
+                throw new InvalidOperationException($"{propertyName} Not initialized.");
             }
             return value.Value;
         }
