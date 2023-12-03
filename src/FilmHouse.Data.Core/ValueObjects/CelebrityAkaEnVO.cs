@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 更多外文名（500位文本）的值对象类。
+    /// 明星的更多外文名（500位文本）的值对象类。
     /// </summary>
     [JsonConverter(typeof(CelebrityAkaEnJsonConverter))]
     [ValueConverter(typeof(CelebrityAkaEnValueConverter), typeof(CelebrityAkaEnArrayValueConverter))]

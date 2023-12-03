@@ -334,7 +334,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.MinMaxMethod
 
         /// <summary>
-        /// 小さい方を返します。
+        /// 返回小的值
         /// </summary>
         /// <param name="x">初值</param>
         /// <param name="y">第二个值</param>

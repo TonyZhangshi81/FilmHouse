@@ -7,36 +7,42 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
+using FilmHouse.Data.Core.ValueObjects;
 using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 表示排序的值对象类。进行与原始型的隐性分配。
+    /// 资源大小（11位长度）的值对象类。进行与原始型的隐性分配。
     /// </summary>
-    [JsonConverter(typeof(SortOrderJsonConverter))]
-    [ValueConverter(typeof(SortOrderValueConverter), typeof(SortOrderArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(SortOrderTypeConverter))]
+    [JsonConverter(typeof(ResourceSizeJsonConverter))]
+    [ValueConverter(typeof(ResourceSizeValueConverter), typeof(ResourceSizeArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(ResourceSizeTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class SortOrderVO : IEquatable<SortOrderVO>, IComparable<SortOrderVO>, IFormattable, IConvertible, IValue<int>, IValueObject
+    public partial class ResourceSizeVO : IEquatable<ResourceSizeVO>, IComparable<ResourceSizeVO>, IFormattable, IConvertible, IValue<long>, IValueObject
     {
-        private readonly int _value;
+        private readonly long _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "SortOrder";
+        public const string TypeName = "ResourceSize";
 
         /// <summary>
         /// 取得作为数值的最大位数。
         /// </summary>
-        public const int Precision = 3;
+        public const int Precision = 11;
+
+        /// <summary>
+        /// 取得显示格式。
+        /// </summary>
+        public const string DisplayFormat = @"{0:##,###,###,###}";
 
         /// <summary>
         /// 获取值对象包含的原始类型。
         /// </summary>
-        public int AsPrimitive() => this._value;
+        public long AsPrimitive() => this._value;
         /// <summary>
         /// 是不依赖句式而获取原始句式的方法。
         /// </summary>
@@ -44,36 +50,36 @@ namespace FilmHouse.Data.Core.ValueObjects
         public object AsPrimitiveObject() => this.AsPrimitive();
 
         /// <summary>
-        /// <see cref="SortOrderVO"/>是不依赖句式而取得原始句式的方法。
+        /// <see cref="ResourceSizeVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public SortOrderVO(int value)
+        public ResourceSizeVO(long value)
         {
             this.PreProcess(ref value);
             this._value = value;
             this.Validate();
         }
 
-        partial void PreProcess(ref int value);
+        partial void PreProcess(ref long value);
 
         partial void Validate();
 
         /// <summary>
-        /// <see cref="int"/>向<see cref="SortOrderVO"/>对的隐性的角色扮演。
+        /// <see cref="long"/>向<see cref="ResourceSizeVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator int(SortOrderVO value)
+        public static implicit operator long(ResourceSizeVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="SortOrderVO"/>向<see cref="int"/>对的隐性的角色扮演。
+        /// <see cref="ResourceSizeVO"/>向<see cref="long"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator SortOrderVO(int value)
+        public static implicit operator ResourceSizeVO(long value)
         {
-            return new SortOrderVO(value);
+            return new ResourceSizeVO(value);
         }
 
         /// <summary>
@@ -82,7 +88,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in SortOrderVO? x, in SortOrderVO? y)
+        internal static bool Equals(in ResourceSizeVO? x, in ResourceSizeVO? y)
         {
             if (x is null && y is null)
             {
@@ -96,11 +102,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 对<see cref="int"/>型和包含的原始型进行比较处理。
+        /// <see cref="long"/>对句式和包含的原始句式进行比较处理。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(SortOrderVO? other)
+        public bool Equals(ResourceSizeVO? other)
         {
             return Equals(this, other);
         }
@@ -117,13 +123,13 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(SortOrderVO).IsAssignableFrom(t))
+            if (typeof(ResourceSizeVO).IsAssignableFrom(t))
             {
-                return Equals((SortOrderVO)obj);
+                return Equals((ResourceSizeVO)obj);
             }
-            if (t == typeof(int))
+            if (t == typeof(long))
             {
-                return this._value.Equals((int)obj);
+                return this._value.Equals((long)obj);
             }
 
             return this._value.Equals(obj);
@@ -142,7 +148,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         public override string ToString()
         {
-            return string.Format("{0}", this._value);
+            return string.Format(DisplayFormat, this._value);
         }
 
         /// <summary>
@@ -266,7 +272,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否相等
         /// </summary>
-        public static bool operator ==(in SortOrderVO? x, in SortOrderVO? y)
+        public static bool operator ==(in ResourceSizeVO? x, in ResourceSizeVO? y)
         {
             return Equals(x, y);
         }
@@ -274,7 +280,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in SortOrderVO? x, in SortOrderVO? y)
+        public static bool operator !=(in ResourceSizeVO? x, in ResourceSizeVO? y)
         {
             return !Equals(x, y);
         }
@@ -282,31 +288,31 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ParseMethod
 
         /// <summary>
-        /// 将字符串形式的值转换为等价的<see cref="SortOrderVO"/>型。
+        /// 将字符串形式的值转换为等价&lt;see cref = " ResourceSizevo " / & gt;转换成句式。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <returns><see cref="SortOrderVO"/>型的值</returns>
-        public static SortOrderVO Parse(string s)
+        /// <returns><see cref="ResourceSizeVO"/>型的值</returns>
+        public static ResourceSizeVO Parse(string s)
         {
-            return new SortOrderVO(int.Parse(s));
+            return new ResourceSizeVO(long.Parse(s));
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价的<see cref="SortOrderVO"/>型，返回表示转换成功与否的值。
+        /// 将字符串形式的值转换为等价&lt;see cref = " ResourceSizevo " / & gt;转换成句式，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <param name="result"><see cref="SortOrderVO"/>型的值</param>
+        /// <param name="result"><see cref="ResourceSizeVO"/>型的值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
-        public static bool TryParse(string s, out SortOrderVO? result)
+        public static bool TryParse(string s, out ResourceSizeVO? result)
         {
-            if (int.TryParse(s, out var r))
+            if (long.TryParse(s, out var r))
             {
-                result = new SortOrderVO(r);
+                result = new ResourceSizeVO(r);
                 return true;
             }
             else
             {
-                result = default(SortOrderVO);
+                result = default(ResourceSizeVO);
                 return false;
             }
         }
@@ -317,23 +323,23 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 返回小的值
         /// </summary>
-        /// <param name="x">初值</param>
-        /// <param name="y">第二个值</param>
+        /// <param name="x">最初的值</param>
+        /// <param name="y">第二值</param>
         /// <returns>参数小的一方</returns>
-        public static SortOrderVO Min(SortOrderVO x, SortOrderVO y)
+        public static ResourceSizeVO Min(ResourceSizeVO x, ResourceSizeVO y)
         {
-            return new SortOrderVO(Math.Min(x._value, y._value));
+            return new ResourceSizeVO(Math.Min(x._value, y._value));
         }
 
         /// <summary>
-        /// 返回最大值
+        /// 返回大的值
         /// </summary>
-        /// <param name="x">初值</param>
-        /// <param name="y">第二个值</param>
+        /// <param name="x">最初的值</param>
+        /// <param name="y">第二值</param>
         /// <returns>参数大的一方</returns>
-        public static SortOrderVO Max(SortOrderVO x, SortOrderVO y)
+        public static ResourceSizeVO Max(ResourceSizeVO x, ResourceSizeVO y)
         {
-            return new SortOrderVO(Math.Max(x._value, y._value));
+            return new ResourceSizeVO(Math.Max(x._value, y._value));
         }
 
 
@@ -341,28 +347,28 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ValueArithmeticOperator
 
         /// <summary>
-        /// 递增运算符
+        /// 递增算子
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static SortOrderVO operator ++(in SortOrderVO x)
+        public static ResourceSizeVO operator ++(in ResourceSizeVO x)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value + 1));
+                return new ResourceSizeVO((long)(x._value + 1));
             }
         }
 
         /// <summary>
-        /// 减缩运算符
+        /// 消去运算符
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static SortOrderVO operator --(in SortOrderVO x)
+        public static ResourceSizeVO operator --(in ResourceSizeVO x)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value - 1));
+                return new ResourceSizeVO((long)(x._value - 1));
             }
         }
 
@@ -372,11 +378,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SortOrderVO operator +(in SortOrderVO x, in int y)
+        public static ResourceSizeVO operator +(in ResourceSizeVO x, in long y)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value + y));
+                return new ResourceSizeVO((long)(x._value + y));
             }
         }
 
@@ -386,11 +392,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SortOrderVO operator -(in SortOrderVO x, in int y)
+        public static ResourceSizeVO operator -(in ResourceSizeVO x, in long y)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value - y));
+                return new ResourceSizeVO((long)(x._value - y));
             }
         }
 
@@ -400,11 +406,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SortOrderVO operator *(in SortOrderVO x, in int y)
+        public static ResourceSizeVO operator *(in ResourceSizeVO x, in long y)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value * y));
+                return new ResourceSizeVO((long)(x._value * y));
             }
         }
 
@@ -414,11 +420,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SortOrderVO operator /(in SortOrderVO x, in int y)
+        public static ResourceSizeVO operator /(in ResourceSizeVO x, in long y)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value / y));
+                return new ResourceSizeVO((long)(x._value / y));
             }
         }
 
@@ -426,11 +432,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.Comparable
 
         /// <summary>
-        /// 将这个实例与<paramref name="other"/>进行比较。
+        /// 将该实例&lt;paramref name = " other " / & gt;和比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(SortOrderVO? other)
+        public int CompareTo(ResourceSizeVO? other)
         {
             if (other == null)
             {
@@ -445,7 +451,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >(in SortOrderVO x, in SortOrderVO y)
+        public static bool operator >(in ResourceSizeVO x, in ResourceSizeVO y)
         {
             return x._value > y._value;
         }
@@ -456,7 +462,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <(in SortOrderVO x, in SortOrderVO y)
+        public static bool operator <(in ResourceSizeVO x, in ResourceSizeVO y)
         {
             return x._value < y._value;
         }
@@ -467,7 +473,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >=(in SortOrderVO x, in SortOrderVO y)
+        public static bool operator >=(in ResourceSizeVO x, in ResourceSizeVO y)
         {
             return x._value >= y._value;
         }
@@ -478,31 +484,31 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <=(in SortOrderVO x, in SortOrderVO y)
+        public static bool operator <=(in ResourceSizeVO x, in ResourceSizeVO y)
         {
             return x._value <= y._value;
         }
 
 
         // UnitGenerateOptions.JsonConverter
-        private class SortOrderJsonConverter : JsonConverter<SortOrderVO>
+        private class ResourceSizeJsonConverter : JsonConverter<ResourceSizeVO>
         {
-            public override void Write(Utf8JsonWriter writer, SortOrderVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, ResourceSizeVO value, JsonSerializerOptions options)
             {
-                var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
+                var converter = options.GetConverter(typeof(long)) as JsonConverter<long>;
                 if (converter != null)
                 {
                     converter.Write(writer, value._value, options);
                 }
                 else
                 {
-                    throw new JsonException($"{typeof(int)} converter does not found.");
+                    throw new JsonException($"{typeof(long)} converter does not found.");
                 }
             }
 
-            public override SortOrderVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override ResourceSizeVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
+                var converter = options.GetConverter(typeof(long)) as JsonConverter<long>;
                 if (converter != null)
                 {
                     try
@@ -515,16 +521,16 @@ namespace FilmHouse.Data.Core.ValueObjects
                                 throw options.GetConvertFailureException(typeToConvert);
                             }
                             var stringValue = stringConverter.Read(ref reader, typeToConvert, options);
-                            var typeConverter = TypeDescriptor.GetConverter(typeof(SortOrderVO));
-                            return (SortOrderVO?)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
+                            var typeConverter = TypeDescriptor.GetConverter(typeof(ResourceSizeVO));
+                            return (ResourceSizeVO?)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
                         }
 
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return new SortOrderVO(value);
+                        return new ResourceSizeVO(value);
                     }
                     catch (Exception exception)
                     {
-                        throw options.GetInvalidValueException(ref reader, typeof(int), exception);
+                        throw options.GetInvalidValueException(ref reader, typeof(long), exception);
                     }
                 }
                 else
@@ -541,24 +547,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class SortOrderValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SortOrderVO?, int?>
+        public class ResourceSizeValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ResourceSizeVO?, long?>
         {
             /// <summary>
-            /// <see cref="SortOrderValueConverter"/>是不依赖句式而取得原始句式的方法。
+            /// <see cref="ResourceSizeValueConverter"/>的新实例。
             /// </summary>
-            public SortOrderValueConverter()
+            public ResourceSizeValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="SortOrderValueConverter"/>是不依赖句式而取得原始句式的方法。
+            /// <see cref="ResourceSizeValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public SortOrderValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public ResourceSizeValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new SortOrderVO(x.Value) : null,
+                        convertFromProviderExpression: x => x != null ? new ResourceSizeVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -568,18 +574,18 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
-                int value => value,
-                SortOrderVO value => value._value,
+                long value => value,
+                ResourceSizeVO value => value._value,
                 _ => null,
             };
 
             /// <summary>
-            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
+            /// 当读取存储数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                SortOrderVO value => value,
-                int value => new SortOrderVO(value),
+                ResourceSizeVO value => value,
+                long value => new ResourceSizeVO(value),
                 _ => null,
             };
         }
@@ -587,24 +593,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class SortOrderArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SortOrderVO?[], int?[]>
+        public class ResourceSizeArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ResourceSizeVO?[], long?[]>
         {
             /// <summary>
-            /// <see cref="SortOrderArrayValueConverter"/>是不依赖句式而取得原始句式的方法。
+            /// <see cref="ResourceSizeArrayValueConverter"/>的新实例。
             /// </summary>
-            public SortOrderArrayValueConverter()
+            public ResourceSizeArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="SortOrderArrayValueConverter"/>是不依赖句式而取得原始句式的方法。
+            /// <see cref="ResourceSizeArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public SortOrderArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public ResourceSizeArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
-                        convertToProviderExpression: x => x.Select(_ => _ == null ? (int?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
+                        convertToProviderExpression: x => x.Select(_ => _ == null ? (long?)null : _._value).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new ResourceSizeVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -614,31 +620,31 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
-                int?[] values => values,
-                SortOrderVO?[] values => values.Select(_ => _?._value).ToArray(),
-                IEnumerable<int?> values => values.ToArray(),
-                IEnumerable<SortOrderVO?> values => values.Select(_ => _?._value).ToArray(),
+                long?[] values => values,
+                ResourceSizeVO?[] values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<long?> values => values.ToArray(),
+                IEnumerable<ResourceSizeVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
             /// <summary>
-            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
+            /// 当读取存储数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                SortOrderVO?[] values => values,
-                int?[] values => values.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
-                IEnumerable<SortOrderVO?> values => values.ToArray(),
-                IEnumerable<int?> values => values.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
+                ResourceSizeVO?[] values => values,
+                long?[] values => values.Select(_ => _ == null ? null : new ResourceSizeVO(_.Value)).ToArray(),
+                IEnumerable<ResourceSizeVO?> values => values.ToArray(),
+                IEnumerable<long?> values => values.Select(_ => _ == null ? null : new ResourceSizeVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class SortOrderTypeConverter : System.ComponentModel.TypeConverter
+        private class ResourceSizeTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(SortOrderVO);
-            private static readonly Type ValueType = typeof(int);
+            private static readonly Type WrapperType = typeof(ResourceSizeVO);
+            private static readonly Type ValueType = typeof(long);
             private static readonly Type BindingValueType = typeof(string);
 
             public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, Type sourceType)
@@ -667,17 +673,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(SortOrderVO))
+                if (t == typeof(ResourceSizeVO))
                 {
-                    return (SortOrderVO)value;
+                    return (ResourceSizeVO)value;
                 }
-                if (t == typeof(int))
+                if (t == typeof(long))
                 {
-                    return new SortOrderVO((int)value);
+                    return new ResourceSizeVO((long)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new SortOrderVO(int.Parse((string)value));
+                    return new ResourceSizeVO(long.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -690,7 +696,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is SortOrderVO wrappedValue)
+                if (value is ResourceSizeVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

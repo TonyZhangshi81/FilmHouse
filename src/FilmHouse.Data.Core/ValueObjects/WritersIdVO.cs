@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -9,53 +9,37 @@ using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Data.Core.ValueObjects;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Data.Core.Services.Codes;
-using System.Text.RegularExpressions;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 代码ID的值对象类。
+    /// 编剧ID（1000位文本）的值对象类。
     /// </summary>
-    [JsonConverter(typeof(CodeIdJsonConverter))]
-    [ValueConverter(typeof(CodeIdValueConverter), typeof(CodeIdArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(CodeIdTypeConverter))]
+    [JsonConverter(typeof(WritersIdJsonConverter))]
+    [ValueConverter(typeof(WritersIdValueConverter), typeof(WritersIdArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(WritersIdTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class CodeId : IConvertible<string>, IEquatable<CodeId>, IComparable<CodeId>, IValue<string>, IValueObject
+    public partial class WritersIdVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<WritersIdVO>, IComparable<WritersIdVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "CodeId";
-
-        /// <summary>
-        /// "语言"区分的代码组。
-        /// </summary>
-        public static readonly CodeGroupVO Group = new("Group");
+        public new const string TypeName = "WritersId(size:1000)";
 
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 400;
+        public const int Size = 1000;
 
         /// <summary>
-        /// 获取值对象包含的原始类型。
-        /// </summary>
-        public string AsPrimitive() => this._value;
-        /// <summary>
-        /// 是不依赖句式而获取原始句式的方法。
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public object AsPrimitiveObject() => this.AsPrimitive();
-
-        /// <summary>
-        /// <see cref="CodeId"/>的新实例。
+        /// <see cref="WritersIdVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public CodeId(string value)
+        public WritersIdVO(string value)
+            : base(value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -63,42 +47,15 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 转换为保持代码管理信息的<see cref="CodeElement"/>
+        /// <see cref="CelebrityIdVO"/>的集合。
         /// </summary>
-        /// <param name="provider"></param>
         /// <returns></returns>
-        public IReadOnlyList<CodeElement>? AsCodeElement(ICodeProvider provider)
+        public IEnumerator<CelebrityIdVO>? GetCelebrityNames()
         {
-            var codes = this._value.Split('/', StringSplitOptions.None);
-            if (!codes.Any())
+            foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {
-                return null;
+                yield return (new CelebrityIdVO(new Guid(value)));
             }
-
-            var group = provider.AvailableAt(Group);
-            var items = group.Elements.Where(d => codes.Contains(d.Code.AsPrimitive())).ToList();
-            if (!items.Any())
-            {
-                return null;
-            }
-            return items;
-        }
-
-        /// <summary>
-        /// 获取代码组。
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public CodeContainer? GetCodeGroup(ICodeProvider provider)
-        {
-            var codes = this._value.Split('/', StringSplitOptions.None);
-            if (!codes.Any())
-            {
-                return null;
-            }
-
-            var group = provider.AvailableAt(Group);
-            return group;
         }
 
         partial void PreProcess(ref string value);
@@ -106,21 +63,21 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="CodeId"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="WritersIdVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(CodeId value)
+        public static explicit operator string(WritersIdVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="CodeId"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="WritersIdVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator CodeId(string value)
+        public static explicit operator WritersIdVO(string value)
         {
-            return new CodeId(value);
+            return new WritersIdVO(value);
         }
 
         /// <summary>
@@ -129,7 +86,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in CodeId? x, in CodeId? y)
+        internal static bool Equals(in WritersIdVO? x, in WritersIdVO? y)
         {
             if (x is null && y is null)
             {
@@ -147,7 +104,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(CodeId? other)
+        public bool Equals(WritersIdVO? other)
         {
             return Equals(this, other);
         }
@@ -164,9 +121,9 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(CodeId).IsAssignableFrom(t))
+            if (typeof(WritersIdVO).IsAssignableFrom(t))
             {
-                return Equals((CodeId)obj);
+                return Equals((WritersIdVO)obj);
             }
             if (t == typeof(string))
             {
@@ -185,7 +142,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 返回表示当前对象的字串。
+        /// 返回表示当前对象的字符串。
         /// </summary>
         public override string ToString()
         {
@@ -195,9 +152,9 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         /// <summary>
-        /// 是否相等
+        /// 是否等于
         /// </summary>
-        public static bool operator ==(in CodeId? x, in CodeId? y)
+        public static bool operator ==(in WritersIdVO? x, in WritersIdVO? y)
         {
             return Equals(x, y);
         }
@@ -205,7 +162,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in CodeId? x, in CodeId? y)
+        public static bool operator !=(in WritersIdVO? x, in WritersIdVO? y)
         {
             return !Equals(x, y);
         }
@@ -218,11 +175,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ComparableInterfaceOnly
 
         /// <summary>
-        /// 将这个实例与<paramref name="other"/>进行比较。
+        /// 将该实例<paramref name="other" />和比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(CodeId? other)
+        public int CompareTo(WritersIdVO? other)
         {
             if (other == null)
             {
@@ -233,9 +190,9 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class CodeIdJsonConverter : JsonConverter<CodeId>
+        private class WritersIdJsonConverter : JsonConverter<WritersIdVO>
         {
-            public override void Write(Utf8JsonWriter writer, CodeId value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, WritersIdVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -248,7 +205,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 }
             }
 
-            public override CodeId? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override WritersIdVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -256,7 +213,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new CodeId(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new WritersIdVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -277,24 +234,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class CodeIdValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CodeId?, string?>
+        public class WritersIdValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<WritersIdVO?, string?>
         {
             /// <summary>
-            /// <see cref="CodeIdValueConverter"/>的新实例。
+            /// <see cref="WritersIdValueConverter"/>的新实例。
             /// </summary>
-            public CodeIdValueConverter()
+            public WritersIdValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="CodeIdValueConverter"/>的新实例。
+            /// <see cref="WritersIdValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public CodeIdValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public WritersIdValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new CodeId(x) : null,
+                        convertFromProviderExpression: x => x != null ? new WritersIdVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -305,17 +262,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                CodeId value => value._value,
+                WritersIdVO value => value._value,
                 _ => null,
             };
 
             /// <summary>
-            /// ストア向データを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                CodeId value => value,
-                string value => new CodeId(value),
+                WritersIdVO value => value,
+                string value => new WritersIdVO(value),
                 _ => null,
             };
         }
@@ -323,24 +280,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class CodeIdArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CodeId?[], string?[]>
+        public class WritersIdArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<WritersIdVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="CodeIdArrayValueConverter"/>的新实例。
+            /// <see cref="WritersIdArrayValueConverter"/>的新实例。
             /// </summary>
-            public CodeIdArrayValueConverter()
+            public WritersIdArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="CodeIdArrayValueConverter"/>的新实例。
+            /// <see cref="WritersIdArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public CodeIdArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public WritersIdArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new CodeId(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new WritersIdVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -351,29 +308,29 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                CodeId?[] values => values.Select(_ => _?._value).ToArray(),
+                WritersIdVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<CodeId?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<WritersIdVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
             /// <summary>
-            /// ストア向データを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                CodeId?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new CodeId(_)).ToArray(),
-                IEnumerable<CodeId?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new CodeId(_)).ToArray(),
+                WritersIdVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new WritersIdVO(_)).ToArray(),
+                IEnumerable<WritersIdVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new WritersIdVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class CodeIdTypeConverter : System.ComponentModel.TypeConverter
+        private class WritersIdTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(CodeId);
+            private static readonly Type WrapperType = typeof(WritersIdVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -403,13 +360,13 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(CodeId))
+                if (t == typeof(WritersIdVO))
                 {
-                    return (CodeId)value;
+                    return (WritersIdVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new CodeId((string)value);
+                    return new WritersIdVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -422,7 +379,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is CodeId wrappedValue)
+                if (value is WritersIdVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

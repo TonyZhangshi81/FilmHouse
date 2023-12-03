@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -12,26 +11,26 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 表示排序的值对象类。进行与原始型的隐性分配。
+    /// 评价人数的值对象类。进行与原始型的隐性分配。
     /// </summary>
-    [JsonConverter(typeof(SortOrderJsonConverter))]
-    [ValueConverter(typeof(SortOrderValueConverter), typeof(SortOrderArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(SortOrderTypeConverter))]
+    [JsonConverter(typeof(RatingCountConverter))]
+    [ValueConverter(typeof(RatingCountValueConverter), typeof(RatingCountArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(RatingCountTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class SortOrderVO : IEquatable<SortOrderVO>, IComparable<SortOrderVO>, IFormattable, IConvertible, IValue<int>, IValueObject
+    public partial class RatingCountVO : IEquatable<RatingCountVO>, IComparable<RatingCountVO>, IFormattable, IConvertible, IValue<int>, IValueObject
     {
         private readonly int _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "SortOrder";
+        public const string TypeName = "RatingCount";
 
         /// <summary>
         /// 取得作为数值的最大位数。
         /// </summary>
-        public const int Precision = 3;
+        public const int Precision = 10;
 
         /// <summary>
         /// 获取值对象包含的原始类型。
@@ -44,10 +43,10 @@ namespace FilmHouse.Data.Core.ValueObjects
         public object AsPrimitiveObject() => this.AsPrimitive();
 
         /// <summary>
-        /// <see cref="SortOrderVO"/>是不依赖句式而取得原始句式的方法。
+        /// <see cref="RatingCountVO"/>
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public SortOrderVO(int value)
+        public RatingCountVO(int value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -59,21 +58,21 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="int"/>向<see cref="SortOrderVO"/>对的隐性的角色扮演。
+        /// <see cref="int"/>向<see cref="RatingCountVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator int(SortOrderVO value)
+        public static implicit operator int(RatingCountVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="SortOrderVO"/>向<see cref="int"/>对的隐性的角色扮演。
+        /// <see cref="RatingCountVO"/>向<see cref="int"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator SortOrderVO(int value)
+        public static implicit operator RatingCountVO(int value)
         {
-            return new SortOrderVO(value);
+            return new RatingCountVO(value);
         }
 
         /// <summary>
@@ -82,7 +81,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in SortOrderVO? x, in SortOrderVO? y)
+        internal static bool Equals(in RatingCountVO x, in RatingCountVO y)
         {
             if (x is null && y is null)
             {
@@ -96,11 +95,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 对<see cref="int"/>型和包含的原始型进行比较处理。
+        /// <see cref="int"/>对句式和包含的原始句式进行比较处理。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(SortOrderVO? other)
+        public bool Equals(RatingCountVO other)
         {
             return Equals(this, other);
         }
@@ -110,16 +109,16 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
             if (obj == null)
             {
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(SortOrderVO).IsAssignableFrom(t))
+            if (typeof(RatingCountVO).IsAssignableFrom(t))
             {
-                return Equals((SortOrderVO)obj);
+                return Equals((RatingCountVO)obj);
             }
             if (t == typeof(int))
             {
@@ -150,7 +149,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="format">格式字符串</param>
         /// <returns>表示当前对象的字符串</returns>
-        public virtual string ToString(string? format) => this.AsPrimitive().ToString(format);
+        public virtual string ToString(string format) => this.AsPrimitive().ToString(format);
 
         /// <summary>
         /// 返回表示当前对象的字符串。
@@ -158,7 +157,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="format">格式字符串</param>
         /// <param name="provider">用于设定值格式的提供商</param>
         /// <returns>表示当前对象的字符串</returns>
-        public virtual string ToString(string? format, IFormatProvider? provider) => this.AsPrimitive().ToString(format, provider);
+        public virtual string ToString(string format, IFormatProvider provider) => this.AsPrimitive().ToString(format, provider);
 
         /// <summary>
         /// 
@@ -170,103 +169,103 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        bool IConvertible.ToBoolean(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToBoolean(provider);
+        bool IConvertible.ToBoolean(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToBoolean(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        byte IConvertible.ToByte(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToByte(provider);
+        byte IConvertible.ToByte(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToByte(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        char IConvertible.ToChar(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToChar(provider);
+        char IConvertible.ToChar(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToChar(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        DateTime IConvertible.ToDateTime(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToDateTime(provider);
+        DateTime IConvertible.ToDateTime(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToDateTime(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        decimal IConvertible.ToDecimal(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToDecimal(provider);
+        decimal IConvertible.ToDecimal(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToDecimal(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        double IConvertible.ToDouble(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToDouble(provider);
+        double IConvertible.ToDouble(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToDouble(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        short IConvertible.ToInt16(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToInt16(provider);
+        short IConvertible.ToInt16(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToInt16(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        int IConvertible.ToInt32(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToInt32(provider);
+        int IConvertible.ToInt32(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToInt32(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        long IConvertible.ToInt64(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToInt64(provider);
+        long IConvertible.ToInt64(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToInt64(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        sbyte IConvertible.ToSByte(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToSByte(provider);
+        sbyte IConvertible.ToSByte(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToSByte(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        float IConvertible.ToSingle(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToSingle(provider);
+        float IConvertible.ToSingle(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToSingle(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        string IConvertible.ToString(IFormatProvider? provider) => this.AsPrimitive().ToString(provider);
+        string IConvertible.ToString(IFormatProvider provider) => this.AsPrimitive().ToString(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="conversionType"></param>
         /// <param name="provider"></param>
         /// <returns></returns>
-        object IConvertible.ToType(Type conversionType, IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToType(conversionType, provider);
+        object IConvertible.ToType(Type conversionType, IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToType(conversionType, provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        ushort IConvertible.ToUInt16(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToUInt16(provider);
+        ushort IConvertible.ToUInt16(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToUInt16(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        uint IConvertible.ToUInt32(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToUInt32(provider);
+        uint IConvertible.ToUInt32(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToUInt32(provider);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        ulong IConvertible.ToUInt64(IFormatProvider? provider) => ((IConvertible)this.AsPrimitive()).ToUInt64(provider);
+        ulong IConvertible.ToUInt64(IFormatProvider provider) => ((IConvertible)this.AsPrimitive()).ToUInt64(provider);
 
         /// <summary>
-        /// 是否相等
+        /// 是否等于
         /// </summary>
-        public static bool operator ==(in SortOrderVO? x, in SortOrderVO? y)
+        public static bool operator ==(in RatingCountVO x, in RatingCountVO y)
         {
             return Equals(x, y);
         }
@@ -274,7 +273,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in SortOrderVO? x, in SortOrderVO? y)
+        public static bool operator !=(in RatingCountVO x, in RatingCountVO y)
         {
             return !Equals(x, y);
         }
@@ -282,31 +281,31 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ParseMethod
 
         /// <summary>
-        /// 将字符串形式的值转换为等价的<see cref="SortOrderVO"/>型。
+        /// 将字符串形式的值转换为等价<see cref="RatingCountVO" />转换成句式。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <returns><see cref="SortOrderVO"/>型的值</returns>
-        public static SortOrderVO Parse(string s)
+        /// <returns><see cref="RatingCountVO"/>型的值</returns>
+        public static RatingCountVO Parse(string s)
         {
-            return new SortOrderVO(int.Parse(s));
+            return new RatingCountVO(int.Parse(s));
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价的<see cref="SortOrderVO"/>型，返回表示转换成功与否的值。
+        /// 将字码串形式的值转换为等价<see cref="RatingCountVO" />转换成句式，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <param name="result"><see cref="SortOrderVO"/>型的值</param>
+        /// <param name="result"><see cref="RatingCountVO"/>型的值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
-        public static bool TryParse(string s, out SortOrderVO? result)
+        public static bool TryParse(string s, out RatingCountVO result)
         {
             if (int.TryParse(s, out var r))
             {
-                result = new SortOrderVO(r);
+                result = new RatingCountVO(r);
                 return true;
             }
             else
             {
-                result = default(SortOrderVO);
+                result = default(RatingCountVO);
                 return false;
             }
         }
@@ -315,25 +314,25 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.MinMaxMethod
 
         /// <summary>
-        /// 返回小的值
+        /// 返回小值
         /// </summary>
-        /// <param name="x">初值</param>
-        /// <param name="y">第二个值</param>
+        /// <param name="x">最初的值</param>
+        /// <param name="y">第二值</param>
         /// <returns>参数小的一方</returns>
-        public static SortOrderVO Min(SortOrderVO x, SortOrderVO y)
+        public static RatingCountVO Min(RatingCountVO x, RatingCountVO y)
         {
-            return new SortOrderVO(Math.Min(x._value, y._value));
+            return new RatingCountVO(Math.Min(x._value, y._value));
         }
 
         /// <summary>
-        /// 返回最大值
+        /// 返回大值
         /// </summary>
-        /// <param name="x">初值</param>
-        /// <param name="y">第二个值</param>
+        /// <param name="x">最初的值</param>
+        /// <param name="y">第二值</param>
         /// <returns>参数大的一方</returns>
-        public static SortOrderVO Max(SortOrderVO x, SortOrderVO y)
+        public static RatingCountVO Max(RatingCountVO x, RatingCountVO y)
         {
-            return new SortOrderVO(Math.Max(x._value, y._value));
+            return new RatingCountVO(Math.Max(x._value, y._value));
         }
 
 
@@ -341,84 +340,84 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ValueArithmeticOperator
 
         /// <summary>
-        /// 递增运算符
+        /// 递增算子
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static SortOrderVO operator ++(in SortOrderVO x)
+        public static RatingCountVO operator ++(in RatingCountVO x)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value + 1));
+                return new RatingCountVO((int)(x._value + 1));
             }
         }
 
         /// <summary>
-        /// 减缩运算符
+        /// 消去运算符
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        public static SortOrderVO operator --(in SortOrderVO x)
+        public static RatingCountVO operator --(in RatingCountVO x)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value - 1));
+                return new RatingCountVO((int)(x._value - 1));
             }
         }
 
         /// <summary>
-        /// 加法运算符
+        /// 加运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SortOrderVO operator +(in SortOrderVO x, in int y)
+        public static RatingCountVO operator +(in RatingCountVO x, in int y)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value + y));
+                return new RatingCountVO((int)(x._value + y));
             }
         }
 
         /// <summary>
-        /// 减法运算符
+        /// 减运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SortOrderVO operator -(in SortOrderVO x, in int y)
+        public static RatingCountVO operator -(in RatingCountVO x, in int y)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value - y));
+                return new RatingCountVO((int)(x._value - y));
             }
         }
 
         /// <summary>
-        /// 乘法运算符
+        /// 乘运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SortOrderVO operator *(in SortOrderVO x, in int y)
+        public static RatingCountVO operator *(in RatingCountVO x, in int y)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value * y));
+                return new RatingCountVO((int)(x._value * y));
             }
         }
 
         /// <summary>
-        /// 除法运算符
+        /// 除运算符
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static SortOrderVO operator /(in SortOrderVO x, in int y)
+        public static RatingCountVO operator /(in RatingCountVO x, in int y)
         {
             checked
             {
-                return new SortOrderVO((int)(x._value / y));
+                return new RatingCountVO((int)(x._value / y));
             }
         }
 
@@ -426,11 +425,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.Comparable
 
         /// <summary>
-        /// 将这个实例与<paramref name="other"/>进行比较。
+        /// 将该实例与<paramref name="other" />比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(SortOrderVO? other)
+        public int CompareTo(RatingCountVO other)
         {
             if (other == null)
             {
@@ -440,54 +439,54 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 大于运算符
+        /// 是否大
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >(in SortOrderVO x, in SortOrderVO y)
+        public static bool operator >(in RatingCountVO x, in RatingCountVO y)
         {
             return x._value > y._value;
         }
 
         /// <summary>
-        /// 小于运算符
+        /// 是否小
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <(in SortOrderVO x, in SortOrderVO y)
+        public static bool operator <(in RatingCountVO x, in RatingCountVO y)
         {
             return x._value < y._value;
         }
 
         /// <summary>
-        /// 大于等于运算符
+        /// 是否大于等于
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator >=(in SortOrderVO x, in SortOrderVO y)
+        public static bool operator >=(in RatingCountVO x, in RatingCountVO y)
         {
             return x._value >= y._value;
         }
 
         /// <summary>
-        /// 小于等于运算符
+        /// 是否小于等于
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public static bool operator <=(in SortOrderVO x, in SortOrderVO y)
+        public static bool operator <=(in RatingCountVO x, in RatingCountVO y)
         {
             return x._value <= y._value;
         }
 
 
         // UnitGenerateOptions.JsonConverter
-        private class SortOrderJsonConverter : JsonConverter<SortOrderVO>
+        private class RatingCountConverter : JsonConverter<RatingCountVO>
         {
-            public override void Write(Utf8JsonWriter writer, SortOrderVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, RatingCountVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
                 if (converter != null)
@@ -500,7 +499,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 }
             }
 
-            public override SortOrderVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override RatingCountVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(int)) as JsonConverter<int>;
                 if (converter != null)
@@ -515,12 +514,12 @@ namespace FilmHouse.Data.Core.ValueObjects
                                 throw options.GetConvertFailureException(typeToConvert);
                             }
                             var stringValue = stringConverter.Read(ref reader, typeToConvert, options);
-                            var typeConverter = TypeDescriptor.GetConverter(typeof(SortOrderVO));
-                            return (SortOrderVO?)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
+                            var typeConverter = TypeDescriptor.GetConverter(typeof(RatingCountVO));
+                            return (RatingCountVO)(stringValue == null ? null : typeConverter.ConvertFrom(stringValue));
                         }
 
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return new SortOrderVO(value);
+                        return new RatingCountVO(value);
                     }
                     catch (Exception exception)
                     {
@@ -541,24 +540,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class SortOrderValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SortOrderVO?, int?>
+        public class RatingCountValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<RatingCountVO, int?>
         {
             /// <summary>
-            /// <see cref="SortOrderValueConverter"/>是不依赖句式而取得原始句式的方法。
+            /// <see cref="RatingCountValueConverter"/>
             /// </summary>
-            public SortOrderValueConverter()
+            public RatingCountValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="SortOrderValueConverter"/>是不依赖句式而取得原始句式的方法。
+            /// <see cref="RatingCountValueConverter"/>
             /// </summary>
             /// <param name="mappingHints"></param>
-            public SortOrderValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public RatingCountValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new SortOrderVO(x.Value) : null,
+                        convertFromProviderExpression: x => x != null ? new RatingCountVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -566,20 +565,20 @@ namespace FilmHouse.Data.Core.ValueObjects
             /// <summary>
             /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
-            public override Func<object?, object?> ConvertToProvider => (x) => x switch
+            public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 int value => value,
-                SortOrderVO value => value._value,
+                RatingCountVO value => value._value,
                 _ => null,
             };
 
             /// <summary>
             /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
-            public override Func<object?, object?> ConvertFromProvider => (x) => x switch
+            public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                SortOrderVO value => value,
-                int value => new SortOrderVO(value),
+                RatingCountVO value => value,
+                int value => new RatingCountVO(value),
                 _ => null,
             };
         }
@@ -587,61 +586,61 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class SortOrderArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SortOrderVO?[], int?[]>
+        public class RatingCountArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<RatingCountVO[], int?[]>
         {
             /// <summary>
-            /// <see cref="SortOrderArrayValueConverter"/>是不依赖句式而取得原始句式的方法。
+            /// <see cref="RatingCountArrayValueConverter"/>
             /// </summary>
-            public SortOrderArrayValueConverter()
+            public RatingCountArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="SortOrderArrayValueConverter"/>是不依赖句式而取得原始句式的方法。
+            /// <see cref="RatingCountArrayValueConverter"/>
             /// </summary>
             /// <param name="mappingHints"></param>
-            public SortOrderArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public RatingCountArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (int?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new RatingCountVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
 
             /// <summary>
-            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
+            /// 在将数据写入到存储的情况下,取得转换对象的函数,并将该函数设定为,将将该函数与将对象转换成该对象的函数,并将其与与子串、框化以及非严格匹配的简单类型的一致处理。
             /// </summary>
-            public override Func<object?, object?> ConvertToProvider => (x) => x switch
+            public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 int?[] values => values,
-                SortOrderVO?[] values => values.Select(_ => _?._value).ToArray(),
+                RatingCountVO[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<int?> values => values.ToArray(),
-                IEnumerable<SortOrderVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<RatingCountVO> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
             /// <summary>
             /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
-            public override Func<object?, object?> ConvertFromProvider => (x) => x switch
+            public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                SortOrderVO?[] values => values,
-                int?[] values => values.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
-                IEnumerable<SortOrderVO?> values => values.ToArray(),
-                IEnumerable<int?> values => values.Select(_ => _ == null ? null : new SortOrderVO(_.Value)).ToArray(),
+                RatingCountVO[] values => values,
+                int?[] values => values.Select(_ => _ == null ? null : new RatingCountVO(_.Value)).ToArray(),
+                IEnumerable<RatingCountVO> values => values.ToArray(),
+                IEnumerable<int?> values => values.Select(_ => _ == null ? null : new RatingCountVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class SortOrderTypeConverter : System.ComponentModel.TypeConverter
+        private class RatingCountTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(SortOrderVO);
+            private static readonly Type WrapperType = typeof(RatingCountVO);
             private static readonly Type ValueType = typeof(int);
             private static readonly Type BindingValueType = typeof(string);
 
-            public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, Type sourceType)
+            public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext context, Type sourceType)
             {
                 if (sourceType == WrapperType || sourceType == ValueType || sourceType == BindingValueType)
                 {
@@ -651,7 +650,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return base.CanConvertFrom(context, sourceType);
             }
 
-            public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext? context, Type? destinationType)
+            public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, Type destinationType)
             {
                 if (destinationType != null)
                 {
@@ -664,33 +663,33 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return base.CanConvertTo(context, destinationType);
             }
 
-            public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
+            public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(SortOrderVO))
+                if (t == typeof(RatingCountVO))
                 {
-                    return (SortOrderVO)value;
+                    return (RatingCountVO)value;
                 }
                 if (t == typeof(int))
                 {
-                    return new SortOrderVO((int)value);
+                    return new RatingCountVO((int)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new SortOrderVO(int.Parse((string)value));
+                    return new RatingCountVO(int.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
             }
 
-            public override object? ConvertTo(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object? value, Type destinationType)
+            public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
             {
                 if (value == null)
                 {
                     return null;
                 }
 
-                if (value is SortOrderVO wrappedValue)
+                if (value is RatingCountVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

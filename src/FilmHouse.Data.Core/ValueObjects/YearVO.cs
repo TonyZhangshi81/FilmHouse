@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -9,96 +9,41 @@ using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Data.Core.ValueObjects;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Data.Core.Services.Codes;
-using System.Text.RegularExpressions;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 代码ID的值对象类。
+    /// 年代（4位文本）的值对象类。
     /// </summary>
-    [JsonConverter(typeof(CodeIdJsonConverter))]
-    [ValueConverter(typeof(CodeIdValueConverter), typeof(CodeIdArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(CodeIdTypeConverter))]
+    [JsonConverter(typeof(YearJsonConverter))]
+    [ValueConverter(typeof(YearValueConverter), typeof(YearArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(YearTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class CodeId : IConvertible<string>, IEquatable<CodeId>, IComparable<CodeId>, IValue<string>, IValueObject
+    public partial class YearVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<YearVO>, IComparable<YearVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "CodeId";
-
-        /// <summary>
-        /// "语言"区分的代码组。
-        /// </summary>
-        public static readonly CodeGroupVO Group = new("Group");
+        public new const string TypeName = "Year(size:4)";
 
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 400;
+        public const int Size = 4;
 
         /// <summary>
-        /// 获取值对象包含的原始类型。
-        /// </summary>
-        public string AsPrimitive() => this._value;
-        /// <summary>
-        /// 是不依赖句式而获取原始句式的方法。
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public object AsPrimitiveObject() => this.AsPrimitive();
-
-        /// <summary>
-        /// <see cref="CodeId"/>的新实例。
+        /// <see cref="YearVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public CodeId(string value)
+        public YearVO(string value)
+            : base(value)
         {
             this.PreProcess(ref value);
             this._value = value;
             this.Validate();
-        }
-
-        /// <summary>
-        /// 转换为保持代码管理信息的<see cref="CodeElement"/>
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public IReadOnlyList<CodeElement>? AsCodeElement(ICodeProvider provider)
-        {
-            var codes = this._value.Split('/', StringSplitOptions.None);
-            if (!codes.Any())
-            {
-                return null;
-            }
-
-            var group = provider.AvailableAt(Group);
-            var items = group.Elements.Where(d => codes.Contains(d.Code.AsPrimitive())).ToList();
-            if (!items.Any())
-            {
-                return null;
-            }
-            return items;
-        }
-
-        /// <summary>
-        /// 获取代码组。
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public CodeContainer? GetCodeGroup(ICodeProvider provider)
-        {
-            var codes = this._value.Split('/', StringSplitOptions.None);
-            if (!codes.Any())
-            {
-                return null;
-            }
-
-            var group = provider.AvailableAt(Group);
-            return group;
         }
 
         partial void PreProcess(ref string value);
@@ -106,21 +51,21 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="CodeId"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="YearVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(CodeId value)
+        public static explicit operator string(YearVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="CodeId"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="YearVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator CodeId(string value)
+        public static explicit operator YearVO(string value)
         {
-            return new CodeId(value);
+            return new YearVO(value);
         }
 
         /// <summary>
@@ -129,7 +74,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in CodeId? x, in CodeId? y)
+        internal static bool Equals(in YearVO? x, in YearVO? y)
         {
             if (x is null && y is null)
             {
@@ -147,7 +92,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(CodeId? other)
+        public bool Equals(YearVO? other)
         {
             return Equals(this, other);
         }
@@ -164,9 +109,9 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(CodeId).IsAssignableFrom(t))
+            if (typeof(YearVO).IsAssignableFrom(t))
             {
-                return Equals((CodeId)obj);
+                return Equals((YearVO)obj);
             }
             if (t == typeof(string))
             {
@@ -185,7 +130,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 返回表示当前对象的字串。
+        /// 返回表示当前对象的字符串。
         /// </summary>
         public override string ToString()
         {
@@ -195,9 +140,9 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         /// <summary>
-        /// 是否相等
+        /// 是否等于
         /// </summary>
-        public static bool operator ==(in CodeId? x, in CodeId? y)
+        public static bool operator ==(in YearVO? x, in YearVO? y)
         {
             return Equals(x, y);
         }
@@ -205,7 +150,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in CodeId? x, in CodeId? y)
+        public static bool operator !=(in YearVO? x, in YearVO? y)
         {
             return !Equals(x, y);
         }
@@ -218,11 +163,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ComparableInterfaceOnly
 
         /// <summary>
-        /// 将这个实例与<paramref name="other"/>进行比较。
+        /// 将该实例<paramref name="other" />和比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(CodeId? other)
+        public int CompareTo(YearVO? other)
         {
             if (other == null)
             {
@@ -233,9 +178,9 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class CodeIdJsonConverter : JsonConverter<CodeId>
+        private class YearJsonConverter : JsonConverter<YearVO>
         {
-            public override void Write(Utf8JsonWriter writer, CodeId value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, YearVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -248,7 +193,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 }
             }
 
-            public override CodeId? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override YearVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -256,7 +201,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new CodeId(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new YearVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -277,24 +222,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class CodeIdValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CodeId?, string?>
+        public class YearValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<YearVO?, string?>
         {
             /// <summary>
-            /// <see cref="CodeIdValueConverter"/>的新实例。
+            /// <see cref="YearValueConverter"/>的新实例。
             /// </summary>
-            public CodeIdValueConverter()
+            public YearValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="CodeIdValueConverter"/>的新实例。
+            /// <see cref="YearValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public CodeIdValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public YearValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new CodeId(x) : null,
+                        convertFromProviderExpression: x => x != null ? new YearVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -305,17 +250,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                CodeId value => value._value,
+                YearVO value => value._value,
                 _ => null,
             };
 
             /// <summary>
-            /// ストア向データを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                CodeId value => value,
-                string value => new CodeId(value),
+                YearVO value => value,
+                string value => new YearVO(value),
                 _ => null,
             };
         }
@@ -323,24 +268,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class CodeIdArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CodeId?[], string?[]>
+        public class YearArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<YearVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="CodeIdArrayValueConverter"/>的新实例。
+            /// <see cref="YearArrayValueConverter"/>的新实例。
             /// </summary>
-            public CodeIdArrayValueConverter()
+            public YearArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="CodeIdArrayValueConverter"/>的新实例。
+            /// <see cref="YearArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public CodeIdArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public YearArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new CodeId(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new YearVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -351,29 +296,29 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                CodeId?[] values => values.Select(_ => _?._value).ToArray(),
+                YearVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<CodeId?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<YearVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
             /// <summary>
-            /// ストア向データを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
+            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                CodeId?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new CodeId(_)).ToArray(),
-                IEnumerable<CodeId?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new CodeId(_)).ToArray(),
+                YearVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new YearVO(_)).ToArray(),
+                IEnumerable<YearVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new YearVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class CodeIdTypeConverter : System.ComponentModel.TypeConverter
+        private class YearTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(CodeId);
+            private static readonly Type WrapperType = typeof(YearVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -403,13 +348,13 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(CodeId))
+                if (t == typeof(YearVO))
                 {
-                    return (CodeId)value;
+                    return (YearVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new CodeId((string)value);
+                    return new YearVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -422,7 +367,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is CodeId wrappedValue)
+                if (value is YearVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

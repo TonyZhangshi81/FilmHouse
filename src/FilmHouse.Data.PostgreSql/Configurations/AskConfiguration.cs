@@ -40,6 +40,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasConversion<RequestTimeVO.RequestTimeValueConverter>();
 
         builder.Property(e => e.RequestWith)
+            .HasDefaultValue(typeof(RequestWithVO).CreateValueObjectInstance("0"))
             .HasColumnType("numeric(4)")
             .HasConversion<RequestWithVO.RequestWithValueConverter>();
 

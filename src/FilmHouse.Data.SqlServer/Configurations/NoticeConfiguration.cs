@@ -42,9 +42,8 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.Flag)
-            .HasDefaultValue(typeof(NoticeFlagVO).CreateValueObjectInstance("0"))
-            .HasColumnType("tinyint")
-            .HasMaxLength(1)
+            .HasDefaultValue(typeof(NoticeFlagVO).CreateValueObjectInstance("false"))
+            .HasColumnType("bit")
             .HasConversion<NoticeFlagVO.NoticeFlagValueConverter>();
 
         builder.Property(e => e.CreatedOn)
