@@ -7,7 +7,6 @@ using System.Text.Unicode;
 using AspNetCoreRateLimit;
 using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Utils;
-using FilmHouse.Core.Utils.PasswordGenerator;
 using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
@@ -188,9 +187,6 @@ void ConfigureServices(IServiceCollection services)
     });
 
     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-    // * 以下服务通过AddLocalService进行批量注册处理
-    //services.AddTransient<IPasswordGenerator, DefaultPasswordGenerator>();
 
     switch (dbType!.ToLower())
     {

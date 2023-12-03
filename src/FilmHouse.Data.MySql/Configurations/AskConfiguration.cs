@@ -55,7 +55,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 
         builder.Property(e => e.Status)
             .HasDefaultValue(typeof(AskStatusVO).CreateValueObjectInstance("false"))
-            .HasColumnType("numeric(1)")
+            .HasColumnType("tinyint")
             .HasConversion<AskStatusVO.AskStatusValueConverter>();
 
         builder.Property(e => e.CreatedOn)

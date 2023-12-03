@@ -42,7 +42,7 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
 
         builder.Property(e => e.Flag)
             .HasDefaultValue(typeof(NoticeFlagVO).CreateValueObjectInstance("false"))
-            .HasColumnType("bit")
+            .HasColumnType("smallint")
             .HasConversion<NoticeFlagVO.NoticeFlagValueConverter>();
 
         builder.Property(e => e.CreatedOn)
