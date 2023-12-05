@@ -1,0 +1,108 @@
+﻿@using FilmHouse.Business;
+@inject Microsoft.Extensions.Options.IOptionsMonitor<WebSiteSettings> _webSiteSettings
+
+@model FilmHouse.Web.Models.HomeViewModel
+@{
+    Layout = "_LayoutWide";
+}
+@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.PageType = 1;
+    ViewBag.NavType = 1;
+}
+
+
+@section Links {
+    <link rel="stylesheet" href="~/css/home.css" />
+}
+
+<div class="hidden-xs" id="index_back">
+    <img src="/Content/Discovery/@Model.Discovery.Avatar.AsPrimitive()" title="@Model.Discovery.Movie.Title">
+</div>
+
+<div class="container" id="display_back">
+    <h1 class="text-center" id="head_title">@_webSiteSettings.CurrentValue.Name</h1>
+
+    <form action="/Search" class="form-horizontal" id="searchForm" method="post" role="form">
+        <div class="input-group input-group-lg col-sm-8 col-sm-offset-2" style="margin-top:20px;">
+            <input type="search" class="form-control" placeholder="搜索 电影" style="border-radius:2px 0px 0px 2px; border:1px solid #10761A; box-shadow:0;" name="search">
+            <span class="input-group-btn">
+                <a title="搜索" class="btn btn-primary" href="javascript:document.getElementById('searchForm').submit()" style="border-radius:0px 2px 2px 0px; border:1px solid #10761A;">
+                    <i class="fa fa-search"></i>
+                </a>
+            </span>
+        </div>
+    </form>
+
+    <div class="col-sm-8 col-sm-offset-2" style="background:rgba(255, 255, 255, 0.75) !important; padding:10px; margin-top:20px;">
+        <div>
+            <a class="link-text" href="/Movie/Index?id=@Model.Discovery.Movie.MovieId" title="@Model.Discovery.Movie.Title" target="_self">
+                <span class="font-large">@Model.Discovery.Movie.Title</span>
+            </a>
+            <span class="pull-right">
+                评分:
+                <a class="clr-doubangreen" title="跳转到豆瓣电影" href="https://movie.douban.com/subject/@Model.Discovery.Movie.DoubanID/">@Model.Discovery.Movie.Rating</a>
+            </span>
+        </div>
+        <div class="font-small" style="max-height:85px; overflow:hidden; text-overflow:ellipsis;">@Model.Discovery.Movie.Summary</div>
+        <div class="visible-xs text-overflow font-small">
+            导演：
+            @foreach (var celebitem in Model.Discovery.Movie.Directors.Take(4))
+            {
+                if (celebitem.Id != null && !string.IsNullOrEmpty(celebitem.Id.ToString()))
+                {
+                    <a href="/Celeb/Index?id=@celebitem.Id.ToString()" class="link-text" target="_self">@celebitem.Name</a>
+                }
+                else
+                {
+                    <span>@celebitem.Name</span>
+                }
+            }
+        </div>
+        <div class="visible-xs text-overflow font-small">
+            演员：
+            @foreach (var celebitem in Model.Discovery.Movie.Writers.Take(4))
+            {
+                if (celebitem.Id != null && !string.IsNullOrEmpty(celebitem.Id.ToString()))
+                {
+                    <a href="/Celeb/Index?id=@celebitem.Id.ToString()" class="link-text" target="_self">@celebitem.Name</a>
+                }
+                else
+                {
+                    <span>@celebitem.Name</span>
+                }
+            }
+        </div>
+        <div class="visible-xs text-overflow font-small">
+            类型：
+            @foreach (var celebitem in Model.Discovery.Movie.Casts.Take(4))
+            {
+                if (celebitem.Id != null && !string.IsNullOrEmpty(celebitem.Id.ToString()))
+                {
+                    <a href="/Celeb/Index?id=@celebitem.Id.ToString()" class="link-text" target="_self">@celebitem.Name</a>
+                }
+                else
+                {
+                    <span>@celebitem.Name</span>
+                }
+            }
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+@section Scripts {
+    <script src="~/js/Home/Index.js"></script>
+}
