@@ -27,6 +27,7 @@ public class SqlServerFilmHouseDbContext : FilmHouseDbContext
         modelBuilder.ApplyConfiguration(new CodeMastConfiguration());
         modelBuilder.ApplyConfiguration(new CommentConfiguration());
         modelBuilder.ApplyConfiguration(new ConfigurationConfiguration());
+        modelBuilder.ApplyConfiguration(new DiscoveryConfiguration());
         modelBuilder.ApplyConfiguration(new MarkConfiguration());
         modelBuilder.ApplyConfiguration(new MovieConfiguration());
         modelBuilder.ApplyConfiguration(new NoticeConfiguration());

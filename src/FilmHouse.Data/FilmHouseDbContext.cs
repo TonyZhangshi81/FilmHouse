@@ -28,6 +28,7 @@ public class FilmHouseDbContext : DbContext
     public virtual DbSet<CodeMastEntity> CodeMast { get; set; }
     public virtual DbSet<CommentEntity> Comments { get; set; }
     public virtual DbSet<ConfigurationEntity> Configuration { get; set; }
+    public virtual DbSet<DiscoveryEntity> Discovery { get; set; }
     public virtual DbSet<MarkEntity> Marks { get; set; }
     public virtual DbSet<MovieEntity> Movies { get; set; }
     public virtual DbSet<NoticeEntity> Notices { get; set; }
@@ -50,6 +51,7 @@ public static class FilmHouseDbContextExtension
         context.CodeMast.RemoveRange();
         context.Comments.RemoveRange();
         context.Configuration.RemoveRange();
+        context.Discovery.RemoveRange();
         context.Marks.RemoveRange();
         context.Movies.RemoveRange();
         context.Notices.RemoveRange();

@@ -87,5 +87,32 @@ public class MovieEntity : EntitiesBase
 
     [Column(Order = 27)]
     public PageViewsVO PageViews { get; set; }
-    
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ICollection<AskEntity> Asks { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ICollection<CommentEntity> Comments { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ICollection<ResourceEntity> Resources { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ICollection<DiscoveryEntity> Discoveries { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ICollection<WorkEntity> Works { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
+
 }

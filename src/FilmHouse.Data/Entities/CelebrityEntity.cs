@@ -69,4 +69,12 @@ public class CelebrityEntity : EntitiesBase
     [Column(Order = 20)]
     public NoteVO Note { get; set; }
 
+
+
+
+    public virtual ICollection<WorkEntity> WorkEntities { get; set; }
+
+    public virtual UserAccountEntity UserAccount { get; set; }
+
+
 }

@@ -27,4 +27,15 @@ public class CommentEntity : EntitiesBase
     [Column(Order = 6)]
     public CommentTimeVO CommentTime { get; set; }
 
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual MovieEntity Movie { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
+
 }

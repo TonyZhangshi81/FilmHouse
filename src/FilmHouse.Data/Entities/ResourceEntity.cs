@@ -44,4 +44,19 @@ public class ResourceEntity : EntitiesBase
     [Column(Order = 11)]
     public NoteVO Note { get; set; }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ICollection<NoticeEntity> Notices { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual MovieEntity Movie { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
+
+
 }
