@@ -43,11 +43,11 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
-            .HasColumnType("datetime(3)")
+            .HasColumnType("timestamp(3)")
             .HasConversion<CreatedOnVO.CreatedOnValueConverter>();
 
         builder.Property(e => e.UpDatedOn)
-            .HasColumnType("datetime(3)")
+            .HasColumnType("timestamp(3)")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
     }
