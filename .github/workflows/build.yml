@@ -4,8 +4,10 @@ env:
   TARGET_SOLUTION_VAR: 'FilmHouse.sln'
   DOTNET_VERSION: '7.0.x'
 
-on:push
-  workflow_dispatch:
+on:
+  push:
+    branches:
+    - 'main'
 
 permissions:
   contents: read
