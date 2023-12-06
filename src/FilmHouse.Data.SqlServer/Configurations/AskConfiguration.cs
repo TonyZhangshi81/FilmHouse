@@ -64,5 +64,18 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Asks)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Ask_UserAccount");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Asks)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Ask_Movie");
+
     }
 }

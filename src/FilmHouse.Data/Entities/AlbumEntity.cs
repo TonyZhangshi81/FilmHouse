@@ -58,8 +58,6 @@ public class AlbumEntity : EntitiesBase
 
 
 
-
-
     /// <summary>
     /// 
     /// </summary>

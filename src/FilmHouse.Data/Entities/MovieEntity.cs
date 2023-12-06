@@ -7,6 +7,15 @@ namespace FilmHouse.Data.Entities;
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public class MovieEntity : EntitiesBase
 {
+    public MovieEntity()
+    {
+        Asks = new HashSet<AskEntity>();
+        Comments = new HashSet<CommentEntity>();
+        Resources = new HashSet<ResourceEntity>();
+        Discoveries = new HashSet<DiscoveryEntity>();
+        Works = new HashSet<WorkEntity>();
+    }
+
     [Column(Order = 2)]
     [Required]
     public MovieIdVO MovieId { get; set; }

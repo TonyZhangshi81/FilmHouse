@@ -7,6 +7,18 @@ namespace FilmHouse.Data.Entities;
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public class UserAccountEntity : EntitiesBase
 {
+    public UserAccountEntity()
+    {
+        Albums = new HashSet<AlbumEntity>();
+        Asks = new HashSet<AskEntity>();
+        Celebrities = new HashSet<CelebrityEntity>();
+        Comments = new HashSet<CommentEntity>();
+        Movies = new HashSet<MovieEntity>();
+        Notices = new HashSet<NoticeEntity>();
+        Resources = new HashSet<ResourceEntity>();
+        Marks = new HashSet<MarkEntity>();
+    }
+
     [Column(Order = 2)]
     [Required]
     public UserIdVO UserId { get; set; }

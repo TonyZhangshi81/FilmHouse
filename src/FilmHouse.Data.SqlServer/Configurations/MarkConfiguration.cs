@@ -51,5 +51,11 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Marks)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Mark_UserAccount");
     }
 }

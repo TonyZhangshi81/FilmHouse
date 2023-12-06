@@ -9,6 +9,11 @@ namespace FilmHouse.Data.Entities;
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public class CelebrityEntity : EntitiesBase
 {
+    public CelebrityEntity()
+    {
+        Works = new HashSet<WorkEntity>();
+    }
+
     [Column(Order = 2)]
     [Required]
     public CelebrityIdVO CelebrityId { get; set; }
@@ -48,7 +53,7 @@ public class CelebrityEntity : EntitiesBase
     public StarAvatarVO Avatar { get; set; }
 
     [Column(Order = 14)]
-    public WorksVO Works { get; set; }
+    public WorksVO WorksId { get; set; }
 
     [Column(Order = 15)]
     public DoubanIDVO DoubanID { get; set; }
@@ -72,7 +77,7 @@ public class CelebrityEntity : EntitiesBase
 
 
 
-    public virtual ICollection<WorkEntity> WorkEntities { get; set; }
+    public virtual ICollection<WorkEntity> Works { get; set; }
 
     public virtual UserAccountEntity UserAccount { get; set; }
 
