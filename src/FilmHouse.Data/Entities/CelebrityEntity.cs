@@ -9,6 +9,11 @@ namespace FilmHouse.Data.Entities;
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public class CelebrityEntity : EntitiesBase
 {
+    public CelebrityEntity()
+    {
+        WorkEntities = new HashSet<WorkEntity>();
+    }
+
     [Column(Order = 2)]
     [Required]
     public CelebrityIdVO CelebrityId { get; set; }
