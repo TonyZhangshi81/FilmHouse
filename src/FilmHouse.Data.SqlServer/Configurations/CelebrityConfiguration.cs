@@ -79,7 +79,7 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasMaxLength(100)
             .HasConversion<StarAvatarVO.StarAvatarValueConverter>();
 
-        builder.Property(e => e.Works)
+        builder.Property(e => e.WorksId)
             .HasColumnType("varchar(1000)")
             .HasMaxLength(1000)
             .HasConversion<WorksVO.WorksValueConverter>();
@@ -122,6 +122,14 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Celebrities)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Celebrity_UserAccount");
+
 
     }
 }

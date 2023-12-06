@@ -19,7 +19,7 @@ namespace FilmHouse.Core.Utils
         /// <returns></returns>
         public static string ToHash<T>(this IPasswordHashable<T> value, string soltstring)
         {
-            // 使用使用用户ID字符串等的salt。
+            // 使用用户ID字符串等的salt。
             byte[] salt = Encoding.UTF8.GetBytes(soltstring);
 
             // Pbkdf2方法可以指定散列化的重复次数和创建散列的长度。

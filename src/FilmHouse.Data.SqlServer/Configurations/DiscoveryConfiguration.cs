@@ -50,5 +50,12 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Discoveries)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Discovery_Movie");
+
     }
 }

@@ -67,5 +67,12 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
             .HasColumnType("datetime(3)")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Albums)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Album_UserAccount");
+
+
     }
 }

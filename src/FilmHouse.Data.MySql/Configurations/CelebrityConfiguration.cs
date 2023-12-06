@@ -60,11 +60,11 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
         builder.Property(e => e.Birthday)
             .HasColumnType("date")
             .HasConversion<BirthdayVO.BirthdayValueConverter>();
-       
+
         builder.Property(e => e.Deathday)
             .HasColumnType("date")
             .HasConversion<DeathdayVO.DeathdayValueConverter>();
-        
+
         builder.Property(e => e.BornPlace)
             .HasColumnType("varchar(100)")
             .HasMaxLength(100)
@@ -74,22 +74,22 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasColumnType("varchar(500)")
             .HasMaxLength(500)
             .HasConversion<FamilyVO.FamilyValueConverter>();
-        
+
         builder.Property(e => e.Avatar)
             .HasColumnType("varchar(100)")
             .HasMaxLength(100)
             .HasConversion<StarAvatarVO.StarAvatarValueConverter>();
 
-        builder.Property(e => e.Works)
+        builder.Property(e => e.WorksId)
             .HasColumnType("varchar(1000)")
             .HasMaxLength(1000)
             .HasConversion<WorksVO.WorksValueConverter>();
-        
+
         builder.Property(e => e.DoubanID)
             .HasColumnType("varchar(10)")
             .HasMaxLength(10)
             .HasConversion<DoubanIDVO.DoubanIDValueConverter>();
-        
+
         builder.Property(e => e.IMDb)
             .HasColumnType("varchar(10)")
             .HasMaxLength(10)
@@ -105,7 +105,7 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<UserIdVO.UserIdValueConverter>();
-        
+
         builder.Property(e => e.ReviewStatus)
             .HasDefaultValue(typeof(ReviewStatusVO).CreateValueObjectInstance("0"))
             .HasColumnType("tinyint unsigned")

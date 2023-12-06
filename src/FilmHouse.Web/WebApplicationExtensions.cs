@@ -21,7 +21,6 @@ public static class WebApplicationExtensions
 
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
-        //var env = services.GetRequiredService<IWebHostEnvironment>();
         var maxRetryAvailability = Convert.ToInt32(app.Configuration.GetSection("SeedMaxRetryAvailability").Value ?? "10");
 
         FilmHouseDbContext context = dbType.ToLowerInvariant() switch

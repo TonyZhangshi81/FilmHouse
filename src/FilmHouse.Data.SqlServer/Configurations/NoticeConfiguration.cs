@@ -55,5 +55,18 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Notices)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Notice_UserAccount");
+
+        builder.HasOne(d => d.Resource)
+            .WithMany(p => p.Notices)
+            .HasForeignKey(d => d.ResourceId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Notice_Resource");
+
     }
 }

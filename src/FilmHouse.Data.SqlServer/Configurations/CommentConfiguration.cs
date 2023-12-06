@@ -52,5 +52,19 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Comment_UserAccount");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Comment_Movie");
+
     }
 }
