@@ -13,7 +13,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 影片名（50位文本）的值对象类。
+    /// 影片中文名（50位文本）的值对象类。
     /// </summary>
     [JsonConverter(typeof(MovieTitleJsonConverter))]
     [ValueConverter(typeof(MovieTitleValueConverter), typeof(MovieTitleArrayValueConverter))]

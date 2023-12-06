@@ -11,11 +11,11 @@ public class MarkEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid MarkId { get; set; }
+    public MarkIdVO MarkId { get; set; }
 
     [Column(Order = 3)]
     [Required]
-    public Int16 Type { get; set; }
+    public MarkTypeVO Type { get; set; }
 
     [Column(Order = 4)]
     [Required]
@@ -23,8 +23,11 @@ public class MarkEntity : EntitiesBase
 
     [Column(Order = 5)]
     [Required]
-    public Guid Target { get; set; }
+    public MarkTargetVO Target { get; set; }
 
-    [Column(Order = 6)]
-    public DateTime Time { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
 }

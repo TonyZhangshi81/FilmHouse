@@ -7,5 +7,10 @@
 		<PackageReference Include="NLog" Version="5.2.5" />
 		<PackageReference Include="NLog.Extensions.Logging" Version="5.3.5" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\FilmHouse.Core\FilmHouse.Core.csproj" />
+	  <ProjectReference Include="..\FilmHouse.Data.Core\FilmHouse.Data.Core.csproj" />
+	  <ProjectReference Include="..\FilmHouse.Data\FilmHouse.Data.csproj" />
+	</ItemGroup>
 
 </Project>

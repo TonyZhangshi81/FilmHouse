@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -22,12 +23,14 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
 
         builder.Property(e => e.MarkId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<MarkIdVO.MarkIdValueConverter>();
 
         builder.Property(e => e.Type)
             .IsRequired()
-            .HasDefaultValue("0")
-            .HasColumnType("tinyint");
+            .HasDefaultValue(typeof(MarkTypeVO).CreateValueObjectInstance("0"))
+            .HasColumnType("tinyint")
+            .HasConversion<MarkTypeVO.MarkTypeValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
@@ -36,10 +39,8 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
 
         builder.Property(e => e.Target)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
-
-        builder.Property(e => e.Time)
-            .HasColumnType("datetime");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<MarkTargetVO.MarkTargetValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
@@ -50,5 +51,11 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Marks)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Mark_UserAccount");
     }
 }

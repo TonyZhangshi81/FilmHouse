@@ -1,0 +1,20 @@
+﻿
+.div-ask {
+    height: 128px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-top: 1px solid #CCCCCC;
+    -webkit-transition: background 0.6s ease;
+    -o-transition: background 0.6s ease;
+    -moz-transition: background 0.6s ease;
+    transition: background 0.6s ease;
+}
+
+.div-ask:hover {
+    background-color: #EEEEEE;
+}
+
+
+

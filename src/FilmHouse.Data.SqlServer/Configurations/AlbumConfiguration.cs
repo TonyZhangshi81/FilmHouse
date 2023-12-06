@@ -53,7 +53,7 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.AmountAttention)
             .HasDefaultValue(typeof(AmountAttentionVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(4)")
+            .HasColumnType("int")
             .HasConversion<AmountAttentionVO.AmountAttentionValueConverter>();
 
         builder.Property(e => e.CreatedOn)
@@ -64,5 +64,13 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Albums)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Album_UserAccount");
+
     }
 }

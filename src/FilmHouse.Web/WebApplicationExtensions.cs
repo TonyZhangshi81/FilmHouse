@@ -4,7 +4,7 @@ using FilmHouse.Data.SqlServer;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data;
 using FilmHouse.Data.Core.Services.Codes;
-using Isid.Ilex.Core.Infrastructure.Services.Codes;
+using FilmHouse.Data.Infrastructure.Services.Codes;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 
@@ -21,7 +21,6 @@ public static class WebApplicationExtensions
 
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
-        //var env = services.GetRequiredService<IWebHostEnvironment>();
         var maxRetryAvailability = Convert.ToInt32(app.Configuration.GetSection("SeedMaxRetryAvailability").Value ?? "10");
 
         FilmHouseDbContext context = dbType.ToLowerInvariant() switch

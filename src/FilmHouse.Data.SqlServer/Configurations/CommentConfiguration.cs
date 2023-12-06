@@ -22,7 +22,8 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.CommentId)
             .IsRequired()
-            .HasColumnType("uniqueidentifier");
+            .HasColumnType("uniqueidentifier")
+            .HasConversion<CommentIdVO.CommentIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
@@ -35,10 +36,12 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.Content)
-            .HasColumnType("varchar(max)");
+            .HasColumnType("varchar(max)")
+            .HasConversion<ContentVO.ContentValueConverter>();
 
         builder.Property(e => e.CommentTime)
-            .HasColumnType("datetime");
+            .HasColumnType("datetime")
+            .HasConversion<CommentTimeVO.CommentTimeValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
@@ -48,6 +51,20 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+
+
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Comment_UserAccount");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Comment_Movie");
 
     }
 }

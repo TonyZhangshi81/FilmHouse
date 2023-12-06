@@ -3,6 +3,12 @@
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Utils\**" />
+	  <EmbeddedResource Remove="Utils\**" />
+	  <None Remove="Utils\**" />
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.13" />
@@ -11,7 +17,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="DataAnnotations\" />
-	  <Folder Include="Utils\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\FilmHouse.Core\FilmHouse.Core.csproj" />

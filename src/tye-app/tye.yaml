@@ -1,0 +1,10 @@
+services:
+
+- name: UI-FileHouse
+  project: ../FilmHouse.Web/FilmHouse.Web.csproj
+  env:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Development
+  bindings:
+    - port: 20001
+      protocol: http

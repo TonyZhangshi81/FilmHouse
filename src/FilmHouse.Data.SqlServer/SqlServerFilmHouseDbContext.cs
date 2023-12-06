@@ -1,5 +1,4 @@
-﻿using FilmHouse.Data.PostgreSql.Configurations;
-using FilmHouse.Data.SqlServer.Configurations;
+﻿using FilmHouse.Data.SqlServer.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmHouse.Data.SqlServer;
@@ -15,6 +14,11 @@ public class SqlServerFilmHouseDbContext : FilmHouseDbContext
     {
     }
 
+    // dotnet add package ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly
+    // Adds .NET 6 or later DateOnly and TimeOnly support to the SQL Server EF Core provider. These types map directly to the SQL Server date and time data types.
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlServer(x => x.UseDateOnlyTimeOnly());
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new AlbumConfiguration());
@@ -23,6 +27,7 @@ public class SqlServerFilmHouseDbContext : FilmHouseDbContext
         modelBuilder.ApplyConfiguration(new CodeMastConfiguration());
         modelBuilder.ApplyConfiguration(new CommentConfiguration());
         modelBuilder.ApplyConfiguration(new ConfigurationConfiguration());
+        modelBuilder.ApplyConfiguration(new DiscoveryConfiguration());
         modelBuilder.ApplyConfiguration(new MarkConfiguration());
         modelBuilder.ApplyConfiguration(new MovieConfiguration());
         modelBuilder.ApplyConfiguration(new NoticeConfiguration());

@@ -41,6 +41,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasConversion<RequestTimeVO.RequestTimeValueConverter>();
 
         builder.Property(e => e.RequestWith)
+            .HasDefaultValue(typeof(RequestWithVO).CreateValueObjectInstance("0"))
             .HasColumnType("numeric(4)")
             .HasConversion<RequestWithVO.RequestWithValueConverter>();
 
@@ -51,7 +52,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 
         builder.Property(e => e.Status)
             .HasDefaultValue(typeof(AskStatusVO).CreateValueObjectInstance("false"))
-            .HasColumnType("numeric(1)")
+            .HasColumnType("bit")
             .HasConversion<AskStatusVO.AskStatusValueConverter>();
 
         builder.Property(e => e.CreatedOn)
@@ -62,6 +63,19 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Asks)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Ask_UserAccount");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Asks)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Ask_Movie");
 
     }
 }

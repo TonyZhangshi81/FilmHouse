@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -21,57 +22,76 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
 
         builder.Property(e => e.CelebrityId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<CelebrityIdVO.CelebrityIdValueConverter>();
 
         builder.Property(e => e.Name)
+            .IsRequired()
             .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasConversion<CelebrityNameVO.CelebrityNameValueConverter>();
 
         builder.Property(e => e.Aka)
-            .HasColumnType("text");
+            .HasColumnType("varchar(500)")
+            .HasMaxLength(500)
+            .HasConversion<CelebrityAkaVO.CelebrityAkaValueConverter>();
 
         builder.Property(e => e.NameEn)
             .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasMaxLength(50)
+            .HasConversion<CelebrityNameEnVO.CelebrityNameEnValueConverter>();
 
         builder.Property(e => e.AkaEn)
-            .HasColumnType("text");
+            .HasColumnType("varchar(500)")
+            .HasMaxLength(500)
+            .HasConversion<CelebrityAkaEnVO.CelebrityAkaEnValueConverter>();
 
         builder.Property(e => e.Gender)
-            .HasColumnType("smallint");
+            .HasColumnType("smallint")
+            .HasConversion<GenderVO.GenderValueConverter>();
 
-        builder.Property(e => e.Occupation)
-            .HasColumnType("text");
+        builder.Property(e => e.Professions)
+            .HasColumnType("varchar(50)")
+            .HasMaxLength(50)
+            .HasConversion<ProfessionsVO.ProfessionsValueConverter>();
 
         builder.Property(e => e.Birthday)
-            .HasColumnType("varchar(10)")
-            .HasMaxLength(10);
+            .HasColumnType("date")
+            .HasConversion<BirthdayVO.BirthdayValueConverter>();
 
         builder.Property(e => e.Deathday)
-            .HasColumnType("varchar(10)")
-            .HasMaxLength(10);
+            .HasColumnType("date")
+            .HasConversion<DeathdayVO.DeathdayValueConverter>();
 
         builder.Property(e => e.BornPlace)
             .HasColumnType("varchar(100)")
-            .HasMaxLength(10);
+            .HasMaxLength(100)
+            .HasConversion<BornPlaceVO.BornPlaceValueConverter>();
 
         builder.Property(e => e.Family)
-            .HasColumnType("text");
+            .HasColumnType("varchar(500)")
+            .HasMaxLength(500)
+            .HasConversion<FamilyVO.FamilyValueConverter>();
 
         builder.Property(e => e.Avatar)
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasColumnType("varchar(100)")
+            .HasMaxLength(100)
+            .HasConversion<StarAvatarVO.StarAvatarValueConverter>();
 
-        builder.Property(e => e.Works)
-            .HasColumnType("text");
+        builder.Property(e => e.WorksId)
+            .HasColumnType("varchar(1000)")
+            .HasMaxLength(1000)
+            .HasConversion<WorksVO.WorksValueConverter>();
 
         builder.Property(e => e.DoubanID)
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasColumnType("varchar(10)")
+            .HasMaxLength(10)
+            .HasConversion<DoubanIDVO.DoubanIDValueConverter>();
 
         builder.Property(e => e.IMDb)
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+            .HasColumnType("varchar(10)")
+            .HasMaxLength(10)
+            .HasConversion<IMDbVO.IMDbValueConverter>();
 
         builder.Property(e => e.Summary)
             .HasComment("Variable-length character data, ⇐ 2G")
@@ -84,12 +104,14 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasConversion<UserIdVO.UserIdValueConverter>();
 
         builder.Property(e => e.ReviewStatus)
-            .HasDefaultValue("0")
-            .HasColumnType("smallint");
+            .HasDefaultValue(typeof(ReviewStatusVO).CreateValueObjectInstance("0"))
+            .HasColumnType("smallint")
+            .HasConversion<ReviewStatusVO.ReviewStatusValueConverter>();
 
-        builder.Property(e => e.ReviewNote)
-            .HasColumnType("varchar(100)")
-            .HasMaxLength(100);
+        builder.Property(e => e.Note)
+            .HasColumnType("varchar(1000)")
+            .HasMaxLength(1000)
+            .HasConversion<NoteVO.NoteValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

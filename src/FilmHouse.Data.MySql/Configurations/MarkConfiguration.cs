@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.MySql.Configurations;
 
@@ -24,12 +25,15 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
         builder.Property(e => e.MarkId)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
+            .HasMaxLength(36)
+            .HasConversion<MarkIdVO.MarkIdValueConverter>();
 
         builder.Property(e => e.Type)
             .IsRequired()
-            .HasDefaultValue("0")
-            .HasColumnType("smallint");
+            .HasDefaultValue(typeof(MarkTypeVO).CreateValueObjectInstance("0"))
+            .HasColumnType("tinyint unsigned")
+            .HasMaxLength(1)
+            .HasConversion<MarkTypeVO.MarkTypeValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
@@ -40,10 +44,8 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
         builder.Property(e => e.Target)
             .IsRequired()
             .HasColumnType("char(36)")
-            .HasMaxLength(36);
-
-        builder.Property(e => e.Time)
-            .HasColumnType("datetime(3)");
+            .HasMaxLength(36)
+            .HasConversion<MarkTargetVO.MarkTargetValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

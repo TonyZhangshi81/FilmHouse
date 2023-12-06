@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -21,17 +22,25 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 
         builder.Property(e => e.ResourceId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<ResourceIdVO.ResourceIdValueConverter>();
 
         builder.Property(e => e.Name)
-            .HasColumnType("text");
+            .IsRequired()
+            .HasColumnType("varchar(50)")
+            .HasMaxLength(50)
+            .HasConversion<ResourceNameVO.ResourceNameValueConverter>();
 
         builder.Property(e => e.Content)
             .IsRequired()
-            .HasColumnType("text");
+            .HasColumnType("varchar(400)")
+            .HasMaxLength(400)
+            .HasConversion<ResourceContentVO.ResourceContentValueConverter>();
 
         builder.Property(e => e.Size)
-            .HasColumnType("bigint");
+            .HasDefaultValue(typeof(ResourceSizeVO).CreateValueObjectInstance("0"))
+            .HasColumnType("numeric(11)")
+            .HasConversion<ResourceSizeVO.ResourceSizeValueConverter>();
 
         builder.Property(e => e.UserId)
             .HasColumnType("uuid")
@@ -42,20 +51,20 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasColumnType("uuid")
             .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
-        builder.Property(e => e.Time)
-            .HasColumnType("timestamp(3)");
-
         builder.Property(e => e.FavorCount)
-            .HasDefaultValue("0")
-            .HasColumnType("int");
+            .HasDefaultValue(typeof(FavorCountVO).CreateValueObjectInstance("0"))
+            .HasColumnType("numeric(11)")
+            .HasConversion<FavorCountVO.FavorCountValueConverter>();
 
         builder.Property(e => e.Type)
-            .HasDefaultValue("0")
-            .HasColumnType("smallint");
+            .HasDefaultValue(typeof(ResourceTypeVO).CreateValueObjectInstance("0"))
+            .HasColumnType("smallint")
+            .HasConversion<ResourceTypeVO.ResourceTypeValueConverter>();
 
         builder.Property(e => e.ReviewStatus)
-            .HasDefaultValue("0")
-            .HasColumnType("smallint");
+            .HasDefaultValue(typeof(ReviewStatusVO).CreateValueObjectInstance("0"))
+            .HasColumnType("int")
+            .HasConversion<ReviewStatusVO.ReviewStatusValueConverter>();
 
         builder.Property(e => e.Note)
             .HasColumnType("varchar(1000)")

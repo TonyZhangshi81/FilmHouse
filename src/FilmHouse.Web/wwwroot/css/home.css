@@ -1,0 +1,60 @@
+﻿
+#index_back {
+    position: absolute;
+    z-index: -100;
+    overflow: hidden;
+    top: 0;
+    width: 100%;
+    height: 640px;
+    margin-top: 80px;
+}
+
+    #index_back img {
+        text-align: center;
+        width: 100%;
+        min-height: 100%;
+    }
+
+#display_back {
+    height: 640px;
+    padding-top: 90px;
+}
+
+#head_title {
+    font-family: 'Weston Free';
+    color: rgba(255,255,255,0.84);
+}
+
+@media(max-width:1280px) {
+    #index_back {
+        height: 500px;
+    }
+
+    #display_back {
+        height: 500px;
+        padding-top: 20px;
+    }
+}
+
+@media(max-width:960px) {
+    #index_back {
+        height: 440px;
+    }
+
+    #display_back {
+        height: 440px;
+        padding-top: 5px;
+    }
+}
+
+@media(max-width:768px) {
+    #head_title {
+        color: rgba(0,0,0,0.64);
+    }
+}
+
+@media(max-width:360px) {
+    .hidden-xxs {
+        visibility: hidden;
+    }
+}

@@ -11,24 +11,32 @@ public class NoticeEntity : EntitiesBase
 {
     [Column(Order = 2)]
     [Required]
-    public Guid NoticeId { get; set; }
+    public NoticeIdVO NoticeId { get; set; }
 
     [Column(Order = 3)]
     [Required]
-    public string Content { get; set; }
+    public ContentVO Content { get; set; }
 
     [Column(Order = 4)]
     [Required]
-    public Guid ResourceId { get; set; }
+    public ResourceIdVO ResourceId { get; set; }
 
     [Column(Order = 5)]
     [Required]
     public UserIdVO UserId { get; set; }
 
-    [Column(Order = 7)]
-    public DateTime Time { get; set; }
+    [Column(Order = 6)]
+    public NoticeFlagVO Flag { get; set; }
 
-    [Column(Order = 8)]
-    public Int16 Flag { get; set; }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ResourceEntity Resource { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
 
 }

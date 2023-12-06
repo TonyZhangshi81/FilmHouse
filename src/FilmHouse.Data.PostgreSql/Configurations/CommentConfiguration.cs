@@ -21,7 +21,8 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 
         builder.Property(e => e.CommentId)
             .IsRequired()
-            .HasColumnType("uuid");
+            .HasColumnType("uuid")
+            .HasConversion<CommentIdVO.CommentIdValueConverter>();
 
         builder.Property(e => e.UserId)
             .IsRequired()
@@ -34,10 +35,12 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasConversion<MovieIdVO.MovieIdValueConverter>();
 
         builder.Property(e => e.Content)
-            .HasColumnType("text");
+            .HasColumnType("text")
+            .HasConversion<ContentVO.ContentValueConverter>();
 
         builder.Property(e => e.CommentTime)
-            .HasColumnType("timestamp(3)");
+            .HasColumnType("timestamp(3)")
+            .HasConversion<CommentTimeVO.CommentTimeValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

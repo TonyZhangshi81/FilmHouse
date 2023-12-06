@@ -36,7 +36,7 @@ public class ConfigureEndpoints
             //setup.AddCustomStylesheet(@"wwwroot\css\dotnet.css");
         });
 
-        endpoints.MapControllerRoute(name: "default", pattern: "{controller=FilmHouse}/{action=Index}/{id?}");
+        endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
     };
 
     /*

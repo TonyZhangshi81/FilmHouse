@@ -56,4 +56,11 @@ public class AlbumEntity : EntitiesBase
     [Column(Order = 8)]
     public AmountAttentionVO AmountAttention { get; set; }
 
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
+
 }
