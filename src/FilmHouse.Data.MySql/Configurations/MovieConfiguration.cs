@@ -37,12 +37,12 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasColumnType("varchar(100)")
             .HasMaxLength(100)
             .HasConversion<MovieTitleEnVO.MovieTitleEnValueConverter>();
-        
+
         builder.Property(e => e.Aka)
             .HasColumnType("varchar(300)")
             .HasMaxLength(300)
             .HasConversion<MovieAkaVO.MovieAkaValueConverter>();
-        
+
         builder.Property(e => e.Directors)
             .HasColumnType("varchar(500)")
             .HasMaxLength(500)
@@ -52,7 +52,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasColumnType("varchar(500)")
             .HasMaxLength(500)
             .HasConversion<WritersNamesVO.WritersNamesValueConverter>();
-        
+
         builder.Property(e => e.Casts)
             .HasColumnType("varchar(500)")
             .HasMaxLength(500)
@@ -164,5 +164,12 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime(3)")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Movies)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Movie_UserAccount");
+
     }
 }

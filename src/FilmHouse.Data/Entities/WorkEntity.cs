@@ -24,4 +24,15 @@ public class WorkEntity : EntitiesBase
     [Column(Order = 5)]
     public WorkTypeVO Type { get; set; }
 
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual CelebrityEntity Celebrity { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual MovieEntity Movie { get; set; }
+
 }

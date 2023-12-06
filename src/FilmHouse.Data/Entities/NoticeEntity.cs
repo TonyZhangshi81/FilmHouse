@@ -28,4 +28,15 @@ public class NoticeEntity : EntitiesBase
     [Column(Order = 6)]
     public NoticeFlagVO Flag { get; set; }
 
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ResourceEntity Resource { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
+
 }

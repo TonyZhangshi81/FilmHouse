@@ -50,5 +50,18 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+        builder.HasOne(d => d.Celebrity)
+            .WithMany(p => p.Works)
+            .HasForeignKey(d => d.CelebrityId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Work_Celebrity");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Works)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Work_Movie");
+
     }
 }

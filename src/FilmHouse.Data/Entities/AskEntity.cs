@@ -57,4 +57,17 @@ public class AskEntity : EntitiesBase
     [Column(Order = 8)]
     public AskStatusVO Status { get; set; }
 
+
+
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual MovieEntity Movie { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
+
 }

@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using FilmHouse.Data.Entities;
+﻿using FilmHouse.Core.Utils.Data;
 using FilmHouse.Data.Core.ValueObjects;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -164,5 +164,13 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Movies)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Movie_UserAccount");
+
     }
 }

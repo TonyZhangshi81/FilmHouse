@@ -161,5 +161,12 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("timestamp(3)")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Movies)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Movie_UserAccount");
+
     }
 }

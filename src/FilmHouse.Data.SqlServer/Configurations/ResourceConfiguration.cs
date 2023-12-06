@@ -81,5 +81,18 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
+
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Resources)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Resource_UserAccount");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Resources)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("FK_Resource_Movie");
+
     }
 }

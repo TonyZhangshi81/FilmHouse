@@ -24,4 +24,10 @@ public class MarkEntity : EntitiesBase
     [Column(Order = 5)]
     [Required]
     public MarkTargetVO Target { get; set; }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual UserAccountEntity UserAccount { get; set; }
 }

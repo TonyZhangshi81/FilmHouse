@@ -166,9 +166,10 @@ void ConfigureServices(IServiceCollection services)
             .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(Program)))
             .AddRazorPagesOptions(options =>
             {
-                options.Conventions.AddPageRoute("/Admin/Post", "admin");
-                options.Conventions.AuthorizeFolder("/Admin");
-                options.Conventions.AuthorizeFolder("/Settings");
+                // 访问地址映射(/Admin/Post -> admin)
+                //options.Conventions.AddPageRoute("/Admin/Post", "admin");
+                // /Admin文件夹下的所有 Razor 页面都设置为需要授权才能访问
+                //options.Conventions.AuthorizeFolder("/Admin");
             });
 
     services.AddHealthChecksUI()
