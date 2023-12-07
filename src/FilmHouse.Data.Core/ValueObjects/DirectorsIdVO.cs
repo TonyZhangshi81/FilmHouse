@@ -13,14 +13,14 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 导演ID（1000位文本）的值对象类。
+    /// 导演ID集合（1000位文本）的值对象类。
     /// </summary>
     [JsonConverter(typeof(DirectorsIdJsonConverter))]
     [ValueConverter(typeof(DirectorsIdValueConverter), typeof(DirectorsIdArrayValueConverter))]
     [System.ComponentModel.TypeConverter(typeof(DirectorsIdTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class DirectorsIdVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<DirectorsIdVO>, IComparable<DirectorsIdVO>, IValue<string>, IValueObject
+    public partial class DirectorsIdVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<DirectorsIdVO>, IComparable<DirectorsIdVO>, IValue<string>, IValueObject, IEnumeratorObject<CelebrityIdVO>
     {
         private readonly string _value;
 
@@ -50,7 +50,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <see cref="CelebrityIdVO"/>的集合。
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<CelebrityIdVO>? GetCelebrityNames()
+        public IEnumerator<CelebrityIdVO>? ToEnumerator()
         {
             foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {

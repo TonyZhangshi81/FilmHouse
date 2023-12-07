@@ -47,7 +47,7 @@ public class CelebrityEntity : EntitiesBase
     public BornPlaceVO BornPlace { get; set; }
 
     [Column(Order = 12)]
-    public FamilyVO Family { get; set; }
+    public FamiliesVO Family { get; set; }
 
     [Column(Order = 13)]
     public StarAvatarVO Avatar { get; set; }

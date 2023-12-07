@@ -46,18 +46,6 @@ namespace FilmHouse.Data.Core.ValueObjects
             this.Validate();
         }
 
-        /// <summary>
-        /// <see cref="CelebrityNameVO"/>的集合。
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerator<CelebrityNameVO>? GetCelebrityNames()
-        {
-            foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
-            {
-                yield return (new CelebrityNameVO(value));
-            }
-        }
-
         partial void PreProcess(ref string value);
 
         partial void Validate();

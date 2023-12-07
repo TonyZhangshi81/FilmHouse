@@ -13,7 +13,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// ConfigurationValue的值对象类。
+    /// 配置键的值对象类。
     /// </summary>
     [JsonConverter(typeof(ConfigValueJsonConverter))]
     [ValueConverter(typeof(ConfigValueValueConverter), typeof(ConfigValueArrayValueConverter))]
@@ -32,7 +32,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 50;
+        public const int Size = 100;
 
         /// <summary>
         /// <see cref="ConfigValueVO"/>的新实例。

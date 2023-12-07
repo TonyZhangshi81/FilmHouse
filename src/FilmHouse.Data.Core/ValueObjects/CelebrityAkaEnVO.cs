@@ -21,7 +21,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(CelebrityAkaEnTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class CelebrityAkaEnVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<CelebrityAkaEnVO>, IComparable<CelebrityAkaEnVO>, IValue<string>, IValueObject
+    public partial class CelebrityAkaEnVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<CelebrityAkaEnVO>, IComparable<CelebrityAkaEnVO>, IValue<string>, IValueObject, IEnumeratorObject<CelebrityNameEnVO>
     {
         private readonly string _value;
 
@@ -51,9 +51,9 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <see cref="CelebrityNameEnVO"/>的集合。
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<CelebrityNameEnVO>? GetCelebrityNames()
+        public IEnumerator<CelebrityNameEnVO>? ToEnumerator()
         {
-            foreach(var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
+            foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {
                 yield return (new CelebrityNameEnVO(value));
             }

@@ -14,14 +14,14 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 国家信息（400位数文本）的值对象类。
+    /// 国家信息集合（400位数文本）的值对象类。
     /// </summary>
     [JsonConverter(typeof(CountriesJsonConverter))]
     [ValueConverter(typeof(CountriesValueConverter), typeof(CountriesArrayValueConverter))]
     [System.ComponentModel.TypeConverter(typeof(CountriesTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class CountriesVO : FilmHouse.Data.Core.ValueObjects.CodeId, IEquatable<CountriesVO>, IComparable<CountriesVO>, IValue<string>, IValueObject
+    public partial class CountriesVO : FilmHouse.Data.Core.ValueObjects.CodesId, IEquatable<CountriesVO>, IComparable<CountriesVO>, IValue<string>, IValueObject, IEnumeratorObject<CodeKeyVO>
     {
         private readonly string _value;
 
@@ -50,6 +50,18 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void PreProcess(ref string value);
 
         partial void Validate();
+
+        /// <summary>
+        /// <see cref="CelebrityNameVO"/>的集合。
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<CodeKeyVO>? ToEnumerator()
+        {
+            foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
+            {
+                yield return (new CodeKeyVO(value));
+            }
+        }
 
         /// <summary>
         /// <see cref="string"/>向<see cref="CountriesVO"/>进行隐式转换

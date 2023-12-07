@@ -13,7 +13,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// RequestTime的值对象类。
+    /// 请求时间的值对象类。
     /// </summary>
     [JsonConverter(typeof(RequestTimeJsonConverter))]
     [ValueConverter(typeof(RequestTimeValueConverter), typeof(RequestTimeArrayValueConverter))]

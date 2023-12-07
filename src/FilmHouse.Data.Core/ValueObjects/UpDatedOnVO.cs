@@ -13,7 +13,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 是表示创建日期时间的值对象类。
+    /// 创建日期时间的值对象类。
     /// </summary>
     [JsonConverter(typeof(UpDatedOnJsonConverter))]
     [ValueConverter(typeof(UpDatedOnValueConverter), typeof(UpDatedOnArrayValueConverter))]
