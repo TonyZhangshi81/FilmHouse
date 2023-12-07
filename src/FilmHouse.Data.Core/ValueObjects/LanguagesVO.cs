@@ -21,7 +21,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(LanguagesTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class LanguagesVO : FilmHouse.Data.Core.ValueObjects.CodeId, IEquatable<LanguagesVO>, IComparable<LanguagesVO>, IValue<string>, IValueObject
+    public partial class LanguagesVO : FilmHouse.Data.Core.ValueObjects.CodesId, IEquatable<LanguagesVO>, IComparable<LanguagesVO>, IValue<string>, IValueObject, IEnumeratorObject<CodeKeyVO>
     {
         private readonly string _value;
 
@@ -50,6 +50,18 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void PreProcess(ref string value);
 
         partial void Validate();
+
+        /// <summary>
+        /// <see cref="CodeKeyVO"/>的集合。
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<CodeKeyVO> ToEnumerator()
+        {
+            foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
+            {
+                yield return (new CodeKeyVO(value));
+            }
+        }
 
         /// <summary>
         /// <see cref="string"/>向<see cref="LanguagesVO"/>进行隐式转换

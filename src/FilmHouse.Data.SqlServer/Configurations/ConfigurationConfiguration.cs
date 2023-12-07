@@ -25,10 +25,10 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
             .IsRequired()
             .HasMaxLength(50)
             .HasConversion<ConfigKeyVO.ConfigKeyValueConverter>();
-        
+
         builder.Property(e => e.Value)
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50)
+            .HasColumnType("varchar(100)")
+            .HasMaxLength(100)
             .HasConversion<ConfigValueVO.ConfigValueValueConverter>();
 
         builder.Property(e => e.CreatedOn)

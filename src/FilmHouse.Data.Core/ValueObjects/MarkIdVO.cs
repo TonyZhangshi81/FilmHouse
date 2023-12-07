@@ -8,7 +8,7 @@ using FilmHouse.Core.ValueObjects.Serialization;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// MarkId的值对象类。
+    /// 标记Id的值对象类。
     /// </summary>
     [JsonConverter(typeof(MarkIdJsonConverter))]
     [ValueConverter(typeof(MarkIdValueConverter), typeof(MarkIdArrayValueConverter))]

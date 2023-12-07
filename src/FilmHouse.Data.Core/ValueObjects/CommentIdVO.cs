@@ -8,7 +8,7 @@ using FilmHouse.Core.ValueObjects.Serialization;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// CommentId的值对象类。
+    /// 评论Id的值对象类。
     /// </summary>
     [JsonConverter(typeof(CommentIdJsonConverter))]
     [ValueConverter(typeof(CommentIdValueConverter), typeof(CommentIdArrayValueConverter))]

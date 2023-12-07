@@ -13,7 +13,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// ConfigurationKey的值对象类。
+    /// 配置键的值对象类。
     /// </summary>
     [JsonConverter(typeof(ConfigKeyJsonConverter))]
     [ValueConverter(typeof(ConfigKeyValueConverter), typeof(ConfigKeyArrayValueConverter))]

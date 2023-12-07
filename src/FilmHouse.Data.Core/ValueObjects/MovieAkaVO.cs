@@ -21,7 +21,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(MovieAkaTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class MovieAkaVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<MovieAkaVO>, IComparable<MovieAkaVO>, IValue<string>, IValueObject
+    public partial class MovieAkaVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<MovieAkaVO>, IComparable<MovieAkaVO>, IValue<string>, IValueObject, IEnumeratorObject<MovieTitleVO>
     {
         private readonly string _value;
 
@@ -51,9 +51,9 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <see cref="MovieTitleVO"/>的集合。
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<MovieTitleVO>? GetMovieTitles()
+        public IEnumerator<MovieTitleVO> ToEnumerator()
         {
-            foreach(var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
+            foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {
                 yield return (new MovieTitleVO(value));
             }

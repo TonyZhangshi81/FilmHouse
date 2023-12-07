@@ -73,7 +73,7 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
         builder.Property(e => e.Family)
             .HasColumnType("varchar(500)")
             .HasMaxLength(500)
-            .HasConversion<FamilyVO.FamilyValueConverter>();
+            .HasConversion<FamiliesVO.FamilyValueConverter>();
 
         builder.Property(e => e.Avatar)
             .HasColumnType("varchar(100)")
