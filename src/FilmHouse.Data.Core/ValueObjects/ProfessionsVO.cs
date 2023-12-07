@@ -20,7 +20,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(ProfessionsTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class ProfessionsVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<ProfessionsVO>, IComparable<ProfessionsVO>, IValue<string>, IValueObject
+    public partial class ProfessionsVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<ProfessionsVO>, IComparable<ProfessionsVO>, IValue<string>, IValueObject, IEnumeratorObject<ProVO>
     {
         private readonly string _value;
 
@@ -50,7 +50,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <see cref="ProVO"/>的集合。
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<ProVO>? GetProfessions()
+        public IEnumerator<ProVO>? ToEnumerator()
         {
             foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {

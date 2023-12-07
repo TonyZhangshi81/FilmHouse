@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -9,38 +9,53 @@ using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Data.Core.ValueObjects;
 using FilmHouse.Core.ValueObjects;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using FilmHouse.Data.Core.Services.Codes;
+using System.Text.RegularExpressions;
 
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 家庭成员（500位文本）的值对象类。
+    /// 代码ID的值对象类。
     /// </summary>
-    [JsonConverter(typeof(FamilyJsonConverter))]
-    [ValueConverter(typeof(FamilyValueConverter), typeof(FamilyArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(FamilyTypeConverter))]
+    [JsonConverter(typeof(CodeIdJsonConverter))]
+    [ValueConverter(typeof(CodeIdValueConverter), typeof(CodeIdArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(CodeIdTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class FamilyVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<FamilyVO>, IComparable<FamilyVO>, IValue<string>, IValueObject
+    public partial class CodesId : IConvertible<string>, IEquatable<CodesId>, IComparable<CodesId>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "Family(size:500)";
+        public const string TypeName = "CodeId";
+
+        /// <summary>
+        /// "语言"区分的代码组。
+        /// </summary>
+        public static readonly CodeGroupVO Group = new("Group");
 
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 500;
+        public const int Size = 400;
 
         /// <summary>
-        /// <see cref="FamilyVO"/>的新实例。
+        /// 获取值对象包含的原始类型。
+        /// </summary>
+        public string AsPrimitive() => this._value;
+        /// <summary>
+        /// 是不依赖句式而获取原始句式的方法。
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public object AsPrimitiveObject() => this.AsPrimitive();
+
+        /// <summary>
+        /// <see cref="CodesId"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public FamilyVO(string value)
-            : base(value)
+        public CodesId(string value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -48,15 +63,42 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// <see cref="CelebrityNameEnVO"/>的集合。
+        /// 转换为保持代码管理信息的<see cref="CodeElement"/>
         /// </summary>
+        /// <param name="provider"></param>
         /// <returns></returns>
-        public IEnumerator<CelebrityNameEnVO>? GetCelebrityNames()
+        public IReadOnlyList<CodeElement>? AsCodeElement(ICodeProvider provider)
         {
-            foreach(var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
+            var codes = this._value.Split('/', StringSplitOptions.None);
+            if (!codes.Any())
             {
-                yield return (new CelebrityNameEnVO(value));
+                return null;
             }
+
+            var group = provider.AvailableAt(Group);
+            var items = group.Elements.Where(d => codes.Contains(d.Code.AsPrimitive())).ToList();
+            if (!items.Any())
+            {
+                return null;
+            }
+            return items;
+        }
+
+        /// <summary>
+        /// 获取代码组。
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        public CodeContainer? GetCodeGroup(ICodeProvider provider)
+        {
+            var codes = this._value.Split('/', StringSplitOptions.None);
+            if (!codes.Any())
+            {
+                return null;
+            }
+
+            var group = provider.AvailableAt(Group);
+            return group;
         }
 
         partial void PreProcess(ref string value);
@@ -64,21 +106,21 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="FamilyVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="CodesId"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(FamilyVO value)
+        public static explicit operator string(CodesId value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="FamilyVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="CodesId"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator FamilyVO(string value)
+        public static explicit operator CodesId(string value)
         {
-            return new FamilyVO(value);
+            return new CodesId(value);
         }
 
         /// <summary>
@@ -87,7 +129,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in FamilyVO? x, in FamilyVO? y)
+        internal static bool Equals(in CodesId? x, in CodesId? y)
         {
             if (x is null && y is null)
             {
@@ -105,7 +147,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(FamilyVO? other)
+        public bool Equals(CodesId? other)
         {
             return Equals(this, other);
         }
@@ -122,9 +164,9 @@ namespace FilmHouse.Data.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(FamilyVO).IsAssignableFrom(t))
+            if (typeof(CodesId).IsAssignableFrom(t))
             {
-                return Equals((FamilyVO)obj);
+                return Equals((CodesId)obj);
             }
             if (t == typeof(string))
             {
@@ -143,7 +185,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         }
 
         /// <summary>
-        /// 返回表示当前对象的字符串。
+        /// 返回表示当前对象的字串。
         /// </summary>
         public override string ToString()
         {
@@ -153,9 +195,9 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         /// <summary>
-        /// 是否等于
+        /// 是否相等
         /// </summary>
-        public static bool operator ==(in FamilyVO? x, in FamilyVO? y)
+        public static bool operator ==(in CodesId? x, in CodesId? y)
         {
             return Equals(x, y);
         }
@@ -163,7 +205,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in FamilyVO? x, in FamilyVO? y)
+        public static bool operator !=(in CodesId? x, in CodesId? y)
         {
             return !Equals(x, y);
         }
@@ -176,11 +218,11 @@ namespace FilmHouse.Data.Core.ValueObjects
         // UnitGenerateOptions.ComparableInterfaceOnly
 
         /// <summary>
-        /// 将该实例<paramref name="other" />和比较。
+        /// 将这个实例与<paramref name="other"/>进行比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(FamilyVO? other)
+        public int CompareTo(CodesId? other)
         {
             if (other == null)
             {
@@ -191,9 +233,9 @@ namespace FilmHouse.Data.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class FamilyJsonConverter : JsonConverter<FamilyVO>
+        private class CodeIdJsonConverter : JsonConverter<CodesId>
         {
-            public override void Write(Utf8JsonWriter writer, FamilyVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, CodesId value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -206,7 +248,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                 }
             }
 
-            public override FamilyVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override CodesId? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -214,7 +256,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new FamilyVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new CodesId(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -235,24 +277,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class FamilyValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<FamilyVO?, string?>
+        public class CodeIdValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CodesId?, string?>
         {
             /// <summary>
-            /// <see cref="FamilyValueConverter"/>的新实例。
+            /// <see cref="CodeIdValueConverter"/>的新实例。
             /// </summary>
-            public FamilyValueConverter()
+            public CodeIdValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="FamilyValueConverter"/>的新实例。
+            /// <see cref="CodeIdValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public FamilyValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public CodeIdValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new FamilyVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new CodesId(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -263,17 +305,17 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                FamilyVO value => value._value,
+                CodesId value => value._value,
                 _ => null,
             };
 
             /// <summary>
-            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
+            /// ストア向データを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                FamilyVO value => value,
-                string value => new FamilyVO(value),
+                CodesId value => value,
+                string value => new CodesId(value),
                 _ => null,
             };
         }
@@ -281,24 +323,24 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class FamilyArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<FamilyVO?[], string?[]>
+        public class CodeIdArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<CodesId?[], string?[]>
         {
             /// <summary>
-            /// <see cref="FamilyArrayValueConverter"/>的新实例。
+            /// <see cref="CodeIdArrayValueConverter"/>的新实例。
             /// </summary>
-            public FamilyArrayValueConverter()
+            public CodeIdArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="FamilyArrayValueConverter"/>的新实例。
+            /// <see cref="CodeIdArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public FamilyArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public CodeIdArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new FamilyVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new CodesId(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -309,29 +351,29 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                FamilyVO?[] values => values.Select(_ => _?._value).ToArray(),
+                CodesId?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<FamilyVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<CodesId?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
             /// <summary>
-            /// 当从存储中读取数据时，获取转换对象的函数。该函数设置为处理空、装箱和非严格匹配的简单类型的匹配。
+            /// ストア向データを読み取るときに、オブジェクトを変換する関数を取得します。この関数は、null、ボックス化、および非厳密一致の単純型の一致を処理するように設定します。
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                FamilyVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new FamilyVO(_)).ToArray(),
-                IEnumerable<FamilyVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new FamilyVO(_)).ToArray(),
+                CodesId?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new CodesId(_)).ToArray(),
+                IEnumerable<CodesId?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new CodesId(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class FamilyTypeConverter : System.ComponentModel.TypeConverter
+        private class CodeIdTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(FamilyVO);
+            private static readonly Type WrapperType = typeof(CodesId);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -361,13 +403,13 @@ namespace FilmHouse.Data.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(FamilyVO))
+                if (t == typeof(CodesId))
                 {
-                    return (FamilyVO)value;
+                    return (CodesId)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new FamilyVO((string)value);
+                    return new CodesId((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -380,7 +422,7 @@ namespace FilmHouse.Data.Core.ValueObjects
                     return null;
                 }
 
-                if (value is FamilyVO wrappedValue)
+                if (value is CodesId wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

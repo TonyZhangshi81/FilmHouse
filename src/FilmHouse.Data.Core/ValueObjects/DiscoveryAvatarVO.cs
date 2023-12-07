@@ -13,7 +13,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 发现专栏图片地址（100位文本）的值对象类。
+    /// 电影每日发现专栏图片地址（100位文本）的值对象类。
     /// </summary>
     [JsonConverter(typeof(DiscoveryAvatarVOJsonConverter))]
     [ValueConverter(typeof(DiscoveryAvatarVOValueConverter), typeof(DiscoveryAvatarVOArrayValueConverter))]

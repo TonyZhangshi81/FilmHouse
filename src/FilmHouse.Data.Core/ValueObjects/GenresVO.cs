@@ -21,7 +21,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(GenresTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class GenresVO : FilmHouse.Data.Core.ValueObjects.CodeId, IEquatable<GenresVO>, IComparable<GenresVO>, IValue<string>, IValueObject
+    public partial class GenresVO : FilmHouse.Data.Core.ValueObjects.CodesId, IEquatable<GenresVO>, IComparable<GenresVO>, IValue<string>, IValueObject, IEnumeratorObject<CodeKeyVO>
     {
         private readonly string _value;
 
@@ -40,7 +40,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
         public GenresVO(string value)
-            :base(value)
+            : base(value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -50,6 +50,18 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void PreProcess(ref string value);
 
         partial void Validate();
+
+        /// <summary>
+        /// <see cref="CelebrityNameVO"/>的集合。
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator<CodeKeyVO>? ToEnumerator()
+        {
+            foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
+            {
+                yield return (new CodeKeyVO(value));
+            }
+        }
 
         /// <summary>
         /// <see cref="string"/>向<see cref="GenresVO"/>进行隐式转换

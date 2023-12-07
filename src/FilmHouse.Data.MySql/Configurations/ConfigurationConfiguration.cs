@@ -19,7 +19,7 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<RequestIdVO.RequestIdValueConverter>();
-        
+
         builder.Property(e => e.Key)
             .HasColumnType("varchar(50)")
             .IsRequired()
@@ -27,8 +27,8 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
             .HasConversion<ConfigKeyVO.ConfigKeyValueConverter>();
 
         builder.Property(e => e.Value)
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50)
+            .HasColumnType("varchar(100)")
+            .HasMaxLength(100)
             .HasConversion<ConfigValueVO.ConfigValueValueConverter>();
 
         builder.Property(e => e.CreatedOn)
