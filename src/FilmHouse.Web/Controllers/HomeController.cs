@@ -1,22 +1,26 @@
-﻿using FilmHouse.Business;
-using FilmHouse.Business.Commands.Home;
-using FilmHouse.Data.Entities;
+﻿using FilmHouse.Commands.Home;
 using FilmHouse.Web.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Net;
-using static IdentityModel.OidcConstants;
 
 namespace FilmHouse.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICommandHandler<DisplayCommand, (int status, IReadOnlyList<DiscoveryEntity> discoveries)> _displayCommandHandler;
+        #region Initizalize
 
-        public HomeController(ICommandHandler<DisplayCommand, (int status, IReadOnlyList<DiscoveryEntity> discoveries)> displayCommandHandler)
+        private readonly IMediator _mediator;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mediator"></param>
+        public HomeController(IMediator mediator)
         {
-            this._displayCommandHandler = displayCommandHandler;
+            this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
+
+        #endregion Initizalize
 
         [Route("")]
         [Route("[controller]")]
@@ -30,18 +34,21 @@ namespace FilmHouse.Web.Controllers
 
             var model = new HomeViewModel();
 
-            var result = await this._displayCommandHandler.HandleAsync(new DisplayCommand());
-            if (result.status != 0)
+            var command = new DisplayCommand();
+            var display = await _mediator.Send(command);
+
+            if (display.Status != 0)
             {
+                return RedirectToAction("NotFound", "Error");
             }
 
-            if (offset >= result.discoveries.Count || offset < 0)
+            if (offset >= display.Discoveries.Count || offset < 0)
             {
                 return Redirect("/Home/Index?offset=0");
             }
 
 
-            var showDiscovery = result.discoveries.ElementAt(offset);
+            var showDiscovery = display.Discoveries.ElementAt(offset);
             model.Discovery.DiscoveryId = showDiscovery.DiscoveryId;
             model.Discovery.Avatar = showDiscovery.Avatar;
             model.Discovery.Order = showDiscovery.Order;

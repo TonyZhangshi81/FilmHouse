@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Web", "FilmHouse.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data", "FilmHouse.Data\FilmHouse.Data.csproj", "{0854892C-4331-4807-A3F7-B39C506958E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Business", "FilmHouse.Business\FilmHouse.Business.csproj", "{C0F2D497-7176-4E71-A101-CD63D1FD3909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Commands", "FilmHouse.Business\FilmHouse.Commands.csproj", "{C0F2D497-7176-4E71-A101-CD63D1FD3909}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Business.Test", "FilmHouse.Business.Test\FilmHouse.Business.Test.csproj", "{D14E0E3A-AF3E-4C3D-91C8-92E1F35B9B9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Commands.Test", "FilmHouse.Business.Test\FilmHouse.Commands.Test.csproj", "{D14E0E3A-AF3E-4C3D-91C8-92E1F35B9B9C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Mvc", "FilmHouse.Mvc\FilmHouse.Mvc.csproj", "{4153A40D-3910-42E6-812E-84E6A4ACB056}"
 EndProject
