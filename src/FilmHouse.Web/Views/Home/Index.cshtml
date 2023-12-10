@@ -1,4 +1,5 @@
 ﻿@using FilmHouse.Business;
+@using Microsoft.AspNetCore.Http;
 @inject Microsoft.Extensions.Options.IOptionsMonitor<WebSiteSettings> _webSiteSettings
 
 @model FilmHouse.Web.Models.HomeViewModel
@@ -9,6 +10,8 @@
     ViewData["Title"] = "Home Page";
     ViewBag.PageType = 1;
     ViewBag.NavType = 1;
+
+    var requestUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
 }
 
 
@@ -21,6 +24,7 @@
 </div>
 
 <div class="container" id="display_back">
+
     <h1 class="text-center" id="head_title">@_webSiteSettings.CurrentValue.Name</h1>
 
     <form action="/Search" class="form-horizontal" id="searchForm" method="post" role="form">
@@ -33,7 +37,6 @@
             </span>
         </div>
     </form>
-
 
     <div class="col-sm-8 col-sm-offset-2" style="background:rgba(255, 255, 255, 0.75) !important; padding:10px; margin-top:20px;">
         <div>
@@ -90,10 +93,62 @@
         </div>
     </div>
 
+    <div class="col-sm-8 col-sm-offset-2 text-center hidden-xxs" style="margin-top:30px;">
+        @if (Model.Discovery.Movie.IsPlan)
+        {
+            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=1&returnurl=@requestUrl" title="取消"><span class="glyphicon glyphicon-time"></span></a>
+        }
+        else
+        {
+            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=1&returnurl=@requestUrl" title="想看"><span class="glyphicon glyphicon-time"></span></a>
+        }
+        @if (Model.Discovery.Movie.IsFinish)
+        {
+            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=2&returnurl=@requestUrl" title="取消"><span class="glyphicon glyphicon-ok-circle"></span></a>
+        }
+        else
+        {
+            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=2&returnurl=@requestUrl" title="看过"><span class="glyphicon glyphicon-ok-circle"></span></a>
+        }
+        @if (Model.Discovery.Movie.IsFavor)
+        {
+            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=3&returnurl=@requestUrl" title="取消"><span class="glyphicon glyphicon-heart-empty"></span></a>
+        }
+        else
+        {
+            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=3&returnurl=@requestUrl" title="喜欢"><span class="glyphicon glyphicon-heart-empty"></span></a>
+        }
+        <a class="link-glyph link-glyph-default" href="/Home/Index?pageIndex=@Model.Discovery.PrePageIndex" title="上一页"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="link-glyph link-glyph-default" href="/Home/Index?pageIndex=@Model.Discovery.PostPageIndex" title="下一页"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+</div>
 
+<div class="container no-padding" style="margin-bottom:15px;">
+    <div class="col-sm-6">
+        <div class="text-left font-large">最新</div>
+        <hr />
+        <ul class="list-link">
+            @foreach (var item in Model.News)
+            {
+                <li>
+                    <a class="link-list-item" href="/Movie/Index?id=@item.MovieId" title="@item.MovieTitle" target="_self">@item.MovieTitle &nbsp;(<span style="display:inline-block;">@item.Year</span>)</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-sm-6">
+        <div class="text-left font-large">热门</div>
+        <hr />
+        <ul class="list-link">
 
-
-
+            @foreach (var item in Model.Mosts)
+            {
+                <li>
+                    <a class="link-list-item" href="/Movie/Index?id=@item.MovieId" title="@item.MovieTitle" target="_self">@item.MovieTitle &nbsp;(<span style="display:inline-block;">@item.Year</span>)</a>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
 
 @section Scripts {

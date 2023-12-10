@@ -59,6 +59,25 @@ namespace FilmHouse.Data.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
+        /// 提供代码组持有的代码值的常数定义。
+        /// </summary>
+        public static class Codes
+        {
+            /// <summary>
+            /// 「0:无性别」
+            /// </summary>
+            public static readonly GenderVO GenderCode0 = new(0);
+            /// <summary>
+            /// 「1:男性」
+            /// </summary>
+            public static readonly GenderVO GenderCode1 = new(1);
+            /// <summary>
+            /// 「2:女性」
+            /// </summary>
+            public static readonly GenderVO GenderCode2 = new(2);
+        }
+
+        /// <summary>
         /// <see cref="int"/>向<see cref="GenderVO"/>对的隐性的角色扮演。
         /// </summary>
         /// <param name="value"></param>

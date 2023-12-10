@@ -20,7 +20,7 @@ namespace FilmHouse.Data.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(WritersIdTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class WritersIdVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<WritersIdVO>, IComparable<WritersIdVO>, IValue<string>, IValueObject
+    public partial class WritersIdVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<WritersIdVO>, IComparable<WritersIdVO>, IValue<string>, IValueObject, IEnumeratorObject<CelebrityIdVO>
     {
         private readonly string _value;
 
@@ -50,7 +50,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <see cref="CelebrityIdVO"/>的集合。
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<CelebrityIdVO>? GetCelebrityNames()
+        public IEnumerable<CelebrityIdVO>? ToEnumerable()
         {
             foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {

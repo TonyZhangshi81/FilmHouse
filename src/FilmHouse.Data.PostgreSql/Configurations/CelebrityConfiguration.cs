@@ -27,8 +27,8 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
 
         builder.Property(e => e.Name)
             .IsRequired()
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50)
+            .HasColumnType("varchar(200)")
+            .HasMaxLength(200)
             .HasConversion<CelebrityNameVO.CelebrityNameValueConverter>();
 
         builder.Property(e => e.Aka)
@@ -37,8 +37,8 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasConversion<CelebrityAkaVO.CelebrityAkaValueConverter>();
 
         builder.Property(e => e.NameEn)
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50)
+            .HasColumnType("varchar(200)")
+            .HasMaxLength(200)
             .HasConversion<CelebrityNameEnVO.CelebrityNameEnValueConverter>();
 
         builder.Property(e => e.AkaEn)

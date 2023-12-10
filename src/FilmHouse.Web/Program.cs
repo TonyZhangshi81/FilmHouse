@@ -127,6 +127,9 @@ void ConfigureServices(IServiceCollection services)
     // https://www.cnblogs.com/chenxi001/p/13308860.html
     services.AddResponseCaching();
 
+    // 缓存管理
+    services.AddMemoryCache();
+
     // DI的批量登录设定
     var assemblies = StartupCore.GetAppAssemblies(true);
     services.AddLocalService(assemblies);

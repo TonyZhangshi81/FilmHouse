@@ -2,6 +2,8 @@
 using FilmHouse.Data;
 using FilmHouse.Data.Core.Services.Codes;
 using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Data.Entities;
+using FilmHouse.Data.Spec;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace FilmHouse.Data.Infrastructure.Services.Codes
@@ -12,17 +14,17 @@ namespace FilmHouse.Data.Infrastructure.Services.Codes
     public class CodeProvider : ICodeProvider, ICodeProviderCacher
     {
         private readonly IMemoryCache _cache;
-        private readonly FilmHouseDbContext _dbcontext;
+        private readonly IRepository<CodeMastEntity> _codeMast;
         private const string CacheKey = nameof(CodeProvider);
 
         /// <summary>
         /// <see cref="CodeProvider"/>的新实例。
         /// </summary>
-        /// <param name="dbContext"></param>
+        /// <param name="codeMast"></param>
         /// <param name="cache"></param>
-        public CodeProvider(FilmHouseDbContext dbContext, IMemoryCache cache)
+        public CodeProvider(IRepository<CodeMastEntity> codeMast, IMemoryCache cache)
         {
-            this._dbcontext = dbContext;
+            this._codeMast = codeMast;
             this._cache = cache;
         }
 
@@ -47,7 +49,8 @@ namespace FilmHouse.Data.Infrastructure.Services.Codes
             lock (CacheKey)
             {
                 var groups = new Dictionary<CodeGroupVO, CodeContainer>();
-                var results = this._dbcontext.CodeMast.OrderBy(_ => _.Group).ThenBy(_ => _.Order).ToList();
+
+                var results = this._codeMast.Select(new CodeMastSpec(), c => c);
                 foreach (var datum in results)
                 {
                     var items = new List<CodeElement>();

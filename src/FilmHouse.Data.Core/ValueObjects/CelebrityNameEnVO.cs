@@ -13,7 +13,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Data.Core.ValueObjects
 {
     /// <summary>
-    /// 明星外文名（50位文本）的值对象类。
+    /// 明星外文名（200位文本）的值对象类。
     /// </summary>
     [JsonConverter(typeof(CelebrityNameEnJsonConverter))]
     [ValueConverter(typeof(CelebrityNameEnValueConverter), typeof(CelebrityNameEnArrayValueConverter))]
@@ -27,12 +27,12 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "CelebrityNameEn(size:50)";
+        public new const string TypeName = "CelebrityNameEn(size:200)";
 
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 50;
+        public const int Size = 200;
 
         /// <summary>
         /// <see cref="CelebrityNameEnVO"/>的新实例。

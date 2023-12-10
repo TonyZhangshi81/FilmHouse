@@ -24,9 +24,16 @@ namespace FilmHouse.Core.DependencyInjection
         {
             var serviceInterfaceTypes = new HashSet<Type>();
 
+            // 暂时如此对应（由于导入assembly的顺序存在问题，所以serviceInterface在优先级靠后的assembly中被发现，但是此时的具体实现所在的assembly已经被扫描完毕了）
+            // 造成依赖关系构建时出现遗漏！
             foreach (var assembly in assemblies)
             {
                 serviceInterfaceTypes.UnionWith(assembly.GetTypes().Where(_ => _.IsInterface && _.GetCustomAttribute<ServiceRegisterAttribute>() != null));
+            }
+
+            foreach (var assembly in assemblies)
+            {
+                //serviceInterfaceTypes.UnionWith(assembly.GetTypes().Where(_ => _.IsInterface && _.GetCustomAttribute<ServiceRegisterAttribute>() != null));
 
                 // 接口实现类的服务注册
                 services.AddInterfaceServices(assembly, serviceInterfaceTypes);
@@ -69,7 +76,7 @@ namespace FilmHouse.Core.DependencyInjection
                     // 如果你正在实现非泛型接口，
                     var implementationTypes = targetAssembly.GetTypes()
                         .Where(_ => _.IsClass && !_.IsAbstract && serviceType.IsAssignableFrom(_) && (_.IsPublic || _.IsNestedPublic))
-                        .Where(_ => _.GetCustomAttribute<ImplementationRegisterAttribute>()?.Enabled ?? true)
+                        //.Where(_ => _.GetCustomAttribute<ImplementationRegisterAttribute>()?.Enabled ?? true)
                         .Where(_ => _.GetCustomAttribute<ServiceRegisterAttribute>()?.Lifetime == null || _.GetCustomAttribute<ServiceRegisterAttribute>()!.Lifetime != SelfServiceLifetime.None)
                         .OrderBy(_ => _.GetCustomAttribute<ImplementationRegisterAttribute>()?.Priority ?? int.MaxValue);
                     services.AddService(lifetime, serviceType, implementationTypes, isLazy);
