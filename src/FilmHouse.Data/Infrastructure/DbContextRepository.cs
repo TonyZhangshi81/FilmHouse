@@ -101,4 +101,16 @@ public abstract class DbContextRepository<T> : IRepository<T> where T : class
 
     private IQueryable<T> ApplySpecification(ISpecification<T> spec) =>
         SpecificationEvaluator<T>.GetQuery(DbContext.Set<T>().AsQueryable(), spec);
+
+
+
+
+
+    public IReadOnlyList<TResult> Select<TResult>(ISpecification<T> spec, Expression<Func<T, TResult>> selector) =>
+        ApplySpecification(spec).AsNoTracking().Select(selector).ToList();
+
+    public IReadOnlyList<TResult> Select<TResult>(Expression<Func<T, TResult>> selector) =>
+        DbContext.Set<T>().AsNoTracking().Select(selector).ToList();
+
+
 }

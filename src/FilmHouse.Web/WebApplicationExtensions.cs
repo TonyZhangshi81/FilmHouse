@@ -7,6 +7,10 @@ using FilmHouse.Data.Core.Services.Codes;
 using FilmHouse.Data.Infrastructure.Services.Codes;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
+using FilmHouse.Data.Entities;
+using FilmHouse.Data.Infrastructure;
+using FilmHouse.Data.Core.Services.Configuration;
+using FilmHouse.Data.Infrastructure.Services.Configuration;
 
 namespace FilmHouse.Web;
 
@@ -20,14 +24,14 @@ public static class WebApplicationExtensions
         }
 
         using var scope = app.Services.CreateScope();
-        var services = scope.ServiceProvider;
+        var serviceProvider = scope.ServiceProvider;
         var maxRetryAvailability = Convert.ToInt32(app.Configuration.GetSection("SeedMaxRetryAvailability").Value ?? "10");
 
         FilmHouseDbContext context = dbType.ToLowerInvariant() switch
         {
-            "mysql" => services.GetRequiredService<MySqlFilmHouseDbContext>(),
-            "sqlserver" => services.GetRequiredService<SqlServerFilmHouseDbContext>(),
-            "postgresql" => services.GetRequiredService<PostgreSqlFilmHouseDbContext>(),
+            "mysql" => serviceProvider.GetRequiredService<MySqlFilmHouseDbContext>(),
+            "sqlserver" => serviceProvider.GetRequiredService<SqlServerFilmHouseDbContext>(),
+            "postgresql" => serviceProvider.GetRequiredService<PostgreSqlFilmHouseDbContext>(),
             _ => throw new ArgumentOutOfRangeException(nameof(dbType))
         };
 
@@ -64,14 +68,17 @@ public static class WebApplicationExtensions
         {
             app.Logger.LogInformation("通用代码信息数据获取...");
 
+            var memoryCache = serviceProvider.GetRequiredService<IMemoryCache>();
+
+            var codeMast = serviceProvider.GetRequiredService<IRepository<CodeMastEntity>>();
+            var codeCaher = (ICodeProviderCacher)new CodeProvider(codeMast, memoryCache);
             // 代码管理的缓存化
-            using (var innerScope = services.CreateScope())
-            {
-                // IMemoryCache要在应用程序侧的主机上使用，所以要从host生成的scope中获取
-                var memoryCache = innerScope.ServiceProvider.GetRequiredService<IMemoryCache>();
-                var codeCaher = (ICodeProviderCacher)new CodeProvider(context, memoryCache);
-                codeCaher.EnsureCache();
-            }
+            codeCaher.EnsureCache();
+
+            var configuration = serviceProvider.GetRequiredService<IRepository<ConfigurationEntity>>();
+            var configCaher = (ISettingProviderCacher)new SettingProvider(configuration, memoryCache);
+            // 配置管理的缓存化
+            configCaher.EnsureCache();
 
             app.Logger.LogInformation("通用代码信息数据已获取并设定缓存");
         }
