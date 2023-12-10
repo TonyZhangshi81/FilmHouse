@@ -55,7 +55,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <see cref="CodeKeyVO"/>的集合。
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<CodeKeyVO> ToEnumerator()
+        public IEnumerable<CodeKeyVO>? ToEnumerable()
         {
             foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {

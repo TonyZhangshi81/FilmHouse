@@ -50,7 +50,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <see cref="ProVO"/>的集合。
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<ProVO>? ToEnumerator()
+        public IEnumerable<ProVO>? ToEnumerable()
         {
             foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {

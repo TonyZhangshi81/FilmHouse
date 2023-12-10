@@ -21,6 +21,6 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        IEnumerator<T> ToEnumerator();
+        IEnumerable<T> ToEnumerable();
     }
 }

@@ -50,7 +50,7 @@ namespace FilmHouse.Data.Core.ValueObjects
         /// <see cref="CelebrityIdVO"/>的集合。
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<CelebrityIdVO>? ToEnumerator()
+        public IEnumerable<CelebrityIdVO>? ToEnumerable()
         {
             foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
             {
