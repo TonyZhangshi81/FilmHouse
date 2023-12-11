@@ -13,15 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{12EE32C5-FA6E-41C9-8A81-D1DCDF1C28C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Web", "FilmHouse.Web\FilmHouse.Web.csproj", "{F90E404C-8A93-4E7C-B6EB-C53DA17A5514}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.App.Presentation.Web.UI", "FilmHouse.App.Presentation.Web.UI\FilmHouse.App.Presentation.Web.UI.csproj", "{F90E404C-8A93-4E7C-B6EB-C53DA17A5514}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data", "FilmHouse.Data\FilmHouse.Data.csproj", "{0854892C-4331-4807-A3F7-B39C506958E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Commands", "FilmHouse.Business\FilmHouse.Commands.csproj", "{C0F2D497-7176-4E71-A101-CD63D1FD3909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Commands", "FilmHouse.Commands\FilmHouse.Commands.csproj", "{C0F2D497-7176-4E71-A101-CD63D1FD3909}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Commands.Test", "FilmHouse.Business.Test\FilmHouse.Commands.Test.csproj", "{D14E0E3A-AF3E-4C3D-91C8-92E1F35B9B9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Commands.Test", "FilmHouse.Commands.Test\FilmHouse.Commands.Test.csproj", "{D14E0E3A-AF3E-4C3D-91C8-92E1F35B9B9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Mvc", "FilmHouse.Mvc\FilmHouse.Mvc.csproj", "{4153A40D-3910-42E6-812E-84E6A4ACB056}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Core.Presentation.Web", "FilmHouse.Core.Presentation.Web\FilmHouse.Core.Presentation.Web.csproj", "{4153A40D-3910-42E6-812E-84E6A4ACB056}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data.SqlServer", "FilmHouse.Data.SqlServer\FilmHouse.Data.SqlServer.csproj", "{B77928F8-9424-4A7B-93C7-558BA3007F2B}"
 EndProject
