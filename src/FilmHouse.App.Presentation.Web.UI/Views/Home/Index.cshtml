@@ -3,24 +3,26 @@
 @using Microsoft.AspNetCore.Http;
 
 @inject ISettingProvider settingProvider
-
 @model FilmHouse.Web.Models.HomeViewModel
+
 @{
     Layout = "_LayoutWide";
-}
-
-@{
-    ViewData["Title"] = "Home Page";
-    ViewBag.PageType = 1;
-    ViewBag.NavType = 1;
 
     var requestUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
     var name = settingProvider.GetValue("WebSiteSettings:Name");
-}
+    var subTitle = settingProvider.GetValue("WebSiteSettings:SubTitle");
 
+    ViewData["Title"] = subTitle;
+    ViewBag.PageType = 1;
+    ViewBag.NavType = 1;
+}
 
 @section Links {
     <link rel="stylesheet" href="~/css/home.css" />
+}
+
+@section Scripts {
+    <script src="~/js/Home/Index.js" asp-append-version="true" defer="defer"></script>
 }
 
 <div class="hidden-xs" id="index_back">
@@ -155,7 +157,3 @@
         </ul>
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/js/Home/Index.js"></script>
-}

@@ -44,10 +44,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DataEncrpytionKeys\" />
     <Folder Include="Middleware\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Error\NotAdmin.cshtml" />
+    <None Include="Views\Error\NotFound.cshtml" />
     <None Include="wwwroot\Content\Account\CelebBack.jpg" />
     <None Include="wwwroot\Content\Account\LoginBack.jpg" />
     <None Include="wwwroot\Content\Album\2b1a2e70a8c5097dbee0df2aec4c6215.jpg" />

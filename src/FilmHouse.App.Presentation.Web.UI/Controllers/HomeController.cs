@@ -34,11 +34,6 @@ namespace FilmHouse.Web.Controllers
         [Route("[controller]/{pageIndex}")]
         public async Task<ActionResult> Index(int pageIndex = 1)
         {
-            // 未登录状态
-            ViewBag.IsAuthenticated = 0;
-            ViewBag.PageType = 1;
-            ViewBag.NavType = 1;
-
             var maxPage = this._settingProvider.GetValue("Home:Discovery:MaxPage").CastTo<int>();
 
             var model = new HomeViewModel();
