@@ -242,9 +242,9 @@ ModelManifest.xml
 .fake/
 
 
-/src/FilmHouse.Web/DataEncrpytionKeys
-/src/FilmHouse.Web/Logs
-/src/FilmHouse.Web/wwwroot/lib
+/src/FilmHouse.App.Presentation.Web.UI/DataEncrpytionKeys
+/src/FilmHouse.App.Presentation.Web.UI/Logs
+/src/FilmHouse.App.Presentation.Web.UI/wwwroot/lib
 
 /src/FilmHouse.Web/Middleware/*
 !/src/FilmHouse.Web/Middleware/.gitkeep
@@ -252,8 +252,8 @@ ModelManifest.xml
 /tools/nginx-1.24.0/logs/*
 !/tools/nginx-1.24.0/logs/.gitkeep
 
-/tools/nginx-1.24.0/logs/*
-!/tools/nginx-1.24.0/logs/.gitkeep
+/tools/nginx-1.24.0/ssl/*
+!/tools/nginx-1.24.0/ssl/.gitkeep
 
 /tools/nginx-1.24.0/temp/*
 !/tools/nginx-1.24.0/temp/.gitkeep
