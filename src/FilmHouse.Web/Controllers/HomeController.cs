@@ -2,9 +2,9 @@
 using FilmHouse.Web.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using FilmHouse.Data.Core.Services.Configuration;
+using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils.Data;
-using FilmHouse.Data.Core.Services.Codes;
+using FilmHouse.Core.Services.Codes;
 
 namespace FilmHouse.Web.Controllers
 {

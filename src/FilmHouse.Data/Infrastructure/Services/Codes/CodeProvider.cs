@@ -1,7 +1,7 @@
 ﻿using FilmHouse.Core.Utils;
 using FilmHouse.Data;
-using FilmHouse.Data.Core.Services.Codes;
-using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.Services.Codes;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Spec;
 using Microsoft.Extensions.Caching.Memory;

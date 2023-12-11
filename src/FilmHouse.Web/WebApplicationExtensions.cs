@@ -3,13 +3,13 @@ using FilmHouse.Data.MySql;
 using FilmHouse.Data.SqlServer;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data;
-using FilmHouse.Data.Core.Services.Codes;
+using FilmHouse.Core.Services.Codes;
 using FilmHouse.Data.Infrastructure.Services.Codes;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Hosting;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
-using FilmHouse.Data.Core.Services.Configuration;
+using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Data.Infrastructure.Services.Configuration;
 
 namespace FilmHouse.Web;

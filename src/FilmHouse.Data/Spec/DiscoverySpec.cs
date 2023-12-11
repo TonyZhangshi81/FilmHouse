@@ -1,4 +1,4 @@
-﻿using FilmHouse.Data.Core.ValueObjects;
+﻿using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using Microsoft.EntityFrameworkCore;

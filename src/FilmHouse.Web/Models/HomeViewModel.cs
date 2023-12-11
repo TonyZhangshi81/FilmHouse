@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using FilmHouse.Core.Utils.Data;
-using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 
 namespace FilmHouse.Web.Models
