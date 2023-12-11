@@ -13,21 +13,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{12EE32C5-FA6E-41C9-8A81-D1DCDF1C28C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Web", "FilmHouse.Web\FilmHouse.Web.csproj", "{F90E404C-8A93-4E7C-B6EB-C53DA17A5514}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.App.Presentation.Web.UI", "FilmHouse.App.Presentation.Web.UI\FilmHouse.App.Presentation.Web.UI.csproj", "{F90E404C-8A93-4E7C-B6EB-C53DA17A5514}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data", "FilmHouse.Data\FilmHouse.Data.csproj", "{0854892C-4331-4807-A3F7-B39C506958E5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Business", "FilmHouse.Business\FilmHouse.Business.csproj", "{C0F2D497-7176-4E71-A101-CD63D1FD3909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Commands", "FilmHouse.Commands\FilmHouse.Commands.csproj", "{C0F2D497-7176-4E71-A101-CD63D1FD3909}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Business.Test", "FilmHouse.Business.Test\FilmHouse.Business.Test.csproj", "{D14E0E3A-AF3E-4C3D-91C8-92E1F35B9B9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Commands.Test", "FilmHouse.Commands.Test\FilmHouse.Commands.Test.csproj", "{D14E0E3A-AF3E-4C3D-91C8-92E1F35B9B9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Mvc", "FilmHouse.Mvc\FilmHouse.Mvc.csproj", "{4153A40D-3910-42E6-812E-84E6A4ACB056}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Core.Presentation.Web", "FilmHouse.Core.Presentation.Web\FilmHouse.Core.Presentation.Web.csproj", "{4153A40D-3910-42E6-812E-84E6A4ACB056}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data.SqlServer", "FilmHouse.Data.SqlServer\FilmHouse.Data.SqlServer.csproj", "{B77928F8-9424-4A7B-93C7-558BA3007F2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data.MySql", "FilmHouse.Data.MySql\FilmHouse.Data.MySql.csproj", "{DAA1E7E4-C366-410D-AA3E-ECEF513D29E8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Data.Core", "FilmHouse.Data.Core\FilmHouse.Data.Core.csproj", "{2844D765-2149-4990-BBBD-2F8D81F67CC8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Core", "FilmHouse.Core\FilmHouse.Core.csproj", "{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}"
 EndProject
@@ -69,10 +67,6 @@ Global
 		{DAA1E7E4-C366-410D-AA3E-ECEF513D29E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAA1E7E4-C366-410D-AA3E-ECEF513D29E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAA1E7E4-C366-410D-AA3E-ECEF513D29E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2844D765-2149-4990-BBBD-2F8D81F67CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2844D765-2149-4990-BBBD-2F8D81F67CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2844D765-2149-4990-BBBD-2F8D81F67CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2844D765-2149-4990-BBBD-2F8D81F67CC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -90,7 +84,6 @@ Global
 		{4153A40D-3910-42E6-812E-84E6A4ACB056} = {BFA828E5-7AAC-45E4-8D48-55FBC3C6BAD8}
 		{B77928F8-9424-4A7B-93C7-558BA3007F2B} = {12EE32C5-FA6E-41C9-8A81-D1DCDF1C28C7}
 		{DAA1E7E4-C366-410D-AA3E-ECEF513D29E8} = {12EE32C5-FA6E-41C9-8A81-D1DCDF1C28C7}
-		{2844D765-2149-4990-BBBD-2F8D81F67CC8} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

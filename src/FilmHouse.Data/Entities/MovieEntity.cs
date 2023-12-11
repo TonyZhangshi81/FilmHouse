@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Data.Entities;
 
@@ -30,21 +30,39 @@ public class MovieEntity : EntitiesBase
     [Column(Order = 5)]
     public MovieAkaVO Aka { get; set; }
 
+    /// <summary>
+    /// 导演名列表
+    /// </summary>
     [Column(Order = 6)]
     public DirectorNamesVO Directors { get; set; }
 
+    /// <summary>
+    /// 编剧名列表
+    /// </summary>
     [Column(Order = 7)]
     public WritersNamesVO Writers { get; set; }
 
+    /// <summary>
+    /// 演员名列表
+    /// </summary>
     [Column(Order = 8)]
     public CastsNamesVO Casts { get; set; }
 
+    /// <summary>
+    /// 导演ID列表
+    /// </summary>
     [Column(Order = 9)]
     public DirectorsIdVO DirectorsId { get; set; }
 
+    /// <summary>
+    /// 编剧ID列表
+    /// </summary>
     [Column(Order = 10)]
     public WritersIdVO WritersId { get; set; }
 
+    /// <summary>
+    /// 演员ID列表
+    /// </summary>
     [Column(Order = 11)]
     public CastsIdVO CastsId { get; set; }
 
@@ -94,6 +112,9 @@ public class MovieEntity : EntitiesBase
     [Column(Order = 26)]
     public NoteVO Note { get; set; }
 
+    /// <summary>
+    /// 浏览数
+    /// </summary>
     [Column(Order = 27)]
     public PageViewsVO PageViews { get; set; }
 

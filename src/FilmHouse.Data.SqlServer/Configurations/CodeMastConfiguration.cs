@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
-using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 

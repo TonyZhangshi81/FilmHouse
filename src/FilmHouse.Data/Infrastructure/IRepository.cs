@@ -45,4 +45,11 @@ public interface IRepository<T> where T : class
     Task<T> AddAsync(T entity, CancellationToken ct = default);
 
     Task UpdateAsync(T entity, CancellationToken ct = default);
+
+
+
+    IReadOnlyList<TResult> Select<TResult>(ISpecification<T> spec, Expression<Func<T, TResult>> selector);
+
+    IReadOnlyList<TResult> Select<TResult>(Expression<Func<T, TResult>> selector);
+
 }
