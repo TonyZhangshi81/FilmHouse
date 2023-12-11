@@ -36,7 +36,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FilmHouse.Business\FilmHouse.Commands.csproj" />
 		<ProjectReference Include="..\FilmHouse.Core\FilmHouse.Core.csproj" />
-		<ProjectReference Include="..\FilmHouse.Data.Core\FilmHouse.Data.Core.csproj" />
 		<ProjectReference Include="..\FilmHouse.Data.MySql\FilmHouse.Data.MySql.csproj" />
 		<ProjectReference Include="..\FilmHouse.Data.PostgreSql\FilmHouse.Data.PostgreSql.csproj" />
 		<ProjectReference Include="..\FilmHouse.Data.SqlServer\FilmHouse.Data.SqlServer.csproj" />

@@ -1,4 +1,4 @@
-﻿using FilmHouse.Data.Core.ValueObjects;
+﻿using FilmHouse.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations;

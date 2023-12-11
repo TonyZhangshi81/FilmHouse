@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using FilmHouse.Core.Utils.Data;
-using FilmHouse.Data.Core.ValueObjects;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 
 namespace FilmHouse.Web.Models
@@ -15,7 +15,7 @@ namespace FilmHouse.Web.Models
 
         public static List<MovieListViewModel> FromEntity(IReadOnlyList<MovieEntity> movices)
         {
-            List <MovieListViewModel> news = new List<MovieListViewModel>();
+            List<MovieListViewModel> news = new List<MovieListViewModel>();
             foreach (var item in movices)
             {
                 news.Add(new MovieListViewModel() { MovieId = item.MovieId, MovieTitle = MovieListViewModel.SetTitle(item.Title, item.TitleEn), Year = item.Year });
@@ -77,6 +77,7 @@ namespace FilmHouse.Web.Models
             viewModel.Title = movie.Title;
             viewModel.MovieId = movie.MovieId;
             viewModel.DoubanID = movie.DoubanID;
+            viewModel.Rating = movie.Rating;
             viewModel.Summary = movie.Summary;
             viewModel.Title = movie.Title;
 
@@ -180,9 +181,9 @@ namespace FilmHouse.Web.Models
         public static MovieTitleAndEnVO SetTitle(MovieTitleVO title, MovieTitleEnVO titleEn)
         {
             var tle = new MovieTitleAndEnVO(title.AsPrimitive());
-            if(titleEn != null)
+            if (titleEn != null)
             {
-                tle = new MovieTitleAndEnVO( $"{title}\t{titleEn.AsPrimitive()}");
+                tle = new MovieTitleAndEnVO($"{title}\t{titleEn.AsPrimitive()}");
             }
             return tle;
         }

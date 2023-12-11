@@ -1,17 +1,21 @@
-﻿@using FilmHouse.Business;
+﻿@using FilmHouse.Commands;
+@using FilmHouse.Core.Services.Configuration;
 @using Microsoft.AspNetCore.Http;
-@inject Microsoft.Extensions.Options.IOptionsMonitor<WebSiteSettings> _webSiteSettings
+
+@inject ISettingProvider settingProvider
 
 @model FilmHouse.Web.Models.HomeViewModel
 @{
     Layout = "_LayoutWide";
 }
+
 @{
     ViewData["Title"] = "Home Page";
     ViewBag.PageType = 1;
     ViewBag.NavType = 1;
 
     var requestUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+    var name = settingProvider.GetValue("WebSiteSettings:Name");
 }
 
 
@@ -25,7 +29,7 @@
 
 <div class="container" id="display_back">
 
-    <h1 class="text-center" id="head_title">@_webSiteSettings.CurrentValue.Name</h1>
+    <h1 class="text-center" id="head_title">@name</h1>
 
     <form action="/Search" class="form-horizontal" id="searchForm" method="post" role="form">
         <div class="input-group input-group-lg col-sm-8 col-sm-offset-2" style="margin-top:20px;">
@@ -49,7 +53,8 @@
             </span>
         </div>
         <div class="font-small" style="max-height:85px; overflow:hidden; text-overflow:ellipsis;">@Model.Discovery.Movie.Summary</div>
-        <div class="visible-xs text-overflow font-small">
+        <!-- 可以考虑 visible-xs 在xs尺寸下隐藏以下信息 -->
+        <div class="text-overflow font-small">
             导演：
             @foreach (var celebitem in Model.Discovery.Movie.Directors.Take(4))
             {
@@ -63,7 +68,7 @@
                 }
             }
         </div>
-        <div class="visible-xs text-overflow font-small">
+        <div class="text-overflow font-small">
             演员：
             @foreach (var celebitem in Model.Discovery.Movie.Writers.Take(4))
             {
@@ -77,7 +82,7 @@
                 }
             }
         </div>
-        <div class="visible-xs text-overflow font-small">
+        <div class="text-overflow font-small">
             类型：
             @foreach (var celebitem in Model.Discovery.Movie.Casts.Take(4))
             {
@@ -118,8 +123,8 @@
         {
             <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=3&returnurl=@requestUrl" title="喜欢"><span class="glyphicon glyphicon-heart-empty"></span></a>
         }
-        <a class="link-glyph link-glyph-default" href="/Home/Index?pageIndex=@Model.Discovery.PrePageIndex" title="上一页"><span class="glyphicon glyphicon-chevron-left"></span></a>
-        <a class="link-glyph link-glyph-default" href="/Home/Index?pageIndex=@Model.Discovery.PostPageIndex" title="下一页"><span class="glyphicon glyphicon-chevron-right"></span></a>
+        <a class="link-glyph link-glyph-default" href="/Home/@Model.Discovery.PrePageIndex" title="上一页"><span class="glyphicon glyphicon-chevron-left"></span></a>
+        <a class="link-glyph link-glyph-default" href="/Home/@Model.Discovery.PostPageIndex" title="下一页"><span class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
 </div>
 
