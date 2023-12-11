@@ -95,8 +95,6 @@ void WriteParameterTable()
 
 void ConfigureConfiguration()
 {
-    //builder.Services.Configure<WebSiteSettings>(builder.Configuration.GetSection("WebSiteSettings"));
-
     IConfiguration configuration = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json")
         .AddJsonFile("appsettings.Development.json")

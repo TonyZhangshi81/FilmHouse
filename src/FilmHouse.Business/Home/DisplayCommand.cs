@@ -6,6 +6,7 @@ using MediatR;
 using FilmHouse.Data.Spec;
 using System;
 using System.Security.Principal;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace FilmHouse.Commands.Home;
 
@@ -37,40 +38,17 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
     /// <returns></returns>
     public async Task<DisplayContect> Handle(DisplayCommand request, CancellationToken ct)
     {
-        var pageIndex = (request.pageIndex <= 0) ? 1 : request.pageIndex;
-
         // 表中没有记录
-        if (!await this._discovery.AnyAsync(ct:ct))
+        if (!await this._discovery.AnyAsync(ct: ct))
         {
             return new DisplayContect() { Status = 0, CurrentPageIndex = 0 };
         }
 
-        // 现有记录数
-        var allCount = await this._discovery.CountAsync(ct: ct);
-        // 从首页至最后一页
-        if (pageIndex == -1)
-        {
-            // 现有记录数大于等于设定页数的时候，就取设置页数上的信息
-            if(allCount >= request.maxIndex)
-            {
-                pageIndex = request.maxIndex;
-            }
-            else
-            {
-                pageIndex = allCount;
-            }
-        }
-        else
-        {
-            // 现有记录数小于翻页书的时候，就取现有记录数上的信息
-            if (allCount < pageIndex)
-            {
-                pageIndex = allCount;
-            }
-        }
+        var currentPageIndex = request.pageIndex;
+        var (prePageIndex, postPageIndex) = await this.CalcPagination(currentPageIndex, request.maxIndex, ct);
 
         // 每日发现
-        var discoverySpec = new DiscoverySpec(1, pageIndex);
+        var discoverySpec = new DiscoverySpec(1, currentPageIndex);
         var discoveryQuery = await this._discovery.SelectAsync(discoverySpec, c => c, ct);
         var discMovie = discoveryQuery[0].Movie;
         // 最新栏目
@@ -104,15 +82,46 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         return new DisplayContect()
         {
             Status = 0,
-            CurrentPageIndex = pageIndex,
+
             Discoveries = discoveryQuery,
             DiscMovie = discMovie,
             NewMovies = newMovies,
             MostMovies = mostMovies,
+
+            CurrentPageIndex = currentPageIndex,
+            PrePageIndex = prePageIndex,
+            PostPageIndex = postPageIndex,
+
             IsPlan = isPlan,
             IsFinish = isFinish,
             IsFavor = isFavor,
         };
+    }
+
+    private async Task<Tuple<int, int>> CalcPagination(int currentPageIndex, int maxIndex, CancellationToken ct)
+    {
+        // 上一页
+        var prePageIndex = currentPageIndex - 1;
+        // 下一页
+        var postPageIndex = currentPageIndex + 1;
+
+        // 现有记录数
+        var allCount = await this._discovery.CountAsync(ct: ct);
+
+        // 从首页至最后一页
+        if (prePageIndex == 0)
+        {
+            // 确定最后的页码
+            prePageIndex = (allCount >= maxIndex) ? maxIndex : allCount;
+        }
+
+        // 从最后一页至首页
+        if (postPageIndex > maxIndex || postPageIndex > allCount)
+        {
+            postPageIndex = 1;
+        }
+
+        return Tuple.Create(prePageIndex, postPageIndex);
     }
 
     /// <summary>
@@ -138,6 +147,9 @@ public class DisplayContect
     public int Status { get; set; }
 
     public int CurrentPageIndex { get; set; }
+    public int PostPageIndex { get; set; }
+    public int PrePageIndex { get; set; }
+
     public IReadOnlyList<DiscoveryEntity> Discoveries { get; set; }
     public MovieEntity DiscMovie { get; set; }
     public IReadOnlyList<MovieEntity> NewMovies { get; set; }

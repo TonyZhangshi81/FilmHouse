@@ -28,8 +28,7 @@ namespace FilmHouse.Web.Controllers
         #endregion Initizalize
 
         [Route("")]
-        [Route("[controller]")]
-        [Route("[controller]/Index")]
+        [Route("[controller]/{pageIndex}")]
         public async Task<ActionResult> Index(int pageIndex = 1)
         {
             // 未登录状态
@@ -59,9 +58,9 @@ namespace FilmHouse.Web.Controllers
             // 当前页码
             model.Discovery.CurrentPageIndex = display.CurrentPageIndex;
             // 上一页码
-            model.Discovery.PostPageIndex = display.CurrentPageIndex - 1;
+            model.Discovery.PrePageIndex = display.PrePageIndex;
             // 下一页码
-            model.Discovery.PrePageIndex = display.CurrentPageIndex + 1;
+            model.Discovery.PostPageIndex = display.PostPageIndex;
 
             // 想看
             model.Discovery.Movie.IsPlan = display.IsPlan;
