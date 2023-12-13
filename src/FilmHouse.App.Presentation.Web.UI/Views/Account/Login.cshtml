@@ -1,20 +1,29 @@
-﻿@model FilmHouse.Web.Models.LoginViewModel
+﻿@using Microsoft.AspNetCore.Html
+@using FilmHouse.Core.Services.Configuration;
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@inject ISettingProvider settingProvider
+
+@model FilmHouse.Web.Models.LoginViewModel
 
 @{
     ViewBag.Title = "登录";
     Layout = "~/Views/Account/_LayoutPage.cshtml";
+
+    var subTitle = settingProvider.GetValue("WebSiteSettings:SubTitle");
+    var name = settingProvider.GetValue("WebSiteSettings:Name");
 }
 
-@using (Html.BeginForm("Login", "Account", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+<form asp-action="Login" asp-controller="Account" asp-route-returnUrl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
+
     @Html.AntiForgeryToken()
     <div class="panel panel-body center-horizon panel-login" style="margin-top:20px; padding:30px 50px 20px 50px;">
 
         <div class="text-center" style="margin:0px -50px;">
-            <text style="font-size:36px; color:#121212; font-weight:bold; font-family:'方正清刻本悦宋简体';">为爱电影的人</text>
+            <text style="font-size:36px; color:#121212; font-weight:bold; font-family:'方正清刻本悦宋简体';">@name</text>
         </div>
         <div class="text-center" style="margin:0px -50px;">
-            <text style="font-size:20px; color:#444444; font-weight:normal; font-family:'Microsoft JhengHei UI';">For people who love movies</text>
+            <text style="font-size:20px; color:#444444; font-weight:normal; font-family:'Microsoft JhengHei UI';">FileHouse</text>
         </div>
 
         <div class="input-group" style="margin-top:30px;">
@@ -45,7 +54,8 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         </div>
     </div>
-}
+</form>
+
 
 <div class="panel panel-body center-horizon panel-login font-larger">
     没有账号？&nbsp;&nbsp;@Html.ActionLink(linkText: "注册一个. ", actionName: "Register", routeValues: null, htmlAttributes: new { @class = "link-text" })

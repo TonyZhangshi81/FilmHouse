@@ -1,5 +1,5 @@
 ﻿$(function () {
   $(".tipup").tooltip();
 
-  Barba.Pjax.start();
+  //Barba.Pjax.start();
 });

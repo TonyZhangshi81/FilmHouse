@@ -18,26 +18,25 @@
 
     <title>@ViewBag.Title - @name</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/custom.css" />
-    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" asp-append-version="true" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" asp-append-version="true" href="~/css/site.css" />
+    <link rel="stylesheet" asp-append-version="true" href="~/css/custom.css" />
+    <link rel="stylesheet" asp-append-version="true" href="~/lib/font-awesome/css/font-awesome.css" />
 
     @await RenderSectionAsync("Links", required: false)
 
-    <script src="~/lib/jquery/jquery.js" type="text/javascript"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-    <script src="~/lib/respond/respond.js" type="text/javascript"></script>
-    <script src="~/lib/modernizr/modernizr.js" type="text/javascript"></script>
-    <script src="~/lib/barba/barba.js" type="text/javascript"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/jquery.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/lib/respond/respond.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/lib/modernizr/modernizr.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/lib/barba/barba.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true" type="text/javascript"></script>
 
 </head>
 
 <body>
+
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -132,14 +131,9 @@
             </div>
         </div>
     }
-
     <div id="barba-wrapper">
         <div class="barba-container">
-            <div class="wrap">
-                <div>
-                  @RenderBody()
-                </div>
-            </div>
+            @RenderBody()
         </div>
     </div>
 
@@ -152,6 +146,8 @@
 
 </body>
 
-<script src="./js/site.js" asp-append-version="true" defer="defer"></script>
+<script src="~/js/site.js" asp-append-version="true" defer="defer"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
 
 </html>

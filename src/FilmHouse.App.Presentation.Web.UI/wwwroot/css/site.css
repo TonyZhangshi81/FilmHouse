@@ -176,3 +176,13 @@
     width: 80%;
   }
 }
+
+.li-account {
+  background-color: #10761A;
+}
+
+  .li-account:hover,
+  .li-account:focus,
+  .li-account:active {
+    background-color: #10761A;
+  }

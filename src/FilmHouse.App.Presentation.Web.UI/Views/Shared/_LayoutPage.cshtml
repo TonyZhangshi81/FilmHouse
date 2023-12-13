@@ -6,10 +6,10 @@
     @await RenderSectionAsync("Links", required: false)
 }
 
-@section Scripts {
-    @await RenderSectionAsync("Scripts", required: false)
-}
-
 <div class="container">
     @RenderBody()
 </div>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}
