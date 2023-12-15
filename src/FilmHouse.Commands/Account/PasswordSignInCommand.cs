@@ -7,7 +7,7 @@ using MediatR;
 
 namespace FilmHouse.Commands.Account;
 
-public record PasswordSignInCommand(AccountNameVO account, PasswordVO password) : IRequest<SignInContect>;
+public record PasswordSignInCommand(AccountNameVO account, PasswordHashVO password) : IRequest<SignInContect>;
 
 public class PasswordSignInCommandHandler : IRequestHandler<PasswordSignInCommand, SignInContect>
 {
@@ -36,7 +36,7 @@ public class PasswordSignInCommandHandler : IRequestHandler<PasswordSignInComman
         {
             return new SignInContect() { UserId = new UserIdVO(Guid.Empty), Status = SignInStatus.UndefinedAccount, IsAdmin = new IsAdminVO(false) };
         }
-        else if (userAccounts.ElementAt(0).Password.AsPrimitive() == request.password.ToHash(userAccounts.ElementAt(0).Account.AsPrimitive()))
+        else if (userAccounts.ElementAt(0).PasswordHash.AsPrimitive() == request.password.ToHash(userAccounts.ElementAt(0).Account.AsPrimitive()))
         {
             return new SignInContect() { UserId = userAccounts.ElementAt(0).UserId, Status = SignInStatus.Success, IsAdmin = userAccounts.ElementAt(0).IsAdmin };
         }

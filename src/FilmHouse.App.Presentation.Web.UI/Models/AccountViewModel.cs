@@ -13,7 +13,7 @@ namespace FilmHouse.Web.Models
         [Required(ErrorMessage = "请输入 密码。")]
         [DataType(DataType.Password)]
         [Display(Name = "密码")]
-        public PasswordVO Password { get; set; }
+        public PasswordHashVO Password { get; set; }
 
         public IsAdminVO IsAdmin { get; set; }
 
@@ -28,10 +28,10 @@ namespace FilmHouse.Web.Models
         public AccountNameVO Account { get; set; }
 
         [Required(ErrorMessage = "请输入 密码。")]
-        [RegularExpression(@"^(?=.*\d.*)(?=.*[a-zA-Z].*).{6,}$", ErrorMessage = "密码 必须包括字符和数字，且长度不小于6")]
+        [RegularExpression("^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9._~!@#$^&*]{8,}$", ErrorMessage = "密码 必须包括字符和数字，且长度不小于8")]
         [DataType(DataType.Password)]
         [Display(Name = "密码")]
-        public PasswordVO Password { get; set; }
+        public PasswordHashVO Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "确认密码")]
@@ -58,33 +58,14 @@ namespace FilmHouse.Web.Models
         public AccountNameVO Account { get; set; }
 
         [Required(ErrorMessage = "请输入 新密码。")]
-        [RegularExpression(@"^(?=.*\d.*)(?=.*[a-zA-Z].*).{6,}$", ErrorMessage = "密码 必须包括字符和数字，且长度不小于6")]
+        [RegularExpression("^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9._~!@#$^&*]{8,}$", ErrorMessage = "密码 必须包括字符和数字，且长度不小于8")]
         [DataType(DataType.Password)]
         [Display(Name = "新密码")]
-        public PasswordVO Password { get; set; }
+        public PasswordHashVO Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "确认密码")]
         [Compare("Password", ErrorMessage = "密码和确认密码不匹配。")]
         public ConfirmPasswordVO ConfirmPassword { get; set; }
-    }
-
-    //
-    // 摘要:
-    //     登录尝试的可能结果
-    public enum SignInStatus
-    {
-        //
-        // 摘要:
-        //     登陆成功
-        Success = 0,
-        //
-        // 摘要:
-        //     用户名不存在
-        UndefinedAccount = 1,
-        //
-        // 摘要:
-        //     登陆失败
-        Failure = 2
     }
 }
