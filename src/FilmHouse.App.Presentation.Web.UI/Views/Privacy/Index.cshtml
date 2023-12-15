@@ -1,0 +1,12 @@
+﻿@using FilmHouse.Core.Services.Configuration;
+
+@inject ISettingProvider settingProvider
+
+@{
+    var subTitle = settingProvider.GetValue("WebSiteSettings:Name");
+    var name = settingProvider.GetValue("WebSiteSettings:Name");
+}
+<h1>name</h1>
+<h1>subTitle</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>

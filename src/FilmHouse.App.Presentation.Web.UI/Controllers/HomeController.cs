@@ -6,6 +6,7 @@ using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.DependencyInjection;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace FilmHouse.Web.Controllers
 {
@@ -76,6 +77,19 @@ namespace FilmHouse.Web.Controllers
             model.Discovery.Movie.IsFavor = display.IsFavor;
 
             return View(model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("[controller]/grantcookie")]
+        public bool GrantCookie()
+        {
+            var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+            consentFeature.GrantConsent();
+            return true;
         }
     }
 }
