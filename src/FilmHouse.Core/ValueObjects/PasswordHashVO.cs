@@ -12,14 +12,14 @@ using FilmHouse.Core.ValueObjects.Serialization;
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 代表输入密码的值对象类。
+    /// 密码(已使用Pbkdf2加密)的值对象类。
     /// </summary>
-    [JsonConverter(typeof(PasswordVOJsonConverter))]
-    [ValueConverter(typeof(PasswordVOValueConverter), typeof(PasswordVOArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(PasswordVOTypeConverter))]
+    [JsonConverter(typeof(PasswordHashVOJsonConverter))]
+    [ValueConverter(typeof(PasswordHashVOValueConverter), typeof(PasswordHashVOArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(PasswordHashVOTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class PasswordVO : FilmHouse.Core.ValueObjects.TextBase, FilmHouse.Core.Utils.IPasswordHashable<PasswordVO>, IEquatable<PasswordVO>, IComparable<PasswordVO>, IValue<string>, IValueObject
+    public partial class PasswordHashVO : FilmHouse.Core.ValueObjects.TextBase, FilmHouse.Core.Utils.IPasswordHashable<PasswordHashVO>, IEquatable<PasswordHashVO>, IComparable<PasswordHashVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
@@ -34,10 +34,10 @@ namespace FilmHouse.Core.ValueObjects
         public const int Size = 200;
 
         /// <summary>
-        /// <see cref="PasswordVO"/>的新实例。
+        /// <see cref="PasswordHashVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public PasswordVO(string value)
+        public PasswordHashVO(string value)
             : base(value)
         {
             this.PreProcess(ref value);
@@ -50,21 +50,21 @@ namespace FilmHouse.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="PasswordVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="PasswordHashVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(PasswordVO value)
+        public static explicit operator string(PasswordHashVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="PasswordVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="PasswordHashVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator PasswordVO(string value)
+        public static explicit operator PasswordHashVO(string value)
         {
-            return new PasswordVO(value);
+            return new PasswordHashVO(value);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in PasswordVO? x, in PasswordVO? y)
+        internal static bool Equals(in PasswordHashVO? x, in PasswordHashVO? y)
         {
             if (x is null && y is null)
             {
@@ -91,7 +91,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(PasswordVO? other)
+        public bool Equals(PasswordHashVO? other)
         {
             return Equals(this, other);
         }
@@ -108,9 +108,9 @@ namespace FilmHouse.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(PasswordVO).IsAssignableFrom(t))
+            if (typeof(PasswordHashVO).IsAssignableFrom(t))
             {
-                return Equals((PasswordVO)obj);
+                return Equals((PasswordHashVO)obj);
             }
             if (t == typeof(string))
             {
@@ -141,7 +141,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否相等
         /// </summary>
-        public static bool operator ==(in PasswordVO? x, in PasswordVO? y)
+        public static bool operator ==(in PasswordHashVO? x, in PasswordHashVO? y)
         {
             return Equals(x, y);
         }
@@ -149,7 +149,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in PasswordVO? x, in PasswordVO? y)
+        public static bool operator !=(in PasswordHashVO? x, in PasswordHashVO? y)
         {
             return !Equals(x, y);
         }
@@ -161,7 +161,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(PasswordVO? other)
+        public int CompareTo(PasswordHashVO? other)
         {
             if (other == null)
             {
@@ -172,9 +172,9 @@ namespace FilmHouse.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class PasswordVOJsonConverter : JsonConverter<PasswordVO>
+        private class PasswordHashVOJsonConverter : JsonConverter<PasswordHashVO>
         {
-            public override void Write(Utf8JsonWriter writer, PasswordVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, PasswordHashVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -187,7 +187,7 @@ namespace FilmHouse.Core.ValueObjects
                 }
             }
 
-            public override PasswordVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override PasswordHashVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -195,7 +195,7 @@ namespace FilmHouse.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new PasswordVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new PasswordHashVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -213,24 +213,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class PasswordVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<PasswordVO?, string?>
+        public class PasswordHashVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<PasswordHashVO?, string?>
         {
             /// <summary>
-            /// <see cref="PasswordVOValueConverter"/>的新实例。
+            /// <see cref="PasswordHashVOValueConverter"/>的新实例。
             /// </summary>
-            public PasswordVOValueConverter()
+            public PasswordHashVOValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="PasswordVOValueConverter"/>的新实例。
+            /// <see cref="PasswordHashVOValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public PasswordVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public PasswordHashVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new PasswordVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new PasswordHashVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -241,7 +241,7 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                PasswordVO value => value._value,
+                PasswordHashVO value => value._value,
                 _ => null,
             };
 
@@ -250,8 +250,8 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                PasswordVO value => value,
-                string value => new PasswordVO(value),
+                PasswordHashVO value => value,
+                string value => new PasswordHashVO(value),
                 _ => null,
             };
         }
@@ -259,24 +259,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class PasswordVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<PasswordVO?[], string?[]>
+        public class PasswordHashVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<PasswordHashVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="PasswordVOArrayValueConverter"/>的新实例。
+            /// <see cref="PasswordHashVOArrayValueConverter"/>的新实例。
             /// </summary>
-            public PasswordVOArrayValueConverter()
+            public PasswordHashVOArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="PasswordVOArrayValueConverter"/>的新实例。
+            /// <see cref="PasswordHashVOArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public PasswordVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public PasswordHashVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new PasswordVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new PasswordHashVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -287,9 +287,9 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                PasswordVO?[] values => values.Select(_ => _?._value).ToArray(),
+                PasswordHashVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<PasswordVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<PasswordHashVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -298,18 +298,18 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                PasswordVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new PasswordVO(_)).ToArray(),
-                IEnumerable<PasswordVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new PasswordVO(_)).ToArray(),
+                PasswordHashVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new PasswordHashVO(_)).ToArray(),
+                IEnumerable<PasswordHashVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new PasswordHashVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class PasswordVOTypeConverter : System.ComponentModel.TypeConverter
+        private class PasswordHashVOTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(PasswordVO);
+            private static readonly Type WrapperType = typeof(PasswordHashVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -339,13 +339,13 @@ namespace FilmHouse.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(PasswordVO))
+                if (t == typeof(PasswordHashVO))
                 {
-                    return (PasswordVO)value;
+                    return (PasswordHashVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new PasswordVO((string)value);
+                    return new PasswordHashVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -358,7 +358,7 @@ namespace FilmHouse.Core.ValueObjects
                     return null;
                 }
 
-                if (value is PasswordVO wrappedValue)
+                if (value is PasswordHashVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {
