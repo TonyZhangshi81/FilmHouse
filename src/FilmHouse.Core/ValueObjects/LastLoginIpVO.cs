@@ -12,32 +12,32 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 邮箱地址（256位文本）的值对象类。
+    /// 最后一次登录的客户端IP（64位文本）的值对象类。
     /// </summary>
-    [JsonConverter(typeof(EmailAddressVOJsonConverter))]
-    [ValueConverter(typeof(EmailAddressVOValueConverter), typeof(EmailAddressVOArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(EmailAddressVOTypeConverter))]
+    [JsonConverter(typeof(LastLoginIpVOJsonConverter))]
+    [ValueConverter(typeof(LastLoginIpVOValueConverter), typeof(LastLoginIpVOArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(LastLoginIpVOTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class EmailAddressVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<EmailAddressVO>, IComparable<EmailAddressVO>, IValue<string>, IValueObject
+    public partial class LastLoginIpVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<LastLoginIpVO>, IComparable<LastLoginIpVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "EmailAddress(size:256)";
+        public new const string TypeName = "LastLoginIp(size:64)";
 
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 256;
+        public const int Size = 64;
 
         /// <summary>
-        /// <see cref="EmailAddressVO"/>的新实例。
+        /// <see cref="LastLoginIpVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public EmailAddressVO(string value)
+        public LastLoginIpVO(string value)
             : base(value)
         {
             this.PreProcess(ref value);
@@ -50,21 +50,21 @@ namespace FilmHouse.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="EmailAddressVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="LastLoginIpVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(EmailAddressVO value)
+        public static explicit operator string(LastLoginIpVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="EmailAddressVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="LastLoginIpVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator EmailAddressVO(string value)
+        public static explicit operator LastLoginIpVO(string value)
         {
-            return new EmailAddressVO(value);
+            return new LastLoginIpVO(value);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in EmailAddressVO? x, in EmailAddressVO? y)
+        internal static bool Equals(in LastLoginIpVO? x, in LastLoginIpVO? y)
         {
             if (x is null && y is null)
             {
@@ -91,7 +91,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(EmailAddressVO? other)
+        public bool Equals(LastLoginIpVO? other)
         {
             return Equals(this, other);
         }
@@ -108,9 +108,9 @@ namespace FilmHouse.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(EmailAddressVO).IsAssignableFrom(t))
+            if (typeof(LastLoginIpVO).IsAssignableFrom(t))
             {
-                return Equals((EmailAddressVO)obj);
+                return Equals((LastLoginIpVO)obj);
             }
             if (t == typeof(string))
             {
@@ -141,7 +141,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in EmailAddressVO? x, in EmailAddressVO? y)
+        public static bool operator ==(in LastLoginIpVO? x, in LastLoginIpVO? y)
         {
             return Equals(x, y);
         }
@@ -149,7 +149,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in EmailAddressVO? x, in EmailAddressVO? y)
+        public static bool operator !=(in LastLoginIpVO? x, in LastLoginIpVO? y)
         {
             return !Equals(x, y);
         }
@@ -166,7 +166,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(EmailAddressVO? other)
+        public int CompareTo(LastLoginIpVO? other)
         {
             if (other == null)
             {
@@ -177,9 +177,9 @@ namespace FilmHouse.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class EmailAddressVOJsonConverter : JsonConverter<EmailAddressVO>
+        private class LastLoginIpVOJsonConverter : JsonConverter<LastLoginIpVO>
         {
-            public override void Write(Utf8JsonWriter writer, EmailAddressVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, LastLoginIpVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -192,7 +192,7 @@ namespace FilmHouse.Core.ValueObjects
                 }
             }
 
-            public override EmailAddressVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override LastLoginIpVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -200,7 +200,7 @@ namespace FilmHouse.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new EmailAddressVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new LastLoginIpVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -221,24 +221,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class EmailAddressVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<EmailAddressVO?, string?>
+        public class LastLoginIpVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<LastLoginIpVO?, string?>
         {
             /// <summary>
-            /// <see cref="EmailAddressVOValueConverter"/>的新实例。
+            /// <see cref="LastLoginIpVOValueConverter"/>的新实例。
             /// </summary>
-            public EmailAddressVOValueConverter()
+            public LastLoginIpVOValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="EmailAddressVOValueConverter"/>的新实例。
+            /// <see cref="LastLoginIpVOValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public EmailAddressVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public LastLoginIpVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new EmailAddressVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new LastLoginIpVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -249,7 +249,7 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                EmailAddressVO value => value._value,
+                LastLoginIpVO value => value._value,
                 _ => null,
             };
 
@@ -258,8 +258,8 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                EmailAddressVO value => value,
-                string value => new EmailAddressVO(value),
+                LastLoginIpVO value => value,
+                string value => new LastLoginIpVO(value),
                 _ => null,
             };
         }
@@ -267,24 +267,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class EmailAddressVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<EmailAddressVO?[], string?[]>
+        public class LastLoginIpVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<LastLoginIpVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="EmailAddressVOArrayValueConverter"/>的新实例。
+            /// <see cref="LastLoginIpVOArrayValueConverter"/>的新实例。
             /// </summary>
-            public EmailAddressVOArrayValueConverter()
+            public LastLoginIpVOArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="EmailAddressVOArrayValueConverter"/>的新实例。
+            /// <see cref="LastLoginIpVOArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public EmailAddressVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public LastLoginIpVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new EmailAddressVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new LastLoginIpVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -295,9 +295,9 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                EmailAddressVO?[] values => values.Select(_ => _?._value).ToArray(),
+                LastLoginIpVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<EmailAddressVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<LastLoginIpVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -306,18 +306,18 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                EmailAddressVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new EmailAddressVO(_)).ToArray(),
-                IEnumerable<EmailAddressVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new EmailAddressVO(_)).ToArray(),
+                LastLoginIpVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new LastLoginIpVO(_)).ToArray(),
+                IEnumerable<LastLoginIpVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new LastLoginIpVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class EmailAddressVOTypeConverter : System.ComponentModel.TypeConverter
+        private class LastLoginIpVOTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(EmailAddressVO);
+            private static readonly Type WrapperType = typeof(LastLoginIpVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -347,13 +347,13 @@ namespace FilmHouse.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(EmailAddressVO))
+                if (t == typeof(LastLoginIpVO))
                 {
-                    return (EmailAddressVO)value;
+                    return (LastLoginIpVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new EmailAddressVO((string)value);
+                    return new LastLoginIpVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -366,7 +366,7 @@ namespace FilmHouse.Core.ValueObjects
                     return null;
                 }
 
-                if (value is EmailAddressVO wrappedValue)
+                if (value is LastLoginIpVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

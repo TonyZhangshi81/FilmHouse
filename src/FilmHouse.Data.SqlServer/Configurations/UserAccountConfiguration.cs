@@ -32,11 +32,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
             .HasMaxLength(50)
             .HasConversion<AccountNameVO.AccountNameValueConverter>();
 
-        builder.Property(e => e.Password)
+        builder.Property(e => e.PasswordHash)
             .IsRequired()
             .HasColumnType("varchar(200)")
             .HasMaxLength(200)
-            .HasConversion<PasswordVO.PasswordVOValueConverter>();
+            .HasConversion<PasswordHashVO.PasswordHashVOValueConverter>();
 
         builder.Property(e => e.EmailAddress)
             .IsRequired()
@@ -59,6 +59,15 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
             .HasDefaultValue(typeof(IsAdminVO).CreateValueObjectInstance("false"))
             .HasColumnType("bit")
             .HasConversion<IsAdminVO.IsAdminVOValueConverter>();
+
+        builder.Property(e => e.LastLoginIp)
+            .HasColumnType("varchar(64)")
+            .HasMaxLength(64)
+            .HasConversion<LastLoginIpVO.LastLoginIpVOValueConverter>();
+
+        builder.Property(e => e.LastLoginTime)
+            .HasColumnType("datetime")
+            .HasConversion<LastLoginTimeVO.LastLoginTimeVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()
