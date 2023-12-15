@@ -23,6 +23,7 @@ using Microsoft.Net.Http.Headers;
 using NLog.Web;
 using Spectre.Console;
 using Encoder = FilmHouse.Web.Configuration.Encoder;
+using FilmHouse.Core.Presentation.Web.Auth;
 
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -137,17 +138,43 @@ void ConfigureServices(IServiceCollection services)
             .AddHttpContextAccessor()
             .AddRateLimit(builder.Configuration.GetSection("IpRateLimiting"));
 
+    // 添加分布式内存缓存服务
+    //services.AddDistributedMemoryCache();
+    // 配置Session服务的选项
+    services.AddSession(options =>
+    {
+        // 配置会话选项
+        options.Cookie.IsEssential = true;
+        // 设置会话的闲置超时时间为20分钟。如果在20分钟内没有任何活动，则会话将被视为过期并被清除。
+        options.IdleTimeout = TimeSpan.FromMinutes(20);
+        // 设置会话Cookie的HttpOnly属性为`true`。这意味着该Cookie只能通过HTTP协议进行传输，客户端脚本无法访问该Cookie。
+        options.Cookie.HttpOnly = true;
+    });
+
     services.AddDataProtection()
             .PersistKeysToFileSystem(new DirectoryInfo(persistKeys!))
             .SetDefaultKeyLifetime(TimeSpan.FromDays(15))
             .SetApplicationName("filmhouse_web");
 
+    // 配置Cookie策略选项
     services.Configure<CookiePolicyOptions>(options =>
     {
+        // 设置为`true`表示要求用户在使用Cookie之前必须给予明确的同意。这通常是根据法律要求或隐私政策的规定来决定的。
         options.CheckConsentNeeded = context => true;
+        // 设置为`None`表示允许跨站点请求时发送Cookie。这是为了兼容旧版浏览器或需要与其他域名进行交互的情况。
         options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+        // 设置为`SameAsRequest`表示Cookie的安全性与请求的安全性相同。如果请求是通过HTTPS进行的，则Cookie也会被标记为安全，只能通过HTTPS传输。
         options.Secure = CookieSecurePolicy.SameAsRequest;
+        // 设置为`None`表示允许客户端脚本访问和操作Cookie。如果设置为`HttpOnlyPolicy.Always`，则Cookie将被标记为仅限服务器访问，无法通过客户端脚本访问。
         options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.None;
+        // 配置其他的 `CookieBuilder` 相关属性
+        options.ConsentCookie = new CookieBuilder
+        {
+            // 设置过期间隔为3天
+            Expiration = TimeSpan.FromDays(3),
+            IsEssential = true,
+            Name = ".AspNet.FilmHouse"
+        };
     });
 
     /*
@@ -176,6 +203,8 @@ void ConfigureServices(IServiceCollection services)
     services.AddHealthChecksUI()
             .AddInMemoryStorage();
     services.AddCustomerHealthChecks();
+
+    services.AddFilmHouseAuthenticaton(builder.Configuration);
 
     // Fix Chinese character being encoded in HTML output
     services.AddSingleton(Encoder.FilmHouseHtmlEncoder);
@@ -313,6 +342,7 @@ void ConfigureMiddleware()
     // address: https://localhost:7144/healthchecks-ui#/healthchecks
     app.UseHealthChecksUI();
 
+    // Cookie策略
     app.UseCookiePolicy();
     app.UseSecurityHeaders(builder =>
     {
@@ -348,7 +378,9 @@ void ConfigureMiddleware()
 
     app.UseResponseCaching();
 
+    // app.UseAuthentication会启用Authentication中间件
     app.UseAuthentication();
+    // 根据当前Http请求中的Cookie信息来设置HttpContext.User属性，在app.UseAuthentication方法之后注册的中间件才能够从HttpContext.User中读取到值
     app.UseAuthorization();
 
 #pragma warning disable ASP0014

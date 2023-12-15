@@ -21,6 +21,9 @@ namespace FilmHouse.Web.Controllers
         /// 
         /// </summary>
         /// <param name="mediator"></param>
+        /// <param name="settingProvider"></param>
+        /// <param name="currentRequestId"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public HomeController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId)
         {
             this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
@@ -30,6 +33,11 @@ namespace FilmHouse.Web.Controllers
 
         #endregion Initizalize
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
         [Route("")]
         [Route("[controller]/{pageIndex}")]
         public async Task<ActionResult> Index(int pageIndex = 1)

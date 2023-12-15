@@ -115,8 +115,8 @@ public class Seed
     private static IEnumerable<CelebrityEntity> GetCelebrities(RequestIdVO uuid, CreatedOnVO dateTime) =>
        new List<CelebrityEntity>
        {
-            new(){ 
-                RequestId = uuid, 
+            new(){
+                RequestId = uuid,
                 CelebrityId = new CelebrityIdVO(Guid.NewGuid()),
                 Name = new CelebrityNameVO("蒂姆·波顿"),
                 Aka = new CelebrityAkaVO("蒂姆·伯顿 / 提姆·波顿 / 添·布顿"),
@@ -132,8 +132,8 @@ public class Seed
                 IMDb = new IMDbVO("nm0000318"),
                 Summary = new SummaryVO("　　美国电影导演，生于加利福尼亚州的伯班克。他在加州艺术学院学习时得到了迪士尼的奖学金，这是用来赞助给年轻动画人以帮助他们成就梦想的基金。由此他开始正式成为迪士尼的动画师，之后成为导演。蒂姆·伯顿热衷描绘错位，善于运用象征和隐喻的手法，常以黑色幽默，独特的视角而著称。其代表作有《蝙蝠侠》、《大鱼》、《剪刀手爱德华》等。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()), 
-                CreatedOn = dateTime 
+                UserId = new UserIdVO(Guid.NewGuid()),
+                CreatedOn = dateTime
             },
 
             new(){
@@ -399,7 +399,7 @@ public class Seed
     private static IEnumerable<UserAccountEntity> GetUserAccounts(RequestIdVO uuid, CreatedOnVO dateTime) =>
        new List<UserAccountEntity>
        {
-            new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("tonyzhangshi"), Password = new PasswordVO(new PasswordVO("123456").ToHash("test")), EmailAddress = new EmailAddressVO("tonyzhangshi@163.com"), Avatar = new UserAvatarVO("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(false), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("tonyzhangshi"), Password = new PasswordVO(new PasswordVO("Tony19811031").ToHash("tonyzhangshi")), EmailAddress = new EmailAddressVO("tonyzhangshi@163.com"), Avatar = new UserAvatarVO("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(false), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("test01"), Password = new PasswordVO(new PasswordVO("111111").ToHash("test01")), EmailAddress = new EmailAddressVO("test01@163.com"), Avatar = new UserAvatarVO("User_1.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(false), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("test02"), Password = new PasswordVO(new PasswordVO("222222").ToHash("test02")), EmailAddress = new EmailAddressVO("test02@163.com"), Avatar = new UserAvatarVO("User_1.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(true), CreatedOn = dateTime },
        };
@@ -412,11 +412,11 @@ public class Seed
         }
 
         var ids = new StringBuilder();
-        var items =  names.Split('/');
-        foreach ( var item in items )
+        var items = names.Split('/');
+        foreach (var item in items)
         {
             var id = dbContext.Celebrities.AsNoTracking().Where(d => d.Name == new CelebrityNameVO(item.Trim())).FirstOrDefault();
-            if(id != null)
+            if (id != null)
             {
                 ids.Append($"{id.CelebrityId} / ");
             }
@@ -461,14 +461,14 @@ public class Seed
                 Avatar = new MovieAvatarVO("p480956937.jpg"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode2,
                 PageViews = new PageViewsVO(98),
-                UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("tonyzhangshi")).First().UserId, 
-                CreatedOn = dateTime 
+                UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("tonyzhangshi")).First().UserId,
+                CreatedOn = dateTime
             },
 
-            new MovieEntity() { 
-                RequestId = uuid, 
-                MovieId = new MovieIdVO(Guid.NewGuid()), 
-                Title = new MovieTitleVO("黑天鹅"), 
+            new MovieEntity() {
+                RequestId = uuid,
+                MovieId = new MovieIdVO(Guid.NewGuid()),
+                Title = new MovieTitleVO("黑天鹅"),
                 TitleEn = new MovieTitleEnVO("Black Swan"),
                 Aka = new MovieAkaVO("夺命黑天鹅 / 霸王别鹅(豆友译名)"),
                 Directors = new DirectorNamesVO("达伦·阿伦诺夫斯基"),
@@ -491,13 +491,13 @@ public class Seed
                 Avatar = new MovieAvatarVO("p719282906.jpg"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode2,
                 PageViews = new PageViewsVO(105),
-                UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("tonyzhangshi")).First().UserId, 
+                UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("tonyzhangshi")).First().UserId,
                 CreatedOn = dateTime },
 
-            new MovieEntity() { 
-                RequestId = uuid, 
-                MovieId = new MovieIdVO(Guid.NewGuid()), 
-                Title = new MovieTitleVO("雷神4：爱与雷霆"), 
+            new MovieEntity() {
+                RequestId = uuid,
+                MovieId = new MovieIdVO(Guid.NewGuid()),
+                Title = new MovieTitleVO("雷神4：爱与雷霆"),
                 TitleEn = new MovieTitleEnVO("Thor: Love and Thunder"),
                 Aka = new MovieAkaVO("雷神4 / 雷神奇侠4：爱与雷霆(港) / 雷神索尔：爱与雷霆(台)"),
                 Directors = new DirectorNamesVO("塔伊加·维迪提"),
@@ -520,7 +520,7 @@ public class Seed
                 Avatar = new MovieAvatarVO("20231022161924.png"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode2,
                 PageViews = new PageViewsVO(123),
-                UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test01")).First().UserId, 
+                UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test01")).First().UserId,
                 CreatedOn = dateTime },
         };
 
@@ -538,28 +538,28 @@ public class Seed
     private static IEnumerable<DiscoveryEntity> GetDiscoveries(RequestIdVO uuid, CreatedOnVO dateTime, FilmHouseDbContext dbContext) =>
        new List<DiscoveryEntity>
        {
-                new DiscoveryEntity(){ 
-                    RequestId = uuid, 
-                    DiscoveryId = new DiscoveryIdVO(Guid.NewGuid()), 
-                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).First().MovieId, 
-                    Avatar = new DiscoveryAvatarVO("p2305422832.jpg"), 
-                    Order = new SortOrderVO(1), 
-                    CreatedOn = dateTime 
+                new DiscoveryEntity(){
+                    RequestId = uuid,
+                    DiscoveryId = new DiscoveryIdVO(Guid.NewGuid()),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).First().MovieId,
+                    Avatar = new DiscoveryAvatarVO("p2305422832.jpg"),
+                    Order = new SortOrderVO(1),
+                    CreatedOn = dateTime
                 },
-                new DiscoveryEntity(){ 
-                    RequestId = uuid, 
+                new DiscoveryEntity(){
+                    RequestId = uuid,
                     DiscoveryId = new DiscoveryIdVO(Guid.NewGuid()),
                     MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).First().MovieId,
-                    Avatar = new DiscoveryAvatarVO("p2220223845.jpg"), 
-                    Order = new SortOrderVO(2), 
+                    Avatar = new DiscoveryAvatarVO("p2220223845.jpg"),
+                    Order = new SortOrderVO(2),
                     CreatedOn = dateTime },
 
-                new DiscoveryEntity(){ 
-                    RequestId = uuid, 
+                new DiscoveryEntity(){
+                    RequestId = uuid,
                     DiscoveryId = new DiscoveryIdVO(Guid.NewGuid()),
                     MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).First().MovieId,
-                    Avatar = new DiscoveryAvatarVO("p2181503009.jpg"), 
-                    Order = new SortOrderVO(3), 
+                    Avatar = new DiscoveryAvatarVO("p2181503009.jpg"),
+                    Order = new SortOrderVO(3),
                     CreatedOn = dateTime },
        };
 
