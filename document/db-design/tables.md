@@ -221,18 +221,20 @@
 
 <a id="jump_UserAccount"></a>
 ### [账户信息] UserAccount
-| 列名         |   类型   | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                       | VO             |
-| :----------- | :------: | ---: | ---: | :--: | :-: | :-: | -----: | :------------------------- | :------------- |
-| RequestId    |   uuid   |   36 |      |  v   |     |     |        | GUID                       | RequestIdVO    |
-| UserId       |   uuid   |   50 |      |  v   |  v  |     |        | 主键                       | UserIdVO       |
-| Account      | varchar  |   50 |      |  v   |     |     |        | 用户名                     | AccountVO      |
-| Password     | varchar  |  200 |      |  v   |     |     |        | 密码                       | PasswordVO     |
-| EmailAddress | varchar  |  256 |      |  v   |     |     |        | email                      | EmailAddressVO |
-| Avatar       | varchar  |  256 |      |      |     |     |        | 头像（带扩展名）           | AvatarVO       |
-| Cover        | varchar  |  100 |      |      |     |     |        | 封面（带扩展名）           | CoverVO        |
-| IsAdmin      |   bool   |    1 |      |      |     |     |  false | 是否为管理员<BR>(1:管理员) | IsAdminVO      |
-| CreatedOn    | datetime |    8 |      |  v   |     |     |        | 创建时间                   | CreatedOnVO    |
-| UpDatedOn    | datetime |    8 |      |      |     |     |        | 修改时间                   | UpDatedOnVO    |
+| 列名          |   类型   | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                       | VO              |
+| :------------ | :------: | ---: | ---: | :--: | :-: | :-: | -----: | :------------------------- | :-------------- |
+| RequestId     |   uuid   |   36 |      |  v   |     |     |        | GUID                       | RequestIdVO     |
+| UserId        |   uuid   |   50 |      |  v   |  v  |     |        | 主键                       | UserIdVO        |
+| Account       | varchar  |   50 |      |  v   |     |     |        | 用户名                     | AccountVO       |
+| PasswordHash  | varchar  |  200 |      |  v   |     |     |        | 密码                       | PasswordHashVO  |
+| EmailAddress  | varchar  |  256 |      |  v   |     |     |        | email                      | EmailAddressVO  |
+| Avatar        | varchar  |  256 |      |      |     |     |        | 头像（带扩展名）           | AvatarVO        |
+| Cover         | varchar  |  100 |      |      |     |     |        | 封面（带扩展名）           | CoverVO         |
+| IsAdmin       |   bool   |    1 |      |      |     |     |  false | 是否为管理员<BR>(1:管理员) | IsAdminVO       |
+| CreatedOn     | datetime |    8 |      |  v   |     |     |        | 创建时间                   | CreatedOnVO     |
+| UpDatedOn     | datetime |    8 |      |      |     |     |        | 修改时间                   | UpDatedOnVO     |
+| LastLoginIp   | varchar  |   64 |      |      |     |     |        | 最后一次登录的客户端IP     | LastLoginIpVO   |
+| LastLoginTime | datetime |    8 |      |      |     |     |        | 最后一次登录的时间         | LastLoginTimeVO |
 
 
 <a id="jump_Resource"></a>
