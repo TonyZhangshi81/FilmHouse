@@ -6,6 +6,7 @@ using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.DependencyInjection;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace FilmHouse.Web.Controllers
 {
@@ -21,6 +22,9 @@ namespace FilmHouse.Web.Controllers
         /// 
         /// </summary>
         /// <param name="mediator"></param>
+        /// <param name="settingProvider"></param>
+        /// <param name="currentRequestId"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public HomeController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId)
         {
             this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
@@ -30,6 +34,11 @@ namespace FilmHouse.Web.Controllers
 
         #endregion Initizalize
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
         [Route("")]
         [Route("[controller]/{pageIndex}")]
         public async Task<ActionResult> Index(int pageIndex = 1)
@@ -68,6 +77,19 @@ namespace FilmHouse.Web.Controllers
             model.Discovery.Movie.IsFavor = display.IsFavor;
 
             return View(model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("[controller]/grantcookie")]
+        public bool GrantCookie()
+        {
+            var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+            consentFeature.GrantConsent();
+            return true;
         }
     }
 }

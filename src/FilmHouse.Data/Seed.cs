@@ -399,7 +399,7 @@ public class Seed
     private static IEnumerable<UserAccountEntity> GetUserAccounts(RequestIdVO uuid, CreatedOnVO dateTime) =>
        new List<UserAccountEntity>
        {
-            new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("tonyzhangshi"), PasswordHash = new PasswordHashVO(new PasswordHashVO("123456").ToHash("test")), EmailAddress = new EmailAddressVO("tonyzhangshi@163.com"), Avatar = new UserAvatarVO("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(false), LastLoginIp = new LastLoginIpVO("201.182.1.23"), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("tonyzhangshi"), PasswordHash = new PasswordHashVO(new PasswordHashVO("Tony19811031").ToHash("tonyzhangshi")), EmailAddress = new EmailAddressVO("tonyzhangshi@163.com"), Avatar = new UserAvatarVO("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(false), LastLoginIp = new LastLoginIpVO("201.182.1.23"), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("test01"), PasswordHash = new PasswordHashVO(new PasswordHashVO("111111").ToHash("test01")), EmailAddress = new EmailAddressVO("test01@163.com"), Avatar = new UserAvatarVO("User_1.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(false), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("test02"), PasswordHash = new PasswordHashVO(new PasswordHashVO("222222").ToHash("test02")), EmailAddress = new EmailAddressVO("test02@163.com"), Avatar = new UserAvatarVO("User_1.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(true), CreatedOn = dateTime },
        };
@@ -562,5 +562,4 @@ public class Seed
                     Order = new SortOrderVO(3),
                     CreatedOn = dateTime },
        };
-
 }

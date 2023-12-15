@@ -1,6 +1,6 @@
 services:
 
-- name: ui-filehouse
+- name: ui-filmhouse
   project: ../FilmHouse.App.Presentation.Web.UI/FilmHouse.App.Presentation.Web.UI.csproj
   env:
     - name: ASPNETCORE_ENVIRONMENT
