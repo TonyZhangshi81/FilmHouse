@@ -10,6 +10,11 @@ using FilmHouse.Commands.Account;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using FilmHouse.Core.Utils;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
+using FilmHouse.Core.Presentation.Web.Auth;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers
 {
@@ -22,6 +27,8 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         private readonly ICurrentRequestId _currentRequestId;
         private readonly ILogger<AccountController> _logger;
 
+        private readonly AuthenticationSettings _authenticationSettings;
+
         /// <summary>
         /// 
         /// </summary>
@@ -30,12 +37,14 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         /// <param name="currentRequestId"></param>
         /// <param name="logger"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public AccountController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId, ILogger<AccountController> logger)
+        public AccountController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings)
         {
             this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this._settingProvider = settingProvider ?? throw new ArgumentNullException(nameof(settingProvider));
             this._currentRequestId = currentRequestId ?? throw new ArgumentNullException(nameof(currentRequestId));
             this._logger = logger;
+
+            this._authenticationSettings = authSettings.Value;
         }
 
         #endregion Initizalize
@@ -43,6 +52,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         #region 登录
         //
         // GET: /Account/Login/
+        [HttpGet]
         [AllowAnonymous]
         [LogonFilter]
         public ActionResult Login(string returnUrl)
@@ -76,6 +86,8 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 {
                     case Commands.Account.SignInStatus.Success:
                         await this.SetClaimsIdentity(model.Account, result.UserId, result.IsAdmin);
+                        await this._mediator.Send(new ValidateLoginCommand(result.UserId, new(Helper.GetClientIP(HttpContext))));
+
                         this._logger.LogInformation($@"Authentication success for local account ""{model.Account}""");
 
                         if (result.IsAdmin.AsPrimitive())
@@ -102,8 +114,6 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 return View(model);
             }
         }
-        #endregion
-
 
         /// <summary>
         /// 
@@ -131,6 +141,65 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
             // 对用户进行身份验证并在成功后进行登录。使用Cookie身份验证方案。
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, p);
         }
+
+        #endregion
+
+        #region 注销
+
+        //
+        // POST: /Account/SignOut/
+        [HttpGet]
+        public async Task<IActionResult> SignOut(string returnUrl)
+        {
+            switch (this._authenticationSettings.Provider)
+            {
+                case AuthenticationProvider.EntraID:
+                    /*
+                    var callbackUrl = Url.Page("/Index", null, null, Request.Scheme);
+                    return SignOut(
+                        new AuthenticationProperties { RedirectUri = callbackUrl },
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        OpenIdConnectDefaults.AuthenticationScheme);
+                    */
+                    break;
+                case AuthenticationProvider.Local:
+                    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    break;
+                default:
+                    break;
+            }
+            var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+            if (consentFeature != null)
+            {
+                // 设置TrackingConsentFeature的同意状态为未同意
+                consentFeature.WithdrawConsent();
+            }
+
+            return RedirectToLocal(returnUrl);
+        }
+
+        #endregion
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("[controller]/grantcookie")]
+        public bool GrantCookie()
+        {
+            var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+            if (consentFeature != null)
+            {
+                // 设置TrackingConsentFeature的同意状态为同意
+                consentFeature.GrantConsent();
+            }
+            return true;
+        }
+
+
+
 
         private ActionResult RedirectToLocal(string returnUrl)
         {

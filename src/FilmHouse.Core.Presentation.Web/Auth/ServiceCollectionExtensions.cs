@@ -38,7 +38,7 @@ public static class ServiceCollectionExtensions
                     {
                         options.AccessDeniedPath = "/auth/accessdenied";
                         options.LoginPath = "/Account/Login";
-                        options.LogoutPath = "/Account/LogOff";
+                        options.LogoutPath = "/Account/SignOut";
                     });
                 break;
             default:

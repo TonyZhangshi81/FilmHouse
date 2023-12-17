@@ -7,18 +7,15 @@ using MediatR;
 
 namespace FilmHouse.Commands.Account;
 
-public record PasswordSignInCommand(AccountNameVO account, PasswordHashVO password) : IRequest<SignInContect>;
+public record PasswordSignInCommand(AccountNameVO AccountName, PasswordHashVO InputPassword) : IRequest<SignInContect>;
 
 public class PasswordSignInCommandHandler : IRequestHandler<PasswordSignInCommand, SignInContect>
 {
     #region Initizalize
 
-    private readonly IRepository<UserAccountEntity> _account;
+    private readonly IRepository<UserAccountEntity> _repo;
 
-    public PasswordSignInCommandHandler(IRepository<UserAccountEntity> account)
-    {
-        this._account = account;
-    }
+    public PasswordSignInCommandHandler(IRepository<UserAccountEntity> repo) => _repo = repo;
 
     #endregion Initizalize
 
@@ -29,20 +26,19 @@ public class PasswordSignInCommandHandler : IRequestHandler<PasswordSignInComman
     /// <returns></returns>
     public async Task<SignInContect> Handle(PasswordSignInCommand request, CancellationToken ct)
     {
-        var accountSpec = new UserAccountSpec(request.account);
-        var userAccounts = await this._account.SelectAsync(accountSpec, c => c, ct: ct);
+        var userAccount = await this._repo.GetAsync(d => d.Account == request.AccountName);
 
-        if (!userAccounts.Any())
+        if (userAccount == null)
         {
-            return new SignInContect() { UserId = new UserIdVO(Guid.Empty), Status = SignInStatus.UndefinedAccount, IsAdmin = new IsAdminVO(false) };
+            return new SignInContect() { UserId = new(Guid.Empty), Status = SignInStatus.UndefinedAccount, IsAdmin = new(false) };
         }
-        else if (userAccounts.ElementAt(0).PasswordHash.AsPrimitive() == request.password.ToHash(userAccounts.ElementAt(0).Account.AsPrimitive()))
+        else if (userAccount.PasswordHash.Equals(request.InputPassword.ToHash(userAccount.Account.AsPrimitive())))
         {
-            return new SignInContect() { UserId = userAccounts.ElementAt(0).UserId, Status = SignInStatus.Success, IsAdmin = userAccounts.ElementAt(0).IsAdmin };
+            return new SignInContect() { UserId = userAccount.UserId, Status = SignInStatus.Success, IsAdmin = userAccount.IsAdmin };
         }
         else
         {
-            return new SignInContect() { UserId = new UserIdVO(Guid.Empty), Status = SignInStatus.Failure, IsAdmin = new IsAdminVO(false) };
+            return new SignInContect() { UserId = new(Guid.Empty), Status = SignInStatus.Failure, IsAdmin = new(false) };
         }
     }
 }

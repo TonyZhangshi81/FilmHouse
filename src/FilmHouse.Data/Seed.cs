@@ -132,7 +132,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0000318"),
                 Summary = new SummaryVO("　　美国电影导演，生于加利福尼亚州的伯班克。他在加州艺术学院学习时得到了迪士尼的奖学金，这是用来赞助给年轻动画人以帮助他们成就梦想的基金。由此他开始正式成为迪士尼的动画师，之后成为导演。蒂姆·伯顿热衷描绘错位，善于运用象征和隐喻的手法，常以黑色幽默，独特的视角而著称。其代表作有《蝙蝠侠》、《大鱼》、《剪刀手爱德华》等。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -150,7 +150,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0003031"),
                 Summary = new SummaryVO("　　Caroline Thompson (born April 23, 1956) is an American novelist, screenwriter, film director, and producer. She wrote the screenplays for Tim Burton's films Edward Scissorhands, The Nightmare Before Christmas, and Corpse Bride. She co-wrote the story for Edward Scissorhands and recently co-adapted a new stage version of the film with director and choreographer Matthew Bourne. Thompson also adapted the screenplay for the film version of Wicked Lovely, a bestselling fantasy series, in 2011, but the production was put into turnaround."),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -171,7 +171,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0000204"),
                 Summary = new SummaryVO("　　娜塔丽·波特曼，美国著名女演员。因出演吕克·贝松导演的《杀手里昂》一鸣惊人，自此开始了一边读书一边拍戏的生涯。\r\n娜塔莉好像总能与好莱坞大腕们同台演出。接下来1995年她在麦克尔曼的《盗火线》中做了艾尔帕西诺的继女，1996年在《火星人攻击地球》中出演杰克尼科尔森的女儿。同年她又出现在伍迪·艾伦的音乐喜剧《人人都说我爱你》里。娜塔莉在剧中的轻松表演赢得了观众的喜爱。\r\n　　1996年娜塔莉在电影《美丽佳人》中的演出又一次获得好评如潮。在剧中她扮演的女孩叫马蒂，那可是个颇有心计的早熟女孩，一心一意想把心上人从他的未婚妻手中夺走。评论家对娜塔莉在剧中的演技评价甚高，有一点绝不可否认：她是整部剧中最出色的亮点。\r\n　　1997年娜塔莉作出一个惊人的决定：她竟然推掉《洛丽塔》和《罗密欧与朱莉叶》两部巨片，心甘情愿地登上舞台出演《安妮·弗兰克的日记》。这个举动曾让众人大惑不解，但是从《安妮》一剧每次结束后长达近一个小时的谢幕中，我们就明白她演的有多么出色。娜塔莉在舞台演了整整1年，直到1998年才离开《安妮》剧组。\r\n　　世纪末娜塔莉出演了她最为广泛议论的角色——在风靡全球的乔治卢卡斯的《星球大战前传：幽灵的威胁》中饰演高贵而美丽的阿米达拉女王。尽管毁誉皆有，这部影片创下了全球巨额票房却是一个不争的事实。而娜塔莉的美丽形象也如同当年的赫本世人皆知。\r\n　　从最初站在镁光灯下到今天，昔日的女孩如今已长大，纯真依旧，但是却多了份成熟女人的自信与风情。娜塔莉正用自己的实际行动向世界证明——她是好莱坞新一代演员中最具实力，最有前途的女星之一。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -191,7 +191,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0000136"),
                 Summary = new SummaryVO("　　约翰尼·德普，1963年6月出生于美国肯塔基州的一个中产家庭，在佛罗里达州长大。15岁时他的父母离异，这让他一度成为不良少年并染上毒瘾。在舅父的唱诗班他迷恋上了音乐，还曾经自组摇滚乐队。在1983年，为了成为摇滚歌手，他前往洛杉矶发展。同年，他与他的第一任妻子，化妆师Lori Anne Allison结婚，并通过她认识了尼古拉斯·凯奇。正是在凯奇的大力引荐下，约翰尼·德普开始踏入影视圈，走上星路。\r\n　　小时候他不喜欢念书，经常一个人关在房间里苦练吉他，高中辍学后，他前往洛杉矶寻求发展，希望成为摇滚歌星。但阴错阳差，一次偶然试镜却让他与表演结了缘。他领衔主演的电视剧《龙虎少年队》播出后，迅速成为美国青少年的偶像。1984年，约翰尼·德普进入电影圈，在恐怖片《猛鬼街》中饰演角色，随后又在鬼才导演蒂姆·波顿的《剪刀手爱德华》中扮演主角，并凭借此片首次获得金球奖提名。拍摄期间，他与片中扮演女主角的维诺娜·赖德陷入热恋并订了婚，但这场婚约仅维持了三年便宣告破裂。1994年，他与鬼才导演蒂姆·波顿二次合作了另类黑白片《艾德伍德》，他凭借精湛绝伦的演出第三次荣获金球奖最佳男主角奖提名。此后，德普比波顿的合作一直持续至今。但在此期间，德普也出演了一系列脍炙人口的影片、塑造了很多令人津津乐道的角色，其中以《加勒比海盗》系列中的“杰克船长”最为著名。\r\n　　除了演戏，约翰尼·德普在导演方面也显现出了才华。他于1997年自编自导自演了《勇气》(The Brave)一片，有大牌明星马龙·白兰度加盟提携，影片夺得了多项奖项，1997年的坎城影展并将它列入竞赛片,让他在好莱坞出尽了风头。不仅如此，2009年德普又将小说《朗姆酒日记》搬上了银幕，自导自演。\r\n　　德普除了别具特色的演技之外，引人注意的还有其恋爱史。与他谈过恋爱的女星名单可列出一长串，从薇诺娜·赖德到雪琳芬·珍妮佛葛蕾，再到骨感名模凯特·摩丝。性格刚烈的约翰尼·德普曾因与凯特·摩丝发生争吵，愤而捣毁了纽约一个每晚两千美元的饭店客房，并因此被捕入狱。1997年，约翰尼·德普爱上了法国女演员兼歌手凡妮莎·帕拉迪丝，2年后凡妮莎为他生下了女儿，取名百合玫瑰旋律德普(Lily-Rose Melody Depp)。此后，曾以颓废形象定格银幕的约翰尼·德普开始以慈父形象出现在各类报刊杂志，推着婴儿车，拿着尿布，经常出入各种社交派对，这与他以往的形象可谓天壤之别。\r\n　　自从20世纪80年代处就一直有纹身，在他身上共有12块纹身。他身上的纹身包括在他右前臂上纹的 他儿子的名字、在他左胸心脏位置文的他女儿的名字、在他右前臂纹的一个本土美国人的轮廓，他以次表达他对切罗基血统的敬意。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -212,7 +212,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0000213"),
                 Summary = new SummaryVO("　　薇诺娜·瑞德，美国女演员，曾在美国戏剧学院修演艺课。1985年，瑞德寄出了一个试演录像带，希望能在电影《Desert Blom》里串上一角，但是不获录用。尽管如此，一位叫戴维•塞尔哲的作家和导演对她印象深刻，并让她在《美国小子》里饰演主角的朋友。之后将姓氏改为“瑞德”，做为她在片尾工作人员名单出现的名字。1987年，薇诺娜出演了影片《少女离家时》，被洛杉矶时报评为“一个值得注意的处女作”。1988年在影片《阴间大法师》中饰演了一个穿着歌德式服装的颓丧少女，获得了绝大多数的正面评价。\r\n　　1989年，薇诺娜在黑色喜剧，《希德姐妹帮》中亮相。薇诺娜的经理人曾恳求她放弃演出，理由是此剧会“糟蹋了她的前途”。这部影片初次上映时在票房上遭遇挫折，但录像带在发行后却取得高销售量和出租量。尽管大家对影片中出现争议性的少年暴力事件反应冷淡，但薇诺娜的表现还是可圈可点。《华盛顿邮报》此评道“好莱坞最受曙目的天真无邪的少女……瑞德……让我们爱上她的少年凶犯角色：一个机灵,有趣， 带有一丝Bonnie Parker（美国二十世纪初声名狼藉的女罪犯）影子的女孩子。她是续《Gregory's Girl》内纯洁无辜的少女之后最可爱，最精选的年轻角色”。那年之后，她主演了《大火球》里Jerry Lee Lewis的十三岁新娘。\r\n　　1990年，薇诺娜在三部片子中演出，第一部是和她后来的男友，约翰尼·德普一起主演的《剪刀手爱德华》。之后，她去了意大利罗马拍弗朗西斯•科波拉的《教父III》。但她以“完全不能起床”为由辞演了此片，生病让瑞德取消了这计划。 薇诺娜的下一个角色出现在《怒海娇娃》（1990年）。薇诺娜凭片中Charlotte Flax一角，获得了金球奖最佳女配角提名。\r\n　　在演过多部少女片后，1991年接演吉姆·贾木许的《地球之夜》正式迈入成熟角色，而次年大导演科波拉的《惊情四百年》更将她推上票房明星的地位，自此成为好莱坞新一代的接班女星之一。\r\n　　长相甜美的赖德，一双水汪汪的大眼睛不知迷死多少影迷，帅哥约翰尼·德普、才子马特·达蒙都曾是她的裙下之臣。\r\n　　虽然被上天无限眷顾，现实中的薇诺娜却相当反叛，甚至因为盗窃而引起轩然大波，也因此严重影响了她近年在影坛的发展。这几年她重整旗鼓，以全新的心态和形象开展事业。2010年与波曼一起出演的影片《黑天鹅》，虽然在片中只是扮演配角，但薇诺娜的表现让喜爱她的影迷没有失望。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -231,7 +231,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0001848"),
                 Summary = new SummaryVO("　　1948年生人。原来的志向是当芭蕾舞演员。后来80年跑去演电影，在《礼尚往来 It's My Turn》里打酱油。再后来又演了《追梦人生 Independence Day》、《浑身是劲 Footloose》、《坠入情网 Falling in Love》，一直到85年伍迪艾伦的《 The Purple Rose of Cairo开罗紫玫瑰》里一个大萧条时期的妓女角色，给人留下了深刻印象。伍迪艾伦第二年的电影《汉娜姐妹 Hannah and Her Sisters》又邀请她来演女配角，这次终于拿到了奥斯卡最佳女配角奖并且获得了金球奖提名。\r\n出名之后又拍了《粗野少年族 The Lost Boys》、伍迪艾伦的《情怀九月天 September》、《灯红酒绿 Bright Lights, Big City》等片，其中87年伍迪艾伦的《无线电时代 Radio Days》让她拿到了BAFTA奖提名。\r\n89年的《温馨家族 Parenthood》再度让她提名奥斯卡最佳女配角奖并且提名金球奖、提名美国喜剧奖。随后名导蒂姆波顿又来找他演了《剪刀手爱德华 Edward Scissorhands》的peg夫人，这一角色让他提名土星奖最佳女配角奖。\r\n随后，朱迪福斯特导演的《锦绣童年 Little Man Tate》、迈克尔里奇导演的《条子与妙家庭 Cops and Robbersons》和《球探 The Scout》都有她的角色，不过还是伍迪艾伦的作品最适合她呀！94年的电影《Bullets Over Broadway子弹横飞百老汇》让他第二次拿到了奥斯卡最佳女配角奖，也终于获得了金球奖，获得了美国喜剧奖，获得了独立精神奖，获得了屏幕演员工会奖的单人奖项，并且赢得了好几个影评人协会的奖项。96年客串了电视剧《通往埃文利之路Road to Avonlea》拿到了艾美奖最佳客串女演员奖，同年的电影《鸟笼 The Birdcage》让她第二次拿到了美国喜剧奖，又拿到了屏幕演员工会奖的一个集体奖项。\r\n98年又演了《马语者 The Horse Whisperer》和《超异能快感 Practical Magic》，后者获得了美国喜剧奖提名。99年《平凡的诺亚 The Simple Life of Noah Dearborn》又获艾美奖迷你剧/电视电影最佳女配角提名。\r\n00年左右基本都在电视行业，00年拍了魔幻题材迷你剧《第十王朝 The 10th Kingdom》再里面演Evil Queen；又去《法律与秩序》主剧演了四十八集的D.A. Nora Lewin，中间抽空演了西恩潘的《我是山姆 I Am Sam》。随后虽然演了几部大明星坐镇的电影《圣徒指南 A Guide to Recognizing Your Saints》《亲亲老爸 Dan in Real Life》等，但是除了04年的《暗水船灯 The Blackwater Lightship》拿到了金卫星奖以外，这6年基本沉寂了下来。\r\n直到08年《纽约提喻法 Synecdoche, New York》再获独立精神奖的集体奖项，而由她在电视剧《扪心问诊In Treatment》演的Dr. Gina Toll，08年获得艾美剧情类最佳女配角奖，09年获得艾美奖提名和金球奖提名卫星奖提名，到了2010年的第三季她不再出演，这部剧也就三季剧终了。\r\n她继续奋斗在电影行业，2010年和妮可基德曼演的《兔子洞 Rabbit Hole》又拿了卫星奖提名，11年演了喜剧《观鸟大年 The Big Year》、去年演了《蒂莫西的奇异生活 The Odd Life of Timothy Green》。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -251,7 +251,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0004716"),
                 Summary = new SummaryVO("　　1969年2月出生在纽约的布鲁克林，从小就喜欢古典电影，少年时期开始喜欢涂鸦。后来他进入哈佛大学学习电影，在学校的作品还屡次获奖。1996年2月，他开始筹备自己的长片处女作《圆周率》，两年后面世的这部电影一鸣惊人，先是获得圣丹斯电影节的导演奖，翌年又摘得独立精神奖的最佳编剧处女作奖。2000年，他再次自编自导了《梦之安魂曲》，也赢得了不错的反响。2005年，他还入围“最需要关注的好莱坞100人”。 导演作品2006年，阿罗诺夫斯基推出自己第三部导演作品《珍爱泉源》，这部影片的完成可谓历尽艰难：2002年初，阿罗诺夫斯基曾希望由布拉德·皮特和凯特·布兰切特主演本片，计划的投资预算也高达7500万美元。后来由于布拉德·皮特同阿罗诺夫斯基产生意见分歧而决定放弃，影片被搁置下来，而2004年影片开拍时，预算已经降到3500万，主演也变成了在当时比较“便宜”的休·杰克曼和蕾切尔·薇兹。不过对于拍惯独立影片的阿罗诺夫斯基来说，资金问题是难不倒他的，因为拍摄《圆周率》只用了6万，《梦之安魂曲》也不过400万。\r\n　　2008年，达伦的第四部作品《摔角王》捧得威尼斯金狮大奖。\r\n　　阿罗诺夫斯基的前妻就是主演了《珍爱泉源》的蕾切尔·薇兹，两人2006年5月31日成为父母，他们的儿子叫Henry Chance。不过两人已于2010年底分手。\r\n　　现已与福克斯公司签约两年,从《金刚狼2》起深度合作,令人期待.3月18日二十世纪福斯公司与达伦·阿罗诺夫斯基共同发表声明，宣布他将退出《金刚狼2》剧组，放弃执导该片。本片原计划这个月开机，2012年上映。\r\n　　达伦将担任2011年威尼斯国际电影节主竞赛单元评委会主席。达伦的五部长片中，三部的首映都放在了威尼斯电影节上，包括《珍爱源泉》、《摔角王》、《黑天鹅》。《黑天鹅》曾作为2010年威尼斯电影节开幕影片。\r\n　　达伦的新作《诺亚》被称作是他的野心之作，前不久刚刚在法国发布了他与漫画家Nico Henrichon合作的该片的迷你漫画第一辑。本片也将是达伦迄今最大规模的制作，据称投资将达到1.3亿元。对于这个宗教意味很重的故事，达伦并不想过于强调其宗教色彩：“我不认为这是个非常宗教的故事。我觉得这是一个伟大的寓言，来自各种宗教和精神实践。我认为这是一个从来没在银幕上表现过的伟大故事。”\r\n　　在《圣经》中，上帝要用洪水毁灭地上的人类，他选中了诺亚一家作为新人类的种子。诺亚一边赶造方舟，一边劝告世人悔改其行为。诺亚花了整整120年时间终于造成了一只庞大的方舟，并听从上帝的话，把全家八口搬了进去，各种飞禽走兽也一对对赶来，有条不紊地进入方舟。7天后，洪水自天而降，一连下了40个昼夜，人群和动植物全部陷入没顶之灾。几十天后，鸽子衔来了橄榄枝，表示大水已经消退，方舟上的人类和万物重新开始在地上繁衍。\r\n　　《诺亚》有望2012年春天开机，2014年上映。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -271,7 +271,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0169806"),
                 Summary = new SummaryVO("塔伊加·维迪提（有时也采用科恩这个姓氏）是蒂-法脑-阿-阿帕努伊部落后裔，来自东海岸的劳库库利地区。他涉足艺术界多年，是一名视觉艺术家、演员、编剧和导演。泰卡的第一部短片《两车一夜》曾入围2005学院奖。他的另一部短片《塔玛图》是关于二战中在意大利战斗的一群毛利士兵的故事，赢得了许多国际奖，并使其有资格入围奥斯卡奖。他的首部故事片《鹰对鲨》以宣传片的形式出售给米拉马克斯并于2007年在国际上发行。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -284,7 +284,7 @@ public class Seed
                 DoubanID = new DoubanIDVO("1313056"),
                 IMDb = new IMDbVO("nm0374560"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -298,7 +298,7 @@ public class Seed
                 DoubanID = new DoubanIDVO("1418806"),
                 IMDb = new IMDbVO("nm3066492"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -314,7 +314,7 @@ public class Seed
                 IMDb = new IMDbVO("nm0498278"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
                 Summary = new SummaryVO("　　2008，两部美国大片——《钢铁侠》和《无敌浩克》在全世界刮起一股超级英雄狂潮，分别席卷全球票房达5.67亿美元和2.28亿美元。这两部大片的横空出世再次勾起了人们对漫画历史上那些超级英雄的记忆。蜘蛛侠、神奇四侠、X战警、夜魔侠……当然也包括钢铁侠和绿巨人，这一个个耳熟能详的名字都与一个人息息相关。他就是被尊为“漫画之王”、“蜘蛛侠之父”的斯坦·李。\r\n　　90岁的斯坦·李一手将惊奇漫画公司打造为全世界最为成功的动漫王国，神奇漫画总共创造了5000多个漫画角色，90%以上知名的角色都由斯坦·李参与创造。半个多世纪以来，美国年轻人都是读着斯坦·李的作品长大的，其漫画作品在全世界的销售量超过了20亿册，蜘蛛侠更是成为全世界最受欢迎的超级英雄。在美国，“神奇先生”斯坦·李已不仅仅是一个名人，而成为一个文化符号。如今，已届暮年的斯坦·李仍然“壮心不已”，前不久，他宣布将与迪士尼联手，推出三部新电影。"),
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -328,7 +328,7 @@ public class Seed
                 IMDb = new IMDbVO("nm3883355"),
                 Summary = new SummaryVO("漫画家、漫威编剧。"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -341,7 +341,7 @@ public class Seed
                 DoubanID = new DoubanIDVO("1313056"),
                 IMDb = new IMDbVO("nm2114730"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -354,7 +354,7 @@ public class Seed
                 DoubanID = new DoubanIDVO("1313057"),
                 IMDb = new IMDbVO("nm0572352"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -367,7 +367,7 @@ public class Seed
                 DoubanID = new DoubanIDVO("1003481"),
                 IMDb = new IMDbVO("nm0005109"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
 
@@ -385,7 +385,7 @@ public class Seed
                 DoubanID = new DoubanIDVO("1021959"),
                 IMDb = new IMDbVO("nm1165110"),
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode0,
-                UserId = new UserIdVO(Guid.NewGuid()),
+                UserId = new(Guid.NewGuid()),
                 CreatedOn = dateTime
             },
        };
@@ -399,9 +399,9 @@ public class Seed
     private static IEnumerable<UserAccountEntity> GetUserAccounts(RequestIdVO uuid, CreatedOnVO dateTime) =>
        new List<UserAccountEntity>
        {
-            new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("tonyzhangshi"), PasswordHash = new PasswordHashVO(new PasswordHashVO("Tony19811031").ToHash("tonyzhangshi")), EmailAddress = new EmailAddressVO("tonyzhangshi@163.com"), Avatar = new UserAvatarVO("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(false), LastLoginIp = new LastLoginIpVO("201.182.1.23"), CreatedOn = dateTime },
-            new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("test01"), PasswordHash = new PasswordHashVO(new PasswordHashVO("111111").ToHash("test01")), EmailAddress = new EmailAddressVO("test01@163.com"), Avatar = new UserAvatarVO("User_1.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(false), CreatedOn = dateTime },
-            new(){ RequestId = uuid, UserId = new UserIdVO(Guid.NewGuid()), Account = new AccountNameVO("test02"), PasswordHash = new PasswordHashVO(new PasswordHashVO("222222").ToHash("test02")), EmailAddress = new EmailAddressVO("test02@163.com"), Avatar = new UserAvatarVO("User_1.jpg"), Cover = new CoverVO("Cover_1.jpg"), IsAdmin = new IsAdminVO(true), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("tonyzhangshi"), PasswordHash = new(new PasswordHashVO("Tony19811031").ToHash("tonyzhangshi")), EmailAddress = new("tonyzhangshi@163.com"), Avatar = new("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), LastLoginIp = new("201.182.1.23"), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test01"), PasswordHash = new(new PasswordHashVO("111111").ToHash("test01")), EmailAddress = new("test01@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test02"), PasswordHash = new(new PasswordHashVO("222222").ToHash("test02")), EmailAddress = new("test02@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(true), CreatedOn = dateTime },
        };
 
     private static string GetWritersId(FilmHouseDbContext dbContext, string names)
