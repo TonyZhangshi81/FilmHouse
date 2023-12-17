@@ -48,7 +48,7 @@ namespace FilmHouse.Web.Controllers
             var model = new HomeViewModel();
             model.Discovery.MaxPage = maxPage;
 
-            var command = new DisplayCommand(pageIndex, maxPage, User.Identity);
+            var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage, User.Identity);
             var display = await _mediator.Send(command);
 
             if (display.Status != 0)
@@ -77,19 +77,6 @@ namespace FilmHouse.Web.Controllers
             model.Discovery.Movie.IsFavor = display.IsFavor;
 
             return View(model);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("[controller]/grantcookie")]
-        public bool GrantCookie()
-        {
-            var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
-            consentFeature.GrantConsent();
-            return true;
         }
     }
 }

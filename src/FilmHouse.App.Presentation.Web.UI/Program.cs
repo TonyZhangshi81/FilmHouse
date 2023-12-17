@@ -24,6 +24,7 @@ using NLog.Web;
 using Spectre.Console;
 using Encoder = FilmHouse.Web.Configuration.Encoder;
 using FilmHouse.Core.Presentation.Web.Auth;
+using System.Security.Principal;
 
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

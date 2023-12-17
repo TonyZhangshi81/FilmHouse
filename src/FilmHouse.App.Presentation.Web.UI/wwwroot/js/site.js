@@ -7,15 +7,13 @@
   var $button = $("#cookieConsent button[data-cookie-string]");
   $button.click(function () { dataCookieString(this); });
 
-
   //Barba.Pjax.start();
 });
-
 
 function dataCookieString(event) {
   //document.cookie = event.dataset.cookieString;
 
-  var pUrl = "/Home/grantcookie";
+  var pUrl = "/Account/grantcookie";
 
   $.ajax({
     type: "GET",

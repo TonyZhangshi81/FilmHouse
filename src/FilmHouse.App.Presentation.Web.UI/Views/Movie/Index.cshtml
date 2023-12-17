@@ -1,0 +1,163 @@
+﻿@using FilmHouse.Commands;
+@using FilmHouse.Core.Services.Configuration;
+@using Microsoft.AspNetCore.Http.Extensions;
+@using Microsoft.AspNetCore.Http;
+
+@model FilmHouse.Web.Models.MovieViewModel
+
+@{
+    ViewBag.Title = Model.Movie.Title;
+    ViewBag.PageType = 2;
+
+    var fullUrl = Context.Request.GetDisplayUrl();
+}
+
+@section Links {
+    <link rel="stylesheet" asp-append-version="true" href="~/css/movie.css" />
+}
+
+@section Scripts {
+    <script src="~/lib/bundles/jquery.smooth-scroll.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/js/Home/Index.js" asp-append-version="true" defer="defer"></script>
+}
+
+<div class="modal fade" id="modalCmt" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("Create", "Comment", routeValues: new { movie = Model.Movie.MovieId, returnurl = fullUrl }, method: FormMethod.Post, true, htmlAttributes: new { @class = "form-horizontal", role = "form" }))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        添加内容
+                    </h4>
+                </div>
+                <div class="modal-body" style="padding:15px 50px;">
+                    <label class="control-label" for="content" style="margin-top:0px;">简短评论</label>
+                    <textarea name="content" id="content" class="form-control" placeholder="请输入评论内容" style="margin-top: 10px; height:99px;"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <input type="submit" class="btn btn-primary" value="提交">
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="panel panel-default" style="margin-top:167px;">
+    <div style="float:left; display:inline-block; margin-top:-167px; margin-left:25px; margin-right:25px; padding:3px; background-color:white; box-shadow:0px 0px 10px #999999;">
+        <img src="~/Content/Movie/@Model.Movie.Avatar" class="img-responsive" title="@Model.Movie.Title" style="width:170px; height:240px;" />
+    </div>
+    <div>
+        <div class="font-larger" style="margin-top:10px; margin-bottom:10px;">
+            <strong>@Model.Movie.Title&nbsp;&nbsp;&nbsp;&nbsp;@Model.Movie.TitleEn</strong><small style="display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;(@Model.Movie.Year)</small>
+        </div>
+        <div style="margin-bottom:10px;">
+            @if (!Model.Movie.IsPlan)
+            {
+                <a class="btn btn-mark" title="想看" href="/Mark/Create?target=@Model.Movie.MovieId&type=1&returnurl=@fullUrl"><span class="fa fa-clock-o" aria-hidden="true"></span> 想看</a>
+            }
+            else
+            {
+                <a class="btn btn-mark-inverse" title="取消想看" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=1&returnurl=@fullUrl"><span class="fa fa-clock-o" aria-hidden="true"></span> 想看</a>
+            }
+            @if (!Model.Movie.IsFinish)
+            {
+                <a class="btn btn-mark" title="看过" href="/Mark/Create?target=@Model.Movie.MovieId&type=2&returnurl=@fullUrl"><span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过</a>
+            }
+            else
+            {
+                <a class="btn btn-mark-inverse" title="取消看过" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=2&returnurl=@fullUrl"><span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过</a>
+            }
+            @if (!Model.Movie.IsFavor)
+            {
+                <a class="btn btn-mark" title="喜欢" href="/Mark/Create?target=@Model.Movie.MovieId&type=3&returnurl=@fullUrl"><span class="fa fa-heart-o" aria-hidden="true"></span> 喜欢</a>
+            }
+            else
+            {
+                <a class="btn btn-mark-inverse" title="取消喜欢" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=3&returnurl=@fullUrl" aria-hidden="true"><span class="fa fa-heart-o"></span> 喜欢</a>
+            }
+            @if (Model.Movie.IsCreate)
+            {
+                <a class="btn btn-mark tipup" href="/Movie/Edit?id=@Model.Movie.MovieId" title="修改 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                if (Model.Movie.DoubanID != null && !string.IsNullOrEmpty(Model.Movie.DoubanID.AsPrimitive()))
+                {
+                    <a class="btn btn-mark tipup" href="/Movie/Refresh?id=@Model.Movie.MovieId" title="更新 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                }
+                <a class="btn btn-mark tipup" href="/Movie/Delete?id=@Model.Movie.MovieId" title="删除 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+            }
+        </div>
+    </div>
+
+    <div class="panel-footer text-center no-padding" style="background-color:transparent; padding:10px;">
+        <div class="list-tab">
+            <a href="#details" id="link-to-details">&nbsp;&nbsp;详情&nbsp;&nbsp;</a>
+            <a href="#summary" id="link-to-summary">&nbsp;&nbsp;简介&nbsp;&nbsp;</a>
+            <a href="#resources" id="link-to-resources">&nbsp;&nbsp;资源&nbsp;&nbsp;</a>
+            <a href="#comments" id="link-to-comments">&nbsp;&nbsp;评论&nbsp;&nbsp;</a>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-9 no-padding">
+    @*详情*@
+    <div class="panel panel-default" id="details">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>电影详情</strong>&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body">
+            <ul style="list-style:none; padding:0px; margin:0px;">
+                <li>
+                    <span style="color:#808080;">更多电影名:</span>
+                    @Html.DisplayFor(model => model.Movie.Aka)
+                </li>
+                <li>
+                    <!-- 导演 -->
+                    @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Movie.Directors, type = "Directors" })
+                </li>
+                <li>
+                    <!-- 编剧 -->
+                    @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Movie.Writers, type = "Writers" })
+                </li>
+                <li>
+                    <!-- 演员 -->
+                    @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Movie.Casts, type = "Casts" })
+                </li>
+                <li>
+                    <span style="color:#808080;">上映日期:</span>
+                    @Html.DisplayFor(model => model.Movie.Pubdates)
+                </li>
+                <li>
+                    <span style="color:#808080;">片长:</span>
+                    @Html.DisplayFor(model => model.Movie.Durations)
+                </li>
+                <li>
+                    <span style="color:#808080;">类型:</span>
+                    @Html.DisplayFor(model => model.Movie.Genres)
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>

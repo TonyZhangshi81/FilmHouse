@@ -52,52 +52,9 @@
                 <a class="navbar-brand" href="/" style="font-family:'Weston Free'; " title="@subTitle">@name</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (ViewBag.NavType == 1)
-                    {
-                        <li class="active">@Html.ActionLink("首页", "Index", "Home")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("首页", "Index", "Home")</li>
-                    }
-                    @if (ViewBag.NavType == 2)
-                    {
-                        <li class="active">@Html.ActionLink("选电影", "Index", "Search")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("选电影", "Index", "Search")</li>
-                    }
-                    @if (ViewBag.NavType == 3)
-                    {
-                        <li class="active">@Html.ActionLink("求资源", "Index", "Ask")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("求资源", "Index", "Ask")</li>
-                    }
-                    @if (ViewBag.NavType == 4)
-                    {
-                        <li class="active">@Html.ActionLink("专辑", "Index", "Album")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("专辑", "Index", "Album")</li>
-                    }
-                    @if (ViewBag.IsAuthenticated == 1)
-                    {
-                        if (ViewBag.NavType == 5)
-                        {
-                            <li class="active">@Html.ActionLink("我的主页", "Index", "Mine")</li>
-                        }
-                        else
-                        {
-                            <li>@Html.ActionLink("我的主页", "Index", "Mine")</li>
-                        }
-                    }
-                    <li role="separator" class="divider"></li>
-                </ul>
+                <cache expires-after="@TimeSpan.FromMinutes(30)">
+                    @await Component.InvokeAsync("MenuLink", new { navType = ViewBag.NavType })
+                </cache>
                 <partial name="_LoginPartial" />
             </div>
         </div>
@@ -107,18 +64,9 @@
     {
         <div style="background-color:#3B9047; padding:5px; margin-bottom:20px;" class="hidden-xs">
             <div class="container">
-                <div class="row no-margin no-padding">
-                    <a class="link-sub">热门分类：</a>
-                    <a class="link-sub" href="/Search/Index?country=10" target="_self">大陆</a>
-                    <a class="link-sub" href="/Search/Index?country=11" target="_self">香港</a>
-                    <a class="link-sub" href="/Search/Index?country=12" target="_self">美国</a>
-                    <a class="link-sub" href="/Search/Index?country=14" target="_self">日本</a>
-                    <a class="link-sub" href="/Search/Index?genre=14" target="_self">动作</a>
-                    <a class="link-sub" href="/Search/Index?genre=12" target="_self">喜剧</a>
-                    <a class="link-sub" href="/Search/Index?genre=15" target="_self">科幻</a>
-                    <a class="link-sub" href="/Search/Index?genre=22" target="_self">悬疑</a>
-                    <a class="link-sub" href="/Search/Index?genre=13" target="_self">爱情</a>
-                </div>
+                <cache expires-after="@TimeSpan.FromMinutes(30)">
+                    @await Component.InvokeAsync("SubMenuLink")
+                </cache>
             </div>
         </div>
     }
@@ -143,11 +91,11 @@
     </div>
 
     <footer class="site-footer bg-doubangreen" role="contentinfo">
-        <div style="height:27px; background-color:#DCDCDC;"></div> 
+        <div style="height:27px; background-color:#DCDCDC;"></div>
         <div class="site-info" style="padding:40px 0px 30px 0px; margin:0px;">
             <p style="text-align:center; color:#F2F2F2;">
                 &copy; 2023 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="/Home/Index" style="font-family:'Weston Free'; color:inherit; text-decoration:underline;" title="@subTitle">@subTitle</a> - 
+                <a href="/Home/Index" style="font-family:'Weston Free'; color:inherit; text-decoration:underline;" title="@subTitle">@subTitle</a> -
                 @Html.ActionLink("Learn More", "Index", "Privacy") .
             </p>
         </div>

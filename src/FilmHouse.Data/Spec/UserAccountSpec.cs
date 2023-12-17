@@ -13,6 +13,4 @@ public sealed class UserAccountSpec : BaseSpecification<UserAccountEntity>
     {
     }
 
-
-
 }

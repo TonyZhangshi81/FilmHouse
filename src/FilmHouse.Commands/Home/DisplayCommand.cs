@@ -1,13 +1,11 @@
-﻿using FilmHouse.Core.ValueObjects;
+﻿using System.Security.Claims;
+using System.Security.Principal;
+using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
-using System.Linq;
-using MediatR;
 using FilmHouse.Data.Spec;
-using System;
-using System.Security.Principal;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using FilmHouse.Core.DependencyInjection;
+using MediatR;
 
 namespace FilmHouse.Commands.Home;
 
@@ -61,7 +59,7 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         var mostMoviesSpec = new MovieSpec(20, 1, ReviewStatusVO.Codes.ReviewStatusCode2);
         var mostMovies = await this._movie.SelectAsync(mostMoviesSpec, c => c, ct);
 
-        var markTargetId = new MarkTargetVO(discoveryQuery[0].MovieId.AsPrimitive());
+        var movieId = discoveryQuery[0].MovieId;
 
         var isPlan = false;
         var isFinish = false;
@@ -70,16 +68,16 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         // 登陆后的用户可以设置对影片的偏好
         if (request.user.IsAuthenticated)
         {
-            var accountSpec = new UserAccountSpec(new AccountNameVO(request.user.Name));
             // 取得登录用户的ID
-            var userId = await this._userAccount.FirstOrDefaultAsync(accountSpec, c => c.UserId);
+            var claimsIdentity = request.user as ClaimsIdentity;
+            var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
 
             // 想看
-            isPlan = await MarkCheckAsync(markTargetId, userId, MarkTypeVO.Codes.MarkTypeCode1, ct: ct);
+            isPlan = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode1, ct: ct);
             // 看过
-            isFinish = await MarkCheckAsync(markTargetId, userId, MarkTypeVO.Codes.MarkTypeCode2, ct: ct);
+            isFinish = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode2, ct: ct);
             // 喜欢
-            isFavor = await MarkCheckAsync(markTargetId, userId, MarkTypeVO.Codes.MarkTypeCode3, ct: ct);
+            isFavor = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode3, ct: ct);
         }
 
         return new DisplayContect()
@@ -130,13 +128,13 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
     /// <summary>
     /// 检查是否已经标记过
     /// </summary>
-    /// <param name="tagret">标记对象id</param>
+    /// <param name="movieId">标记对象id</param>
     /// <param name="userId">用户id</param>
     /// <param name="type">标记类型</param>
     /// <returns>标记过true，否则false</returns>
-    private async Task<bool> MarkCheckAsync(MarkTargetVO target, UserIdVO userId, MarkTypeVO type, CancellationToken ct)
+    private async Task<bool> MarkCheckAsync(MovieIdVO movieId, UserIdVO userId, MarkTypeVO type, CancellationToken ct)
     {
-        var markSpec = new MarkSpec(type, userId, target);
+        var markSpec = new MarkSpec(type, userId, target: new(movieId.AsPrimitive()));
         var suit = await this._mark.AnyAsync(markSpec, ct: ct);
         return suit;
     }

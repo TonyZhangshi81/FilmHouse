@@ -12,7 +12,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 影集介绍（文本格式长度可变）的值对象类。
+    /// 评论内容（文本格式长度可变）的值对象类。
     /// </summary>
     [JsonConverter(typeof(SummaryJsonConverter))]
     [ValueConverter(typeof(SummaryValueConverter), typeof(SummaryArrayValueConverter))]
