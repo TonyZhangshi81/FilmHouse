@@ -1,43 +1,33 @@
-﻿using FilmHouse.Core.Utils;
+﻿using FilmHouse.Commands.Test.Utils;
+using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data;
 using FilmHouse.Data.Entities;
-using Xunit;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
+using NUnit.Framework;
 
 namespace FilmHouse.Commands.Test.Account;
 
-public class ValidateLoginCommandHandlerTest
+[TestFixture]
+public class ValidateLoginCommandHandlerTest : TransactionalTestBase
 {
-    private readonly FilmHouseDbContext dbContext;
-
-    public ValidateLoginCommandHandlerTest()
+    [Test]
+    public async Task MyTest1()
     {
-        this.dbContext = new InMemoryDatabaseFactory().CreateContext();
-
         var uuid = new RequestIdVO(Guid.NewGuid());
         var sysDate = new CreatedOnVO(System.DateTime.Now);
-        var userAccount = new UserAccountEntity();
-        userAccount.RequestId = uuid;
-        userAccount.UserId = new(Guid.NewGuid());
-        userAccount.Account = new("tonyzhangshi");
-        userAccount.PasswordHash = new(new PasswordHashVO("Tony19811031").ToHash("tonyzhangshi"));
-        userAccount.EmailAddress = new("tonyzhangshi@163.com");
-        userAccount.Avatar = new("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg");
-        userAccount.Cover = new("Cover_1.jpg");
-        userAccount.IsAdmin = new(false);
-        userAccount.LastLoginIp = new("201.182.1.23");
-        userAccount.CreatedOn = sysDate;
 
-        //this.dbContext.UserAccounts.Add(userAccount);
-        //this.dbContext.SaveChanges();
+        await this.DbContext.UserAccounts.AddRangeAsync(this.GetUserAccounts(uuid, sysDate));
+        //this._dbContext.SaveChanges();
 
-        //Assert.Equal(3, this.dbContext.UserAccounts.Count());
+        Assert.That(this.DbContext.UserAccounts.Count(), Is.EqualTo(3));
+
     }
-
-    [Fact]
-    public void MyTest()
+    [Test]
+    public void MyTest2()
     {
-        //Assert.Equal(3, this.dbContext.UserAccounts.Count());
+        Assert.That(this.DbContext.UserAccounts.Count(), Is.EqualTo(3));
+
     }
 
 

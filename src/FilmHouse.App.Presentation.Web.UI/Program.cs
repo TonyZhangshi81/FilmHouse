@@ -121,14 +121,12 @@ void ConfigureServices(IServiceCollection services)
         options.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All);
     });
 
+    // 缓存管理
     // https://www.cnblogs.com/chenxi001/p/13363786.html
     services.AddMemoryCache();
 
     // https://www.cnblogs.com/chenxi001/p/13308860.html
     services.AddResponseCaching();
-
-    // 缓存管理
-    services.AddMemoryCache();
 
     // DI的批量登录设定
     var assemblies = StartupCore.GetAppAssemblies(true);
