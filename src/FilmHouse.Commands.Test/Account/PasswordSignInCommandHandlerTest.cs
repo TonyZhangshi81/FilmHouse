@@ -7,13 +7,10 @@ using NUnit.Framework;
 namespace FilmHouse.Commands.Test.Account;
 
 [TestFixture]
-public class ValidateLoginCommandHandlerTest : TransactionalTestBase
+public class PasswordSignInCommandHandlerTest : TransactionalTestBase
 {
     [Test]
-    [TestCase("tonyzhangshi")]
-    [TestCase("test01")]
-    [TestCase("test02")]
-    public async Task ValidateLogin01(string accountName)
+    public async Task PasswordSignIn01()
     {
         var uuid = new RequestIdVO(Guid.NewGuid());
         var sysDate = new CreatedOnVO(System.DateTime.Now);
@@ -21,16 +18,17 @@ public class ValidateLoginCommandHandlerTest : TransactionalTestBase
         await this.DbContext.UserAccounts.AddRangeAsync(this.GetUserAccounts(uuid, sysDate));
         await this.DbContext.SaveChangesAsync();
 
-        var userId = this.DbContext.UserAccounts.Where(d => d.Account.Equals(new(accountName))).Select(d => d.UserId).First();
+        var login = await this.Mediator.Send(new PasswordSignInCommand(new("tonyzhangshi"), new("Tony19811031")));
 
-        LastLoginIpVO lastLoginIp = new("172.168.6.8");
-        await this.Mediator.Send(new ValidateLoginCommand(userId, lastLoginIp));
+        var userItem = this.DbContext.UserAccounts.Where(d => d.Account.Equals(new("tonyzhangshi"))).Select(d => new { d.UserId, d.IsAdmin }).First();
 
-        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new(accountName)) && d.LastLoginIp.Equals(lastLoginIp)).Any(), Is.EqualTo(true));
+        Assert.That(login.Status, Is.EqualTo(SignInStatus.Success));
+        Assert.That(login.UserId, Is.EqualTo(userItem.UserId));
+        Assert.That(login.IsAdmin, Is.EqualTo(userItem.IsAdmin));
     }
 
     [Test]
-    public async Task ValidateLogin02()
+    public async Task PasswordSignIn02()
     {
         var uuid = new RequestIdVO(Guid.NewGuid());
         var sysDate = new CreatedOnVO(System.DateTime.Now);
@@ -38,10 +36,29 @@ public class ValidateLoginCommandHandlerTest : TransactionalTestBase
         await this.DbContext.UserAccounts.AddRangeAsync(this.GetUserAccounts(uuid, sysDate));
         await this.DbContext.SaveChangesAsync();
 
-        LastLoginIpVO lastLoginIp = new("172.168.6.8");
-        await this.Mediator.Send(new ValidateLoginCommand(new(Guid.NewGuid()), lastLoginIp));
+        var login = await this.Mediator.Send(new PasswordSignInCommand(new("tonyzhangshi01"), new("Tony19811031")));
 
-        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new("tonyzhangshi")) && d.LastLoginIp.Equals(new("201.182.1.23"))).Any(), Is.EqualTo(true));
+        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new("tonyzhangshi01"))).Any(), Is.EqualTo(false));
+        Assert.That(login.Status, Is.EqualTo(SignInStatus.UndefinedAccount));
+        Assert.That(login.UserId, Is.EqualTo(new UserIdVO(Guid.Empty)));
+        Assert.That(login.IsAdmin, Is.EqualTo(new IsAdminVO(false)));
+    }
+
+    [Test]
+    public async Task PasswordSignIn03()
+    {
+        var uuid = new RequestIdVO(Guid.NewGuid());
+        var sysDate = new CreatedOnVO(System.DateTime.Now);
+
+        await this.DbContext.UserAccounts.AddRangeAsync(this.GetUserAccounts(uuid, sysDate));
+        await this.DbContext.SaveChangesAsync();
+
+        var login = await this.Mediator.Send(new PasswordSignInCommand(new("tonyzhangshi"), new("tony19811031")));
+
+        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new("tonyzhangshi"))).Any(), Is.EqualTo(true));
+        Assert.That(login.Status, Is.EqualTo(SignInStatus.Failure));
+        Assert.That(login.UserId, Is.EqualTo(new UserIdVO(Guid.Empty)));
+        Assert.That(login.IsAdmin, Is.EqualTo(new IsAdminVO(false)));
     }
 
     /// <summary>

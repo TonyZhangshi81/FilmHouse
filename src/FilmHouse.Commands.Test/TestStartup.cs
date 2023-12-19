@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using FilmHouse.Commands.Test.Utils;
 using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Data.Infrastructure;
@@ -19,7 +20,7 @@ namespace FilmHouse.Commands.Test
 {
     public class TestStartup
     {
-        public TestStartup(IConfiguration config)
+        public TestStartup()
         {
         }
 

@@ -1,4 +1,5 @@
-﻿using FilmHouse.Core.ValueObjects;
+﻿using FilmHouse.Core.Utils;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using MediatR;
@@ -14,7 +15,7 @@ public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand>
 
     public async Task Handle(DeleteAccountCommand request, CancellationToken ct)
     {
-        var account = await _repo.GetAsync(d => d.Account == request.AccountName && d.PasswordHash == request.InputPassword);
+        var account = await _repo.GetAsync(d => d.Account == request.AccountName && d.PasswordHash == new PasswordHashVO(request.InputPassword.ToHash(request.AccountName.AsPrimitive())));
         if (account != null)
         {
             await _repo.DeleteAsync(account.UserId, ct);
