@@ -1,9 +1,7 @@
-﻿using FilmHouse.Commands.Test.Utils;
+﻿using FilmHouse.Commands.Account;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Data;
 using FilmHouse.Data.Entities;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using NUnit.Framework;
 
 namespace FilmHouse.Commands.Test.Account;
@@ -18,18 +16,30 @@ public class ValidateLoginCommandHandlerTest : TransactionalTestBase
         var sysDate = new CreatedOnVO(System.DateTime.Now);
 
         await this.DbContext.UserAccounts.AddRangeAsync(this.GetUserAccounts(uuid, sysDate));
-        //this._dbContext.SaveChanges();
+        await this.DbContext.SaveChangesAsync();
 
-        Assert.That(this.DbContext.UserAccounts.Count(), Is.EqualTo(3));
+        var userId = this.DbContext.UserAccounts.Where(d => d.Account.Equals(new("tonyzhangshi"))).Select(d => d.UserId).First();
 
+        LastLoginIpVO lastLoginIp = new("172.168.6.8");
+        await this.Mediator.Send(new ValidateLoginCommand(userId, lastLoginIp));
+
+        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new("tonyzhangshi")) && d.LastLoginIp.Equals(lastLoginIp)).Any(), Is.EqualTo(true));
     }
+
     [Test]
-    public void MyTest2()
+    public async Task MyTest2()
     {
-        Assert.That(this.DbContext.UserAccounts.Count(), Is.EqualTo(3));
+        var uuid = new RequestIdVO(Guid.NewGuid());
+        var sysDate = new CreatedOnVO(System.DateTime.Now);
 
+        await this.DbContext.UserAccounts.AddRangeAsync(this.GetUserAccounts(uuid, sysDate));
+        await this.DbContext.SaveChangesAsync();
+
+        LastLoginIpVO lastLoginIp = new("172.168.6.8");
+        await this.Mediator.Send(new ValidateLoginCommand(new(Guid.NewGuid()), lastLoginIp));
+
+        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new("tonyzhangshi")) && d.LastLoginIp.Equals(new("201.182.1.23"))).Any(), Is.EqualTo(true));
     }
-
 
     /// <summary>
     /// 

@@ -27,9 +27,9 @@ public class MovieController : Controller
     /// <exception cref="ArgumentNullException"></exception>
     public MovieController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId)
     {
-        this._mediator = Guard.GetNotNull<IMediator>(mediator, typeof(IMediator).Name);
-        this._settingProvider = Guard.GetNotNull<ISettingProvider>(settingProvider, typeof(ISettingProvider).Name);
-        this._currentRequestId = Guard.GetNotNull<ICurrentRequestId>(currentRequestId, typeof(ICurrentRequestId).Name);
+        this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
+        this._settingProvider = Guard.GetNotNull(settingProvider, nameof(ISettingProvider));
+        this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
     }
 
     #endregion Initizalize

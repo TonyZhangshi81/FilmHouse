@@ -1,13 +1,21 @@
 ﻿using System.ComponentModel;
+using FilmHouse.Core.Services.Codes;
+using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data;
 using FilmHouse.Data.Entities;
+using FilmHouse.Data.Infrastructure;
+using FilmHouse.Data.Infrastructure.Services.Codes;
+using FilmHouse.Data.Infrastructure.Services.Configuration;
 using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
+using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -16,43 +24,19 @@ namespace FilmHouse.Commands.Test
 {
     public partial class TestBase
     {
-        private IServiceScope _serviceScope;
-
-        protected TestServer _testServer;
-        protected FilmHouseDbContext _dbContext;
-
-        [SetUp]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public void SetupBase()
-        {
-
-            //var serviceProvider = this._serviceScope.ServiceProvider;
-
-            /*
-            var configuration = this.ServiceProvider.GetService<IConfiguration>();
-            var dbType = configuration.GetValue<string>("ConnectionStrings:DatabaseType");
-
-            dbContext = dbType.ToLowerInvariant() switch
-            {
-                "mysql" => this.ServiceProvider.GetRequiredService<MySqlFilmHouseDbContext>(),
-                "sqlserver" => this.ServiceProvider.GetRequiredService<SqlServerFilmHouseDbContext>(),
-                "postgresql" => this.ServiceProvider.GetRequiredService<PostgreSqlFilmHouseDbContext>(),
-                _ => throw new ArgumentOutOfRangeException(nameof(dbType))
-            };
-            */
-        }
+        protected TestServer testServer;
 
         [OneTimeSetUp]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public async Task SetUp()
         {
-            this._testServer = new TestServer(new WebHostBuilder().UseStartup<TestStartup>());
-            this._serviceScope = this._testServer.Services.CreateScope();
+            this.testServer = new TestServer(new WebHostBuilder().UseStartup<TestStartup>());
+            _serviceScope = this.testServer.Services.CreateScope();
 
             var configuration = this.ServiceProvider.GetService<IConfiguration>();
             var dbType = configuration.GetValue<string>("ConnectionStrings:DatabaseType");
 
-            this.DbContext = dbType.ToLowerInvariant() switch
+            _dbcontext = dbType.ToLowerInvariant() switch
             {
                 "mysql" => this.ServiceProvider.GetRequiredService<MySqlFilmHouseDbContext>(),
                 "sqlserver" => this.ServiceProvider.GetRequiredService<SqlServerFilmHouseDbContext>(),
@@ -60,17 +44,33 @@ namespace FilmHouse.Commands.Test
                 _ => throw new ArgumentOutOfRangeException(nameof(dbType))
             };
 
-            //using (var scope = this._serviceScope)
-            //{
-                await TestInitialiseAsync();
-            //}
+            _mediator = this.ServiceProvider.GetRequiredService<IMediator>();
+
+            await TestInitialiseAsync();
         }
 
         private async Task TestInitialiseAsync()
         {
-            await DbContext.Database.EnsureCreatedAsync();
-            await DbContext.ClearAllData();
-            //await this.SeedAsync();
+            await _dbcontext.Database.EnsureCreatedAsync();
+
+            bool isNew = !await _dbcontext.Configuration.AnyAsync();
+            if (isNew)
+            {
+                await _dbcontext.ClearAllData();
+                await this.SeedAsync();
+            }
+
+            var memoryCache = this.ServiceProvider.GetRequiredService<IMemoryCache>();
+
+            var codeMast = this.ServiceProvider.GetRequiredService<IRepository<CodeMastEntity>>();
+            var codeCaher = (ICodeProviderCacher)new CodeProvider(codeMast, memoryCache);
+            // 代码管理的缓存化
+            codeCaher.EnsureCache();
+
+            var configuration = this.ServiceProvider.GetRequiredService<IRepository<ConfigurationEntity>>();
+            var configCaher = (ISettingProviderCacher)new SettingProvider(configuration, memoryCache);
+            // 配置管理的缓存化
+            configCaher.EnsureCache();
         }
 
         private async Task SeedAsync()
@@ -78,13 +78,13 @@ namespace FilmHouse.Commands.Test
             var uuid = new RequestIdVO(Guid.NewGuid());
             var sysDate = new CreatedOnVO(System.DateTime.Now);
 
-            await DbContext.Configuration.AddRangeAsync(GetInitConfigurationSettings(uuid, sysDate));
-            await DbContext.CodeMast.AddRangeAsync(GetInitCodeMastSettings(uuid, sysDate));
-            //await dbContext.SaveChangesAsync();
+            await _dbcontext.Configuration.AddRangeAsync(GetInitConfigurationSettings(uuid, sysDate));
+            await _dbcontext.CodeMast.AddRangeAsync(GetInitCodeMastSettings(uuid, sysDate));
+            await _dbcontext.SaveChangesAsync();
         }
 
         /// <summary>
-        /// 
+        /// 测试执行结束时，记载被实施的处理。
         /// </summary>
         [OneTimeTearDown]
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -95,27 +95,18 @@ namespace FilmHouse.Commands.Test
                 this._serviceScope.Dispose();
             }
 
-            if (this._testServer != null)
+            if (this.testServer != null)
             {
-                this._testServer.Dispose();
+                this.testServer.Dispose();
+            }
+
+            if (this._dbcontext != null)
+            {
+                this._dbcontext.Dispose();
             }
         }
 
-        /// <summary>
-        /// 在测试方法的每次执行结束时，记载被实施的处理。
-        /// </summary>
-        [TearDown]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public void TearDownBase()
-        {
-            /*
-            if (this._serviceScope != null)
-            {
-                this._serviceScope.Dispose();
-            }
-            */
-        }
-
+        private IServiceScope _serviceScope;
         /// <summary>
         /// 取得服务提供商。
         /// </summary>
@@ -133,6 +124,14 @@ namespace FilmHouse.Commands.Test
         {
             get => Guard.GetNotNull(this._dbcontext, nameof(this.DbContext));
             private set => this._dbcontext = value;
+        }
+
+        private IMediator _mediator;
+
+        protected IMediator Mediator
+        {
+            get => Guard.GetNotNull(this._mediator, nameof(this.Mediator));
+            private set => this._mediator = value;
         }
 
         /// <summary>

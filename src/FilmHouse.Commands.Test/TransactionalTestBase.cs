@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel;
-using FilmHouse.Core.Utils;
-using FilmHouse.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 using NUnit.Framework;
 
@@ -39,10 +37,6 @@ namespace FilmHouse.Commands.Test
             if (this._transaction != null)
             {
                 this._transaction.Dispose();
-            }
-            if (this.DbContext != null)
-            {
-                this.DbContext.Dispose();
             }
         }
     }

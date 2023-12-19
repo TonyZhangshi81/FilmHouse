@@ -9,7 +9,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.13" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageReference Include="Moq" Version="4.20.69" />
     <PackageReference Include="NLog" Version="5.2.7" />
@@ -24,6 +23,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
     <PackageReference Include="ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly" Version="7.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+    <PackageReference Include="ReportGenerator" Version="5.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FilmHouse.Commands\FilmHouse.Commands.csproj" />
