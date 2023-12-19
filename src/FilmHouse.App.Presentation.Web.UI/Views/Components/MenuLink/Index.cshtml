@@ -1,0 +1,50 @@
+﻿@{
+    var navType = ViewBag.NavType;
+
+    <ul class="nav navbar-nav">
+        @if (navType == 1)
+        {
+            <li class="active">@Html.ActionLink("首页", "Index", "Home")</li>
+        }
+        else
+        {
+            <li>@Html.ActionLink("首页", "Index", "Home")</li>
+        }
+        @if (navType == 2)
+        {
+            <li class="active">@Html.ActionLink("选电影", "Index", "Search")</li>
+        }
+        else
+        {
+            <li>@Html.ActionLink("选电影", "Index", "Search")</li>
+        }
+        @if (navType == 3)
+        {
+            <li class="active">@Html.ActionLink("求资源", "Index", "Ask")</li>
+        }
+        else
+        {
+            <li>@Html.ActionLink("求资源", "Index", "Ask")</li>
+        }
+        @if (navType == 4)
+        {
+            <li class="active">@Html.ActionLink("专辑", "Index", "Album")</li>
+        }
+        else
+        {
+            <li>@Html.ActionLink("专辑", "Index", "Album")</li>
+        }
+        @if (ViewBag.IsAuthenticated == 1)
+        {
+            if (navType == 5)
+            {
+                <li class="active">@Html.ActionLink("我的主页", "Index", "Mine")</li>
+            }
+            else
+            {
+                <li>@Html.ActionLink("我的主页", "Index", "Mine")</li>
+            }
+        }
+        <li role="separator" class="divider"></li>
+    </ul>
+}

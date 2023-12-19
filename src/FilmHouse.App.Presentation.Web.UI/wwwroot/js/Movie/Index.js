@@ -8,6 +8,7 @@
     $("#summaryshort").slideUp(500);
     $("#summarylong").slideDown(500);
   });
+
   $("#btnHidden").click(function () {
     $("#summaryshort").slideDown(500);
     $("#summarylong").slideUp(500);

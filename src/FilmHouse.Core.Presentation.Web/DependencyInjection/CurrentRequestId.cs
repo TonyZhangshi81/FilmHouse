@@ -9,18 +9,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 namespace FilmHouse.Core.Presentation.Web.DependencyInjection
 {
     /// <summary>
-    /// 現在の処理で統一的に使用されるリクエストIDを取得するためのインターフェースです。
+    /// 是用于获取在当前处理中统一使用的请求ID的接口。
     /// </summary>
     /// <remarks>
-    /// この型を使用することで、現在の処理がどのリクエストIDとなっているかのかを取得します。
-    /// HttpContext.Itemsに格納された情報を取得します。
+    /// 通过使用这个类型，获取当前的处理是哪个请求ID。
+    /// 获取HttpContext.Items中存储的信息。
     /// </remarks>
     public class CurrentRequestId : ICurrentRequestId
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         /// <summary>
-        /// <see cref="CurrentRequestId"/>の新しいインスタンスを生成します。
+        /// <see cref="CurrentRequestId"/>的新实例。
         /// </summary>
         /// <param name="httpContextAccessor"></param>
         public CurrentRequestId(IHttpContextAccessor httpContextAccessor)
@@ -29,9 +29,9 @@ namespace FilmHouse.Core.Presentation.Web.DependencyInjection
         }
 
         /// <summary>
-        /// <see cref="IHttpContextAccessor"/>から<see cref="HttpContext"/>を取得します。
+        /// <see cref="IHttpContextAccessor"/>从<see cref="HttpContext"/>取得
         /// </summary>
-        /// <exception cref="InvalidOperationException"><see cref="HttpContext"/>のインスタンスが取得できない場合にスローされます。</exception>
+        /// <exception cref="InvalidOperationException"><see cref="HttpContext"/>的实例不能获得的情况下被抛出。</exception>
         private HttpContext CurrentContext
         {
             get
@@ -42,10 +42,10 @@ namespace FilmHouse.Core.Presentation.Web.DependencyInjection
         }
 
         /// <summary>
-        /// 現在の処理のリクエストIDを取得します。
+        /// 获取当前处理的请求ID。
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotSupportedException"><see cref="HttpContext.Items"/>に想定されているキーが格納されていない場合にスローされます。</exception>
+        /// <exception cref="NotSupportedException"><see cref="HttpContext.Items"/>中设想的键没有被存储的情况下被抛出。</exception>
         public RequestIdVO Get()
         {
             var key = HttpContextItemNames.CurrentRequestId;
@@ -63,7 +63,7 @@ namespace FilmHouse.Core.Presentation.Web.DependencyInjection
         }
 
         /// <summary>
-        /// 現在の処理のリクエストIDを取得します。
+        /// 获取当前处理的请求ID。
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -84,10 +84,10 @@ namespace FilmHouse.Core.Presentation.Web.DependencyInjection
         }
 
         /// <summary>
-        /// 現在の処理のリクエストIDを設定します。
+        /// 设置当前处理的请求ID。
         /// </summary>
         /// <param name="value"></param>
-        /// <exception cref="InvalidOperationException">><see cref="HttpContext.Items"/>にすでに登録されている状態で、2回目以降の登録が発生した場合にスローされます。</exception>
+        /// <exception cref="InvalidOperationException"><see cref="HttpContext.Items"/>中已经登录的状态，发生第二次以后的登录的情况会被抛掉。</exception>
         public void Set(RequestIdVO value)
         {
             var key = HttpContextItemNames.CurrentRequestId;

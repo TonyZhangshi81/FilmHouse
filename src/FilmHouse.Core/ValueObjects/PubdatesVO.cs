@@ -12,7 +12,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 上映信息（200位文本）的值对象类。
+    /// 上映日期（200位文本）的值对象类。
     /// </summary>
     [JsonConverter(typeof(PubdatesJsonConverter))]
     [ValueConverter(typeof(PubdatesValueConverter), typeof(PubdatesArrayValueConverter))]

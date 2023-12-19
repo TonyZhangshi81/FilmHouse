@@ -29,7 +29,7 @@ public class UserAccountEntity : EntitiesBase
 
     [Column(Order = 4)]
     [Required]
-    public PasswordVO Password { get; set; }
+    public PasswordHashVO PasswordHash { get; set; }
 
     [Column(Order = 5)]
     [Required]
@@ -43,6 +43,12 @@ public class UserAccountEntity : EntitiesBase
 
     [Column(Order = 8)]
     public IsAdminVO IsAdmin { get; set; }
+
+    [Column(Order = 9)]
+    public LastLoginIpVO LastLoginIp { get; set; }
+
+    [Column(Order = 10)]
+    public LastLoginTimeVO LastLoginTime { get; set; }
 
     /// <summary>
     /// 

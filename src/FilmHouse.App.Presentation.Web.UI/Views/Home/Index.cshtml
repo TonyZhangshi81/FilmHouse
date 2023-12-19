@@ -3,24 +3,26 @@
 @using Microsoft.AspNetCore.Http;
 
 @inject ISettingProvider settingProvider
-
 @model FilmHouse.Web.Models.HomeViewModel
+
 @{
     Layout = "_LayoutWide";
-}
-
-@{
-    ViewData["Title"] = "Home Page";
-    ViewBag.PageType = 1;
-    ViewBag.NavType = 1;
 
     var requestUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
     var name = settingProvider.GetValue("WebSiteSettings:Name");
+    var subTitle = settingProvider.GetValue("WebSiteSettings:SubTitle");
+
+    ViewData["Title"] = subTitle;
+    ViewBag.PageType = 1;
+    ViewBag.NavType = 1;
 }
 
-
 @section Links {
-    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" asp-append-version="true" href="~/css/home.css" />
+}
+
+@section Scripts {
+    <script src="~/js/Home/Index.js" asp-append-version="true" defer="defer"></script>
 }
 
 <div class="hidden-xs" id="index_back">
@@ -44,7 +46,7 @@
 
     <div class="col-sm-8 col-sm-offset-2" style="background:rgba(255, 255, 255, 0.75) !important; padding:10px; margin-top:20px;">
         <div>
-            <a class="link-text" href="/Movie/Index?id=@Model.Discovery.Movie.MovieId" title="@Model.Discovery.Movie.Title" target="_self">
+            <a class="link-text" href="/Movie/Index?movieId=@Model.Discovery.Movie.MovieId" title="@Model.Discovery.Movie.Title" target="_self">
                 <span class="font-large">@Model.Discovery.Movie.Title</span>
             </a>
             <span class="pull-right">
@@ -55,32 +57,12 @@
         <div class="font-small" style="max-height:85px; overflow:hidden; text-overflow:ellipsis;">@Model.Discovery.Movie.Summary</div>
         <!-- 可以考虑 visible-xs 在xs尺寸下隐藏以下信息 -->
         <div class="text-overflow font-small">
-            导演：
-            @foreach (var celebitem in Model.Discovery.Movie.Directors.Take(4))
-            {
-                if (celebitem.Id != null && !string.IsNullOrEmpty(celebitem.Id.ToString()))
-                {
-                    <a href="/Celeb/Index?id=@celebitem.Id.ToString()" class="link-text" target="_self">@celebitem.Name</a>
-                }
-                else
-                {
-                    <span>@celebitem.Name</span>
-                }
-            }
+            <!-- 导演 -->
+            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Discovery.Movie.Directors, type = "Directors", count = 4 })
         </div>
         <div class="text-overflow font-small">
-            演员：
-            @foreach (var celebitem in Model.Discovery.Movie.Writers.Take(4))
-            {
-                if (celebitem.Id != null && !string.IsNullOrEmpty(celebitem.Id.ToString()))
-                {
-                    <a href="/Celeb/Index?id=@celebitem.Id.ToString()" class="link-text" target="_self">@celebitem.Name</a>
-                }
-                else
-                {
-                    <span>@celebitem.Name</span>
-                }
-            }
+            <!-- 编剧 -->
+            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Discovery.Movie.Writers, type = "Writers", count = 4 })
         </div>
         <div class="text-overflow font-small">
             类型：
@@ -155,7 +137,3 @@
         </ul>
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/js/Home/Index.js"></script>
-}

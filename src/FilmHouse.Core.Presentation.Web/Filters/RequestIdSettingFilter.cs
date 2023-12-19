@@ -44,7 +44,7 @@ namespace FilmHouse.Core.Presentation.Web.Filters
 
             if (context.ActionDescriptor is CompiledPageActionDescriptor pageDescriptor)
             {
-                // 画面
+                // 页面
                 requestId = new(Guid.NewGuid());
             }
 

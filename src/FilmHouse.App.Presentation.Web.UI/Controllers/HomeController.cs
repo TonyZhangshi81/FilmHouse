@@ -6,6 +6,7 @@ using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.DependencyInjection;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace FilmHouse.Web.Controllers
 {
@@ -21,6 +22,9 @@ namespace FilmHouse.Web.Controllers
         /// 
         /// </summary>
         /// <param name="mediator"></param>
+        /// <param name="settingProvider"></param>
+        /// <param name="currentRequestId"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public HomeController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId)
         {
             this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
@@ -30,21 +34,21 @@ namespace FilmHouse.Web.Controllers
 
         #endregion Initizalize
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
         [Route("")]
         [Route("[controller]/{pageIndex}")]
         public async Task<ActionResult> Index(int pageIndex = 1)
         {
-            // 未登录状态
-            ViewBag.IsAuthenticated = 0;
-            ViewBag.PageType = 1;
-            ViewBag.NavType = 1;
-
             var maxPage = this._settingProvider.GetValue("Home:Discovery:MaxPage").CastTo<int>();
 
             var model = new HomeViewModel();
             model.Discovery.MaxPage = maxPage;
 
-            var command = new DisplayCommand(pageIndex, maxPage, User.Identity);
+            var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage, User.Identity);
             var display = await _mediator.Send(command);
 
             if (display.Status != 0)
