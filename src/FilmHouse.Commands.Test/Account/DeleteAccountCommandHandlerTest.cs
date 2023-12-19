@@ -7,13 +7,13 @@ using NUnit.Framework;
 namespace FilmHouse.Commands.Test.Account;
 
 [TestFixture]
-public class ValidateLoginCommandHandlerTest : TransactionalTestBase
+public class DeleteAccountCommandHandlerTest : TransactionalTestBase
 {
     [Test]
-    [TestCase("tonyzhangshi")]
-    [TestCase("test01")]
-    [TestCase("test02")]
-    public async Task ValidateLogin01(string accountName)
+    [TestCase("tonyzhangshi", "Tony19811031")]
+    [TestCase("test01", "111111")]
+    [TestCase("test02", "222222")]
+    public async Task DeleteAccount01(string account, string password)
     {
         var uuid = new RequestIdVO(Guid.NewGuid());
         var sysDate = new CreatedOnVO(System.DateTime.Now);
@@ -21,16 +21,15 @@ public class ValidateLoginCommandHandlerTest : TransactionalTestBase
         await this.DbContext.UserAccounts.AddRangeAsync(this.GetUserAccounts(uuid, sysDate));
         await this.DbContext.SaveChangesAsync();
 
-        var userId = this.DbContext.UserAccounts.Where(d => d.Account.Equals(new(accountName))).Select(d => d.UserId).First();
+        await this.Mediator.Send(new DeleteAccountCommand(new(account), new(password)));
 
-        LastLoginIpVO lastLoginIp = new("172.168.6.8");
-        await this.Mediator.Send(new ValidateLoginCommand(userId, lastLoginIp));
-
-        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new(accountName)) && d.LastLoginIp.Equals(lastLoginIp)).Any(), Is.EqualTo(true));
+        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new(account))).Any(), Is.EqualTo(false));
     }
 
     [Test]
-    public async Task ValidateLogin02()
+    [TestCase("tonyzhangshi01", "Tony19811031")]
+    [TestCase("tonyzhangshi", "tony19811031")]
+    public async Task DeleteAccount02(string account, string password)
     {
         var uuid = new RequestIdVO(Guid.NewGuid());
         var sysDate = new CreatedOnVO(System.DateTime.Now);
@@ -38,10 +37,9 @@ public class ValidateLoginCommandHandlerTest : TransactionalTestBase
         await this.DbContext.UserAccounts.AddRangeAsync(this.GetUserAccounts(uuid, sysDate));
         await this.DbContext.SaveChangesAsync();
 
-        LastLoginIpVO lastLoginIp = new("172.168.6.8");
-        await this.Mediator.Send(new ValidateLoginCommand(new(Guid.NewGuid()), lastLoginIp));
+        await this.Mediator.Send(new DeleteAccountCommand(new(account), new(password)));
 
-        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(new("tonyzhangshi")) && d.LastLoginIp.Equals(new("201.182.1.23"))).Any(), Is.EqualTo(true));
+        Assert.That(this.DbContext.UserAccounts.Count(), Is.EqualTo(3));
     }
 
     /// <summary>
