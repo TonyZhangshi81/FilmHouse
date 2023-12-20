@@ -25,6 +25,12 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: Setup mysql
+        uses: shogo82148/actions-setup-mysql@v1.28.1
+        with:
+          mysql-version: "8.0"
+          run: mysql -uroot -e 'SELECT version()'
+          
       - name: Restore NuGet packages
         working-directory: ${{ env.WORKING_DIR }}
         run: nuget restore ${{ env.TARGET_SOLUTION_VAR }}
