@@ -226,8 +226,6 @@ void ConfigureServices(IServiceCollection services)
             services.AddMySqlStorage(connStr!);
             break;
         case "postgresql":
-            // 在这里切换EFCore中是否禁用postgresql infinity的选项设置
-            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
             services.AddPostgreSqlStorage(connStr!);
             break;
         case "sqlserver":

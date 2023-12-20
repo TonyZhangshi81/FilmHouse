@@ -11,9 +11,11 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped(typeof(IRepository<>), typeof(PostgreSqlDbContextRepository<>));
 
-        // 在这里切换EFCore中是否禁用postgresql infinity的选项设置
+        // 用于禁用 PostgreSQL 数据库中特殊的日期时间值（无限大/无限小）与 .NET 中的对应转换
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+        // 用于启用或禁用旧版的时间戳行为
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         services.AddDbContext<PostgreSqlFilmHouseDbContext>(options => options
             .UseLazyLoadingProxies()
             .EnableDetailedErrors()
