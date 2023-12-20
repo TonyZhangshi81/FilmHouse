@@ -4,13 +4,12 @@ using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 
 namespace FilmHouse.Commands.Account;
 
-public record ChangePasswordCommand(AccountNameVO AccountName, PasswordHashVO ClearPassword) : IRequest;
+public record ChangePasswordCommand(AccountNameVO AccountName, PasswordHashVO ClearPassword) : IRequest<ChangePasswordStatus>;
 
-public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand>
+public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, ChangePasswordStatus>
 {
     #region Initizalize
 
@@ -20,16 +19,28 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
 
     #endregion Initizalize
 
-    public async Task Handle(ChangePasswordCommand request, CancellationToken ct)
+    public async Task<ChangePasswordStatus> Handle(ChangePasswordCommand request, CancellationToken ct)
     {
         var account = await _repo.GetAsync(d => d.Account == request.AccountName);
         if (account is null)
         {
-            throw new InvalidOperationException($"LocalAccountEntity with Id '{request.AccountName}' not found.");
+            // throw new InvalidOperationException($"LocalAccountEntity with Id '{request.AccountName}' not found.");
+            return ChangePasswordStatus.UndefinedAccount;
         }
 
         account.PasswordHash = new(request.ClearPassword.ToHash(account.Account.AsPrimitive()));
         account.UpDatedOn = new(DateTime.Now);
         await _repo.UpdateAsync(account, ct);
+
+        return ChangePasswordStatus.Success;
     }
+}
+
+/// <summary>
+/// 密码变更的可能结果
+/// </summary>
+public enum ChangePasswordStatus
+{
+    Success = 0,
+    UndefinedAccount = 1
 }

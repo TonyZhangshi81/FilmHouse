@@ -46,6 +46,7 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand>
         var account = new UserAccountEntity
         {
             RequestId = this._currentRequestId.Get(),
+            UserId = new(Guid.NewGuid()),
             Account = request.UserAccount.Account,
             PasswordHash = new(request.UserAccount.PasswordHash.ToHash(request.UserAccount.Account.AsPrimitive())),
             EmailAddress = request.UserAccount.EmailAddress,
