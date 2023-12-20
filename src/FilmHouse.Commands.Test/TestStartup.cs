@@ -61,7 +61,6 @@ namespace FilmHouse.Commands.Test
 
                 case "postgresql":
                     services.AddScoped(typeof(IRepository<>), typeof(PostgreSqlDbContextRepository<>));
-                    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
                     services.AddDbContext<PostgreSqlFilmHouseDbContext>(optionsAction =>
                         optionsAction
                             .UseLazyLoadingProxies()

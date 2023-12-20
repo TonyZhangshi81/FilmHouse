@@ -1,5 +1,12 @@
 ﻿using System.ComponentModel;
+using FilmHouse.Core.Utils;
+using FilmHouse.Data;
+using FilmHouse.Data.MySql;
+using FilmHouse.Data.PostgreSql;
+using FilmHouse.Data.SqlServer;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace FilmHouse.Commands.Test
@@ -16,7 +23,18 @@ namespace FilmHouse.Commands.Test
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void SetupTransactional()
         {
-            this._transaction = this.DbContext.Database.BeginTransaction();
+            var configuration = this.ServiceProvider.GetRequiredService<IConfiguration>();
+            var dbType = configuration.GetValue<string>("ConnectionStrings:DatabaseType");
+
+            this._dbcontext = dbType.ToLowerInvariant() switch
+            {
+                "mysql" => this.ServiceProvider.GetRequiredService<MySqlFilmHouseDbContext>(),
+                "sqlserver" => this.ServiceProvider.GetRequiredService<SqlServerFilmHouseDbContext>(),
+                "postgresql" => this.ServiceProvider.GetRequiredService<PostgreSqlFilmHouseDbContext>(),
+                _ => throw new ArgumentOutOfRangeException(nameof(dbType))
+            };
+
+            this._transaction = this._dbcontext.Database.BeginTransaction();
         }
 
         /// <summary>
@@ -34,10 +52,26 @@ namespace FilmHouse.Commands.Test
             catch
             {
             }
+
             if (this._transaction != null)
             {
                 this._transaction.Dispose();
             }
+
+            if (this._dbcontext != null)
+            {
+                this._dbcontext.Dispose();
+            }
+        }
+
+        private FilmHouseDbContext _dbcontext;
+
+        /// <summary>
+        /// 获得在这个测试类中使用的<see cref="DbContext"/的实例。
+        /// </summary>
+        protected FilmHouseDbContext DbContext
+        {
+            get => Guard.GetNotNull(this._dbcontext, nameof(this.DbContext)); private set => this._dbcontext = value;
         }
     }
 }
