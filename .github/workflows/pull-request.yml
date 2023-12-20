@@ -46,23 +46,17 @@ jobs:
           dotnet restore ${{ env.TARGET_SOLUTION_VAR }}
           dotnet build ${{ env.TARGET_SOLUTION_VAR }} -m:1 --no-restore /warnaserror
 
-      # 因为没有自己的runs-on从而不具备数据库相关的验证工作，暂时先注释避免妨碍PR操作
       - name: Run NUnit tests
         working-directory: ${{ env.WORKING_DIR }}
         run: |
           dotnet restore ${{ env.TARGET_SOLUTION_VAR }}
-          dotnet test ${{ env.TARGET_SOLUTION_VAR }} --no-build --verbosity normal
+          dotnet test ${{ env.TARGET_SOLUTION_VAR }} --no-build --verbosity normal --logger "trx;LogFileName=TestResult.xml"
 
       - name: Check test results
         working-directory: ${{ env.WORKING_DIR }}
         id: test-results
-        run: echo "::set-output name=tests-passed::$(find . -name 'TestResult.xml' -type f -exec grep -i '<test-case result=\"Passed\"' {} + | wc -l)"
+        run: echo "::set-output name=tests-passed::$(find . -name 'TestResult.xml' -type f -exec grep -i ' outcome=\"Passed\"' {} + | wc -l)"
 
-      #- name: Last
-      #  id: is-ok
-      #  run: |
-      #    if (${{ needs.build.outputs.test-results == '1' }}) {
-      #      exit 1
-      #    } else {
-      #      exit 0
-      #    }
+      - name: Last
+        id: is-ok
+        run: echo "Tests Passed:${{ steps.test-results.outputs.tests-passed }}"
