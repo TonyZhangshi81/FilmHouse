@@ -58,39 +58,20 @@
             <strong>@Model.Movie.Title&nbsp;&nbsp;&nbsp;&nbsp;@Model.Movie.TitleEn</strong><small style="display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;(@Model.Movie.Year)</small>
         </div>
         <div style="margin-bottom:10px;">
-            @if (!Model.Movie.IsPlan)
+            <!-- 电影操作栏 -->
+            @{
+                var actionBarViewModel = new FilmHouse.App.Presentation.Web.UI.Models.Components.MovieActionBarViewModel()
             {
-                <a class="btn btn-mark" title="想看" href="/Mark/Create?target=@Model.Movie.MovieId&type=1&returnurl=@fullUrl"><span class="fa fa-clock-o" aria-hidden="true"></span> 想看</a>
+                DoubanID = Model.Movie.DoubanID,
+                MovieId = Model.Movie.MovieId,
+                IsCreate = Model.Movie.IsCreate,
+                IsFavor = Model.Movie.IsFavor,
+                IsFinish = Model.Movie.IsFinish,
+                IsPlan = Model.Movie.IsPlan,
+            };
             }
-            else
-            {
-                <a class="btn btn-mark-inverse" title="取消想看" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=1&returnurl=@fullUrl"><span class="fa fa-clock-o" aria-hidden="true"></span> 想看</a>
-            }
-            @if (!Model.Movie.IsFinish)
-            {
-                <a class="btn btn-mark" title="看过" href="/Mark/Create?target=@Model.Movie.MovieId&type=2&returnurl=@fullUrl"><span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过</a>
-            }
-            else
-            {
-                <a class="btn btn-mark-inverse" title="取消看过" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=2&returnurl=@fullUrl"><span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过</a>
-            }
-            @if (!Model.Movie.IsFavor)
-            {
-                <a class="btn btn-mark" title="喜欢" href="/Mark/Create?target=@Model.Movie.MovieId&type=3&returnurl=@fullUrl"><span class="fa fa-heart-o" aria-hidden="true"></span> 喜欢</a>
-            }
-            else
-            {
-                <a class="btn btn-mark-inverse" title="取消喜欢" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=3&returnurl=@fullUrl" aria-hidden="true"><span class="fa fa-heart-o"></span> 喜欢</a>
-            }
-            @if (Model.Movie.IsCreate)
-            {
-                <a class="btn btn-mark tipup" href="/Movie/Edit?id=@Model.Movie.MovieId" title="修改 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                if (Model.Movie.DoubanID != null && !string.IsNullOrEmpty(Model.Movie.DoubanID.AsPrimitive()))
-                {
-                    <a class="btn btn-mark tipup" href="/Movie/Refresh?id=@Model.Movie.MovieId" title="更新 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-refresh" aria-hidden="true"></i></a>
-                }
-                <a class="btn btn-mark tipup" href="/Movie/Delete?id=@Model.Movie.MovieId" title="删除 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-            }
+            @* 操作：想看、取消想看、看过、取消看过、喜欢、取消喜欢、修改、更新、删除 *@
+            @await Component.InvokeAsync("MovieActionBar", new { viewModel = actionBarViewModel, returnUrl = fullUrl })
         </div>
     </div>
 
@@ -140,6 +121,37 @@
                     <span style="color:#808080;">类型:</span>
                     @Html.DisplayFor(model => model.Movie.Genres)
                 </li>
+
+                <li>
+                    <span style="color:#808080;">制片国家/地区:</span>
+                    @Html.DisplayFor(model => model.Movie.Countries)
+                </li>
+
+                <li>
+                    <span style="color:#808080;">语言:</span>
+                    @Html.DisplayFor(model => model.Movie.Languages)
+                </li>
+
+                <li>
+                    <span style="color:#808080;">评分:</span>
+                    @Html.DisplayFor(model => model.Movie.Rating)
+                </li>
+
+                @if (Model.Movie.DoubanID != null && !string.IsNullOrWhiteSpace(Model.Movie.DoubanID.AsPrimitive()))
+                {
+                    <li>
+                        <span style="color:#808080;">豆瓣链接:</span>
+                        <a href="https://movie.douban.com/subject/@Model.Movie.DoubanID/" class="link-text" target="_self">@Model.Movie.DoubanID</a>
+                    </li>
+                }
+
+                @if (Model.Movie.IMDbID != null && !string.IsNullOrWhiteSpace(Model.Movie.IMDbID.AsPrimitive()))
+                {
+                    <li>
+                        <span style="color:#808080;">IMDb链接:</span>
+                        <a href="http://www.imdb.com/title/@Model.Movie.IMDbID/" class="link-text" target="_self">@Model.Movie.IMDbID</a>
+                    </li>
+                }
 
             </ul>
         </div>

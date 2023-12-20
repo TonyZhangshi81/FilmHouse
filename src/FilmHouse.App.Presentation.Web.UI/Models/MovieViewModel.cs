@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.Identity.Client;
+﻿using FilmHouse.App.Presentation.Web.UI.Models.Components;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 
@@ -63,14 +62,19 @@ namespace FilmHouse.Web.Models
         /// </summary>
         public RatingVO Rating { get; set; }
 
-        public string RatingCount { get; set; }
+        /// <summary>
+        /// 评价人数
+        /// </summary>
+        public RatingCountVO RatingCount { get; set; }
 
         /// <summary>
         /// 豆瓣ID
         /// </summary>
         public DoubanIDVO DoubanID { get; set; }
-
-        public string IMDbID { get; set; }
+        /// <summary>
+        /// IMDbId
+        /// </summary>
+        public IMDbVO IMDbID { get; set; }
 
         /// <summary>
         /// 评论内容
@@ -101,6 +105,8 @@ namespace FilmHouse.Web.Models
             viewModel.Pubdates = movie.Pubdates;
             viewModel.Durations = movie.Durations;
             viewModel.Genres = movie.Genres;
+            viewModel.IMDbID = movie.IMDb;
+            viewModel.RatingCount = movie.RatingCount;
             
 
             #region Directors
@@ -195,10 +201,13 @@ namespace FilmHouse.Web.Models
         public int FinishCount { get; set; }
         public int FavorCount { get; set; }
 
-
         /// <summary>
         /// 当前用户是否是创建者
         /// </summary>
         public bool IsCreate { get; set; } = false;
+
+
     }
+
+
 }

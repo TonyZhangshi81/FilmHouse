@@ -1,12 +1,11 @@
-﻿using FilmHouse.Core.DependencyInjection;
+﻿using FilmHouse.App.Presentation.Web.UI.Models.Components;
+using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Web.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using FilmHouse.Commands.Movie;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using FilmHouse.Web.Models;
 
 namespace FilmHouse.Web.Controllers;
 
