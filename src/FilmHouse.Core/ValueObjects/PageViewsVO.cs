@@ -287,7 +287,7 @@ namespace FilmHouse.Core.ValueObjects
         // UnitGenerateOptions.ParseMethod
 
         /// <summary>
-        /// 将字符串形式的值转换为等价&lt;see cref = " PageViewsvo " / & gt;转换成句式。
+        /// 将字符串形式的值转换为等价<see cref = " PageViewsvo " />转换成句式。
         /// </summary>
         /// <param name="s">字符串</param>
         /// <returns><see cref="PageViewsVO"/>型的值</returns>
@@ -297,7 +297,7 @@ namespace FilmHouse.Core.ValueObjects
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价&lt;see cref = " PageViewsvo " / & gt;转换成句式，返回表示转换成功与否的值。
+        /// 将字符串形式的值转换为等价<see cref = " PageViewsvo " />转换成句式，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
         /// <param name="result"><see cref="PageViewsVO"/>型的值</param>
@@ -431,7 +431,7 @@ namespace FilmHouse.Core.ValueObjects
         // UnitGenerateOptions.Comparable
 
         /// <summary>
-        /// 将该实例&lt;paramref name = " other " / & gt;和比较。
+        /// 将该实例<paramref name="other" />和比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>

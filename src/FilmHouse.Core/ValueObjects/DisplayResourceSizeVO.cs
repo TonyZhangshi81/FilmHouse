@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -8,51 +8,37 @@ using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 配置键的值对象类。
+    /// 显示用资源大小的值对象类。进行与原始型的隐性分配。
     /// </summary>
-    [JsonConverter(typeof(ConfigKeyJsonConverter))]
-    [ValueConverter(typeof(ConfigKeyValueConverter), typeof(ConfigKeyArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(ConfigKeyTypeConverter))]
+    [JsonConverter(typeof(DisplayResourceSizeJsonConverter))]
+    [ValueConverter(typeof(DisplayResourceSizeValueConverter), typeof(DisplayResourceSizeArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(DisplayResourceSizeTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class ConfigKeyVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<ConfigKeyVO>, IComparable<ConfigKeyVO>, IValue<string>, IValueObject
+    public partial class DisplayResourceSizeVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<DisplayResourceSizeVO>, IComparable<DisplayResourceSizeVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "ConfigKey(size:50)";
+        public new const string TypeName = "DisplayResourceSize";
 
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 50;
+        public const int Size = 20;
 
         /// <summary>
-        /// 提供代码组持有的代码值的常数定义。
-        /// </summary>
-        public static class Keys
-        {
-            public static readonly ConfigKeyVO Name = new("WebSiteSettings:Name");
-            public static readonly ConfigKeyVO SubTitle = new("WebSiteSettings:SubTitle");
-            public static readonly ConfigKeyVO Version = new("WebSiteSettings:Version");
-            public static readonly ConfigKeyVO WebpagesEnabled = new("WebSiteSettings:WebpagesEnabled");
-            public static readonly ConfigKeyVO ClientValidationEnabled = new("WebSiteSettings:ClientValidationEnabled");
-            public static readonly ConfigKeyVO UnobtrusiveJavaScriptEnabled = new("WebSiteSettings:UnobtrusiveJavaScriptEnabled");
-            public static readonly ConfigKeyVO HomeDiscoveryMaxPage = new("Home:Discovery:MaxPage");
-            public static readonly ConfigKeyVO MovieSummaryShort = new("Movie:Summary:Short");
-        }
-
-        /// <summary>
-        /// <see cref="ConfigKeyVO"/>的新实例。
+        /// <see cref="DisplayResourceSizeVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public ConfigKeyVO(string value)
+        public DisplayResourceSizeVO(string value)
             : base(value)
         {
             this.PreProcess(ref value);
@@ -65,21 +51,21 @@ namespace FilmHouse.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="ConfigKeyVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="DisplayResourceSizeVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(ConfigKeyVO value)
+        public static explicit operator string(DisplayResourceSizeVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="ConfigKeyVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="DisplayResourceSizeVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator ConfigKeyVO(string value)
+        public static explicit operator DisplayResourceSizeVO(string value)
         {
-            return new ConfigKeyVO(value);
+            return new DisplayResourceSizeVO(value);
         }
 
         /// <summary>
@@ -88,7 +74,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in ConfigKeyVO? x, in ConfigKeyVO? y)
+        internal static bool Equals(in DisplayResourceSizeVO? x, in DisplayResourceSizeVO? y)
         {
             if (x is null && y is null)
             {
@@ -106,7 +92,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(ConfigKeyVO? other)
+        public bool Equals(DisplayResourceSizeVO? other)
         {
             return Equals(this, other);
         }
@@ -123,9 +109,9 @@ namespace FilmHouse.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(ConfigKeyVO).IsAssignableFrom(t))
+            if (typeof(DisplayResourceSizeVO).IsAssignableFrom(t))
             {
-                return Equals((ConfigKeyVO)obj);
+                return Equals((DisplayResourceSizeVO)obj);
             }
             if (t == typeof(string))
             {
@@ -151,12 +137,10 @@ namespace FilmHouse.Core.ValueObjects
             return string.Format("{0}", this._value);
         }
 
-
-
         /// <summary>
-        /// 是否等于
+        /// 是否相等
         /// </summary>
-        public static bool operator ==(in ConfigKeyVO? x, in ConfigKeyVO? y)
+        public static bool operator ==(in DisplayResourceSizeVO? x, in DisplayResourceSizeVO? y)
         {
             return Equals(x, y);
         }
@@ -164,13 +148,10 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in ConfigKeyVO? x, in ConfigKeyVO? y)
+        public static bool operator !=(in DisplayResourceSizeVO? x, in DisplayResourceSizeVO? y)
         {
             return !Equals(x, y);
         }
-
-
-
 
 
 
@@ -181,7 +162,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(ConfigKeyVO? other)
+        public int CompareTo(DisplayResourceSizeVO? other)
         {
             if (other == null)
             {
@@ -192,9 +173,9 @@ namespace FilmHouse.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class ConfigKeyJsonConverter : JsonConverter<ConfigKeyVO>
+        private class DisplayResourceSizeJsonConverter : JsonConverter<DisplayResourceSizeVO>
         {
-            public override void Write(Utf8JsonWriter writer, ConfigKeyVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, DisplayResourceSizeVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -207,7 +188,7 @@ namespace FilmHouse.Core.ValueObjects
                 }
             }
 
-            public override ConfigKeyVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override DisplayResourceSizeVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -215,7 +196,7 @@ namespace FilmHouse.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new ConfigKeyVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new DisplayResourceSizeVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -236,24 +217,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class ConfigKeyValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ConfigKeyVO?, string?>
+        public class DisplayResourceSizeValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<DisplayResourceSizeVO?, string?>
         {
             /// <summary>
-            /// <see cref="ConfigKeyValueConverter"/>的新实例。
+            /// <see cref="DisplayResourceSizeValueConverter"/>的新实例。
             /// </summary>
-            public ConfigKeyValueConverter()
+            public DisplayResourceSizeValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="ConfigKeyValueConverter"/>的新实例。
+            /// <see cref="DisplayResourceSizeValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public ConfigKeyValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public DisplayResourceSizeValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new ConfigKeyVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new DisplayResourceSizeVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -264,7 +245,7 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                ConfigKeyVO value => value._value,
+                DisplayResourceSizeVO value => value._value,
                 _ => null,
             };
 
@@ -273,8 +254,8 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                ConfigKeyVO value => value,
-                string value => new ConfigKeyVO(value),
+                DisplayResourceSizeVO value => value,
+                string value => new DisplayResourceSizeVO(value),
                 _ => null,
             };
         }
@@ -282,24 +263,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class ConfigKeyArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ConfigKeyVO?[], string?[]>
+        public class DisplayResourceSizeArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<DisplayResourceSizeVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="ConfigKeyArrayValueConverter"/>的新实例。
+            /// <see cref="DisplayResourceSizeArrayValueConverter"/>的新实例。
             /// </summary>
-            public ConfigKeyArrayValueConverter()
+            public DisplayResourceSizeArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="ConfigKeyArrayValueConverter"/>的新实例。
+            /// <see cref="DisplayResourceSizeArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public ConfigKeyArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public DisplayResourceSizeArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new ConfigKeyVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new DisplayResourceSizeVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -310,9 +291,9 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                ConfigKeyVO?[] values => values.Select(_ => _?._value).ToArray(),
+                DisplayResourceSizeVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<ConfigKeyVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<DisplayResourceSizeVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -321,18 +302,18 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                ConfigKeyVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new ConfigKeyVO(_)).ToArray(),
-                IEnumerable<ConfigKeyVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new ConfigKeyVO(_)).ToArray(),
+                DisplayResourceSizeVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new DisplayResourceSizeVO(_)).ToArray(),
+                IEnumerable<DisplayResourceSizeVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new DisplayResourceSizeVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class ConfigKeyTypeConverter : System.ComponentModel.TypeConverter
+        private class DisplayResourceSizeTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(ConfigKeyVO);
+            private static readonly Type WrapperType = typeof(DisplayResourceSizeVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -362,13 +343,13 @@ namespace FilmHouse.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(ConfigKeyVO))
+                if (t == typeof(DisplayResourceSizeVO))
                 {
-                    return (ConfigKeyVO)value;
+                    return (DisplayResourceSizeVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new ConfigKeyVO((string)value);
+                    return new DisplayResourceSizeVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -381,7 +362,7 @@ namespace FilmHouse.Core.ValueObjects
                     return null;
                 }
 
-                if (value is ConfigKeyVO wrappedValue)
+                if (value is DisplayResourceSizeVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

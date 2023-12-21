@@ -7,6 +7,10 @@ using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.DependencyInjection;
 using Microsoft.AspNetCore.Http.Features;
+using static IdentityModel.OidcConstants;
+using FilmHouse.Core.ValueObjects;
+using FilmHouse.Core.Utils;
+using FilmHouse.Data.Infrastructure.Services.Codes;
 
 namespace FilmHouse.Web.Controllers
 {
@@ -17,6 +21,7 @@ namespace FilmHouse.Web.Controllers
         private readonly IMediator _mediator;
         private readonly ISettingProvider _settingProvider;
         private readonly ICurrentRequestId _currentRequestId;
+        private readonly ICodeProvider _codeProvider;
 
         /// <summary>
         /// 
@@ -24,12 +29,14 @@ namespace FilmHouse.Web.Controllers
         /// <param name="mediator"></param>
         /// <param name="settingProvider"></param>
         /// <param name="currentRequestId"></param>
+        /// <param name="codeProvider"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public HomeController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId)
+        public HomeController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId, ICodeProvider codeProvider)
         {
             this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this._settingProvider = settingProvider ?? throw new ArgumentNullException(nameof(settingProvider));
             this._currentRequestId = currentRequestId ?? throw new ArgumentNullException(nameof(currentRequestId));
+            this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICurrentRequestId));
         }
 
         #endregion Initizalize
@@ -57,6 +64,7 @@ namespace FilmHouse.Web.Controllers
             }
 
             model.Discovery = HomeDiscViewModel.FromEntity(display.Discoveries.ElementAt(0));
+            model.Discovery.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => _.Name).ToList();
             // 最新栏目
             model.News = HomeViewModel.FromEntity(display.NewMovies);
             // 热门栏目

@@ -1,0 +1,92 @@
+﻿@using FilmHouse.Core.ValueObjects;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
+@model MovieResourcesHurdleViewModel
+
+@{
+    var fullUrl = ViewBag.ReturnUrl;
+
+    @if (Model.Resources.Count == 0)
+    {
+        <div class="text-center">
+            这部电影还没有资源呢(＃￣▽￣＃),
+            <a class="link-text" href="/Resource/Create?id=@Model.MovieId" title="为 @Model.Title 添加资源">上传资源</a>
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover no-margin">
+            <thead>
+                <tr>
+                    <th>
+                        来源
+                    </th>
+                    <th>
+                        类型
+                    </th>
+                    <th>
+                        标题
+                    </th>
+                    <th>
+                        大小
+                    </th>
+                    <th>
+                        #
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Resources)
+                {
+                    <tr>
+                        @if (item.UserId != null)
+                        {
+                            <td>
+                                <a href="/People/Index?id=@item.UserId&returnurl=@fullUrl" class="link-text" target="_self" title="@item.Account 的主页">@item.Account</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (item.Type == ResourceTypeVO.Codes.TypeCode0)
+                        {
+                            <td>
+                                <span class="fa fa-link" title="电驴链接"></span>
+                            </td>
+                            <td>
+                                <a title="下载" href="@item.Content" class="link-text">@item.Name</a>
+                            </td>
+                        }
+                        else if (item.Type == ResourceTypeVO.Codes.TypeCode1)
+                        {
+                            <td>
+                                <span class="fa fa-magnet" title="磁力链"></span>
+                            </td>
+                            <td>
+                                <a title="下载" href="@item.Content" class="link-text">@item.Name</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <span class="fa fa-file-movie-o" title="bt种子"></span>
+                            </td>
+                            <td>
+                                <a title="下载" href="~/Movie/DownTorrent?filename=@item.Content" class="link-text">@item.Name</a>
+                            </td>
+                        }
+                        <td>
+                            @item.DiscSize
+                        </td>
+                        <td>
+                            <a class="btn btn-xs" title="有用" href="/Resource/Favor?id=@item.ResourceId&returnurl=@fullUrl">
+                                <span class="fa fa-thumbs-o-up"></span>&nbsp;@item.FavorCount
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+}
