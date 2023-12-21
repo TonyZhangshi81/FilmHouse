@@ -11,9 +11,20 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 {
     public void Configure(EntityTypeBuilder<WorkEntity> builder)
     {
+        builder.ToTable("Work");
+
         builder.HasKey(e => new { e.WorkId }).HasName("work_ix00");
 
-        builder.ToTable("Work");
+        builder.HasOne(d => d.Celebrity)
+            .WithMany(p => p.Works)
+            .HasForeignKey(d => d.CelebrityId)
+            .HasConstraintName("FK_Work_Celebrity");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Works)
+            .HasForeignKey(d => d.MovieId)
+            .HasConstraintName("FK_Work_Movie");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()

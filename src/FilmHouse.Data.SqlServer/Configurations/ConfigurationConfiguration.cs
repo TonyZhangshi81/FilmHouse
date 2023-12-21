@@ -10,10 +10,10 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
 {
     public void Configure(EntityTypeBuilder<ConfigurationEntity> builder)
     {
+        builder.ToTable("Configuration");
+		
         builder.HasKey(e => new { e.Key });
         builder.HasAnnotation("SqlServer:Name", "configuration_ix00");
-
-        builder.ToTable("Configuration");
 
         builder.Property(e => e.RequestId)
             .IsRequired()

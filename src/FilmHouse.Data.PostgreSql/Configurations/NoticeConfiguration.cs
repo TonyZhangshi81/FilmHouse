@@ -11,9 +11,20 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
 {
     public void Configure(EntityTypeBuilder<NoticeEntity> builder)
     {
+        builder.ToTable("Notice");
+
         builder.HasKey(e => new { e.NoticeId }).HasName("notice_ix00");
 
-        builder.ToTable("Notice");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Notices)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Notice_UserAccount");
+
+        builder.HasOne(d => d.Resource)
+            .WithMany(p => p.Notices)
+            .HasForeignKey(d => d.ResourceId)
+            .HasConstraintName("FK_Notice_Resource");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()

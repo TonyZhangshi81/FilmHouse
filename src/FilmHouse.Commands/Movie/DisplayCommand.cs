@@ -37,11 +37,14 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
     /// <returns></returns>
     public async Task<DisplayContect> Handle(DisplayCommand request, CancellationToken ct)
     {
-        var movie = await this._movie.GetAsync(d => d.MovieId == request.MovieId);
-        if (movie == null)
+        var movieSpec = new MovieSpec(request.MovieId);
+        var movies = await this._movie.SelectAsync(movieSpec, c => c, ct);
+        if (!movies.Any())
         {
             return null;
         }
+
+        var movie = movies.ElementAt(0);
 
         var isPlan = false;
         var isFinish = false;

@@ -11,10 +11,16 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
 {
     public void Configure(EntityTypeBuilder<CelebrityEntity> builder)
     {
+        builder.ToTable("Celebrity");
+		
         builder.HasKey(e => new { e.CelebrityId });
         builder.HasAnnotation("SqlServer:Name", "celebrity_ix00");
 
-        builder.ToTable("Celebrity");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Celebrities)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Celebrity_UserAccount")
+            .OnDelete(DeleteBehavior.NoAction);
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -122,14 +128,6 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
-
-
-        builder.HasOne(d => d.UserAccount)
-            .WithMany(p => p.Celebrities)
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Celebrity_UserAccount");
-
 
     }
 }

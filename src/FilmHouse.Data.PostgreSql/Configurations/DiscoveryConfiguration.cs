@@ -11,9 +11,14 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
 {
     public void Configure(EntityTypeBuilder<DiscoveryEntity> builder)
     {
+        builder.ToTable("Discovery");
+
         builder.HasKey(e => new { e.DiscoveryId }).HasName("discovery_ix00");
 
-        builder.ToTable("Discovery");
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Discoveries)
+            .HasForeignKey(d => d.MovieId)
+            .HasConstraintName("FK_Discovery_Movie");
 
         builder.Property(e => e.RequestId)
             .IsRequired()

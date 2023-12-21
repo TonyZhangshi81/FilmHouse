@@ -11,10 +11,17 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
 {
     public void Configure(EntityTypeBuilder<MarkEntity> builder)
     {
+        builder.ToTable("Mark");
+
         builder.HasKey(e => new { e.MarkId });
         builder.HasAnnotation("SqlServer:Name", "mark_ix00");
 
-        builder.ToTable("Mark");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Marks)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .HasConstraintName("FK_Mark_UserAccount");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -51,11 +58,5 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
-
-        builder.HasOne(d => d.UserAccount)
-            .WithMany(p => p.Marks)
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Mark_UserAccount");
     }
 }

@@ -11,9 +11,9 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
 {
     public void Configure(EntityTypeBuilder<UserAccountEntity> builder)
     {
-        builder.HasKey(e => new { e.UserId }).HasName("user_account_ix00");
-
         builder.ToTable("UserAccount");
+
+        builder.HasKey(e => new { e.UserId }).HasName("user_account_ix00");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
