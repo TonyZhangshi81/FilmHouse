@@ -11,9 +11,14 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
 {
     public void Configure(EntityTypeBuilder<CelebrityEntity> builder)
     {
+        builder.ToTable("Celebrity");
+
         builder.HasKey(e => new { e.CelebrityId }).HasName("celebrity_ix00");
 
-        builder.ToTable("Celebrity");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Celebrities)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Celebrity_UserAccount");
 
         builder.Property(e => e.RequestId)
             .IsRequired()

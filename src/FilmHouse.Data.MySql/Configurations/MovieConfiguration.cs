@@ -11,9 +11,15 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 {
     public void Configure(EntityTypeBuilder<MovieEntity> builder)
     {
+        builder.ToTable("Movie");
+
         builder.HasKey(e => new { e.MovieId }).HasName("movie_ix00");
 
-        builder.ToTable("Movie");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Movies)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Movie_UserAccount");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -164,12 +170,6 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime(3)")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
-
-
-        builder.HasOne(d => d.UserAccount)
-            .WithMany(p => p.Movies)
-            .HasForeignKey(d => d.UserId)
-            .HasConstraintName("FK_Movie_UserAccount");
 
     }
 }

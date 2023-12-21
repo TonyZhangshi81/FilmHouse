@@ -11,10 +11,22 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 {
     public void Configure(EntityTypeBuilder<AskEntity> builder)
     {
+        builder.ToTable("Ask");
+		
         builder.HasKey(e => new { e.AskId });
         builder.HasAnnotation("SqlServer:Name", "ask_ix00");
 
-        builder.ToTable("Ask");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Asks)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Ask_UserAccount")
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Asks)
+            .HasForeignKey(d => d.MovieId)
+            .HasConstraintName("FK_Ask_Movie");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -64,18 +76,6 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
-
-        builder.HasOne(d => d.UserAccount)
-            .WithMany(p => p.Asks)
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Ask_UserAccount");
-
-        builder.HasOne(d => d.Movie)
-            .WithMany(p => p.Asks)
-            .HasForeignKey(d => d.MovieId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Ask_Movie");
 
     }
 }

@@ -10,9 +10,20 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 {
     public void Configure(EntityTypeBuilder<CommentEntity> builder)
     {
+        builder.ToTable("Comment");
+
         builder.HasKey(e => new { e.CommentId }).HasName("comment_ix00");
 
-        builder.ToTable("Comment");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Comment_UserAccount");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(d => d.MovieId)
+            .HasConstraintName("FK_Comment_Movie");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()

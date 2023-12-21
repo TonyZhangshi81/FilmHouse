@@ -10,10 +10,10 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
 {
     public void Configure(EntityTypeBuilder<CodeMastEntity> builder)
     {
+        builder.ToTable("CodeMast");
+		
         builder.HasKey(e => new { e.Group, e.Code });
         builder.HasAnnotation("SqlServer:Name", "group_code_ix00");
-
-        builder.ToTable("CodeMast");
 
         builder.Property(e => e.RequestId)
             .IsRequired()

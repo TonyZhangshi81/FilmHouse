@@ -11,10 +11,24 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
 {
     public void Configure(EntityTypeBuilder<WorkEntity> builder)
     {
+        builder.ToTable("Work");
+
         builder.HasKey(e => new { e.WorkId });
         builder.HasAnnotation("SqlServer:Name", "work_ix00");
 
-        builder.ToTable("Work");
+        builder.HasOne(d => d.Celebrity)
+            .WithMany(p => p.Works)
+            .HasForeignKey(d => d.CelebrityId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .HasConstraintName("FK_Work_Celebrity");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Works)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .HasConstraintName("FK_Work_Movie");
+
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -49,19 +63,6 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
-
-
-        builder.HasOne(d => d.Celebrity)
-            .WithMany(p => p.Works)
-            .HasForeignKey(d => d.CelebrityId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Work_Celebrity");
-
-        builder.HasOne(d => d.Movie)
-            .WithMany(p => p.Works)
-            .HasForeignKey(d => d.MovieId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Work_Movie");
 
     }
 }

@@ -10,10 +10,23 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
 {
     public void Configure(EntityTypeBuilder<CommentEntity> builder)
     {
+        builder.ToTable("Comment");
+		
         builder.HasKey(e => new { e.CommentId });
         builder.HasAnnotation("SqlServer:Name", "comment_ix00");
 
-        builder.ToTable("Comment");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Comment_UserAccount")
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Comments)
+            .HasForeignKey(d => d.MovieId)
+            .HasConstraintName("FK_Comment_Movie")
+            .OnDelete(DeleteBehavior.NoAction);
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -51,20 +64,6 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
-
-
-
-        builder.HasOne(d => d.UserAccount)
-            .WithMany(p => p.Comments)
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Comment_UserAccount");
-
-        builder.HasOne(d => d.Movie)
-            .WithMany(p => p.Comments)
-            .HasForeignKey(d => d.MovieId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Comment_Movie");
 
     }
 }

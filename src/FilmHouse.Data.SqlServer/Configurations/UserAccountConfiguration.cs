@@ -11,10 +11,10 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
 {
     public void Configure(EntityTypeBuilder<UserAccountEntity> builder)
     {
+        builder.ToTable("UserAccount");
+
         builder.HasKey(e => new { e.UserId });
         builder.HasAnnotation("SqlServer:Name", "user_account_ix00");
-
-        builder.ToTable("UserAccount");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -77,5 +77,6 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
+
     }
 }

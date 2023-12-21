@@ -11,10 +11,17 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 {
     public void Configure(EntityTypeBuilder<MovieEntity> builder)
     {
+        builder.ToTable("Movie");
+
         builder.HasKey(e => new { e.MovieId });
         builder.HasAnnotation("SqlServer:Name", "movie_ix00");
 
-        builder.ToTable("Movie");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Movies)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .HasConstraintName("FK_Movie_UserAccount");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -164,13 +171,6 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
-
-
-        builder.HasOne(d => d.UserAccount)
-            .WithMany(p => p.Movies)
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Movie_UserAccount");
 
     }
 }
