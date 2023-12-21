@@ -1,0 +1,24 @@
+﻿@using FilmHouse.Core.ValueObjects;
+@using FilmHouse.Core.Services.Configuration;
+
+@inject ISettingProvider provider
+@model SummaryVO
+
+@{
+    var summaryShort = Model.AsShort(provider);
+    @if (summaryShort != null && !string.IsNullOrEmpty(summaryShort.AsPrimitive()))
+    {
+        var summaryPara = Model.ToParallel();
+        <div id="summarylong" style="display:none;">
+            @foreach (var item in summaryPara)
+            {
+                <p>@item</p>
+            }
+            <a id="btnHidden" href="###" class="link-text">(收起)</a>
+        </div>
+        <div id="summaryshort" style="display:block;">
+            @summaryShort
+            <a id="btnDisplay" href="###" class="link-text">(展开全部)</a>
+        </div>
+    }
+}

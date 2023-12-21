@@ -2,6 +2,7 @@
 @using FilmHouse.Core.Services.Configuration;
 @using Microsoft.AspNetCore.Http.Extensions;
 @using Microsoft.AspNetCore.Http;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
 @model FilmHouse.Web.Models.MovieViewModel
 
@@ -17,8 +18,8 @@
 }
 
 @section Scripts {
-    <script src="~/lib/bundles/jquery.smooth-scroll.js" asp-append-version="true" type="text/javascript"></script>
-    <script src="~/js/Home/Index.js" asp-append-version="true" defer="defer"></script>
+    <script src="~/lib/smoothscroll/jquery.smooth-scroll.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/js/Movie/Index.js" asp-append-version="true" defer="defer"></script>
 }
 
 <div class="modal fade" id="modalCmt" tabindex="-1" role="dialog"
@@ -86,6 +87,7 @@
 </div>
 
 <div class="col-sm-9 no-padding">
+
     @*详情*@
     <div class="panel panel-default" id="details">
         <div class="panel-heading text-center">
@@ -118,18 +120,18 @@
                     @Html.DisplayFor(model => model.Movie.Durations)
                 </li>
                 <li>
-                    <span style="color:#808080;">类型:</span>
-                    @Html.DisplayFor(model => model.Movie.Genres)
+                    @* 类型 *@
+                    @await Component.InvokeAsync("MovieGenresHurdle", new { genres = Model.Movie.GenresValue })
                 </li>
 
                 <li>
-                    <span style="color:#808080;">制片国家/地区:</span>
-                    @Html.DisplayFor(model => model.Movie.Countries)
+                    @* 制片国家/地区 *@
+                    @await Component.InvokeAsync("MovieCountriesHurdle", new { genres = Model.Movie.CountriesValue })
                 </li>
 
                 <li>
-                    <span style="color:#808080;">语言:</span>
-                    @Html.DisplayFor(model => model.Movie.Languages)
+                    @* 语言 *@
+                    @await Component.InvokeAsync("MovieLanguagesHurdle", new { genres = Model.Movie.LanguagesValue })
                 </li>
 
                 <li>
@@ -141,7 +143,7 @@
                 {
                     <li>
                         <span style="color:#808080;">豆瓣链接:</span>
-                        <a href="https://movie.douban.com/subject/@Model.Movie.DoubanID/" class="link-text" target="_self">@Model.Movie.DoubanID</a>
+                        <a href="https://movie.douban.com/subject/@Model.Movie.DoubanID/" class="link-text" target="_blank">@Model.Movie.DoubanID</a>
                     </li>
                 }
 
@@ -149,7 +151,7 @@
                 {
                     <li>
                         <span style="color:#808080;">IMDb链接:</span>
-                        <a href="http://www.imdb.com/title/@Model.Movie.IMDbID/" class="link-text" target="_self">@Model.Movie.IMDbID</a>
+                        <a href="http://www.imdb.com/title/@Model.Movie.IMDbID/" class="link-text" target="_blank">@Model.Movie.IMDbID</a>
                     </li>
                 }
 
@@ -157,8 +159,41 @@
         </div>
     </div>
 
+    @*简介*@
+    <div class="panel panel-default" id="summary">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>剧情介绍</strong>&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body" id="divbody">
+            @await Component.InvokeAsync("MovieSummaryHurdle", new { summary = Model.Movie.Summary })
+        </div>
+    </div>
 
-
+    @*资源*@
+    <div class="panel panel-default" id="resources">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>所有资源</strong>&nbsp;&nbsp;————
+            <div class="pull-right" style="margin-top:-7px;">
+                <a class="btn btn-default btn-mark tipup" href="/Ask/Create?id=@Model.Movie.MovieId" title="为 @Model.Movie.Title 求资源" data-toggle="tooltip" data-placement="top">
+                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-default btn-mark tipup" href="/Resource/Create?id=@Model.Movie.MovieId" title="为 @Model.Movie.Title 添加资源" data-toggle="tooltip" data-placement="top">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="panel-body">
+            @{
+                var resources = new MovieResourcesHurdleViewModel()
+            {
+                MovieId = Model.Movie.MovieId,
+                Title = Model.Movie.Title,
+                Resources = Model.Resources
+            };
+            }
+            @await Component.InvokeAsync("MovieResourcesHurdle", new { movieResources = resources, returnUrl = fullUrl })
+        </div>
+    </div>
 
 
 

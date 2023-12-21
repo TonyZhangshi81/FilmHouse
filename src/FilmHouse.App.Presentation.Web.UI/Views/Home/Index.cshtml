@@ -65,22 +65,13 @@
             @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Discovery.Movie.Writers, type = "Writers", count = 4 })
         </div>
         <div class="text-overflow font-small">
-            类型：
-            @foreach (var celebitem in Model.Discovery.Movie.Casts.Take(4))
-            {
-                if (celebitem.Id != null && !string.IsNullOrEmpty(celebitem.Id.ToString()))
-                {
-                    <a href="/Celeb/Index?id=@celebitem.Id.ToString()" class="link-text" target="_self">@celebitem.Name</a>
-                }
-                else
-                {
-                    <span>@celebitem.Name</span>
-                }
-            }
+            @* 类型 是否需要跳转至檢索畫面？？ *@
+            @await Component.InvokeAsync("MovieGenresHurdle", new { genres = Model.Discovery.Movie.GenresValue, count = 4 })
         </div>
     </div>
 
     <div class="col-sm-8 col-sm-offset-2 text-center hidden-xxs" style="margin-top:30px;">
+        @* 考虑使用Components TODO *@
         @if (Model.Discovery.Movie.IsPlan)
         {
             <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=1&returnurl=@requestUrl" title="取消"><span class="glyphicon glyphicon-time"></span></a>
@@ -115,10 +106,11 @@
         <div class="text-left font-large">最新</div>
         <hr />
         <ul class="list-link">
+            @* 考虑使用Components TODO *@
             @foreach (var item in Model.News)
             {
                 <li>
-                    <a class="link-list-item" href="/Movie/Index?id=@item.MovieId" title="@item.MovieTitle" target="_self">@item.MovieTitle &nbsp;(<span style="display:inline-block;">@item.Year</span>)</a>
+                    <a class="link-list-item" href="/Movie/Index?movieId=@item.MovieId" title="@item.MovieTitle" target="_self">@item.MovieTitle &nbsp;(<span style="display:inline-block;">@item.Year</span>)</a>
                 </li>
             }
         </ul>
@@ -127,11 +119,11 @@
         <div class="text-left font-large">热门</div>
         <hr />
         <ul class="list-link">
-
+            @* 考虑使用Components TODO *@
             @foreach (var item in Model.Mosts)
             {
                 <li>
-                    <a class="link-list-item" href="/Movie/Index?id=@item.MovieId" title="@item.MovieTitle" target="_self">@item.MovieTitle &nbsp;(<span style="display:inline-block;">@item.Year</span>)</a>
+                    <a class="link-list-item" href="/Movie/Index?movieId=@item.MovieId" title="@item.MovieTitle" target="_self">@item.MovieTitle &nbsp;(<span style="display:inline-block;">@item.Year</span>)</a>
                 </li>
             }
         </ul>

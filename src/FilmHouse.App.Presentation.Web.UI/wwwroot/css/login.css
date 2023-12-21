@@ -4,7 +4,7 @@
   border-radius: 2px;
   background-color: transparent;
   color: #F2F2F2;
-  font-family: 'Founder clear engraving this Song simplified';
+  font-family: "Microsoft YaHei", SimHei, Arial, sans-serif; /* Founder clear engraving this Song simplified */
   text-decoration: none;
   overflow: hidden;
   padding: 6px 30px;

@@ -54,7 +54,7 @@ namespace FilmHouse.Core.ValueObjects
         public TimeOnly AddHours(double value) => this.AsPrimitiveCore().AddHours(value);
 
         /// <summary>
-        /// 将该实例的值加上指定分数的新<see cref="TimeOnly" / & gt;返还。
+        /// 将该实例的值加上指定分数的新<see cref="TimeOnly" />返还。
         /// </summary>
         /// <param name="value">由整数部分和小数部分组成的分数有正负两种情况。</param>
         /// <returns>在这个实例所表示的日期和时间<paramref name = "value" /></paramref>中所表示的分数相加后的值的对象。</returns>

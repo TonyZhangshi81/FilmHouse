@@ -31,11 +31,6 @@ namespace FilmHouse.Core.ValueObjects
         public const string TypeName = "CodeId";
 
         /// <summary>
-        /// "语言"区分的代码组。
-        /// </summary>
-        public static readonly CodeGroupVO Group = new("Group");
-
-        /// <summary>
         /// 取得位数。
         /// </summary>
         public const int Size = 400;
@@ -54,6 +49,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <see cref="CodesId"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
+        /// <param name="group"></param>
         public CodesId(string value)
         {
             this.PreProcess(ref value);
@@ -65,8 +61,9 @@ namespace FilmHouse.Core.ValueObjects
         /// 转换为保持代码管理信息的<see cref="CodeElement"/>
         /// </summary>
         /// <param name="provider"></param>
+        /// <param name="codeGroup"></param>
         /// <returns></returns>
-        public IReadOnlyList<CodeElement>? AsCodeElement(ICodeProvider provider)
+        public IReadOnlyList<CodeElement>? AsCodeElement(ICodeProvider provider, CodeGroupVO codeGroup)
         {
             var codes = this._value.Split('/', StringSplitOptions.None);
             if (!codes.Any())
@@ -74,7 +71,7 @@ namespace FilmHouse.Core.ValueObjects
                 return null;
             }
 
-            var group = provider.AvailableAt(Group);
+            var group = provider.AvailableAt(codeGroup);
             var items = group.Elements.Where(d => codes.Contains(d.Code.AsPrimitive())).ToList();
             if (!items.Any())
             {
@@ -87,8 +84,9 @@ namespace FilmHouse.Core.ValueObjects
         /// 获取代码组。
         /// </summary>
         /// <param name="provider"></param>
+        /// <param name="codeGroup"></param>
         /// <returns></returns>
-        public CodeContainer? GetCodeGroup(ICodeProvider provider)
+        public CodeContainer? GetCodeGroup(ICodeProvider provider, CodeGroupVO codeGroup)
         {
             var codes = this._value.Split('/', StringSplitOptions.None);
             if (!codes.Any())
@@ -96,7 +94,7 @@ namespace FilmHouse.Core.ValueObjects
                 return null;
             }
 
-            var group = provider.AvailableAt(Group);
+            var group = provider.AvailableAt(codeGroup);
             return group;
         }
 

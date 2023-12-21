@@ -14,7 +14,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 电影种类信息的值对象类。
+    /// 电影類型代碼串信息的值对象类。
     /// </summary>
     [JsonConverter(typeof(GenresJsonConverter))]
     [ValueConverter(typeof(GenresValueConverter), typeof(GenresArrayValueConverter))]
@@ -33,7 +33,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// "电影种类"区分的代码组。
         /// </summary>
-        public new static readonly CodeGroupVO Group = new("Genres");
+        public static readonly CodeGroupVO Group = CodeGroupVO.Codes.GroupMovieGenre;
 
         /// <summary>
         /// <see cref="GenresVO"/>的新实例。

@@ -8,6 +8,9 @@ using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Core.Services.Codes;
+using FilmHouse.Core.Services.Configuration;
+using System.Collections;
 
 namespace FilmHouse.Core.ValueObjects
 {
@@ -19,7 +22,7 @@ namespace FilmHouse.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(SummaryTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class SummaryVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<SummaryVO>, IComparable<SummaryVO>, IValue<string>, IValueObject
+    public partial class SummaryVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<SummaryVO>, IComparable<SummaryVO>, IValue<string>, IValueObject, ISlicing<SummaryVO>
     {
         private readonly string _value;
 
@@ -43,6 +46,41 @@ namespace FilmHouse.Core.ValueObjects
         partial void PreProcess(ref string value);
 
         partial void Validate();
+
+        /// <summary>
+        /// 缩略
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <returns></returns>
+        public SummaryVO AsShort(ISettingProvider provider)
+        {
+            var len = provider.GetValue(ConfigKeyVO.Keys.MovieSummaryShort).CastTo<int>();
+
+            if (this._value != null && this._value.Length > len)
+            {
+                return new SummaryVO($"{this._value.Substring(0, len - 3)}...");
+            }
+            else
+            {
+                return new SummaryVO(this._value!);
+            }
+        }
+
+        /// <summary>
+        /// 分行显示
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<SummaryVO> ToParallel()
+        {
+            if (this._value != null)
+            {
+                return this._value.Split('\n').Select(d => new SummaryVO(d)).ToList().AsReadOnly();
+            }
+            else
+            {
+                return (new List<SummaryVO> { new SummaryVO(this._value!) }).AsReadOnly();
+            }
+        }
 
         /// <summary>
         /// <see cref="string"/>向<see cref="SummaryVO"/>进行隐式转换
