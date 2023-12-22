@@ -17,7 +17,6 @@ public class MovieController : Controller
 
     private readonly IMediator _mediator;
     private readonly ISettingProvider _settingProvider;
-    private readonly ICurrentRequestId _currentRequestId;
     private readonly ICodeProvider _codeProvider;
 
     /// <summary>
@@ -25,15 +24,13 @@ public class MovieController : Controller
     /// </summary>
     /// <param name="mediator"></param>
     /// <param name="settingProvider"></param>
-    /// <param name="currentRequestId"></param>
     /// <param name="codeProvider"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public MovieController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId, ICodeProvider codeProvider)
+    public MovieController(IMediator mediator, ISettingProvider settingProvider, ICodeProvider codeProvider)
     {
         this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
         this._settingProvider = Guard.GetNotNull(settingProvider, nameof(ISettingProvider));
-        this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
-        this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICurrentRequestId));
+        this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICodeProvider));
     }
 
     #endregion Initizalize
@@ -49,7 +46,7 @@ public class MovieController : Controller
     /// <returns></returns>
     public async Task<IActionResult> Index(MovieIdVO movieId)
     {
-        var command = new FilmHouse.Commands.Movie.DisplayCommand(movieId, User.Identity);
+        var command = new FilmHouse.Commands.Movie.DisplayCommand(movieId);
         var display = await _mediator.Send(command);
         if (display.DiscMovie == null)
         {
@@ -61,7 +58,8 @@ public class MovieController : Controller
         model.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => _.Name).ToList();
         model.Movie.CountriesValue = display.DiscMovie.Countries.AsCodeElement(this._codeProvider, CountriesVO.Group).Select(_ => _.Name).ToList();
         model.Movie.LanguagesValue = display.DiscMovie.Languages.AsCodeElement(this._codeProvider, LanguagesVO.Group).Select(_ => _.Name).ToList();
-
+        // 评论总数
+        model.Movie.CommentCount = display.CommentCount;
 
         // 创建者
         model.Movie.IsCreate = display.IsCreate;
@@ -81,6 +79,15 @@ public class MovieController : Controller
             foreach (var item in display.DiscMovie.Resources)
             {
                 model.Resources.Add(ResourceDiscViewModel.FromEntity(item));
+            }
+        }
+
+        // 电影评论
+        if (display.DiscMovie.Comments.Any())
+        {
+            foreach (var item in display.DiscMovie.Comments)
+            {
+                model.Comments.Add(CommentDiscViewModel.FromEntity(item));
             }
         }
 

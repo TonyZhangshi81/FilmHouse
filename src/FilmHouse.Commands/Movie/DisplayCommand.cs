@@ -1,31 +1,35 @@
 ﻿using System.Security.Claims;
-using System.Security.Principal;
-using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.Services.Configuration;
+using FilmHouse.Core.Utils;
+using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using FilmHouse.Data.Spec;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace FilmHouse.Commands.Movie;
 
-public record DisplayCommand(MovieIdVO MovieId, IIdentity user) : IRequest<DisplayContect>;
+public record DisplayCommand(MovieIdVO MovieId) : IRequest<DisplayContect>;
 
 public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayContect>
 {
     #region Initizalize
 
     private readonly IRepository<MovieEntity> _movie;
-    private readonly IRepository<UserAccountEntity> _userAccount;
     private readonly IRepository<MarkEntity> _mark;
-    private readonly ICurrentRequestId _currentRequestId;
+    private readonly IRepository<CommentEntity> _comment;
+    private readonly ISettingProvider _settingProvider;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public DisplayCommandHandler(IRepository<MovieEntity> movie, IRepository<UserAccountEntity> userAccount, IRepository<MarkEntity> mark, ICurrentRequestId currentRequestId)
+    public DisplayCommandHandler(IRepository<MovieEntity> movie, IRepository<MarkEntity> mark, IRepository<CommentEntity> comment, ISettingProvider settingProvider, IHttpContextAccessor httpContextAccessor)
     {
-        this._movie = movie;
-        this._userAccount = userAccount;
-        this._mark = mark;
-        this._currentRequestId = currentRequestId;
+        this._movie = Guard.GetNotNull(movie, nameof(IRepository<MovieEntity>));
+        this._mark = Guard.GetNotNull(mark, nameof(IRepository<MarkEntity>));
+        this._comment = Guard.GetNotNull(comment, nameof(IRepository<CommentEntity>));
+        this._settingProvider = Guard.GetNotNull(settingProvider, nameof(ISettingProvider));
+        this._httpContextAccessor = Guard.GetNotNull(httpContextAccessor, nameof(IHttpContextAccessor));
     }
 
     #endregion Initizalize
@@ -37,7 +41,7 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
     /// <returns></returns>
     public async Task<DisplayContect> Handle(DisplayCommand request, CancellationToken ct)
     {
-        var movieSpec = new MovieSpec(request.MovieId);
+        var movieSpec = new MovieSpec(request.MovieId, commentTake: this._settingProvider.GetValue(ConfigKeyVO.Keys.MovieCommentMax).CastTo<int>());
         var movies = await this._movie.SelectAsync(movieSpec, c => c, ct);
         if (!movies.Any())
         {
@@ -45,6 +49,9 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         }
 
         var movie = movies.ElementAt(0);
+
+        // 评论总数
+        var commentCount = await this._comment.CountAsync(d => d.MovieId == movie.MovieId, ct);
 
         var isPlan = false;
         var isFinish = false;
@@ -56,11 +63,14 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         // 创建者
         var isCreate = false;
 
+        // 用户认证情报取得
+        var userIdentity = this._httpContextAccessor.HttpContext.User.Identity;
+
         // 登陆后的用户可以设置对影片的偏好
-        if (request.user.IsAuthenticated)
+        if (userIdentity.IsAuthenticated)
         {
             // 取得登录用户的ID
-            var claimsIdentity = request.user as ClaimsIdentity;
+            var claimsIdentity = userIdentity as ClaimsIdentity;
             var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
             var isAdmin = (claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value).Equals("Administrator");
 
@@ -87,6 +97,8 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         return new DisplayContect()
         {
             DiscMovie = movie,
+
+            CommentCount = commentCount,
 
             IsPlan = isPlan,
             IsFinish = isFinish,
@@ -118,6 +130,7 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
 public class DisplayContect
 {
     public MovieEntity DiscMovie { get; set; }
+    public int CommentCount { get; set; }
 
     public bool IsPlan { get; set; }
     public bool IsFinish { get; set; }

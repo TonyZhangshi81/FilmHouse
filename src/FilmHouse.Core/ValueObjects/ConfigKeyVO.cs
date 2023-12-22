@@ -46,6 +46,7 @@ namespace FilmHouse.Core.ValueObjects
             public static readonly ConfigKeyVO UnobtrusiveJavaScriptEnabled = new("WebSiteSettings:UnobtrusiveJavaScriptEnabled");
             public static readonly ConfigKeyVO HomeDiscoveryMaxPage = new("Home:Discovery:MaxPage");
             public static readonly ConfigKeyVO MovieSummaryShort = new("Movie:Summary:Short");
+            public static readonly ConfigKeyVO MovieCommentMax = new("Movie:Comment:Max");
         }
 
         /// <summary>

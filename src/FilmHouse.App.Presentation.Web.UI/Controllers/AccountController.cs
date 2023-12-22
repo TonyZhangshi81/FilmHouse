@@ -1,20 +1,19 @@
-﻿using FilmHouse.Core.DependencyInjection;
+﻿using System.Security.Claims;
+using FilmHouse.Commands.Account;
+using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.Presentation.Web.Auth;
+using FilmHouse.Core.Presentation.Web.Filters;
 using FilmHouse.Core.Services.Configuration;
+using FilmHouse.Core.Utils;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Web.Models;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using FilmHouse.Core.Presentation.Web.Filters;
-using FilmHouse.Core.ValueObjects;
-using FilmHouse.Commands.Account;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
-using FilmHouse.Core.Utils;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
-using FilmHouse.Core.Presentation.Web.Auth;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers
 {
@@ -23,8 +22,6 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         #region Initizalize
 
         private readonly IMediator _mediator;
-        private readonly ISettingProvider _settingProvider;
-        private readonly ICurrentRequestId _currentRequestId;
         private readonly ILogger<AccountController> _logger;
 
         private readonly AuthenticationSettings _authenticationSettings;
@@ -39,12 +36,11 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         /// <exception cref="ArgumentNullException"></exception>
         public AccountController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings)
         {
-            this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this._settingProvider = settingProvider ?? throw new ArgumentNullException(nameof(settingProvider));
-            this._currentRequestId = currentRequestId ?? throw new ArgumentNullException(nameof(currentRequestId));
             this._logger = logger;
+            this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
 
-            this._authenticationSettings = authSettings.Value;
+            var auSetting = Guard.GetNotNull(authSettings, nameof(IOptions<AuthenticationSettings>));
+            this._authenticationSettings = auSetting.Value;
         }
 
         #endregion Initizalize

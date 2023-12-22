@@ -1,124 +1,158 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Security.Claims;
 using System.Text;
+using FilmHouse.Commands.Movie;
+using FilmHouse.Commands.Test.Utils;
+using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Data;
 using FilmHouse.Data.Entities;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
 
-namespace FilmHouse.Data;
+namespace FilmHouse.Commands.Test.Movie;
 
-public class Seed
+[TestFixture]
+public class DisplayCommandHandlerTest : TransactionalTestBase
 {
-    public static async Task SeedAsync(FilmHouseDbContext dbContext, ILogger logger, int maxRetryAvailability, int retry = 0)
+    private static readonly RequestIdVO CurrentRequestId = new RequestIdVO(Guid.NewGuid());
+
+    /// <summary>
+    /// 管理员身份
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    [Arrange(nameof(OnDisplayCommandArrange))]
+    public async Task DiosplayMovie01()
     {
-        var retryForAvailability = retry;
+        await this.DataPrepare();
 
-        try
-        {
-            var uuid = new RequestIdVO(Guid.NewGuid());
-            var sysDate = new CreatedOnVO(System.DateTime.Now);
+        var movieId = this.DbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First();
 
-            await dbContext.Configuration.AddRangeAsync(GetInitConfigurationSettings(uuid, sysDate));
-            await dbContext.CodeMast.AddRangeAsync(GetInitCodeMastSettings(uuid, sysDate));
-            await dbContext.SaveChangesAsync();
+        var result = await this.Mediator.Send(new DisplayCommand(movieId));
 
-
-#if DEBUG
-
-            // 用户
-            await dbContext.UserAccounts.AddRangeAsync(GetUserAccounts(uuid, sysDate));
-            await dbContext.SaveChangesAsync();
-
-            // 影人信息
-            await dbContext.Celebrities.AddRangeAsync(GetCelebrities(uuid, sysDate, dbContext));
-            await dbContext.SaveChangesAsync();
-
-            // 影片
-            await dbContext.Movies.AddRangeAsync(GetMovies(uuid, sysDate, dbContext));
-            await dbContext.SaveChangesAsync();
-
-            // 每日发现
-            await dbContext.Discoveries.AddRangeAsync(GetDiscoveries(uuid, sysDate, dbContext));
-            await dbContext.SaveChangesAsync();
-
-            // 影片资源
-            await dbContext.Resources.AddRangeAsync(GetResources(uuid, sysDate, dbContext));
-            await dbContext.SaveChangesAsync();
-
-            // 评论
-            await dbContext.Comments.AddRangeAsync(GetComments(uuid, sysDate, dbContext));
-            await dbContext.SaveChangesAsync();
-
-
-#endif
-
-        }
-        catch (Exception e)
-        {
-            if (retryForAvailability >= maxRetryAvailability)
-            {
-                throw;
-            }
-
-            retryForAvailability++;
-
-            logger.LogError(e.Message);
-            await SeedAsync(dbContext, logger, maxRetryAvailability, retryForAvailability);
-            throw;
-        }
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.CommentCount, Is.EqualTo(7));
+        Assert.That(result.IsCreate, Is.True);
     }
 
     /// <summary>
-    /// 配置信息
+    /// 非管理员身份
     /// </summary>
-    /// <param name="uuid"></param>
-    /// <param name="dateTime"></param>
     /// <returns></returns>
-    private static IEnumerable<ConfigurationEntity> GetInitConfigurationSettings(RequestIdVO uuid, CreatedOnVO dateTime) =>
-        new List<ConfigurationEntity>
-        {
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.Name, Value = new("DEMO"), CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.SubTitle, Value = new("DEMO"), CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.Version, Value = new("0.2.0.0"), CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.WebpagesEnabled, Value = new("false"), CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.ClientValidationEnabled, Value = new("true"), CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.UnobtrusiveJavaScriptEnabled, Value = new("false"), CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.HomeDiscoveryMaxPage, Value = new("6"), CreatedOn = dateTime },
-            // 评论缩略显示长度
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSummaryShort, Value = new("250"), CreatedOn = dateTime },
-            // 影片页面上显示的最大评论件数
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieCommentMax, Value = new("10"), CreatedOn = dateTime },
-        };
+    [Test]
+    [Arrange(nameof(OnDisplayCommandArrange))]
+    public async Task DiosplayMovie02()
+    {
+        await this.DataPrepare();
+
+        var movieId = this.DbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First();
+
+        var result = await this.Mediator.Send(new DisplayCommand(movieId));
+
+        Assert.That(result.IsCreate, Is.False);
+    }
 
     /// <summary>
-    /// 代码信息管理表
+    /// 用户未登陆状态
     /// </summary>
-    /// <param name="uuid"></param>
-    /// <param name="dateTime"></param>
     /// <returns></returns>
-    private static IEnumerable<CodeMastEntity> GetInitCodeMastSettings(RequestIdVO uuid, CreatedOnVO dateTime) =>
-        new List<CodeMastEntity>
+    [Test]
+    [Arrange(nameof(OnDisplayCommandArrange))]
+    public async Task DiosplayMovie03()
+    {
+        await this.DataPrepare();
+
+        var movieId = this.DbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First();
+
+        var result = await this.Mediator.Send(new DisplayCommand(movieId));
+
+        Assert.That(result.IsCreate, Is.False);
+    }
+
+    /// <summary>
+    /// 设置服务时进行独特的定制
+    /// </summary>
+    /// <param name="services">服务</param>
+    /// <param name="mocks"></param>
+    private static void OnDisplayCommandArrange(IServiceCollection services, ICollection<Mock> mocks)
+    {
+        var caseMethodName = TestExecutionContext.CurrentContext.CurrentTest.MethodName;
+
+        var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+        switch (caseMethodName)
         {
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("001"), Name = new CodeValueVO("剧情"), Order = new SortOrderVO(1), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("002"), Name = new CodeValueVO("爱情"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("003"), Name = new CodeValueVO("奇幻"), Order = new SortOrderVO(3), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("004"), Name = new CodeValueVO("惊悚"), Order = new SortOrderVO(4), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("005"), Name = new CodeValueVO("喜剧"), Order = new SortOrderVO(5), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("006"), Name = new CodeValueVO("动作"), Order = new SortOrderVO(6), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("007"), Name = new CodeValueVO("科幻"), Order = new SortOrderVO(7), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("008"), Name = new CodeValueVO("冒险"), Order = new SortOrderVO(8), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupMovieGenre, Code = new CodeKeyVO("009"), Name = new CodeValueVO("悬疑"), Order = new SortOrderVO(9), CreatedOn  = dateTime },
+            case nameof(DiosplayMovie02):
+                // 登陆嘉宾
+                var user01 = new ClaimsPrincipal(
+                            new ClaimsIdentity(
+                                    new Claim[] { new Claim(ClaimTypes.Role, "Guest"), new Claim("uid", TestUserId.AsPrimitive().ToString()) },
+                                    CookieAuthenticationDefaults.AuthenticationScheme));
+                httpContextAccessorMock.Setup(h => h.HttpContext.User).Returns(user01);
+                break;
+            case nameof(DiosplayMovie03):
+                // 未登录游客
+                httpContextAccessorMock.Setup(h => h.HttpContext.User.Identity.IsAuthenticated).Returns(false);
+                break;
+            case nameof(DiosplayMovie01):
+            default:
+                // 管理员
+                var user02 = new ClaimsPrincipal(
+                            new ClaimsIdentity(
+                                    new Claim[] { new Claim(ClaimTypes.Role, "Administrator"), new Claim("uid", TestUserId.AsPrimitive().ToString()) },
+                                    CookieAuthenticationDefaults.AuthenticationScheme));
+                httpContextAccessorMock.Setup(h => h.HttpContext.User).Returns(user02);
+                break;
+        }
+        services.AddTransient(_ => httpContextAccessorMock.Object);
+        mocks.Add(httpContextAccessorMock);
+    }
 
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupLanguage, Code = new CodeKeyVO("001"), Name = new CodeValueVO("英语"), Order = new SortOrderVO(1), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupLanguage, Code = new CodeKeyVO("002"), Name = new CodeValueVO("法语"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupLanguage, Code = new CodeKeyVO("003"), Name = new CodeValueVO("意大利语"), Order = new SortOrderVO(3), CreatedOn  = dateTime },
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    protected override void SetupServices(IServiceCollection services)
+    {
+        base.SetupServices(services);
 
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupCountry, Code = new CodeKeyVO("001"), Name = new CodeValueVO("美国"), Order = new SortOrderVO(1), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.GroupCountry, Code = new CodeKeyVO("002"), Name = new CodeValueVO("澳大利亚"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
+        var settingProvider = new Mock<ISettingProvider>();
+        settingProvider.Setup(_ => _.GetValue(It.IsAny<ConfigKeyVO>())).Returns(new ConfigValueVO("6"));
+        services.AddTransient(_ => settingProvider.Object);
+    }
 
-        };
+    #region data prepare
+
+    private async Task DataPrepare()
+    {
+        var uuid = new RequestIdVO(Guid.NewGuid());
+        var sysDate = new CreatedOnVO(System.DateTime.Now);
+
+        // 用户
+        await this.DbContext.UserAccounts.AddRangeAsync(GetUserAccounts(uuid, sysDate));
+        await this.DbContext.SaveChangesAsync();
+
+        // 影人信息
+        await this.DbContext.Celebrities.AddRangeAsync(GetCelebrities(uuid, sysDate, this.DbContext));
+        await this.DbContext.SaveChangesAsync();
+
+        // 影片
+        await this.DbContext.Movies.AddRangeAsync(GetMovies(uuid, sysDate, this.DbContext));
+        await this.DbContext.SaveChangesAsync();
+
+        // 影片资源
+        await this.DbContext.Resources.AddRangeAsync(GetResources(uuid, sysDate, this.DbContext));
+        await this.DbContext.SaveChangesAsync();
+
+        // 评论
+        await this.DbContext.Comments.AddRangeAsync(GetComments(uuid, sysDate, this.DbContext));
+        await this.DbContext.SaveChangesAsync();
+    }
 
     /// <summary>
     /// 
@@ -404,6 +438,8 @@ public class Seed
             },
        };
 
+    private static UserIdVO TestUserId { get; set; } = new UserIdVO(Guid.NewGuid());
+
     /// <summary>
     /// 
     /// </summary>
@@ -413,7 +449,7 @@ public class Seed
     private static IEnumerable<UserAccountEntity> GetUserAccounts(RequestIdVO uuid, CreatedOnVO dateTime) =>
        new List<UserAccountEntity>
        {
-            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("tonyzhangshi"), PasswordHash = new(new PasswordHashVO("Tony19811031").ToHash("tonyzhangshi")), EmailAddress = new("tonyzhangshi@163.com"), Avatar = new("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), LastLoginIp = new("201.182.1.23"), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = TestUserId, Account = new("tonyzhangshi"), PasswordHash = new(new PasswordHashVO("Tony19811031").ToHash("tonyzhangshi")), EmailAddress = new("tonyzhangshi@163.com"), Avatar = new("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), LastLoginIp = new("201.182.1.23"), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test01"), PasswordHash = new(new PasswordHashVO("111111").ToHash("test01")), EmailAddress = new("test01@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test02"), PasswordHash = new(new PasswordHashVO("222222").ToHash("test02")), EmailAddress = new("test02@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(true), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test03"), PasswordHash = new(new PasswordHashVO("333333").ToHash("test03")), EmailAddress = new("test03@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
@@ -779,38 +815,7 @@ public class Seed
 
        };
 
-    /// <summary>
-    /// 每日发现
-    /// </summary>
-    /// <param name="uuid"></param>
-    /// <param name="dateTime"></param>
-    /// <param name="dbContext"></param>
-    /// <returns></returns>
-    private static IEnumerable<DiscoveryEntity> GetDiscoveries(RequestIdVO uuid, CreatedOnVO dateTime, FilmHouseDbContext dbContext) =>
-       new List<DiscoveryEntity>
-       {
-                new DiscoveryEntity(){
-                    RequestId = uuid,
-                    DiscoveryId = new DiscoveryIdVO(Guid.NewGuid()),
-                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).First().MovieId,
-                    Avatar = new DiscoveryAvatarVO("p2305422832.jpg"),
-                    Order = new SortOrderVO(1),
-                    CreatedOn = dateTime
-                },
-                new DiscoveryEntity(){
-                    RequestId = uuid,
-                    DiscoveryId = new DiscoveryIdVO(Guid.NewGuid()),
-                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).First().MovieId,
-                    Avatar = new DiscoveryAvatarVO("p2220223845.jpg"),
-                    Order = new SortOrderVO(2),
-                    CreatedOn = dateTime },
+    #endregion data prepare
 
-                new DiscoveryEntity(){
-                    RequestId = uuid,
-                    DiscoveryId = new DiscoveryIdVO(Guid.NewGuid()),
-                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).First().MovieId,
-                    Avatar = new DiscoveryAvatarVO("p2181503009.jpg"),
-                    Order = new SortOrderVO(3),
-                    CreatedOn = dateTime },
-       };
 }
+

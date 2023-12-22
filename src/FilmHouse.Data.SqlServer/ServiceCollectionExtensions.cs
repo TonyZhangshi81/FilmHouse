@@ -11,8 +11,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped(typeof(IRepository<>), typeof(SqlServerDbContextRepository<>));
 
-        services.AddDbContext<SqlServerFilmHouseDbContext>(options =>
-            options.UseLazyLoadingProxies()
+        services.AddDbContext<SqlServerFilmHouseDbContext>(options => options
+                .UseLazyLoadingProxies()
                 .UseSqlServer(connectionString, builder =>
                 {
                     builder.EnableRetryOnFailure(3, TimeSpan.FromSeconds(30), null);

@@ -39,6 +39,7 @@
     <PackageReference Include="ReportGenerator" Version="5.2.0" />
   </ItemGroup>
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\FilmHouse.Commands\FilmHouse.Commands.csproj" />
     <ProjectReference Include="..\FilmHouse.Core\FilmHouse.Core.csproj" />
     <ProjectReference Include="..\FilmHouse.Data.MySql\FilmHouse.Data.MySql.csproj" />
