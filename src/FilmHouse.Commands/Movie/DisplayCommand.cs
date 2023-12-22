@@ -1,6 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Security.Principal;
-using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.Utils.Data;
@@ -9,10 +7,11 @@ using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using FilmHouse.Data.Spec;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace FilmHouse.Commands.Movie;
 
-public record DisplayCommand(MovieIdVO MovieId, IIdentity user) : IRequest<DisplayContect>;
+public record DisplayCommand(MovieIdVO MovieId) : IRequest<DisplayContect>;
 
 public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayContect>
 {
@@ -21,17 +20,16 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
     private readonly IRepository<MovieEntity> _movie;
     private readonly IRepository<MarkEntity> _mark;
     private readonly IRepository<CommentEntity> _comment;
-
-    private readonly ICurrentRequestId _currentRequestId;
     private readonly ISettingProvider _settingProvider;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public DisplayCommandHandler(IRepository<MovieEntity> movie, IRepository<MarkEntity> mark, IRepository<CommentEntity> comment, ICurrentRequestId currentRequestId, ISettingProvider settingProvider)
+    public DisplayCommandHandler(IRepository<MovieEntity> movie, IRepository<MarkEntity> mark, IRepository<CommentEntity> comment, ISettingProvider settingProvider, IHttpContextAccessor httpContextAccessor)
     {
         this._movie = Guard.GetNotNull(movie, nameof(IRepository<MovieEntity>));
         this._mark = Guard.GetNotNull(mark, nameof(IRepository<MarkEntity>));
         this._comment = Guard.GetNotNull(comment, nameof(IRepository<CommentEntity>));
-        this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
         this._settingProvider = Guard.GetNotNull(settingProvider, nameof(ISettingProvider));
+        this._httpContextAccessor = Guard.GetNotNull(httpContextAccessor, nameof(IHttpContextAccessor));
     }
 
     #endregion Initizalize
@@ -65,11 +63,14 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         // 创建者
         var isCreate = false;
 
+        // 用户认证情报取得
+        var userIdentity = this._httpContextAccessor.HttpContext.User.Identity;
+
         // 登陆后的用户可以设置对影片的偏好
-        if (request.user.IsAuthenticated)
+        if (userIdentity.IsAuthenticated)
         {
             // 取得登录用户的ID
-            var claimsIdentity = request.user as ClaimsIdentity;
+            var claimsIdentity = userIdentity as ClaimsIdentity;
             var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
             var isAdmin = (claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value).Equals("Administrator");
 

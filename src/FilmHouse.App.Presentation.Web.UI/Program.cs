@@ -218,6 +218,7 @@ void ConfigureServices(IServiceCollection services)
         options.HeaderName = "XSRF-TOKEN";
     });
 
+    // HttpContext.User认证状态取得的方法注入
     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
     switch (dbType!.ToLower())

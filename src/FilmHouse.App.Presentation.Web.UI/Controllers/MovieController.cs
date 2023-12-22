@@ -46,7 +46,7 @@ public class MovieController : Controller
     /// <returns></returns>
     public async Task<IActionResult> Index(MovieIdVO movieId)
     {
-        var command = new FilmHouse.Commands.Movie.DisplayCommand(movieId, User.Identity);
+        var command = new FilmHouse.Commands.Movie.DisplayCommand(movieId);
         var display = await _mediator.Send(command);
         if (display.DiscMovie == null)
         {

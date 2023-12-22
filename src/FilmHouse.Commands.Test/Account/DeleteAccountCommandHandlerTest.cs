@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace FilmHouse.Commands.Test.Account;
 
 [TestFixture]
-public class DeleteAccountCommandHandlerTest : TransactionalTestBase
+public class DisplayCommandHandlerTest : TransactionalTestBase
 {
     [Test]
     [TestCase("tonyzhangshi", "Tony19811031")]

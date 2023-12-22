@@ -1,16 +1,11 @@
-﻿using FilmHouse.Commands.Home;
+﻿using FilmHouse.Core.Services.Codes;
+using FilmHouse.Core.Services.Configuration;
+using FilmHouse.Core.Utils;
+using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Web.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using FilmHouse.Core.Services.Configuration;
-using FilmHouse.Core.Utils.Data;
-using FilmHouse.Core.Services.Codes;
-using FilmHouse.Core.DependencyInjection;
-using Microsoft.AspNetCore.Http.Features;
-using static IdentityModel.OidcConstants;
-using FilmHouse.Core.ValueObjects;
-using FilmHouse.Core.Utils;
-using FilmHouse.Data.Infrastructure.Services.Codes;
 
 namespace FilmHouse.Web.Controllers
 {
@@ -27,14 +22,13 @@ namespace FilmHouse.Web.Controllers
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="settingProvider"></param>
-        /// <param name="currentRequestId"></param>
         /// <param name="codeProvider"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public HomeController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId, ICodeProvider codeProvider)
+        public HomeController(IMediator mediator, ISettingProvider settingProvider, ICodeProvider codeProvider)
         {
-            this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this._settingProvider = settingProvider ?? throw new ArgumentNullException(nameof(settingProvider));
-            this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICurrentRequestId));
+            this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
+            this._settingProvider = Guard.GetNotNull(settingProvider, nameof(ISettingProvider));
+            this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICodeProvider));
         }
 
         #endregion Initizalize
