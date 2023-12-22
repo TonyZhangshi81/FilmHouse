@@ -42,16 +42,16 @@
     }
     @if (Model.IsCreate)
     {
-        <a class="btn btn-mark tipup" href="/Movie/Edit?id=@Model.MovieId" title="修改 @Model.Title" data-toggle="tooltip" data-placement="top">
+        <a class="btn btn-mark tipup" href="/Movie/Edit?movieId=@Model.MovieId" title="修改 @Model.Title" data-toggle="tooltip" data-placement="top">
             <i class="fa fa-edit" aria-hidden="true"></i>
         </a>
         if (Model.DoubanID != null && !string.IsNullOrEmpty(Model.DoubanID.AsPrimitive()))
         {
-            <a class="btn btn-mark tipup" href="/Movie/Refresh?id=@Model.MovieId" title="更新 @Model.Title" data-toggle="tooltip" data-placement="top">
+            <a class="btn btn-mark tipup" href="/Movie/Refresh?movieId=@Model.MovieId" title="更新 @Model.Title" data-toggle="tooltip" data-placement="top">
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </a>
         }
-        <a class="btn btn-mark tipup" href="/Movie/Delete?id=@Model.MovieId" title="删除 @Model.Title" data-toggle="tooltip" data-placement="top">
+        <a class="btn btn-mark tipup" href="/Movie/Delete?movieId=@Model.MovieId" title="删除 @Model.Title" data-toggle="tooltip" data-placement="top">
             <i class="fa fa-trash-o" aria-hidden="true"></i>
         </a>
     }

@@ -20,7 +20,6 @@ namespace FilmHouse.Web.Controllers
 
         private readonly IMediator _mediator;
         private readonly ISettingProvider _settingProvider;
-        private readonly ICurrentRequestId _currentRequestId;
         private readonly ICodeProvider _codeProvider;
 
         /// <summary>
@@ -35,7 +34,6 @@ namespace FilmHouse.Web.Controllers
         {
             this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this._settingProvider = settingProvider ?? throw new ArgumentNullException(nameof(settingProvider));
-            this._currentRequestId = currentRequestId ?? throw new ArgumentNullException(nameof(currentRequestId));
             this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICurrentRequestId));
         }
 

@@ -47,6 +47,11 @@ public class Seed
             await dbContext.Resources.AddRangeAsync(GetResources(uuid, sysDate, dbContext));
             await dbContext.SaveChangesAsync();
 
+            // 评论
+            await dbContext.Comments.AddRangeAsync(GetComments(uuid, sysDate, dbContext));
+            await dbContext.SaveChangesAsync();
+
+
 #endif
 
         }
@@ -83,6 +88,8 @@ public class Seed
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.HomeDiscoveryMaxPage, Value = new("6"), CreatedOn = dateTime },
             // 评论缩略显示长度
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSummaryShort, Value = new("250"), CreatedOn = dateTime },
+            // 影片页面上显示的最大评论件数
+            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieCommentMax, Value = new("10"), CreatedOn = dateTime },
         };
 
     /// <summary>
@@ -409,6 +416,12 @@ public class Seed
             new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("tonyzhangshi"), PasswordHash = new(new PasswordHashVO("Tony19811031").ToHash("tonyzhangshi")), EmailAddress = new("tonyzhangshi@163.com"), Avatar = new("0ACFC82E7D5A41FC8AB8FD4EF603C858Tony.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), LastLoginIp = new("201.182.1.23"), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test01"), PasswordHash = new(new PasswordHashVO("111111").ToHash("test01")), EmailAddress = new("test01@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
             new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test02"), PasswordHash = new(new PasswordHashVO("222222").ToHash("test02")), EmailAddress = new("test02@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(true), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test03"), PasswordHash = new(new PasswordHashVO("333333").ToHash("test03")), EmailAddress = new("test03@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test04"), PasswordHash = new(new PasswordHashVO("444444").ToHash("test04")), EmailAddress = new("test04@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test05"), PasswordHash = new(new PasswordHashVO("555555").ToHash("test05")), EmailAddress = new("test05@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test06"), PasswordHash = new(new PasswordHashVO("666666").ToHash("test06")), EmailAddress = new("test06@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test07"), PasswordHash = new(new PasswordHashVO("777777").ToHash("test07")), EmailAddress = new("test07@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
+            new(){ RequestId = uuid, UserId = new(Guid.NewGuid()), Account = new("test08"), PasswordHash = new(new PasswordHashVO("888888").ToHash("test08")), EmailAddress = new("test08@163.com"), Avatar = new("User_1.jpg"), Cover = new("Cover_1.jpg"), IsAdmin = new(false), CreatedOn = dateTime },
        };
 
     private static string GetWritersId(FilmHouseDbContext dbContext, string names)
@@ -614,6 +627,156 @@ public class Seed
                     Note = new NoteVO("非常好！！"),
                     CreatedOn = dateTime
                 },
+       };
+
+    /// <summary>
+    /// 影片评论
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <param name="dateTime"></param>
+    /// <param name="dbContext"></param>
+    /// <returns></returns>
+    private static IEnumerable<CommentEntity> GetComments(RequestIdVO uuid, CreatedOnVO dateTime, FilmHouseDbContext dbContext) =>
+       new List<CommentEntity>
+       {
+           new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("tonyzhangshi"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("再多一个人扎纸解释虫洞我就当场尬死"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-1)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test01"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("第一部：《爸爸，再爱我一次》 第二部：《哥哥，再爱我一次》 第三部：《姐姐，再爱我一次》 第四部：《女友，再爱我一次》"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-2)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test02"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("第一，我不叫喂，我叫雷神雨荨！"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-3)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test03"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("蝙蝠侠因演得过于认真显得格格不入"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-4)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test04"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("宇宙许愿池是一次性吗为啥只能一个人许一个愿望呢？"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-5)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test05"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("彻底儿童片化了，好一坨五颜六色的欢乐大便哈哈。算上导演五个奥斯卡得主陪锤哥玩，马特•达蒙的客串自带喜感，罗素•克劳的宙斯小碎步才真是绝了~"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-6)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test06"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("差，真的差，請蝙蝠俠過來讓雷神揍是很爽，但你漫威一輩子都拍不出《黑暗騎士》，這就是區別。"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-7)),
+                    CreatedOn = dateTime
+                },
+
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test01"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("除了JohnnyDepp 还能有谁能有那样的眼神？"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-1)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test02"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("爱德华的眼睛让人心疼"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-2)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test03"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("就让我相信全世界的雪都是爱德华下的吧。"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-3)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test04"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("如果我没有刀，我就不能保护你。如果我有刀，我就不能拥抱你。 这个城市看不到雪，我为你降一场雪，每一片雪花落地那都是在说，我爱你。 我现在已经是个老妇人了。我只愿他记得我当初的样子。"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-4)),
+                    CreatedOn = dateTime
+                },
+
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test01"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("“我感受到了，感到了……完美。”一段用走火入魔来成就的完美，亦真亦假、亦实亦幻。影片从始至终都弥漫着黑暗的色调，很惊悚，很压抑，无论配乐还是摄影都极其吸引观众。娜塔莉·波特曼颠覆以往，奉献了一场精彩的演出。★★★★★"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-1)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test02"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("好看到呛着人，波特曼就是一直被过于标致的容貌给拖累的公主，这是要飞起来了，看到干巴成那样五官依然标致的前公主薇诺娜赖德又出来跑龙套好心酸"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-2)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test03"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("其实没想象中精彩，精神分裂的表现力度不太够，手法也比较陈旧，差出fight club几个档次，大半夜的愣是没让我有一丁点紧张或局促的感官反应。反倒是配乐和Natalie的精彩表演收服了我，整部电影在交响乐的烘托下活像一出慷慨悲壮的天鹅舞剧，Natalie美翻了"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-3)),
+                    CreatedOn = dateTime
+                },
+                new CommentEntity(){
+                    RequestId = uuid,
+                    CommentId = new CommentIdVO(Guid.NewGuid()),
+                    UserId = dbContext.UserAccounts.Where(d => d.Account.Equals(new AccountNameVO("test04"))).Select(d => d.UserId).First(),
+                    MovieId = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).Select(d => d.MovieId).First(),
+                    Content = new ContentVO("镜子用多了，想不精神分裂都难。故事基本就是天鹅湖的变奏，与《摔跤手》一样的手持摄影，却少了摔跤手的写实风，多了些超现实的感觉与舞台味。女主、摄影、配乐、女配都很有实力。波特曼，好运！"),
+                    CommentTime = new CommentTimeVO(dateTime.AddHours(-4)),
+                    CreatedOn = dateTime
+                },
+
        };
 
     /// <summary>

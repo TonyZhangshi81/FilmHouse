@@ -9,6 +9,9 @@ namespace FilmHouse.Web.Models
         public MovieDiscViewModel Movie { get; set; } = new MovieDiscViewModel();
 
         public List<ResourceDiscViewModel> Resources { get; set; } = new List<ResourceDiscViewModel>();
+
+        public List<CommentDiscViewModel> Comments { get; set; } = new List<CommentDiscViewModel>();
+
     }
 
 
@@ -209,6 +212,8 @@ namespace FilmHouse.Web.Models
 
             return viewModel;
         }
+
+        public int CommentCount { get; set; } = 0;
 
         public bool IsPlan { get; set; } = false;
         public bool IsFinish { get; set; } = false;

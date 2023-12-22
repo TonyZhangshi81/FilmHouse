@@ -23,8 +23,6 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         #region Initizalize
 
         private readonly IMediator _mediator;
-        private readonly ISettingProvider _settingProvider;
-        private readonly ICurrentRequestId _currentRequestId;
         private readonly ILogger<AccountController> _logger;
 
         private readonly AuthenticationSettings _authenticationSettings;
@@ -40,8 +38,6 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         public AccountController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings)
         {
             this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this._settingProvider = settingProvider ?? throw new ArgumentNullException(nameof(settingProvider));
-            this._currentRequestId = currentRequestId ?? throw new ArgumentNullException(nameof(currentRequestId));
             this._logger = logger;
 
             this._authenticationSettings = authSettings.Value;
