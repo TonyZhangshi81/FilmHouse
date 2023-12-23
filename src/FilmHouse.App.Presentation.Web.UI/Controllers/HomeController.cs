@@ -47,7 +47,7 @@ namespace FilmHouse.Web.Controllers
             var model = new HomeViewModel();
             model.Discovery.MaxPage = maxPage;
 
-            var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage, User.Identity);
+            var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage);
             var display = await _mediator.Send(command);
 
             if (display.Status != 0)

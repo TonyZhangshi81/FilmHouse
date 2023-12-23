@@ -1,17 +1,29 @@
 ﻿using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace FilmHouse.Data;
 
 public class FilmHouseDbContext : DbContext
 {
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly IServiceProvider _serviceProvider;
+
     public FilmHouseDbContext()
     {
     }
 
-    public FilmHouseDbContext(DbContextOptions options)
+    public FilmHouseDbContext(DbContextOptions options, IServiceProvider serviceProvider)
         : base(options)
     {
+        this._serviceProvider = serviceProvider;
+        this._loggerFactory = this._serviceProvider.GetRequiredService<ILoggerFactory>();
     }
 
     /*
@@ -35,6 +47,35 @@ public class FilmHouseDbContext : DbContext
     public virtual DbSet<ResourceEntity> Resources { get; set; }
     public virtual DbSet<UserAccountEntity> UserAccounts { get; set; }
     public virtual DbSet<WorkEntity> Works { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="optionsBuilder"></param>
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        // 检查是否已配置了数据库上下文。如果已配置，则直接返回，避免重复配置。
+        if (optionsBuilder.IsConfigured)
+        {
+            return;
+        }
+        // 配置使用指定的`loggerFactory`来记录数据库操作日志。
+        // 配置是否启用敏感数据记录。`false`表示禁用敏感数据记录。
+        optionsBuilder
+            .UseLoggerFactory(this._loggerFactory)
+            .EnableSensitiveDataLogging(false);
+
+        // 以下处理暂不实现!
+        // `替换了默认的`IMethodCallTranslatorProvider`服务实现为自定义的`MyMethodCallTranslatorProvider`。这可能是为了自定义LINQ查询中方法调用的转换逻辑。
+        //optionsBuilder.ReplaceService<IMethodCallTranslatorProvider, MyMethodCallTranslatorProvider>();
+        // `替换了默认的`IQuerySqlGeneratorFactory`服务实现为自定义的`MyQuerySqlGeneratorFactory`。这可能是为了自定义SQL查询生成器的逻辑。
+        //optionsBuilder.ReplaceService<IQuerySqlGeneratorFactory, MyQuerySqlGeneratorFactory>();
+        // `替换了默认的`IValueConverterSelector`服务实现为自定义的`MyValueConverterSelector`。这可能是为了自定义值转换器的选择逻辑。
+        //optionsBuilder.ReplaceService<IValueConverterSelector, MyValueConverterSelector>();
+        // `替换了默认的`IMemberTranslatorProvider`服务实现为自定义的`MyMemberTranslatorProvider`。这可能是为了自定义成员访问器（属性、字段等）的转换逻辑。
+        //optionsBuilder.ReplaceService<IMemberTranslatorProvider, MyMemberTranslatorProvider>();
+    }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

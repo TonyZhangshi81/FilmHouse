@@ -1,15 +1,15 @@
 ﻿using System.Security.Claims;
-using System.Security.Principal;
-using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using FilmHouse.Data.Spec;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace FilmHouse.Commands.Home;
 
-public record DisplayCommand(int pageIndex, int maxIndex, IIdentity user) : IRequest<DisplayContect>;
+public record DisplayCommand(int pageIndex, int maxIndex) : IRequest<DisplayContect>;
 
 public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayContect>
 {
@@ -18,16 +18,15 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
     private readonly IRepository<DiscoveryEntity> _discovery;
     private readonly IRepository<MovieEntity> _movie;
     private readonly IRepository<MarkEntity> _mark;
-    private readonly IRepository<UserAccountEntity> _userAccount;
-    private readonly ICurrentRequestId _currentRequestId;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public DisplayCommandHandler(IRepository<DiscoveryEntity> discovery, IRepository<MovieEntity> movie, IRepository<MarkEntity> mark, IRepository<UserAccountEntity> userAccount, ICurrentRequestId currentRequestId)
+    public DisplayCommandHandler(IRepository<DiscoveryEntity> discovery, IRepository<MovieEntity> movie, IRepository<MarkEntity> mark, IHttpContextAccessor httpContextAccessor)
     {
-        this._discovery = discovery;
-        this._movie = movie;
-        this._mark = mark;
-        this._userAccount = userAccount;
-        this._currentRequestId = currentRequestId;
+        this._discovery = Guard.GetNotNull(discovery, nameof(DiscoveryEntity));
+        this._movie = Guard.GetNotNull(movie, nameof(MovieEntity));
+        this._mark = Guard.GetNotNull(mark, nameof(MarkEntity));
+
+        this._httpContextAccessor = Guard.GetNotNull(httpContextAccessor, nameof(IHttpContextAccessor));
     }
 
     #endregion Initizalize
@@ -36,6 +35,7 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
     /// 
     /// </summary>
     /// <param name="request"></param>
+    /// <param name="ct"></param>
     /// <returns></returns>
     public async Task<DisplayContect> Handle(DisplayCommand request, CancellationToken ct)
     {
@@ -65,19 +65,20 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         var isFinish = false;
         var isFavor = false;
 
+        var userIdentity = this._httpContextAccessor.HttpContext.User.Identity;
         // 登陆后的用户可以设置对影片的偏好
-        if (request.user.IsAuthenticated)
+        if (userIdentity.IsAuthenticated)
         {
             // 取得登录用户的ID
-            var claimsIdentity = request.user as ClaimsIdentity;
+            var claimsIdentity = userIdentity as ClaimsIdentity;
             var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
 
             // 想看
-            isPlan = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode1, ct: ct);
+            isPlan = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode1, ct);
             // 看过
-            isFinish = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode2, ct: ct);
+            isFinish = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode2, ct);
             // 喜欢
-            isFavor = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode3, ct: ct);
+            isFavor = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode3, ct);
         }
 
         return new DisplayContect()
@@ -135,7 +136,7 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
     private async Task<bool> MarkCheckAsync(MovieIdVO movieId, UserIdVO userId, MarkTypeVO type, CancellationToken ct)
     {
         var markSpec = new MarkSpec(type, userId, target: new(movieId.AsPrimitive()));
-        var suit = await this._mark.AnyAsync(markSpec, ct: ct);
+        var suit = await this._mark.AnyAsync(markSpec, ct);
         return suit;
     }
 }

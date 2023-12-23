@@ -4,6 +4,7 @@ using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace FilmHouse.Commands.Account;
 
@@ -23,8 +24,8 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand>
     /// <param name="currentRequestId"></param>
     public CreateAccountCommandHandler(IRepository<UserAccountEntity> repo, ICurrentRequestId currentRequestId)
     {
-        _repo = repo;
-        _currentRequestId = currentRequestId;
+        _repo = Guard.GetNotNull(repo, nameof(IRepository<UserAccountEntity>));
+        _currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
     }
 
     #endregion Initizalize

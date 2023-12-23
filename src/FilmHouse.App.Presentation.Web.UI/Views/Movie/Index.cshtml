@@ -204,10 +204,20 @@
             @await Component.InvokeAsync("MovieCommentsHurdle", new { comments = Model.Comments, returnUrl = fullUrl, isFinish = Model.Movie.IsFinish })
         </div>
     </div>
+</div>
 
-
-
-
-
-
+<div class="col-sm-3 div-right">
+    @*关注度、我的评论、相关专辑*@
+    @{
+        var shortReviewViewModel = new MovieShortReviewHurdleViewModel()
+        {
+            Albums = Model.Albums,
+            PersonalReview = Model.PersonalReview,
+            FavorCount = Model.Movie.FavorCount,
+            FinishCount = Model.Movie.FinishCount,
+            IsFinish = Model.Movie.IsFinish,
+            PlanCount = Model.Movie.PlanCount
+        };
+    }
+    @await Component.InvokeAsync("MovieShortReviewHurdle", new { viewModel = shortReviewViewModel, returnUrl = fullUrl })
 </div>
