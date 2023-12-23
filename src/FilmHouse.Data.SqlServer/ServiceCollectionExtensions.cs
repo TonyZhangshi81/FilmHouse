@@ -13,11 +13,11 @@ public static class ServiceCollectionExtensions
 
         services.AddDbContext<SqlServerFilmHouseDbContext>(options => options
                 .UseLazyLoadingProxies()
-                .UseSqlServer(connectionString, builder =>
+                .UseSqlServer(connectionString, optionsBuilder =>
                 {
-                    builder.EnableRetryOnFailure(3, TimeSpan.FromSeconds(30), null);
-                }).
-                EnableDetailedErrors());
+                    optionsBuilder.EnableRetryOnFailure(3, TimeSpan.FromSeconds(30), null);
+                })
+                .EnableDetailedErrors());
 
         return services;
     }

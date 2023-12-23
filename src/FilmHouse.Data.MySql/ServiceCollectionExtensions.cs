@@ -11,11 +11,11 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped(typeof(IRepository<>), typeof(MySqlDbContextRepository<>));
 
-        services.AddDbContext<MySqlFilmHouseDbContext>(optionsAction => optionsAction
+        services.AddDbContext<MySqlFilmHouseDbContext>(options => options
                     .UseLazyLoadingProxies()
-                    .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), builder =>
+                    .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), optionsBuilder =>
                     {
-                        builder.EnableRetryOnFailure(3, TimeSpan.FromSeconds(30), null);
+                        optionsBuilder.EnableRetryOnFailure(3, TimeSpan.FromSeconds(30), null);
                     })
                     .EnableDetailedErrors());
 

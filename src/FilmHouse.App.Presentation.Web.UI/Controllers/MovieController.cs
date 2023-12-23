@@ -90,6 +90,20 @@ public class MovieController : Controller
                 model.Comments.Add(CommentDiscViewModel.FromEntity(item));
             }
         }
+        // 个人评论
+        if(display.PersonalReview != null)
+        {
+            model.PersonalReview = CommentDiscViewModel.FromEntity(display.PersonalReview);
+        }
+
+        // 当前影片相关的影集
+        if (display.Albums.Any())
+        {
+            foreach (var item in display.Albums)
+            {
+                model.Albums.Add(AlbumDiscViewModel.FromEntity(item));
+            }
+        }
 
         return View(model);
     }

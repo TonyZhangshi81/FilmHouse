@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Text;
 using FilmHouse.Commands.Movie;
 using FilmHouse.Commands.Test.Utils;
@@ -33,12 +34,25 @@ public class DisplayCommandHandlerTest : TransactionalTestBase
         await this.DataPrepare();
 
         var movieId = this.DbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First();
-
         var result = await this.Mediator.Send(new DisplayCommand(movieId));
 
         Assert.That(result, Is.Not.Null);
+        // 评论数量
         Assert.That(result.CommentCount, Is.EqualTo(7));
+        // 被收录的影集数量
+        Assert.That(result.Albums.Count, Is.EqualTo(2));
         Assert.That(result.IsCreate, Is.True);
+        Assert.That(result.IsPlan, Is.True);
+        Assert.That(result.IsFinish, Is.True);
+        Assert.That(result.IsFavor, Is.True);
+        Assert.That(result.PlanCount, Is.EqualTo(5));
+        Assert.That(result.FinishCount, Is.EqualTo(6));
+        Assert.That(result.FavorCount, Is.EqualTo(7));
+        Assert.That(result.PersonalReview, Is.Not.Null);
+
+        // 个人评点
+        var personalReviewContent = this.DbContext.Comments.Where(d => d.MovieId == movieId && d.UserId == TestUserId).Select(d => d.Content).First();
+        Assert.That(result.PersonalReview.Content, Is.EqualTo(personalReviewContent));
     }
 
     /// <summary>
@@ -152,6 +166,14 @@ public class DisplayCommandHandlerTest : TransactionalTestBase
         // 评论
         await this.DbContext.Comments.AddRangeAsync(GetComments(uuid, sysDate, this.DbContext));
         await this.DbContext.SaveChangesAsync();
+
+        // 影集
+        await this.DbContext.Albums.AddRangeAsync(GetAlbums(uuid, sysDate, this.DbContext));
+        await this.DbContext.SaveChangesAsync();
+
+        // 标记
+        await this.DbContext.Marks.AddRangeAsync(GetMarks(uuid, sysDate, this.DbContext));
+        await this.DbContext.SaveChangesAsync();
     }
 
     /// <summary>
@@ -159,6 +181,7 @@ public class DisplayCommandHandlerTest : TransactionalTestBase
     /// </summary>
     /// <param name="uuid"></param>
     /// <param name="dateTime"></param>
+    /// <param name="dbContext"></param>
     /// <returns></returns>
     private static IEnumerable<CelebrityEntity> GetCelebrities(RequestIdVO uuid, CreatedOnVO dateTime, FilmHouseDbContext dbContext) =>
        new List<CelebrityEntity>
@@ -445,6 +468,76 @@ public class DisplayCommandHandlerTest : TransactionalTestBase
     /// </summary>
     /// <param name="uuid"></param>
     /// <param name="dateTime"></param>
+    /// <param name="dbContext"></param>
+    /// <returns></returns>
+    private static IEnumerable<AlbumEntity> GetAlbums(RequestIdVO uuid, CreatedOnVO dateTime, FilmHouseDbContext dbContext)
+    {
+        var mvId01 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First().AsPrimitive().ToString();
+        var mvId02 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).Select(d => d.MovieId).First().AsPrimitive().ToString();
+        var mvId03 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).Select(d => d.MovieId).First().AsPrimitive().ToString();
+
+        var list = new List<AlbumEntity>()
+        {
+            new(){ RequestId = uuid, AlbumId = new(Guid.NewGuid()), Title = new("影集A"), UserId = TestUserId, Items = new($"{mvId01}, {mvId02}, {mvId03}"), Summary = new("全部都在这儿"), Cover = new("Album_1.jpg"), AmountAttention = new(877), CreatedOn = dateTime },
+            new(){ RequestId = uuid, AlbumId = new(Guid.NewGuid()), Title = new("影集B"), UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test01")).Select(d => d.UserId).First(), Items = new($"{mvId01}, {mvId02}"), Summary = new("商业片A"), Cover = new("Album_1.jpg"), AmountAttention = new(11), CreatedOn = dateTime },
+            new(){ RequestId = uuid, AlbumId = new(Guid.NewGuid()), Title = new("影集C"), UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test02")).Select(d => d.UserId).First(), Items = new($"{mvId03}"), Summary = new("商业片B"), Cover = new("Album_1.jpg"), AmountAttention = new(22), CreatedOn = dateTime },
+            new(){ RequestId = uuid, AlbumId = new(Guid.NewGuid()), Title = new("影集D"), UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test03")).Select(d => d.UserId).First(), Summary = new("商业片"), Cover = new("Album_1.jpg"), AmountAttention = new(1), CreatedOn = dateTime },
+        };
+        return list;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <param name="dateTime"></param>
+    /// <param name="dbContext"></param>
+    /// <returns></returns>
+    private static IEnumerable<MarkEntity> GetMarks(RequestIdVO uuid, CreatedOnVO dateTime, FilmHouseDbContext dbContext)
+    {
+        var mvId01 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First().AsPrimitive();
+        var mvId02 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).Select(d => d.MovieId).First().AsPrimitive();
+        var mvId03 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).Select(d => d.MovieId).First().AsPrimitive();
+
+        var list = new List<MarkEntity>()
+        {
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode1, UserId = TestUserId, Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = TestUserId, Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = TestUserId, Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode4, UserId = TestUserId, Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode5, UserId = TestUserId, Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode6, UserId = TestUserId, Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = TestUserId, Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode1, UserId = TestUserId, Target = new(mvId02), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = TestUserId, Target = new(mvId02), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = TestUserId, Target = new(mvId03), CreatedOn = dateTime },
+
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode1, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test01")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode1, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test02")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode1, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test03")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode1, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test04")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test01")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test02")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test03")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test04")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test05")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test01")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test02")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test03")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test04")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test05")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test06")).Select(d => d.UserId).First(), Target = new(mvId01), CreatedOn = dateTime },
+        };
+        return list;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <param name="dateTime"></param>
     /// <returns></returns>
     private static IEnumerable<UserAccountEntity> GetUserAccounts(RequestIdVO uuid, CreatedOnVO dateTime) =>
        new List<UserAccountEntity>
@@ -548,7 +641,8 @@ public class DisplayCommandHandlerTest : TransactionalTestBase
                 ReviewStatus = ReviewStatusVO.Codes.ReviewStatusCode2,
                 PageViews = new PageViewsVO(105),
                 UserId = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("tonyzhangshi")).First().UserId,
-                CreatedOn = dateTime },
+                CreatedOn = dateTime 
+            },
 
             new MovieEntity() {
                 RequestId = uuid,

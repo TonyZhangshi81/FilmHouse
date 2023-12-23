@@ -1,0 +1,74 @@
+﻿@using FilmHouse.Core.ValueObjects;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
+@model MovieShortReviewHurdleViewModel;
+
+@{
+    var fullUrl = ViewBag.ReturnUrl;
+
+    @*关注度*@
+    <div class="panel panel-body">
+        <div class="col-xs-4 text-center" style="border-right:1px solid #CCCCCC;">
+            <div>@Model.PlanCount</div>
+            <div>想看</div>
+        </div>
+        <div class="col-xs-4 text-center" style="border-right:1px solid #CCCCCC;">
+            <div>@Model.FinishCount</div>
+            <div>已看</div>
+        </div>
+        <div class="col-xs-4 text-center">
+            <div>@Model.FavorCount</div>
+            <div>喜欢</div>
+        </div>
+    </div>
+
+    @*我的评论*@
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>我的短评</strong>&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body">
+            @if (!Model.IsFinish)
+            {
+                <p class="text-muted">Tips: 标记为已看后，可以写一句话影评。</p>
+            }
+            else
+            {
+                if (Model.PersonalReview == null)
+                {
+                    <a class="link-text" title="插入短评" data-toggle="modal" data-target="#modalCmt">插入短评</a>
+                }
+                else
+                {
+                    <span>我的短评：@Model.PersonalReview.Content</span>
+                    <a class="link-text font-small" title="删除" href="/Comment/Delete?commentId=@Model.PersonalReview.CommentId&returnurl=@fullUrl">删除</a>
+                }
+            }
+        </div>
+    </div>
+
+    @*相关专辑*@
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>相关专辑</strong>&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body">
+            @if (Model.Albums.Count == 0)
+            {
+                <div class="text-center">
+                    没有专辑包含这部电影(＃￣▽￣＃)
+                </div>
+            }
+            else
+            {
+                <ul class="list-link">
+                    @foreach (var item in Model.Albums)
+                    {
+                        <li>
+                            <a class="link-list-item" href="/Album/Detail?albumId=@item.AlbumId" title="@item.Title" target="_self">@item.Title</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+}

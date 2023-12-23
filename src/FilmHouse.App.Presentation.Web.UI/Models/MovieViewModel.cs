@@ -12,8 +12,10 @@ namespace FilmHouse.Web.Models
 
         public List<CommentDiscViewModel> Comments { get; set; } = new List<CommentDiscViewModel>();
 
-    }
+        public List<AlbumDiscViewModel> Albums { get; set; } = new List<AlbumDiscViewModel>();
 
+        public CommentDiscViewModel PersonalReview { get; set; }
+    }
 
     public class MovieDiscViewModel
     {

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Configuration;
+using System.Globalization;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -6,25 +7,26 @@ using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using AspNetCoreRateLimit;
 using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.Presentation.Web.Auth;
+using FilmHouse.Core.Presentation.Web.Health;
+using FilmHouse.Core.Presentation.Web.SecurityHeaders;
 using FilmHouse.Core.Utils;
+using FilmHouse.Data;
 using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
-using FilmHouse.Core.Presentation.Web.Health;
-using FilmHouse.Core.Presentation.Web.SecurityHeaders;
 using FilmHouse.Web;
 using FilmHouse.Web.Configuration;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.WebEncoders;
 using Microsoft.Net.Http.Headers;
 using NLog.Web;
 using Spectre.Console;
 using Encoder = FilmHouse.Web.Configuration.Encoder;
-using FilmHouse.Core.Presentation.Web.Auth;
-using System.Security.Principal;
 
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -221,19 +223,8 @@ void ConfigureServices(IServiceCollection services)
     // HttpContext.User认证状态取得的方法注入
     services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-    switch (dbType!.ToLower())
-    {
-        case "mysql":
-            services.AddMySqlStorage(connStr!);
-            break;
-        case "postgresql":
-            services.AddPostgreSqlStorage(connStr!);
-            break;
-        case "sqlserver":
-        default:
-            services.AddSqlServerStorage(connStr!);
-            break;
-    }
+    // 配置数据库
+    services.AddDataBaseSqlStorage(dbType, connStr);
 
     /*
     services.AddIdentity<UserEntity, UserRoleEntity>(opt =>
@@ -252,6 +243,8 @@ void ConfigureServices(IServiceCollection services)
         .AddDefaultTokenProviders()
         .AddEntityFrameworkStores<FilmHouseDbContext>();
     */
+
+    services.AddScoped<IServiceProvider>(provider => provider.GetService<IServiceProvider>());
 }
 
 async Task FirstRun()

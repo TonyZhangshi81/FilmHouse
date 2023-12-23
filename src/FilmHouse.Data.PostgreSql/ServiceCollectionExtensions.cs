@@ -19,9 +19,9 @@ public static class ServiceCollectionExtensions
 
         services.AddDbContext<PostgreSqlFilmHouseDbContext>(options => options
                 .UseLazyLoadingProxies()
-                .UseNpgsql(connectionString, options =>
+                .UseNpgsql(connectionString, optionsBuilder =>
                 {
-                    options.EnableRetryOnFailure(3, TimeSpan.FromSeconds(30), null);
+                    optionsBuilder.EnableRetryOnFailure(3, TimeSpan.FromSeconds(30), null);
                 })
                 .EnableDetailedErrors());
 

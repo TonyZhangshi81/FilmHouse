@@ -12,7 +12,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 资源名（50位文本）的值对象类。
+    /// 资源名（100位文本）的值对象类。
     /// </summary>
     [JsonConverter(typeof(ResourceNameJsonConverter))]
     [ValueConverter(typeof(ResourceNameValueConverter), typeof(ResourceNameArrayValueConverter))]
@@ -26,12 +26,12 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "ResourceName(size:50)";
+        public new const string TypeName = "ResourceName(size:100)";
 
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 50;
+        public const int Size = 100;
 
         /// <summary>
         /// <see cref="ResourceNameVO"/>的新实例。

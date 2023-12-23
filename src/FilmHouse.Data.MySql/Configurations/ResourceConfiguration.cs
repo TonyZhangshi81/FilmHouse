@@ -40,14 +40,14 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 
         builder.Property(e => e.Name)
             .IsRequired()
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50)
+            .HasColumnType("varchar(100)")
+            .HasMaxLength(100)
             .HasConversion<ResourceNameVO.ResourceNameValueConverter>();
 
         builder.Property(e => e.Content)
             .IsRequired()
-            .HasColumnType("varchar(400)")
-            .HasMaxLength(400)
+            .HasColumnType("varchar(2000)")
+            .HasMaxLength(2000)
             .HasConversion<ResourceContentVO.ResourceContentValueConverter>();
 
         builder.Property(e => e.Size)
