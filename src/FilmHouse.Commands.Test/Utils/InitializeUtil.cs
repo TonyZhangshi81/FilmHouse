@@ -74,6 +74,8 @@ namespace FilmHouse.Commands.Test.Utils
                             break;
                     }
 
+                    services.AddScoped<IServiceProvider>(provider => provider.GetService<IServiceProvider>());
+
                     if (setupServicesAction != null)
                     {
                         // 测试类侧的服务添加注册处理的实施

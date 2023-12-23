@@ -2,6 +2,7 @@
 @using FilmHouse.Core.Services.Configuration;
 @using Microsoft.AspNetCore.Http.Extensions;
 @using Microsoft.AspNetCore.Http;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
 @model FilmHouse.Web.Models.MovieViewModel
 
@@ -17,8 +18,8 @@
 }
 
 @section Scripts {
-    <script src="~/lib/bundles/jquery.smooth-scroll.js" asp-append-version="true" type="text/javascript"></script>
-    <script src="~/js/Home/Index.js" asp-append-version="true" defer="defer"></script>
+    <script src="~/lib/smoothscroll/jquery.smooth-scroll.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/js/Movie/Index.js" asp-append-version="true" defer="defer"></script>
 }
 
 <div class="modal fade" id="modalCmt" tabindex="-1" role="dialog"
@@ -58,39 +59,20 @@
             <strong>@Model.Movie.Title&nbsp;&nbsp;&nbsp;&nbsp;@Model.Movie.TitleEn</strong><small style="display:inline-block;">&nbsp;&nbsp;&nbsp;&nbsp;(@Model.Movie.Year)</small>
         </div>
         <div style="margin-bottom:10px;">
-            @if (!Model.Movie.IsPlan)
+            <!-- 电影操作栏 -->
+            @{
+                var actionBarViewModel = new FilmHouse.App.Presentation.Web.UI.Models.Components.MovieActionBarViewModel()
             {
-                <a class="btn btn-mark" title="想看" href="/Mark/Create?target=@Model.Movie.MovieId&type=1&returnurl=@fullUrl"><span class="fa fa-clock-o" aria-hidden="true"></span> 想看</a>
+                DoubanID = Model.Movie.DoubanID,
+                MovieId = Model.Movie.MovieId,
+                IsCreate = Model.Movie.IsCreate,
+                IsFavor = Model.Movie.IsFavor,
+                IsFinish = Model.Movie.IsFinish,
+                IsPlan = Model.Movie.IsPlan,
+            };
             }
-            else
-            {
-                <a class="btn btn-mark-inverse" title="取消想看" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=1&returnurl=@fullUrl"><span class="fa fa-clock-o" aria-hidden="true"></span> 想看</a>
-            }
-            @if (!Model.Movie.IsFinish)
-            {
-                <a class="btn btn-mark" title="看过" href="/Mark/Create?target=@Model.Movie.MovieId&type=2&returnurl=@fullUrl"><span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过</a>
-            }
-            else
-            {
-                <a class="btn btn-mark-inverse" title="取消看过" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=2&returnurl=@fullUrl"><span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过</a>
-            }
-            @if (!Model.Movie.IsFavor)
-            {
-                <a class="btn btn-mark" title="喜欢" href="/Mark/Create?target=@Model.Movie.MovieId&type=3&returnurl=@fullUrl"><span class="fa fa-heart-o" aria-hidden="true"></span> 喜欢</a>
-            }
-            else
-            {
-                <a class="btn btn-mark-inverse" title="取消喜欢" href="/Mark/Cancel?target=@Model.Movie.MovieId&type=3&returnurl=@fullUrl" aria-hidden="true"><span class="fa fa-heart-o"></span> 喜欢</a>
-            }
-            @if (Model.Movie.IsCreate)
-            {
-                <a class="btn btn-mark tipup" href="/Movie/Edit?id=@Model.Movie.MovieId" title="修改 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                if (Model.Movie.DoubanID != null && !string.IsNullOrEmpty(Model.Movie.DoubanID.AsPrimitive()))
-                {
-                    <a class="btn btn-mark tipup" href="/Movie/Refresh?id=@Model.Movie.MovieId" title="更新 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-refresh" aria-hidden="true"></i></a>
-                }
-                <a class="btn btn-mark tipup" href="/Movie/Delete?id=@Model.Movie.MovieId" title="删除 @Model.Movie.Title" data-toggle="tooltip" data-placement="top"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-            }
+            @* 操作：想看、取消想看、看过、取消看过、喜欢、取消喜欢、修改、更新、删除 *@
+            @await Component.InvokeAsync("MovieActionBar", new { viewModel = actionBarViewModel, returnUrl = fullUrl })
         </div>
     </div>
 
@@ -105,6 +87,7 @@
 </div>
 
 <div class="col-sm-9 no-padding">
+
     @*详情*@
     <div class="panel panel-default" id="details">
         <div class="panel-heading text-center">
@@ -137,27 +120,104 @@
                     @Html.DisplayFor(model => model.Movie.Durations)
                 </li>
                 <li>
-                    <span style="color:#808080;">类型:</span>
-                    @Html.DisplayFor(model => model.Movie.Genres)
+                    @* 类型 *@
+                    @await Component.InvokeAsync("MovieGenresHurdle", new { genres = Model.Movie.GenresValue })
                 </li>
+
+                <li>
+                    @* 制片国家/地区 *@
+                    @await Component.InvokeAsync("MovieCountriesHurdle", new { genres = Model.Movie.CountriesValue })
+                </li>
+
+                <li>
+                    @* 语言 *@
+                    @await Component.InvokeAsync("MovieLanguagesHurdle", new { genres = Model.Movie.LanguagesValue })
+                </li>
+
+                <li>
+                    <span style="color:#808080;">评分:</span>
+                    @Html.DisplayFor(model => model.Movie.Rating)
+                </li>
+
+                @if (Model.Movie.DoubanID != null && !string.IsNullOrWhiteSpace(Model.Movie.DoubanID.AsPrimitive()))
+                {
+                    <li>
+                        <span style="color:#808080;">豆瓣链接:</span>
+                        <a href="https://movie.douban.com/subject/@Model.Movie.DoubanID/" class="link-text" target="_blank">@Model.Movie.DoubanID</a>
+                    </li>
+                }
+
+                @if (Model.Movie.IMDbID != null && !string.IsNullOrWhiteSpace(Model.Movie.IMDbID.AsPrimitive()))
+                {
+                    <li>
+                        <span style="color:#808080;">IMDb链接:</span>
+                        <a href="http://www.imdb.com/title/@Model.Movie.IMDbID/" class="link-text" target="_blank">@Model.Movie.IMDbID</a>
+                    </li>
+                }
 
             </ul>
         </div>
     </div>
 
+    @*简介*@
+    <div class="panel panel-default" id="summary">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>剧情介绍</strong>&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body" id="divbody">
+            @await Component.InvokeAsync("MovieSummaryHurdle", new { summary = Model.Movie.Summary })
+        </div>
+    </div>
 
+    @*资源*@
+    <div class="panel panel-default" id="resources">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>所有资源</strong>&nbsp;&nbsp;————
+            <div class="pull-right" style="margin-top:-7px;">
+                <a class="btn btn-default btn-mark tipup" href="/Ask/Create?id=@Model.Movie.MovieId" title="为 @Model.Movie.Title 求资源" data-toggle="tooltip" data-placement="top">
+                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                </a>
+                <a class="btn btn-default btn-mark tipup" href="/Resource/Create?id=@Model.Movie.MovieId" title="为 @Model.Movie.Title 添加资源" data-toggle="tooltip" data-placement="top">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+        <div class="panel-body">
+            @{
+                var resources = new MovieResourcesHurdleViewModel()
+            {
+                MovieId = Model.Movie.MovieId,
+                Title = Model.Movie.Title,
+                Resources = Model.Resources
+            };
+            }
+            @await Component.InvokeAsync("MovieResourcesHurdle", new { movieResources = resources, returnUrl = fullUrl })
+        </div>
+    </div>
 
+    @*评论*@
+    <div class="panel panel-default" id="comments">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>@Model.Movie.Title 的短评</strong>(<a class="link-text" href="/Movie/Comment?movieId=@Model.Movie.MovieId" target="_self">全部 @Model.Movie.CommentCount 条</a>)&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body">
+            @await Component.InvokeAsync("MovieCommentsHurdle", new { comments = Model.Comments, returnUrl = fullUrl, isFinish = Model.Movie.IsFinish })
+        </div>
+    </div>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
+<div class="col-sm-3 div-right">
+    @*关注度、我的评论、相关专辑*@
+    @{
+        var shortReviewViewModel = new MovieShortReviewHurdleViewModel()
+        {
+            Albums = Model.Albums,
+            PersonalReview = Model.PersonalReview,
+            FavorCount = Model.Movie.FavorCount,
+            FinishCount = Model.Movie.FinishCount,
+            IsFinish = Model.Movie.IsFinish,
+            PlanCount = Model.Movie.PlanCount
+        };
+    }
+    @await Component.InvokeAsync("MovieShortReviewHurdle", new { viewModel = shortReviewViewModel, returnUrl = fullUrl })
 </div>

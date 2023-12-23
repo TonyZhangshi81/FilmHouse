@@ -11,9 +11,15 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
 {
     public void Configure(EntityTypeBuilder<MarkEntity> builder)
     {
+        builder.ToTable("Mark");
+
         builder.HasKey(e => new { e.MarkId }).HasName("mark_ix00");
 
-        builder.ToTable("Mark");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Marks)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Mark_UserAccount");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()

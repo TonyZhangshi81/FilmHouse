@@ -10,10 +10,16 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
 {
     public void Configure(EntityTypeBuilder<DiscoveryEntity> builder)
     {
+        builder.ToTable("Discovery");
+		
         builder.HasKey(e => new { e.DiscoveryId });
         builder.HasAnnotation("SqlServer:Name", "discovery_ix00");
 
-        builder.ToTable("Discovery");
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Discoveries)
+            .HasForeignKey(d => d.MovieId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .HasConstraintName("FK_Discovery_Movie");
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -49,13 +55,6 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
-
-
-        builder.HasOne(d => d.Movie)
-            .WithMany(p => p.Discoveries)
-            .HasForeignKey(d => d.MovieId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Discovery_Movie");
 
     }
 }

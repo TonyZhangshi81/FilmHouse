@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace FilmHouse.Core.ValueObjects
 {
@@ -287,7 +288,7 @@ namespace FilmHouse.Core.ValueObjects
         // UnitGenerateOptions.ParseMethod
 
         /// <summary>
-        /// 将字符串形式的值转换为等价&lt;see cref = " ResourceSizevo " / & gt;转换成句式。
+        /// 将字符串形式的值转换为等价<see cref = " ResourceSizevo " />转换成句式。
         /// </summary>
         /// <param name="s">字符串</param>
         /// <returns><see cref="ResourceSizeVO"/>型的值</returns>
@@ -297,7 +298,7 @@ namespace FilmHouse.Core.ValueObjects
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价&lt;see cref = " ResourceSizevo " / & gt;转换成句式，返回表示转换成功与否的值。
+        /// 将字符串形式的值转换为等价<see cref = " ResourceSizevo " />转换成句式，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
         /// <param name="result"><see cref="ResourceSizeVO"/>型的值</param>
@@ -431,7 +432,7 @@ namespace FilmHouse.Core.ValueObjects
         // UnitGenerateOptions.Comparable
 
         /// <summary>
-        /// 将该实例&lt;paramref name = " other " / & gt;和比较。
+        /// 将该实例<paramref name="other" />和比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>

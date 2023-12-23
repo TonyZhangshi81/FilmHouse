@@ -38,6 +38,5 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("timestamp(3)")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
-
     }
 }

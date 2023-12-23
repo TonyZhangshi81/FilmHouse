@@ -1,5 +1,7 @@
 ﻿using FilmHouse.Data.MySql.Configurations;
+using FilmHouse.Data.MySql.Infrastructure.Data.Query;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace FilmHouse.Data.MySql;
 
@@ -9,9 +11,21 @@ public class MySqlFilmHouseDbContext : FilmHouseDbContext
     {
     }
 
-    public MySqlFilmHouseDbContext(DbContextOptions options)
-        : base(options)
+    public MySqlFilmHouseDbContext(DbContextOptions options, IServiceProvider serviceProvider)
+        : base(options, serviceProvider)
     {
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="optionsBuilder"></param>
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        // `替换了默认的`IMethodCallTranslatorProvider`服务实现为自定义的`FilmHouseMethodCallTranslatorProvider`。这可能是为了自定义LINQ查询中方法调用的转换逻辑。
+        optionsBuilder.ReplaceService<IMethodCallTranslatorProvider, FilmHouseMethodCallTranslatorProvider>();
+
+        base.OnConfiguring(optionsBuilder);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

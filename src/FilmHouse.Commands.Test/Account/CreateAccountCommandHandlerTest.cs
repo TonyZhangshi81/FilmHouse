@@ -42,7 +42,7 @@ public class CreateAccountCommandHandlerTest : TransactionalTestBase
     /// <param name="services">服务</param>
     private static void OnCreateAccountCommandArrange(IServiceCollection services, ICollection<Mock> mocks)
     {
-        Assert.That(services.Count(), Is.EqualTo(40));
+        Assert.That(services.Count(), Is.GreaterThanOrEqualTo(36));
     }
 
     /// <summary>

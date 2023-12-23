@@ -15,7 +15,10 @@ public class PasswordSignInCommandHandler : IRequestHandler<PasswordSignInComman
 
     private readonly IRepository<UserAccountEntity> _repo;
 
-    public PasswordSignInCommandHandler(IRepository<UserAccountEntity> repo) => _repo = repo;
+    public PasswordSignInCommandHandler(IRepository<UserAccountEntity> repo)
+    {
+        _repo = Guard.GetNotNull(repo, nameof(IRepository<UserAccountEntity>));
+    }
 
     #endregion Initizalize
 
@@ -26,6 +29,9 @@ public class PasswordSignInCommandHandler : IRequestHandler<PasswordSignInComman
     /// <returns></returns>
     public async Task<SignInContect> Handle(PasswordSignInCommand request, CancellationToken ct)
     {
+        Guard.RequiresNotNull<AccountNameVO, ArgumentNullException>(request.AccountName);
+        Guard.RequiresNotNull<PasswordHashVO, ArgumentNullException>(request.InputPassword);
+
         var userAccount = await this._repo.GetAsync(d => d.Account == request.AccountName);
 
         if (userAccount == null)

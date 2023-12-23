@@ -34,6 +34,22 @@ namespace FilmHouse.Core.ValueObjects
         public const int Size = 50;
 
         /// <summary>
+        /// 提供代码组持有的代码值的常数定义。
+        /// </summary>
+        public static class Keys
+        {
+            public static readonly ConfigKeyVO Name = new("WebSiteSettings:Name");
+            public static readonly ConfigKeyVO SubTitle = new("WebSiteSettings:SubTitle");
+            public static readonly ConfigKeyVO Version = new("WebSiteSettings:Version");
+            public static readonly ConfigKeyVO WebpagesEnabled = new("WebSiteSettings:WebpagesEnabled");
+            public static readonly ConfigKeyVO ClientValidationEnabled = new("WebSiteSettings:ClientValidationEnabled");
+            public static readonly ConfigKeyVO UnobtrusiveJavaScriptEnabled = new("WebSiteSettings:UnobtrusiveJavaScriptEnabled");
+            public static readonly ConfigKeyVO HomeDiscoveryMaxPage = new("Home:Discovery:MaxPage");
+            public static readonly ConfigKeyVO MovieSummaryShort = new("Movie:Summary:Short");
+            public static readonly ConfigKeyVO MovieCommentMax = new("Movie:Comment:Max");
+        }
+
+        /// <summary>
         /// <see cref="ConfigKeyVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>

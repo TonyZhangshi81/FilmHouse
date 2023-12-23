@@ -1,0 +1,59 @@
+﻿@using FilmHouse.App.Presentation.Web.UI.Models.Components
+@model MovieActionBarViewModel
+
+@{
+    var fullUrl = ViewBag.ReturnUrl;
+
+    @if (!Model.IsPlan)
+    {
+        <a class="btn btn-mark" title="想看" href="/Mark/Create?target=@Model.MovieId&type=1&returnurl=@fullUrl">
+            <span class="fa fa-clock-o" aria-hidden="true"></span> 想看
+        </a>
+    }
+    else
+    {
+        <a class="btn btn-mark-inverse" title="取消想看" href="/Mark/Cancel?target=@Model.MovieId&type=1&returnurl=@fullUrl">
+            <span class="fa fa-clock-o" aria-hidden="true"></span> 想看
+        </a>
+    }
+    @if (!Model.IsFinish)
+    {
+        <a class="btn btn-mark" title="看过" href="/Mark/Create?target=@Model.MovieId&type=2&returnurl=@fullUrl">
+            <span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过
+        </a>
+    }
+    else
+    {
+        <a class="btn btn-mark-inverse" title="取消看过" href="/Mark/Cancel?target=@Model.MovieId&type=2&returnurl=@fullUrl">
+            <span class="fa fa-check-circle-o" aria-hidden="true"></span> 看过
+        </a>
+    }
+    @if (!Model.IsFavor)
+    {
+        <a class="btn btn-mark" title="喜欢" href="/Mark/Create?target=@Model.MovieId&type=3&returnurl=@fullUrl">
+            <span class="fa fa-heart-o" aria-hidden="true"></span> 喜欢
+        </a>
+    }
+    else
+    {
+        <a class="btn btn-mark-inverse" title="取消喜欢" href="/Mark/Cancel?target=@Model.MovieId&type=3&returnurl=@fullUrl" aria-hidden="true">
+            <span class="fa fa-heart-o"></span> 喜欢
+        </a>
+    }
+    @if (Model.IsCreate)
+    {
+        <a class="btn btn-mark tipup" href="/Movie/Edit?movieId=@Model.MovieId" title="修改 @Model.Title" data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-edit" aria-hidden="true"></i>
+        </a>
+        if (Model.DoubanID != null && !string.IsNullOrEmpty(Model.DoubanID.AsPrimitive()))
+        {
+            <a class="btn btn-mark tipup" href="/Movie/Refresh?movieId=@Model.MovieId" title="更新 @Model.Title" data-toggle="tooltip" data-placement="top">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </a>
+        }
+        <a class="btn btn-mark tipup" href="/Movie/Delete?movieId=@Model.MovieId" title="删除 @Model.Title" data-toggle="tooltip" data-placement="top">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </a>
+    }
+
+}

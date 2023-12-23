@@ -1,0 +1,50 @@
+﻿@using FilmHouse.Core.ValueObjects;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
+@model List<CommentDiscViewModel>
+
+@{
+    var fullUrl = ViewBag.ReturnUrl;
+    var isFinish = ViewBag.IsFinish;
+
+    @if (Model.Count == 0)
+    {
+        <div class="text-center">
+            还没有人评论过这部电影(＃￣▽￣＃)
+            @if (isFinish)
+            {
+                <span>,</span>
+                <a class="link-text" title="插入短评" data-toggle="modal" data-target="#modalCmt">评论一下吧</a>
+            }
+        </div>
+    }
+    @foreach (var item in Model)
+    {
+        <div class="comment-item">
+            <div class="avatar">
+                <a class="link-avatar" title="@item.Account" href="/People/Index?id=@item.UserId&returnurl=@fullUrl" target="_self">
+                    <img src="~/Content/User/Avatar/@item.UserAvatar" style="width: 54px;height: 54px; border-radius: 27px;">
+                </a>
+            </div>
+            <div class="comment">
+                <div>
+                    <span>
+                        <a title="@item.Account" href="/People/Index?id=@item.UserId" class="link-text" target="_self">@item.Account</a>
+                    </span>
+                    <span>
+                        &nbsp;&nbsp; @item.CommentTime
+                    </span>
+                </div>
+                <p class="">
+                    @item.Content
+                </p>
+            </div>
+        </div>
+    }
+    @if (Model.Count != 0)
+    {
+        <div>
+            <a class="link-text" href="/Movie/Comment?movieId=@Model.ElementAt(0).MovieId" target="_self">查看全部</a>
+        </div>
+    }
+
+}

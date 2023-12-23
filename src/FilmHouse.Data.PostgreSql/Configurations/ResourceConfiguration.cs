@@ -11,9 +11,20 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 {
     public void Configure(EntityTypeBuilder<ResourceEntity> builder)
     {
+        builder.ToTable("Resource");
+
         builder.HasKey(e => new { e.ResourceId }).HasName("resource_ix00");
 
-        builder.ToTable("Resource");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Resources)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Resource_UserAccount");
+
+        builder.HasOne(d => d.Movie)
+            .WithMany(p => p.Resources)
+            .HasForeignKey(d => d.MovieId)
+            .HasConstraintName("FK_Resource_Movie");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -27,14 +38,14 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 
         builder.Property(e => e.Name)
             .IsRequired()
-            .HasColumnType("varchar(50)")
-            .HasMaxLength(50)
+            .HasColumnType("varchar(100)")
+            .HasMaxLength(100)
             .HasConversion<ResourceNameVO.ResourceNameValueConverter>();
 
         builder.Property(e => e.Content)
             .IsRequired()
-            .HasColumnType("varchar(400)")
-            .HasMaxLength(400)
+            .HasColumnType("varchar(2000)")
+            .HasMaxLength(2000)
             .HasConversion<ResourceContentVO.ResourceContentValueConverter>();
 
         builder.Property(e => e.Size)

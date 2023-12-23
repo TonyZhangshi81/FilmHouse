@@ -35,6 +35,25 @@ namespace FilmHouse.Core.ValueObjects
         public const int Size = 20;
 
         /// <summary>
+        /// 提供代码组持有的代码值的常数定义。
+        /// </summary>
+        public static class Codes
+        {
+            /// <summary>
+            /// 「國家地區」
+            /// </summary>
+            public static readonly CodeGroupVO GroupCountry = new("Country");
+            /// <summary>
+            /// 「電影類別」
+            /// </summary>
+            public static readonly CodeGroupVO GroupMovieGenre = new("GenreMovie");
+            /// <summary>
+            /// 「語言」
+            /// </summary>
+            public static readonly CodeGroupVO GroupLanguage = new("Language");
+        }
+
+        /// <summary>
         /// 获取值对象包含的原始类型。
         /// </summary>
         public string AsPrimitive() => this._value;

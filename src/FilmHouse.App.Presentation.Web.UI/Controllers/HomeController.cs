@@ -1,12 +1,11 @@
-﻿using FilmHouse.Commands.Home;
+﻿using FilmHouse.Core.Services.Codes;
+using FilmHouse.Core.Services.Configuration;
+using FilmHouse.Core.Utils;
+using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Web.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using FilmHouse.Core.Services.Configuration;
-using FilmHouse.Core.Utils.Data;
-using FilmHouse.Core.Services.Codes;
-using FilmHouse.Core.DependencyInjection;
-using Microsoft.AspNetCore.Http.Features;
 
 namespace FilmHouse.Web.Controllers
 {
@@ -16,20 +15,20 @@ namespace FilmHouse.Web.Controllers
 
         private readonly IMediator _mediator;
         private readonly ISettingProvider _settingProvider;
-        private readonly ICurrentRequestId _currentRequestId;
+        private readonly ICodeProvider _codeProvider;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="settingProvider"></param>
-        /// <param name="currentRequestId"></param>
+        /// <param name="codeProvider"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public HomeController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId)
+        public HomeController(IMediator mediator, ISettingProvider settingProvider, ICodeProvider codeProvider)
         {
-            this._mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            this._settingProvider = settingProvider ?? throw new ArgumentNullException(nameof(settingProvider));
-            this._currentRequestId = currentRequestId ?? throw new ArgumentNullException(nameof(currentRequestId));
+            this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
+            this._settingProvider = Guard.GetNotNull(settingProvider, nameof(ISettingProvider));
+            this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICodeProvider));
         }
 
         #endregion Initizalize
@@ -48,7 +47,7 @@ namespace FilmHouse.Web.Controllers
             var model = new HomeViewModel();
             model.Discovery.MaxPage = maxPage;
 
-            var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage, User.Identity);
+            var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage);
             var display = await _mediator.Send(command);
 
             if (display.Status != 0)
@@ -57,6 +56,7 @@ namespace FilmHouse.Web.Controllers
             }
 
             model.Discovery = HomeDiscViewModel.FromEntity(display.Discoveries.ElementAt(0));
+            model.Discovery.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => _.Name).ToList();
             // 最新栏目
             model.News = HomeViewModel.FromEntity(display.NewMovies);
             // 热门栏目

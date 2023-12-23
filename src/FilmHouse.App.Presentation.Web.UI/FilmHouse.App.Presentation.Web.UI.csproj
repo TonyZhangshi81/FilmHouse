@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <Folder Include="DataEncrpytionKeys\" />
+    <Folder Include="Logs\" />
     <Folder Include="Middleware\" />
   </ItemGroup>
 

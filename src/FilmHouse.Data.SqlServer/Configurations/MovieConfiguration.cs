@@ -11,10 +11,17 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 {
     public void Configure(EntityTypeBuilder<MovieEntity> builder)
     {
+        builder.ToTable("Movie");
+
         builder.HasKey(e => new { e.MovieId });
         builder.HasAnnotation("SqlServer:Name", "movie_ix00");
 
-        builder.ToTable("Movie");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Movies)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.NoAction)
+            .HasConstraintName("FK_Movie_UserAccount");
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -53,8 +60,8 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasConversion<WritersNamesVO.WritersNamesValueConverter>();
 
         builder.Property(e => e.Casts)
-            .HasColumnType("varchar(500)")
-            .HasMaxLength(500)
+            .HasColumnType("varchar(1000)")
+            .HasMaxLength(1000)
             .HasConversion<CastsNamesVO.CastsNamesValueConverter>();
 
         builder.Property(e => e.DirectorsId)
@@ -68,8 +75,8 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasConversion<WritersIdVO.WritersIdValueConverter>();
 
         builder.Property(e => e.CastsId)
-            .HasColumnType("varchar(1000)")
-            .HasMaxLength(1000)
+            .HasColumnType("varchar(1500)")
+            .HasMaxLength(1500)
             .HasConversion<CastsIdVO.CastsIdValueConverter>();
 
         builder.Property(e => e.Year)
@@ -164,13 +171,6 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
         builder.Property(e => e.UpDatedOn)
             .HasColumnType("datetime")
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
-
-
-        builder.HasOne(d => d.UserAccount)
-            .WithMany(p => p.Movies)
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Movie_UserAccount");
 
     }
 }

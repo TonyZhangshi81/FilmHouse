@@ -1,0 +1,10 @@
+﻿@using FilmHouse.Core.ValueObjects;
+@model List<CodeValueVO>
+
+@{
+    <span style="color:#808080;">类型:</span>
+    foreach (var item in Model)
+    {
+        <span>@item</span>
+    }
+}

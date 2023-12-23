@@ -11,10 +11,17 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 {
     public void Configure(EntityTypeBuilder<AlbumEntity> builder)
     {
+        builder.ToTable("Album");
+		
         builder.HasKey(e => new { e.AlbumId });
         builder.HasAnnotation("SqlServer:Name", "album_ix00");
 
-        builder.ToTable("Album");
+        builder.HasOne(d => d.UserAccount)
+            .WithMany(p => p.Albums)
+            .HasForeignKey(d => d.UserId)
+            .HasConstraintName("FK_Album_UserAccount")
+            .OnDelete(DeleteBehavior.NoAction);
+
 
         builder.Property(e => e.RequestId)
             .IsRequired()
@@ -66,11 +73,7 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
             .HasConversion<UpDatedOnVO.UpDatedOnValueConverter>();
 
 
-        builder.HasOne(d => d.UserAccount)
-            .WithMany(p => p.Albums)
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Album_UserAccount");
+
 
     }
 }
