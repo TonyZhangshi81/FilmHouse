@@ -50,7 +50,7 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
             .IsRequired()
             .HasColumnType("char(36)")
             .HasMaxLength(36)
-            .HasConversion<MarkTargetVO.MarkTargetValueConverter>();
+            .HasConversion<MarkTargetIdVO.MarkTargetValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

@@ -47,7 +47,7 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
         builder.Property(e => e.Target)
             .IsRequired()
             .HasColumnType("uniqueidentifier")
-            .HasConversion<MarkTargetVO.MarkTargetValueConverter>();
+            .HasConversion<MarkTargetIdVO.MarkTargetValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

@@ -15,7 +15,7 @@ namespace FilmHouse.Core.ValueObjects
     [System.ComponentModel.TypeConverter(typeof(MarkTargetTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class MarkTargetVO : IEquatable<MarkTargetVO>, IComparable<MarkTargetVO>, IFormattable, IValue<System.Guid>, IValueObject
+    public partial class MarkTargetIdVO : IEquatable<MarkTargetIdVO>, IComparable<MarkTargetIdVO>, IFormattable, IValue<System.Guid>, IValueObject
     {
         private readonly System.Guid _value;
 
@@ -40,10 +40,10 @@ namespace FilmHouse.Core.ValueObjects
         public object AsPrimitiveObject() => this.AsPrimitive();
 
         /// <summary>
-        /// <see cref="MarkTargetVO"/>
+        /// <see cref="MarkTargetIdVO"/>
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public MarkTargetVO(System.Guid value)
+        public MarkTargetIdVO(System.Guid value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -55,21 +55,21 @@ namespace FilmHouse.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="System.Guid"/><see cref="MarkTargetVO"/>
+        /// <see cref="System.Guid"/><see cref="MarkTargetIdVO"/>
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator System.Guid(MarkTargetVO value)
+        public static explicit operator System.Guid(MarkTargetIdVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="MarkTargetVO"/><see cref="System.Guid"/>
+        /// <see cref="MarkTargetIdVO"/><see cref="System.Guid"/>
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator MarkTargetVO(System.Guid value)
+        public static explicit operator MarkTargetIdVO(System.Guid value)
         {
-            return new MarkTargetVO(value);
+            return new MarkTargetIdVO(value);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in MarkTargetVO x, in MarkTargetVO y)
+        internal static bool Equals(in MarkTargetIdVO x, in MarkTargetIdVO y)
         {
             if (x is null && y is null)
             {
@@ -96,7 +96,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(MarkTargetVO other)
+        public bool Equals(MarkTargetIdVO other)
         {
             return Equals(this, other);
         }
@@ -113,9 +113,9 @@ namespace FilmHouse.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(MarkTargetVO).IsAssignableFrom(t))
+            if (typeof(MarkTargetIdVO).IsAssignableFrom(t))
             {
-                return Equals((MarkTargetVO)obj);
+                return Equals((MarkTargetIdVO)obj);
             }
             if (t == typeof(System.Guid))
             {
@@ -160,7 +160,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in MarkTargetVO x, in MarkTargetVO y)
+        public static bool operator ==(in MarkTargetIdVO x, in MarkTargetIdVO y)
         {
             return Equals(x, y);
         }
@@ -168,37 +168,37 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in MarkTargetVO x, in MarkTargetVO y)
+        public static bool operator !=(in MarkTargetIdVO x, in MarkTargetIdVO y)
         {
             return !Equals(x, y);
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="MarkTargetVO" />转换成句式。
+        /// 将字符串形式的值转换为等价<see cref="MarkTargetIdVO" />转换成句式。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <returns><see cref="MarkTargetVO"/>型的值</returns>
-        public static MarkTargetVO Parse(string s)
+        /// <returns><see cref="MarkTargetIdVO"/>型的值</returns>
+        public static MarkTargetIdVO Parse(string s)
         {
-            return new MarkTargetVO(System.Guid.Parse(s));
+            return new MarkTargetIdVO(System.Guid.Parse(s));
         }
 
         /// <summary>
-        /// 将字符串形式的值转换为等价<see cref="MarkTargetVO" />转换成句式，返回表示转换成功与否的值。
+        /// 将字符串形式的值转换为等价<see cref="MarkTargetIdVO" />转换成句式，返回表示转换成功与否的值。
         /// </summary>
         /// <param name="s">字符串</param>
-        /// <param name="result"><see cref="MarkTargetVO"/>型的值</param>
+        /// <param name="result"><see cref="MarkTargetIdVO"/>型的值</param>
         /// <returns>参数正常转换时为true。除此之外的情况是false。</returns>
-        public static bool TryParse(string s, out MarkTargetVO result)
+        public static bool TryParse(string s, out MarkTargetIdVO result)
         {
             if (System.Guid.TryParse(s, out var r))
             {
-                result = new MarkTargetVO(r);
+                result = new MarkTargetIdVO(r);
                 return true;
             }
             else
             {
-                result = default(MarkTargetVO);
+                result = default(MarkTargetIdVO);
                 return false;
             }
         }
@@ -213,7 +213,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(MarkTargetVO other)
+        public int CompareTo(MarkTargetIdVO other)
         {
             if (other == null)
             {
@@ -223,9 +223,9 @@ namespace FilmHouse.Core.ValueObjects
         }
 
 
-        private class MarkTargetJsonConverter : JsonConverter<MarkTargetVO>
+        private class MarkTargetJsonConverter : JsonConverter<MarkTargetIdVO>
         {
-            public override void Write(Utf8JsonWriter writer, MarkTargetVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, MarkTargetIdVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(System.Guid)) as JsonConverter<System.Guid>;
                 if (converter != null)
@@ -238,7 +238,7 @@ namespace FilmHouse.Core.ValueObjects
                 }
             }
 
-            public override MarkTargetVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override MarkTargetIdVO Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(System.Guid)) as JsonConverter<System.Guid>;
                 if (converter != null)
@@ -246,7 +246,7 @@ namespace FilmHouse.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return new MarkTargetVO(value);
+                        return new MarkTargetIdVO(value);
                     }
                     catch (Exception exception)
                     {
@@ -267,7 +267,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class MarkTargetValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<MarkTargetVO, System.Guid?>
+        public class MarkTargetValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<MarkTargetIdVO, System.Guid?>
         {
             /// <summary>
             /// <see cref="MarkTargetValueConverter"/>
@@ -284,7 +284,7 @@ namespace FilmHouse.Core.ValueObjects
             public MarkTargetValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new MarkTargetVO(x.Value) : null,
+                        convertFromProviderExpression: x => x != null ? new MarkTargetIdVO(x.Value) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -295,7 +295,7 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 System.Guid value => value,
-                MarkTargetVO value => value._value,
+                MarkTargetIdVO value => value._value,
                 _ => null,
             };
 
@@ -304,8 +304,8 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                MarkTargetVO value => value,
-                System.Guid value => new MarkTargetVO(value),
+                MarkTargetIdVO value => value,
+                System.Guid value => new MarkTargetIdVO(value),
                 _ => null,
             };
         }
@@ -313,7 +313,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class MarkTargetArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<MarkTargetVO[], System.Guid?[]>
+        public class MarkTargetArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<MarkTargetIdVO[], System.Guid?[]>
         {
             /// <summary>
             /// <see cref="MarkTargetArrayValueConverter"/>
@@ -330,7 +330,7 @@ namespace FilmHouse.Core.ValueObjects
             public MarkTargetArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (System.Guid?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new MarkTargetVO(_.Value)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new MarkTargetIdVO(_.Value)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -341,9 +341,9 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object, object> ConvertToProvider => (x) => x switch
             {
                 System.Guid?[] values => values,
-                MarkTargetVO[] values => values.Select(_ => _?._value).ToArray(),
+                MarkTargetIdVO[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<System.Guid?> values => values.ToArray(),
-                IEnumerable<MarkTargetVO> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<MarkTargetIdVO> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -352,10 +352,10 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object, object> ConvertFromProvider => (x) => x switch
             {
-                MarkTargetVO[] values => values,
-                System.Guid?[] values => values.Select(_ => _ == null ? null : new MarkTargetVO(_.Value)).ToArray(),
-                IEnumerable<MarkTargetVO> values => values.ToArray(),
-                IEnumerable<System.Guid?> values => values.Select(_ => _ == null ? null : new MarkTargetVO(_.Value)).ToArray(),
+                MarkTargetIdVO[] values => values,
+                System.Guid?[] values => values.Select(_ => _ == null ? null : new MarkTargetIdVO(_.Value)).ToArray(),
+                IEnumerable<MarkTargetIdVO> values => values.ToArray(),
+                IEnumerable<System.Guid?> values => values.Select(_ => _ == null ? null : new MarkTargetIdVO(_.Value)).ToArray(),
                 _ => null,
             };
         }
@@ -363,7 +363,7 @@ namespace FilmHouse.Core.ValueObjects
         // Default
         private class MarkTargetTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(MarkTargetVO);
+            private static readonly Type WrapperType = typeof(MarkTargetIdVO);
             private static readonly Type ValueType = typeof(System.Guid);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -393,17 +393,17 @@ namespace FilmHouse.Core.ValueObjects
             public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(MarkTargetVO))
+                if (t == typeof(MarkTargetIdVO))
                 {
-                    return (MarkTargetVO)value;
+                    return (MarkTargetIdVO)value;
                 }
                 if (t == typeof(System.Guid))
                 {
-                    return new MarkTargetVO((System.Guid)value);
+                    return new MarkTargetIdVO((System.Guid)value);
                 }
                 if (t == typeof(string))
                 {
-                    return new MarkTargetVO(System.Guid.Parse((string)value));
+                    return new MarkTargetIdVO(System.Guid.Parse((string)value));
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -416,7 +416,7 @@ namespace FilmHouse.Core.ValueObjects
                     return null;
                 }
 
-                if (value is MarkTargetVO wrappedValue)
+                if (value is MarkTargetIdVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {
