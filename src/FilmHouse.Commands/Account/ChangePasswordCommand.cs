@@ -19,8 +19,8 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
 
     public ChangePasswordCommandHandler(IRepository<UserAccountEntity> repo, ILogger<ChangePasswordCommandHandler> logger)
     {
-        _repo = Guard.GetNotNull(repo, nameof(IRepository<UserAccountEntity>));
-        _logger = Guard.GetNotNull(logger, nameof(ILogger<ChangePasswordCommandHandler>));
+        this._repo = Guard.GetNotNull(repo, nameof(IRepository<UserAccountEntity>));
+        this._logger = Guard.GetNotNull(logger, nameof(ILogger<ChangePasswordCommandHandler>));
     }
 
     #endregion Initizalize
@@ -29,7 +29,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
     {
         Guard.RequiresNotNull<AccountNameVO, ArgumentNullException>(request.AccountName);
 
-        var account = await _repo.GetAsync(d => d.Account == request.AccountName);
+        var account = await this._repo.GetAsync(d => d.Account == request.AccountName);
         if (account is null)
         {
             this._logger.LogError($"LocalAccountEntity with Id '{request.AccountName}' not found.");
@@ -39,7 +39,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
 
         account.PasswordHash = new(request.ClearPassword.ToHash(account.Account.AsPrimitive()));
         account.UpDatedOn = new(DateTime.Now);
-        await _repo.UpdateAsync(account, ct);
+        await this._repo.UpdateAsync(account, ct);
 
         return ChangePasswordStatus.Success;
     }

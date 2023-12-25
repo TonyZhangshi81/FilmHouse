@@ -8,7 +8,8 @@ namespace FilmHouse.Data.Spec;
 
 public sealed class MarkSpec : BaseSpecification<MarkEntity>
 {
-    public MarkSpec(MarkTypeVO markType, UserIdVO userId, MarkTargetVO target) : base(c => c.Type == markType && c.UserId == userId && c.Target == target)
+    public MarkSpec(MarkTypeVO markType, UserIdVO userId, MarkTargetVO target) 
+        : base(c => c.Type == markType && c.UserId == userId && c.Target == target)
     {
     }
 

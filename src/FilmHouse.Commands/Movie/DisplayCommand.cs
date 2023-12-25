@@ -97,11 +97,11 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
             var isAdmin = (claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value).Equals("Administrator");
 
             // 想看
-            isPlan = await MarkCheckAsync(movie.MovieId, userId, MarkTypeVO.Codes.MarkTypeCode1, ct);
+            isPlan = await this.MarkCheckAsync(movie.MovieId, userId, MarkTypeVO.Codes.MarkTypeCode1, ct);
             // 看过
-            isFinish = await MarkCheckAsync(movie.MovieId, userId, MarkTypeVO.Codes.MarkTypeCode2, ct);
+            isFinish = await this.MarkCheckAsync(movie.MovieId, userId, MarkTypeVO.Codes.MarkTypeCode2, ct);
             // 喜欢
-            isFavor = await MarkCheckAsync(movie.MovieId, userId, MarkTypeVO.Codes.MarkTypeCode3, ct);
+            isFavor = await this.MarkCheckAsync(movie.MovieId, userId, MarkTypeVO.Codes.MarkTypeCode3, ct);
 
             // 想看的人数
             planCount = await this._mark.CountAsync(d => d.Target == new MarkTargetVO(request.MovieId.AsPrimitive()) && d.Type == MarkTypeVO.Codes.MarkTypeCode1);

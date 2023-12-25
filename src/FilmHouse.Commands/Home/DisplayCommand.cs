@@ -74,14 +74,14 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
             var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
 
             // 想看
-            isPlan = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode1, ct);
+            isPlan = await this.MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode1, ct);
             // 看过
-            isFinish = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode2, ct);
+            isFinish = await this.MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode2, ct);
             // 喜欢
-            isFavor = await MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode3, ct);
+            isFavor = await this.MarkCheckAsync(movieId, userId, MarkTypeVO.Codes.MarkTypeCode3, ct);
         }
 
-        return new DisplayContect()
+        var displayContect = new DisplayContect()
         {
             Status = 0,
 
@@ -98,6 +98,7 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
             IsFinish = isFinish,
             IsFavor = isFavor,
         };
+        return displayContect;
     }
 
     private async Task<Tuple<int, int>> CalcPagination(int currentPageIndex, int maxIndex, CancellationToken ct)
