@@ -89,7 +89,7 @@ finally
 
 void WriteParameterTable()
 {
-   // 获取应用程序版本
+    // 获取应用程序版本
     var appVersion = Helper.AppVersion;
     // 创建一个表格，标题为FilmHouse.Web和.NET版本
     var table = new Spectre.Console.Table
@@ -166,7 +166,7 @@ void ConfigureServices(IServiceCollection services)
     var assemblies = StartupCore.GetAppAssemblies(true);
     services.AddLocalService(assemblies);
 
-   // 添加MediatR服务
+    // 添加MediatR服务
     services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
     // 添加选项服务，并添加HttpContextAccessor和RateLimit服务
     services.AddOptions()
@@ -186,7 +186,7 @@ void ConfigureServices(IServiceCollection services)
         options.Cookie.HttpOnly = true;
     });
 
-   // 添加数据保护服务
+    // 添加数据保护服务
     services.AddDataProtection()
             // 将数据保护密钥持久化到文件系统
             .PersistKeysToFileSystem(new DirectoryInfo(persistKeys!))
@@ -228,7 +228,7 @@ void ConfigureServices(IServiceCollection services)
     });
     */
 
-   // 添加本地化资源路径
+    // 添加本地化资源路径
     services.AddLocalization(options => options.ResourcesPath = "Resources");
     // 添加控制器，并添加自动验证的AntiforgeryTokenFilter
     services.AddControllers(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))
@@ -244,7 +244,7 @@ void ConfigureServices(IServiceCollection services)
                 //options.Conventions.AuthorizeFolder("/Admin");
             });
 
-   // 添加健康检查UI
+    // 添加健康检查UI
     services.AddHealthChecksUI()
             // 添加内存存储
             .AddInMemoryStorage();
@@ -254,7 +254,7 @@ void ConfigureServices(IServiceCollection services)
     // 添加电影厅认证
     services.AddFilmHouseAuthenticaton(builder.Configuration);
 
-   // 添加一个单例服务，用于FilmHouseHtmlEncoder
+    // 添加一个单例服务，用于FilmHouseHtmlEncoder
     services.AddSingleton(Encoder.FilmHouseHtmlEncoder);
 
     // 添加反跨站请求伪造（CSRF）支持，以便FilmHouse可以与ASP.NET Core应用程序进行交互
@@ -267,7 +267,7 @@ void ConfigureServices(IServiceCollection services)
         // 设置表单字段名称
         options.FormFieldName = $"{csrfName}-FORM";
         // 设置HTTP头名称
-        options.HeaderName = "XSRF-TOKEN";
+        options.HeaderName = "XSRF-FILMHOUSE-TOKEN";
     });
 
     // HttpContext.User认证状态取得的方法注入
@@ -294,7 +294,7 @@ void ConfigureServices(IServiceCollection services)
         .AddEntityFrameworkStores<FilmHouseDbContext>();
     */
 
-   // 添加服务提供者，以便服务可以注入到其他服务中
+    // 添加服务提供者，以便服务可以注入到其他服务中
     services.AddScoped<IServiceProvider>(provider => provider.GetService<IServiceProvider>());
 }
 
@@ -302,7 +302,7 @@ async Task FirstRun()
 {
     try
     {
-       var startUpResut = await app.InitStartUp(dbType);
+        var startUpResut = await app.InitStartUp(dbType);
 
         // 数据库连接测试失败
         if (startUpResut == StartupInitResult.DatabaseConnectionFail)
@@ -397,7 +397,7 @@ void ConfigureMiddleware()
     app.UseCookiePolicy();
     app.UseSecurityHeaders(builder =>
     {
-       // 允许所有
+        // 允许所有
         builder.PermissionsPolicySettings.Camera.AllowNone();
 
         // 默认允许所有
