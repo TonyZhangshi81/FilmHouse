@@ -31,67 +31,98 @@ using Encoder = FilmHouse.Web.Configuration.Encoder;
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+// 创建WebApplicationBuilder
 var builder = WebApplication.CreateBuilder(args);
 
+// 获取数据库类型
 var dbType = builder.Configuration.GetConnectionString("DatabaseType");
+// 获取数据库连接字符串
 var connStr = builder.Configuration.GetConnectionString("FilmHouseDatabase");
+// 获取持久化密钥文件路径
 var persistKeys = builder.Configuration["PersistKeysFile:path"];
+// 获取 CultureInfo 列表
 var cultures = new[] { "en-US", "zh-cn" }.Select(p => new CultureInfo(p)).ToList();
 
+// 打印参数表
 WriteParameterTable();
+// 打印 GitHub 链接
 AnsiConsole.MarkupLine("[link=https://github.com/TonyZhangshi81/FilmHouse]GitHub: TonyZhangshi81/FilmHouse[/]");
 
+// 配置配置文件
 ConfigureConfiguration();
+// 配置服务
 ConfigureServices(builder.Services);
 
+// 创建WebApplication
 var app = builder.Build();
 
+// 执行第一次运行
 await FirstRun();
 
+// 配置中间件
 ConfigureMiddleware();
 
+// 获取应用程序的日志记录器
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 try
 {
+    // 获取应用程序的标识符
     var discriminator = app.Services.GetRequiredService<IOptions<DataProtectionOptions>>().Value.ApplicationDiscriminator;
     logger.LogInformation($"Application Discriminator: {discriminator}");
     logger.LogInformation("Starting application");
 
+    // 启动应用程序
     app.Run();
 
     logger.LogInformation("Stopped application");
 }
 catch (Exception exception)
 {
+    // 记录应用程序终止时出现的异常
     logger.LogError(exception, "Application terminated unexpectedly");
 }
 finally
 {
+    // 关闭日志记录器
     NLog.LogManager.Shutdown();
 }
 
 void WriteParameterTable()
 {
+    // 获取应用程序版本
     var appVersion = Helper.AppVersion;
+    // 创建一个表格，标题为FilmHouse.Web和.NET版本
     var table = new Spectre.Console.Table
     {
         Title = new($"FilmHouse.Web {appVersion} | .NET {Environment.Version}")
     };
 
+    // 获取主机名
     var strHostName = Dns.GetHostName();
+    // 获取主机信息
     var ipEntry = Dns.GetHostEntry(strHostName);
+    // 获取IP地址列表
     var ips = ipEntry.AddressList;
 
     table.AddColumn("Parameter");
     table.AddColumn("Value");
+    // 添加当前路径
     table.AddRow(new Markup("[blue]Path[/]"), new Text(Environment.CurrentDirectory));
+    // 添加操作系统信息
     table.AddRow(new Markup("[blue]System[/]"), new Text(Helper.TryGetFullOSVersion()));
+    // 添加当前用户信息
     table.AddRow(new Markup("[blue]User[/]"), new Text(Environment.UserName));
+    // 添加主机名
     table.AddRow(new Markup("[blue]Host[/]"), new Text(Environment.MachineName));
+    // 添加IP地址
     table.AddRow(new Markup("[blue]IP addresses[/]"), new Rows(ips.Select(p => new Text(p.ToString()))));
+    // 添加数据库类型
     table.AddRow(new Markup("[blue]Database type[/]"), new Text(dbType!));
+    // 添加图片存储
     table.AddRow(new Markup("[blue]Image storage[/]"), new Text(builder.Configuration["ImageStorage:Provider"]!));
+    // 添加编辑器
     table.AddRow(new Markup("[blue]Editor[/]"), new Text(builder.Configuration["Editor"]!));
+    // 添加种子最大重试可用性
     table.AddRow(new Markup("[blue]SeedMaxRetryAvailability[/]"), new Text(builder.Configuration["SeedMaxRetryAvailability"]!));
 
     AnsiConsole.Write(table);
@@ -99,14 +130,15 @@ void WriteParameterTable()
 
 void ConfigureConfiguration()
 {
+    // 创建一个新的配置构建器，并添加三个JSON文件
     IConfiguration configuration = new ConfigurationBuilder()
         .AddJsonFile("appsettings.json")
         .AddJsonFile("appsettings.Development.json")
         .AddJsonFile("health.option.json")
         .Build();
+    // 将配置添加到服务中
     builder.Services.AddSingleton<IConfiguration>(configuration);
 }
-
 void ConfigureServices(IServiceCollection services)
 {
     services.AddLogging(logging =>
@@ -134,7 +166,9 @@ void ConfigureServices(IServiceCollection services)
     var assemblies = StartupCore.GetAppAssemblies(true);
     services.AddLocalService(assemblies);
 
+    // 添加MediatR服务
     services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+    // 添加选项服务，并添加HttpContextAccessor和RateLimit服务
     services.AddOptions()
             .AddHttpContextAccessor()
             .AddRateLimit(builder.Configuration.GetSection("IpRateLimiting"));
@@ -152,9 +186,13 @@ void ConfigureServices(IServiceCollection services)
         options.Cookie.HttpOnly = true;
     });
 
+    // 添加数据保护服务
     services.AddDataProtection()
+            // 将数据保护密钥持久化到文件系统
             .PersistKeysToFileSystem(new DirectoryInfo(persistKeys!))
+            // 设置默认密钥有效期为15天
             .SetDefaultKeyLifetime(TimeSpan.FromDays(15))
+            // 设置应用程序名称
             .SetApplicationName("filmhouse_web");
 
     // 配置Cookie策略选项
@@ -190,9 +228,12 @@ void ConfigureServices(IServiceCollection services)
     });
     */
 
+    // 添加本地化资源路径
     services.AddLocalization(options => options.ResourcesPath = "Resources");
+    // 添加控制器，并添加自动验证的AntiforgeryTokenFilter
     services.AddControllers(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))
             .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    // 添加 Razor 页面，并添加数据注释本地化提供者
     services.AddRazorPages()
             .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(Program)))
             .AddRazorPagesOptions(options =>
@@ -203,21 +244,30 @@ void ConfigureServices(IServiceCollection services)
                 //options.Conventions.AuthorizeFolder("/Admin");
             });
 
+    // 添加健康检查UI
     services.AddHealthChecksUI()
+            // 添加内存存储
             .AddInMemoryStorage();
+    // 添加客户健康检查
     services.AddCustomerHealthChecks();
 
+    // 添加电影厅认证
     services.AddFilmHouseAuthenticaton(builder.Configuration);
 
-    // Fix Chinese character being encoded in HTML output
+    // 添加一个单例服务，用于FilmHouseHtmlEncoder
     services.AddSingleton(Encoder.FilmHouseHtmlEncoder);
 
+    // 添加反跨站请求伪造（CSRF）支持，以便FilmHouse可以与ASP.NET Core应用程序进行交互
     services.AddAntiforgery(options =>
     {
+        // 定义一个常量，用于存储CSRF令牌的名称
         const string csrfName = "CSRF-TOKEN-FILMHOUSE";
+        // 设置cookie名称
         options.Cookie.Name = $"X-{csrfName}";
+        // 设置表单字段名称
         options.FormFieldName = $"{csrfName}-FORM";
-        options.HeaderName = "XSRF-TOKEN";
+        // 设置HTTP头名称
+        options.HeaderName = "XSRF-FILMHOUSE-TOKEN";
     });
 
     // HttpContext.User认证状态取得的方法注入
@@ -244,6 +294,7 @@ void ConfigureServices(IServiceCollection services)
         .AddEntityFrameworkStores<FilmHouseDbContext>();
     */
 
+    // 添加服务提供者，以便服务可以注入到其他服务中
     services.AddScoped<IServiceProvider>(provider => provider.GetService<IServiceProvider>());
 }
 
@@ -253,6 +304,7 @@ async Task FirstRun()
     {
         var startUpResut = await app.InitStartUp(dbType);
 
+        // 数据库连接测试失败
         if (startUpResut == StartupInitResult.DatabaseConnectionFail)
         {
             app.MapGet("/", () => Results.Problem(
@@ -261,6 +313,7 @@ async Task FirstRun()
                 ));
             app.Run();
         }
+        // 数据库初始化失败
         else if (startUpResut == StartupInitResult.DatabaseSetupFail)
         {
             app.MapGet("/", () => Results.Problem(
@@ -269,6 +322,7 @@ async Task FirstRun()
             ));
             app.Run();
         }
+        // 数据缓存处理失败
         else if (startUpResut == StartupInitResult.CodeDataCacheFail)
         {
             app.MapGet("/", () => Results.Problem(
@@ -287,14 +341,14 @@ async Task FirstRun()
 
 void ConfigureMiddleware()
 {
+    // 开发环境使用DeveloperExceptionPage中间件，显示错误信息
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
     }
     else
     {
-        //app.UseStatusCodePages(ConfigureStatusCodePages.Handler).UseExceptionHandler("/error");
-        //app.UseHsts();
+        // 生产环境使用ExceptionHandler中间件，重定向到/error页面
         app.UseExceptionHandler(configure => configure.Run(async context =>
         {
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
@@ -314,7 +368,9 @@ void ConfigureMiddleware()
         }));
     }
 
+    // 重定向到HTTPS
     app.UseHttpsRedirection();
+    // 静态文件，支持缓存，支持自定义缓存头
     app.UseStaticFiles(new StaticFileOptions
     {
         // https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/static-files?view=aspnetcore-7.0
@@ -325,6 +381,7 @@ void ConfigureMiddleware()
         }
     });
 
+    // 请求本地化，支持请求 Culture
     app.UseRequestLocalization(new RequestLocalizationOptions
     {
         DefaultRequestCulture = new("en-US"),
@@ -332,6 +389,7 @@ void ConfigureMiddleware()
         SupportedUICultures = cultures
     });
 
+    // 健康检查，支持UI
     // address: https://localhost:7144/healthchecks-ui#/healthchecks
     app.UseHealthChecksUI();
 
@@ -339,44 +397,60 @@ void ConfigureMiddleware()
     app.UseCookiePolicy();
     app.UseSecurityHeaders(builder =>
     {
+        // 允许所有
         builder.PermissionsPolicySettings.Camera.AllowNone();
 
+        // 默认允许所有
         builder.CspSettings.Defaults.AllowNone();
+        // 允许自身
         builder.CspSettings.Connect.AllowSelf();
         builder.CspSettings.Manifest.AllowSelf();
         builder.CspSettings.Objects.AllowNone();
         builder.CspSettings.Frame.AllowNone();
         builder.CspSettings.Scripts.AllowSelf();
 
+        // 允许自身，允许内联unsafe
         builder.CspSettings.Styles
             .AllowSelf()
             .AllowUnsafeInline();
 
+        // 允许自身
         builder.CspSettings.Fonts.AllowSelf();
 
+        // 允许自身，允许i2.wp.com，允许www.gravatar.com
         builder.CspSettings.Images
             .AllowSelf()
             .Allow("https://i2.wp.com")
             .Allow("https://www.gravatar.com");
 
+        // 允许所有
         builder.CspSettings.BaseUri.AllowNone();
+        // 允许自身
         builder.CspSettings.FormAction.AllowSelf();
+        // 允许所有
         builder.CspSettings.FrameAncestors.AllowNone();
 
+        // 禁止引用
         builder.ReferrerPolicy = ReferrerPolicies.NoReferrerWhenDowngrade;
     });
 
+    // 限制IP访问频率
     app.UseIpRateLimiting();
+    // 路由中间件
     app.UseRouting();
 
+    // 缓存中间件
     app.UseResponseCaching();
 
     // app.UseAuthentication会启用Authentication中间件
+    // 认证中间件，在UseAuthentication方法之后注册的中间件才能够从HttpContext.User中读取到值
     app.UseAuthentication();
     // 根据当前Http请求中的Cookie信息来设置HttpContext.User属性，在app.UseAuthentication方法之后注册的中间件才能够从HttpContext.User中读取到值
+    // 授权中间件
     app.UseAuthorization();
 
 #pragma warning disable ASP0014
+    // 配置端点，配置Endpoints.FilmHouseEndpoints
     app.UseEndpoints(ConfigureEndpoints.FilmHouseEndpoints);
 #pragma warning restore ASP0014
 

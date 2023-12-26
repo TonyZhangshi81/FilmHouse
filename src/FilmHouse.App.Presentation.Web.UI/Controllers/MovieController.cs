@@ -47,10 +47,10 @@ public class MovieController : Controller
     public async Task<IActionResult> Index(MovieIdVO movieId)
     {
         var command = new FilmHouse.Commands.Movie.DisplayCommand(movieId);
-        var display = await _mediator.Send(command);
+        var display = await this._mediator.Send(command);
         if (display.DiscMovie == null)
         {
-            return RedirectToAction("NotFound", "Error");
+            return base.RedirectToAction("NotFound", "Error");
         }
 
         var model = new MovieViewModel();
@@ -91,7 +91,7 @@ public class MovieController : Controller
             }
         }
         // 个人评论
-        if(display.PersonalReview != null)
+        if (display.PersonalReview != null)
         {
             model.PersonalReview = CommentDiscViewModel.FromEntity(display.PersonalReview);
         }
@@ -105,7 +105,7 @@ public class MovieController : Controller
             }
         }
 
-        return View(model);
+        return base.View(model);
     }
 
 

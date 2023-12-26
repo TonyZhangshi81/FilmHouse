@@ -8,6 +8,6 @@ public class PrivacyController : Controller
     [Route("[controller]/Index")]
     public IActionResult Index()
     {
-        return this.View();
+        return base.View();
     }
 }

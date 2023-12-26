@@ -2,7 +2,10 @@
 @using Microsoft.AspNetCore.Http.Extensions;
 
 @{
-    var fullUrl = Context.Request.GetDisplayUrl();
+    var fullUrl =Context.Request.GetDisplayUrl();
+    var proxyServerHost = Context.Request.Headers["X-Forwarded-Server"];
+    var clientIP = Context.Request.Headers["X-Forwarded-For"];
+    var clientHost = Context.Request.Headers["X-Forwarded-Host"];
 }
 
 @if (User.Identity.IsAuthenticated)

@@ -12,7 +12,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
     public void Configure(EntityTypeBuilder<AskEntity> builder)
     {
         builder.ToTable("Ask");
-		
+
         builder.HasKey(e => new { e.AskId });
         builder.HasAnnotation("SqlServer:Name", "ask_ix00");
 
@@ -66,6 +66,11 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
             .HasDefaultValue(typeof(AskStatusVO).CreateValueObjectInstance("false"))
             .HasColumnType("bit")
             .HasConversion<AskStatusVO.AskStatusValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

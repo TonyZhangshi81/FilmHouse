@@ -86,6 +86,11 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
             .HasMaxLength(1000)
             .HasConversion<NoteVO.NoteValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("tinyint")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)")

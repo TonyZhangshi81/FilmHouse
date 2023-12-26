@@ -6,5 +6,5 @@ services:
     - name: ASPNETCORE_ENVIRONMENT
       value: Development
   bindings:
-    - port: 7144
+    - port: 7044
       protocol: http

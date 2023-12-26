@@ -48,11 +48,11 @@ namespace FilmHouse.Web.Controllers
             model.Discovery.MaxPage = maxPage;
 
             var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage);
-            var display = await _mediator.Send(command);
+            var display = await this._mediator.Send(command);
 
             if (display.Status != 0)
             {
-                return RedirectToAction("NotFound", "Error");
+                return base.RedirectToAction("NotFound", "Error");
             }
 
             model.Discovery = HomeDiscViewModel.FromEntity(display.Discoveries.ElementAt(0));
@@ -76,7 +76,7 @@ namespace FilmHouse.Web.Controllers
             // 喜欢
             model.Discovery.Movie.IsFavor = display.IsFavor;
 
-            return View(model);
+            return base.View(model);
         }
     }
 }

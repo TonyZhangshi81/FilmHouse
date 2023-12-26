@@ -1,4 +1,5 @@
-﻿using FilmHouse.Core.ValueObjects;
+﻿using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,7 +12,7 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
     public void Configure(EntityTypeBuilder<ConfigurationEntity> builder)
     {
         builder.ToTable("Configuration");
-		
+
         builder.HasKey(e => new { e.Key });
         builder.HasAnnotation("SqlServer:Name", "configuration_ix00");
 
@@ -30,6 +31,11 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
             .HasColumnType("varchar(100)")
             .HasMaxLength(100)
             .HasConversion<ConfigValueVO.ConfigValueValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

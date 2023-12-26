@@ -56,6 +56,7 @@ public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand>
             IsAdmin = request.UserAccount.IsAdmin,
             LastLoginIp = request.UserAccount.LastLoginIp,
             LastLoginTime = new(dt),
+            IsEnabled = new(true),
             CreatedOn = new(dt)
         };
 

@@ -50,6 +50,11 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
             .HasColumnType("numeric(3)")
             .HasConversion<SortOrderVO.SortOrderValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("tinyint")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)")
