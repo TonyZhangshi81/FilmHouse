@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.MySql.Configurations;
 
@@ -30,7 +31,7 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<RequestIdVO.RequestIdValueConverter>();
-        
+
         builder.Property(e => e.CommentId)
             .IsRequired()
             .HasColumnType("char(36)")
@@ -48,7 +49,7 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
             .HasColumnType("char(36)")
             .HasMaxLength(36)
             .HasConversion<MovieIdVO.MovieIdValueConverter>();
-        
+
         builder.Property(e => e.Content)
             .HasColumnType("longtext")
             .HasConversion<ContentVO.ContentValueConverter>();
@@ -56,6 +57,11 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
         builder.Property(e => e.CommentTime)
             .HasColumnType("datetime(3)")
             .HasConversion<CommentTimeVO.CommentTimeValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("tinyint")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

@@ -163,6 +163,11 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasMaxLength(11)
             .HasConversion<PageViewsVO.PageViewsValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime")

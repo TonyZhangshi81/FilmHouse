@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -11,7 +12,7 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
     public void Configure(EntityTypeBuilder<CodeMastEntity> builder)
     {
         builder.ToTable("CodeMast");
-		
+
         builder.HasKey(e => new { e.Group, e.Code });
         builder.HasAnnotation("SqlServer:Name", "group_code_ix00");
 
@@ -42,6 +43,11 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
             .IsRequired()
             .HasColumnType("numeric(3)")
             .HasConversion<SortOrderVO.SortOrderValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

@@ -7,7 +7,7 @@ using MediatR;
 
 namespace FilmHouse.Commands.Mark;
 
-public record CancelCommand(Guid TargrtId, UserIdVO UserId, MarkTypeVO MarkType) : IRequest;
+public record CancelCommand(MarkTargetIdVO TargrtId, UserIdVO UserId, MarkTypeVO MarkType) : IRequest;
 
 public class CancelCommandCommandHandler : IRequestHandler<CancelCommand>
 {
@@ -38,10 +38,10 @@ public class CancelCommandCommandHandler : IRequestHandler<CancelCommand>
     /// <exception cref="ArgumentNullException"></exception>
     public Task Handle(CancelCommand request, CancellationToken ct)
     {
-        Guard.RequiresNotNull<Guid, ArgumentNullException>(request.TargrtId);
+        Guard.RequiresNotNull<MarkTargetIdVO, ArgumentNullException>(request.TargrtId);
         Guard.RequiresNotNull<UserIdVO, ArgumentNullException>(request.UserId);
         Guard.RequiresNotNull<MarkTypeVO, ArgumentNullException>(request.MarkType);
 
-        return this._repo.DeleteAsync(this._repo.GetAsync(d => d.Target == new MarkTargetIdVO(request.TargrtId) && d.UserId == request.UserId && d.Type == request.MarkType).Result, ct);
+        return this._repo.DeleteAsync(this._repo.GetAsync(d => d.Target == request.TargrtId && d.UserId == request.UserId && d.Type == request.MarkType).Result, ct);
     }
 }

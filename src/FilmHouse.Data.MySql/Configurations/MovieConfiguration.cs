@@ -162,6 +162,11 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
             .HasColumnType("numeric(11)")
             .HasConversion<PageViewsVO.PageViewsValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("tinyint")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)")

@@ -27,10 +27,10 @@ public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand>
 
         var account = await _repo.GetAsync(d => d.Account == request.AccountName
                                                 && d.PasswordHash == new PasswordHashVO(request.InputPassword.ToHash(request.AccountName.AsPrimitive())));
-
         if (account != null)
         {
-            await _repo.DeleteAsync(account.UserId, ct);
+            account.IsEnabled = new(false);
+            await _repo.UpdateAsync(account, ct);
         }
     }
 }

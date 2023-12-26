@@ -55,6 +55,11 @@ internal class WorkConfiguration : IEntityTypeConfiguration<WorkEntity>
             .HasColumnType("tinyint unsigned")
             .HasConversion<WorkTypeVO.WorkTypeVOValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("tinyint")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)")

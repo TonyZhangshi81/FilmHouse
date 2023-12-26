@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.SqlServer.Configurations;
 
@@ -11,7 +12,7 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
     public void Configure(EntityTypeBuilder<CommentEntity> builder)
     {
         builder.ToTable("Comment");
-		
+
         builder.HasKey(e => new { e.CommentId });
         builder.HasAnnotation("SqlServer:Name", "comment_ix00");
 
@@ -55,6 +56,11 @@ internal class CommentConfiguration : IEntityTypeConfiguration<CommentEntity>
         builder.Property(e => e.CommentTime)
             .HasColumnType("datetime")
             .HasConversion<CommentTimeVO.CommentTimeValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

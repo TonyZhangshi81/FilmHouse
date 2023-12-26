@@ -59,6 +59,11 @@ internal class NoticeConfiguration : IEntityTypeConfiguration<NoticeEntity>
             .HasColumnType("bit")
             .HasConversion<NoticeFlagVO.NoticeFlagValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime")

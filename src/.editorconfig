@@ -197,3 +197,7 @@ dotnet_diagnostic.CA1822.severity = none
 
 # CA2254: 模板必须是静态的公式。
 dotnet_diagnostic.CA2254.severity = none
+
+# https://github.com/nunit/nunit.analyzers/blob/master/documentation/NUnit2021.md
+# NUnit2021: Incompatible types for EqualTo constraint
+dotnet_diagnostic.NUnit2021.severity = none

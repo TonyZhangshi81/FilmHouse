@@ -118,6 +118,11 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasMaxLength(1000)
             .HasConversion<NoteVO.NoteValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("boolean")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("timestamp(3)")

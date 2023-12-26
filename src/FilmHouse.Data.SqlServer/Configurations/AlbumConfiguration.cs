@@ -12,7 +12,7 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
     public void Configure(EntityTypeBuilder<AlbumEntity> builder)
     {
         builder.ToTable("Album");
-		
+
         builder.HasKey(e => new { e.AlbumId });
         builder.HasAnnotation("SqlServer:Name", "album_ix00");
 
@@ -62,6 +62,11 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
             .HasDefaultValue(typeof(AmountAttentionVO).CreateValueObjectInstance("0"))
             .HasColumnType("int")
             .HasConversion<AmountAttentionVO.AmountAttentionValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

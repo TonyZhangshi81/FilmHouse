@@ -52,6 +52,11 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
             .HasMaxLength(36)
             .HasConversion<MarkTargetIdVO.MarkTargetValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("tinyint")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)")

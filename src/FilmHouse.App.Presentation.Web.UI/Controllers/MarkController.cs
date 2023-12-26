@@ -1,13 +1,9 @@
 ﻿using System.Security.Claims;
-using FilmHouse.Core.Services.Codes;
-using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers
 {
@@ -35,64 +31,11 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         //
         // GET: /Mark/Create/
         [Authorize]
-        public ActionResult Create(Guid targetId, MarkTypeVO markType, string returnurl)
+        public async Task<IActionResult> Create(Guid targetId, MarkTypeVO markType, string returnurl)
         {
-            if (markType.AsPrimitive() <= MarkTypeVO.Codes.MarkTypeCode0.AsPrimitive() || markType.AsPrimitive() > MarkTypeVO.Codes.MarkTypeCode7.AsPrimitive())
+            if (!await this.CheckTargetIdIsExist(targetId, markType))
             {
                 return RedirectToAction("NotFound", "Error");
-            }
-            else
-            {
-                switch (markType)
-                {
-                    case MarkTypeVO.Codes.MarkTypeCode1:
-                    case MarkTypeVO.Codes.MarkTypeCode2:
-                    case MarkTypeVO.Codes.MarkTypeCode3:
-                        var command = new FilmHouse.Commands.Movie.IsExistWithMovieIdCommand(new MovieIdVO(targetId));
-                        var isExist = await this._mediator.Send(command);
-                        if (!isExist)
-                        {
-                            return RedirectToAction("NotFound", "Error");
-                        }
-                        break;
-
-                    case MarkTypeVO.Codes.MarkTypeCode4:
-                        var command = new FilmHouse.Commands.Celeb.IsExistWithCelebrityIdCommand(new CelebrityIdVO(targetId));
-                        var isExist = await this._mediator.Send(command);
-                        if (!isExist)
-                        {
-                            return RedirectToAction("NotFound", "Error");
-                        }
-                        break;
-
-                    case MarkTypeVO.Codes.MarkTypeCode5:
-                        var command = new FilmHouse.Commands.Resource.IsExistWithResourceIdCommand(new ResourceIdVO(targetId));
-                        var isExist = await this._mediator.Send(command);
-                        if (!isExist)
-                        {
-                            return RedirectToAction("NotFound", "Error");
-                        }
-                        break;
-
-                    case MarkTypeVO.Codes.MarkTypeCode6:
-                        var command = new FilmHouse.Commands.Ask.IsExistWithAskIdCommand(new AskIdVO(targetId));
-                        var isExist = await this._mediator.Send(command);
-                        if (!isExist)
-                        {
-                            return RedirectToAction("NotFound", "Error");
-                        }
-                        break;
-
-                    case MarkTypeVO.Codes.MarkTypeCode7:
-                    default:
-                        var command = new FilmHouse.Commands.Album.IsExistWithAlbumIdCommand(new AlbumIdVO(targetId));
-                        var isExist = await this._mediator.Send(command);
-                        if (!isExist)
-                        {
-                            return RedirectToAction("NotFound", "Error");
-                        }
-                        break;
-                }
             }
 
             // 用户认证情报取得
@@ -111,64 +54,47 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
             return Redirect(returnurl);
         }
 
-        //
-        // GET: /Mark/Cancel/
-        [Authorize]
-        public ActionResult Cancel(Guid targetId, MarkTypeVO markType, string returnurl)
+        private async Task<bool> CheckTargetIdIsExist(Guid targetId, MarkTypeVO markType)
         {
             if (markType <= MarkTypeVO.Codes.MarkTypeCode0 || markType > MarkTypeVO.Codes.MarkTypeCode7)
             {
-                return RedirectToAction("NotFound", "Error");
+                return false;
             }
-            switch (markType)
+            else if (markType == MarkTypeVO.Codes.MarkTypeCode1 || markType == MarkTypeVO.Codes.MarkTypeCode2 || markType == MarkTypeVO.Codes.MarkTypeCode3)
             {
-                case MarkTypeVO.Codes.MarkTypeCode1:
-                case MarkTypeVO.Codes.MarkTypeCode2:
-                case MarkTypeVO.Codes.MarkTypeCode3:
-                    var command = new FilmHouse.Commands.Movie.IsExistWithMovieIdCommand(new MovieIdVO(targetId));
-                    var isExist = await this._mediator.Send(command);
-                    if (!isExist)
-                    {
-                        return RedirectToAction("NotFound", "Error");
-                    }
-                    break;
+                var movieCommand = new FilmHouse.Commands.Movie.IsExistWithMovieIdCommand(new MovieIdVO(targetId));
+                return await this._mediator.Send(movieCommand);
+            }
+            else if (markType == MarkTypeVO.Codes.MarkTypeCode4)
+            {
+                var celebCommand = new FilmHouse.Commands.Celeb.IsExistWithCelebrityIdCommand(new CelebrityIdVO(targetId));
+                return await this._mediator.Send(celebCommand);
+            }
+            else if (markType == MarkTypeVO.Codes.MarkTypeCode5)
+            {
+                var resourceCommand = new FilmHouse.Commands.Resource.IsExistWithResourceIdCommand(new ResourceIdVO(targetId));
+                return await this._mediator.Send(resourceCommand);
+            }
+            else if (markType == MarkTypeVO.Codes.MarkTypeCode6)
+            {
+                var askCommand = new FilmHouse.Commands.Ask.IsExistWithAskIdCommand(new AskIdVO(targetId));
+                return await this._mediator.Send(askCommand);
+            }
+            else
+            {
+                var albumCommand = new FilmHouse.Commands.Album.IsExistWithAlbumIdCommand(new AlbumIdVO(targetId));
+                return await this._mediator.Send(albumCommand);
+            }
+        }
 
-                case MarkTypeVO.Codes.MarkTypeCode4:
-                    var command = new FilmHouse.Commands.Celeb.IsExistWithCelebrityIdCommand(new CelebrityIdVO(targetId));
-                    var isExist = await this._mediator.Send(command);
-                    if (!isExist)
-                    {
-                        return RedirectToAction("NotFound", "Error");
-                    }
-                    break;
-
-                case MarkTypeVO.Codes.MarkTypeCode5:
-                    var command = new FilmHouse.Commands.Resource.IsExistWithResourceIdCommand(new ResourceIdVO(targetId));
-                    var isExist = await this._mediator.Send(command);
-                    if (!isExist)
-                    {
-                        return RedirectToAction("NotFound", "Error");
-                    }
-                    break;
-
-                case MarkTypeVO.Codes.MarkTypeCode6:
-                    var command = new FilmHouse.Commands.Ask.IsExistWithAskIdCommand(new AskIdVO(targetId));
-                    var isExist = await this._mediator.Send(command);
-                    if (!isExist)
-                    {
-                        return RedirectToAction("NotFound", "Error");
-                    }
-                    break;
-
-                case MarkTypeVO.Codes.MarkTypeCode7:
-                default:
-                    var command = new FilmHouse.Commands.Album.IsExistWithAlbumIdCommand(new AlbumIdVO(targetId));
-                    var isExist = await this._mediator.Send(command);
-                    if (!isExist)
-                    {
-                        return RedirectToAction("NotFound", "Error");
-                    }
-                    break;
+        //
+        // GET: /Mark/Cancel/
+        [Authorize]
+        public async Task<IActionResult> Cancel(Guid targetId, MarkTypeVO markType, string returnurl)
+        {
+            if (!await this.CheckTargetIdIsExist(targetId, markType))
+            {
+                return RedirectToAction("NotFound", "Error");
             }
 
             // 用户认证情报取得
@@ -180,7 +106,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 var claimsIdentity = userIdentity as ClaimsIdentity;
                 var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
 
-                var command = new FilmHouse.Commands.Mark.CancelCommand(new MarkTargetIdVO(targetId));
+                var command = new FilmHouse.Commands.Mark.CancelCommand(new MarkTargetIdVO(targetId), userId, markType);
                 await this._mediator.Send(command);
             }
 

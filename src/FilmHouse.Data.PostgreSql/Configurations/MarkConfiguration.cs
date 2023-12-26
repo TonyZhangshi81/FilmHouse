@@ -47,6 +47,11 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
             .HasColumnType("uuid")
             .HasConversion<MarkTargetIdVO.MarkTargetValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("boolean")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("timestamp(3)")

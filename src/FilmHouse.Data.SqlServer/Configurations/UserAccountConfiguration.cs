@@ -69,6 +69,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
             .HasColumnType("datetime")
             .HasConversion<LastLoginTimeVO.LastLoginTimeVOValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime")
