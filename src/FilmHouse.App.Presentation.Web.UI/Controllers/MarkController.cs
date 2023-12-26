@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using MediatR;
@@ -13,17 +14,20 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
         private readonly IMediator _mediator;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICurrentRequestId _currentRequestId;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="httpContextAccessor"></param>
+        /// <param name="currentRequestId"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public MarkController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
+        public MarkController(IMediator mediator, IHttpContextAccessor httpContextAccessor, ICurrentRequestId currentRequestId)
         {
             this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
             this._httpContextAccessor = Guard.GetNotNull(httpContextAccessor, nameof(IHttpContextAccessor));
+            this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
         }
 
         #endregion Initizalize
@@ -31,12 +35,15 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         //
         // GET: /Mark/Create/
         [Authorize]
-        public async Task<IActionResult> Create(Guid targetId, MarkTypeVO markType, string returnurl)
+        public async Task<IActionResult> Create(Guid target, MarkTypeVO type, string returnurl)
         {
-            if (!await this.CheckTargetIdIsExist(targetId, markType))
+            if (!await this.CheckTargetIdIsExist(target, type))
             {
                 return RedirectToAction("NotFound", "Error");
             }
+
+            // 创建请求ID
+            this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
 
             // 用户认证情报取得
             var userIdentity = this._httpContextAccessor.HttpContext.User.Identity;
@@ -47,7 +54,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 var claimsIdentity = userIdentity as ClaimsIdentity;
                 var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
 
-                var command = new FilmHouse.Commands.Mark.CreateMarkCommand(new MarkTargetIdVO(targetId), userId, markType);
+                var command = new FilmHouse.Commands.Mark.CreateMarkCommand(new MarkTargetIdVO(target), userId, type);
                 await this._mediator.Send(command);
             }
 
@@ -90,9 +97,9 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         //
         // GET: /Mark/Cancel/
         [Authorize]
-        public async Task<IActionResult> Cancel(Guid targetId, MarkTypeVO markType, string returnurl)
+        public async Task<IActionResult> Cancel(Guid target, MarkTypeVO type, string returnurl)
         {
-            if (!await this.CheckTargetIdIsExist(targetId, markType))
+            if (!await this.CheckTargetIdIsExist(target, type))
             {
                 return RedirectToAction("NotFound", "Error");
             }
@@ -106,7 +113,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 var claimsIdentity = userIdentity as ClaimsIdentity;
                 var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
 
-                var command = new FilmHouse.Commands.Mark.CancelCommand(new MarkTargetIdVO(targetId), userId, markType);
+                var command = new FilmHouse.Commands.Mark.CancelCommand(new MarkTargetIdVO(target), userId, type);
                 await this._mediator.Send(command);
             }
 

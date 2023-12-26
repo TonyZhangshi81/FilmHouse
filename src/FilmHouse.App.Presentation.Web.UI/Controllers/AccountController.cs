@@ -159,6 +159,10 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                     break;
                 case AuthenticationProvider.Local:
                     await base.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    this.HttpContext.Request.Cookies.Select(_ => _.Key)
+                                                    .Where(_ => _.EndsWith("-FILMHOUSE"))
+                                                    .ToList()
+                                                    .ForEach(_ => this.HttpContext.Response.Cookies.Delete(_));
                     break;
                 default:
                     break;

@@ -11,6 +11,16 @@
     ViewBag.PageType = 2;
 
     var fullUrl = Context.Request.GetDisplayUrl();
+
+
+    var uri = new Uri(fullUrl);
+    var scheme = uri.Scheme;
+    var host = uri.Host;
+    var path = uri.AbsolutePath;
+    var query = uri.Query;
+    var fragment = uri.Fragment;
+
+
 }
 
 @section Links {

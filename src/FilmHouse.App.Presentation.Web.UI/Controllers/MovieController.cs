@@ -91,7 +91,7 @@ public class MovieController : Controller
             }
         }
         // 个人评论
-        if(display.PersonalReview != null)
+        if (display.PersonalReview != null)
         {
             model.PersonalReview = CommentDiscViewModel.FromEntity(display.PersonalReview);
         }
