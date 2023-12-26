@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -29,6 +30,11 @@ internal class ConfigurationConfiguration : IEntityTypeConfiguration<Configurati
             .HasColumnType("varchar(100)")
             .HasMaxLength(100)
             .HasConversion<ConfigValueVO.ConfigValueValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("boolean")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

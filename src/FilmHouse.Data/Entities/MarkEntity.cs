@@ -23,7 +23,7 @@ public class MarkEntity : EntitiesBase
 
     [Column(Order = 5)]
     [Required]
-    public MarkTargetVO Target { get; set; }
+    public MarkTargetIdVO Target { get; set; }
 
 
     /// <summary>

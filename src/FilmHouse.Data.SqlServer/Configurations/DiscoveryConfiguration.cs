@@ -1,4 +1,5 @@
-﻿using FilmHouse.Core.ValueObjects;
+﻿using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,7 +12,7 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
     public void Configure(EntityTypeBuilder<DiscoveryEntity> builder)
     {
         builder.ToTable("Discovery");
-		
+
         builder.HasKey(e => new { e.DiscoveryId });
         builder.HasAnnotation("SqlServer:Name", "discovery_ix00");
 
@@ -46,6 +47,11 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
             .IsRequired()
             .HasColumnType("numeric(3)")
             .HasConversion<SortOrderVO.SortOrderValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

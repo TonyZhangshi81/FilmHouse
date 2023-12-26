@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
+using FilmHouse.Commands.Account;
 using FilmHouse.Commands.Test.Utils;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
@@ -18,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -57,17 +59,9 @@ namespace FilmHouse.Commands.Test
                 if (isNew)
                 {
                     await dbcontext.ClearAllData();
-                    // 測試前期數據導入
-                    {
-                        var uuid = new RequestIdVO(Guid.NewGuid());
-                        var sysDate = new CreatedOnVO(System.DateTime.Now);
-
-                        // 系統配置表
-                        await dbcontext.Configuration.AddRangeAsync(GetInitConfigurationSettings(uuid, sysDate));
-                        // 代碼管理表
-                        await dbcontext.CodeMast.AddRangeAsync(GetInitCodeMastSettings(uuid, sysDate));
-                        await dbcontext.SaveChangesAsync();
-                    }
+                    // 測試前期數據導入(长期驻留)
+                    var logger = this.ServiceProvider.GetRequiredService<ILogger<TestBase>>();
+                    await Seed.SeedAsync(dbcontext, logger);
                 }
 
                 {
@@ -117,6 +111,7 @@ namespace FilmHouse.Commands.Test
             {
                 return;
             }
+
             if (arrangeMethodInfo.ReturnType == typeof(void) &&
                 arrangeMethodInfo.GetParameters().Length == 2 &&
                 arrangeMethodInfo.GetParameters()[0].ParameterType == typeof(IServiceCollection) &&

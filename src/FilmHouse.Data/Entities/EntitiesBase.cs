@@ -13,6 +13,10 @@ public abstract class EntitiesBase
     [Required]
     public RequestIdVO RequestId { get; set; }
 
+    [Column(Order = 97)]
+    [Required]
+    public IsEnabledVO IsEnabled { get; set; }
+
     [Column(Order = 98)]
     [Required]
     public CreatedOnVO CreatedOn { get; set; }

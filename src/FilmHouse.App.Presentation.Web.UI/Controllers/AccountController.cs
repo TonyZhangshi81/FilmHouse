@@ -30,11 +30,10 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         /// 
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="settingProvider"></param>
-        /// <param name="currentRequestId"></param>
         /// <param name="logger"></param>
+        /// <param name="authSettings"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public AccountController(IMediator mediator, ISettingProvider settingProvider, ICurrentRequestId currentRequestId, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings)
+        public AccountController(IMediator mediator, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings)
         {
             this._logger = logger;
             this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
@@ -53,12 +52,12 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [LogonFilter]
         public ActionResult Login(string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
+            if (base.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Mine");
+                return base.RedirectToAction("Index", "Mine");
             }
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            base.ViewBag.ReturnUrl = returnUrl;
+            return base.View();
         }
 
         //
@@ -70,44 +69,44 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (!base.ModelState.IsValid)
                 {
-                    return View(model);
+                    return base.View(model);
                 }
 
                 var command = new PasswordSignInCommand(model.Account, model.Password);
-                var result = await _mediator.Send(command);
+                var result = await this._mediator.Send(command);
 
                 switch (result.Status)
                 {
                     case Commands.Account.SignInStatus.Success:
                         await this.SetClaimsIdentity(model.Account, result.UserId, result.IsAdmin);
-                        await this._mediator.Send(new ValidateLoginCommand(result.UserId, new(Helper.GetClientIP(HttpContext))));
+                        await this._mediator.Send(new ValidateLoginCommand(result.UserId, new(Helper.GetClientIP(base.HttpContext))));
 
                         this._logger.LogInformation($@"Authentication success for local account ""{model.Account}""");
 
                         if (result.IsAdmin.AsPrimitive())
                         {
-                            return RedirectToAction("Index", "Movie", new { Area = "Manage" });
+                            return base.RedirectToAction("Index", "Movie", new { Area = "Manage" });
                         }
-                        return RedirectToLocal(returnurl);
+                        return this.RedirectToLocal(returnurl);
 
                     case Commands.Account.SignInStatus.UndefinedAccount:
-                        ModelState.AddModelError("", "用户名不存在。");
-                        return View(model);
+                        base.ModelState.AddModelError("", "用户名不存在。");
+                        return base.View(model);
 
                     case Commands.Account.SignInStatus.Failure:
                     default:
-                        ModelState.AddModelError(string.Empty, "请检查用户名或密码是否正确。");
-                        return View(model);
+                        base.ModelState.AddModelError(string.Empty, "请检查用户名或密码是否正确。");
+                        return base.View(model);
                 }
             }
             catch (Exception e)
             {
                 this._logger.LogError(e, $@"Authentication failed for local account ""{model.Account}""");
 
-                ModelState.AddModelError(string.Empty, "用户验证失败。");
-                return View(model);
+                base.ModelState.AddModelError(string.Empty, "用户验证失败。");
+                return base.View(model);
             }
         }
 
@@ -135,7 +134,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
             var p = new ClaimsPrincipal(ci);
 
             // 对用户进行身份验证并在成功后进行登录。使用Cookie身份验证方案。
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, p);
+            await base.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, p);
         }
 
         #endregion
@@ -159,19 +158,23 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                     */
                     break;
                 case AuthenticationProvider.Local:
-                    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    await base.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                    this.HttpContext.Request.Cookies.Select(_ => _.Key)
+                                                    .Where(_ => _.EndsWith("-FILMHOUSE"))
+                                                    .ToList()
+                                                    .ForEach(_ => this.HttpContext.Response.Cookies.Delete(_));
                     break;
                 default:
                     break;
             }
-            var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+            var consentFeature = base.HttpContext.Features.Get<ITrackingConsentFeature>();
             if (consentFeature != null)
             {
                 // 设置TrackingConsentFeature的同意状态为未同意
                 consentFeature.WithdrawConsent();
             }
 
-            return RedirectToLocal(returnUrl);
+            return this.RedirectToLocal(returnUrl);
         }
 
         #endregion
@@ -185,7 +188,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [Route("[controller]/grantcookie")]
         public bool GrantCookie()
         {
-            var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+            var consentFeature = base.HttpContext.Features.Get<ITrackingConsentFeature>();
             if (consentFeature != null)
             {
                 // 设置TrackingConsentFeature的同意状态为同意
@@ -199,11 +202,11 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (!Url.IsLocalUrl(returnUrl) && !string.IsNullOrEmpty(returnUrl) && !string.IsNullOrWhiteSpace(returnUrl))
+            if (!base.Url.IsLocalUrl(returnUrl) && !string.IsNullOrEmpty(returnUrl) && !string.IsNullOrWhiteSpace(returnUrl))
             {
-                return Redirect(returnUrl);
+                return base.Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return base.RedirectToAction("Index", "Home");
         }
 
     }

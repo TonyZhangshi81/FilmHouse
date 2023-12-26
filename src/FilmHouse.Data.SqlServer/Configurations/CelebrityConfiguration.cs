@@ -12,7 +12,7 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
     public void Configure(EntityTypeBuilder<CelebrityEntity> builder)
     {
         builder.ToTable("Celebrity");
-		
+
         builder.HasKey(e => new { e.CelebrityId });
         builder.HasAnnotation("SqlServer:Name", "celebrity_ix00");
 
@@ -119,6 +119,11 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasColumnType("varchar(1000)")
             .HasMaxLength(1000)
             .HasConversion<NoteVO.NoteValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("bit")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

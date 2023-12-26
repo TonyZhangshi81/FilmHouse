@@ -1,4 +1,5 @@
 ﻿using FilmHouse.Commands.Test.Utils.Constraints;
+using NUnit.Framework;
 using NUnit.Framework.Constraints;
 
 namespace FilmHouse.Commands.Test.Utils

@@ -70,6 +70,11 @@ internal class UserAccountConfiguration : IEntityTypeConfiguration<UserAccountEn
             .HasColumnType("datetime(3)")
             .HasConversion<LastLoginTimeVO.LastLoginTimeVOValueConverter>();
 
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("tinyint")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
+
         builder.Property(e => e.CreatedOn)
             .IsRequired()
             .HasColumnType("datetime(3)")

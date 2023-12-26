@@ -1,4 +1,5 @@
-﻿using NUnit.Framework.Constraints;
+﻿using Moq;
+using NUnit.Framework.Constraints;
 
 namespace FilmHouse.Commands.Test.Utils.Constraints
 {

@@ -25,13 +25,20 @@ namespace FilmHouse.Data.PostgreSql.Infrastructure.Data.Query
             IDbContextOptions npgsqlOptions)
             : base(dependencies, model, npgsqlOptions)
         {
+           // 获取NpgsqlSqlExpressionFactory实例
             var sqlExpressionFactory = (NpgsqlSqlExpressionFactory)dependencies.SqlExpressionFactory;
+            // 获取NpgsqlTypeMappingSource实例
             var typeMappingSource = (NpgsqlTypeMappingSource)dependencies.RelationalTypeMappingSource;
+            // 添加翻译器
             this.AddTranslators(new IMethodCallTranslator[]
             {
+                //FilmHouseStringMethodTranslator：用于处理字符串方法
                 new FilmHouseStringMethodTranslator(typeMappingSource, sqlExpressionFactory, model),
+                //FilmHouseComparableExtensionMemberTranslator：用于处理可比较扩展成员
                 new FilmHouseComparableExtensionMemberTranslator(typeMappingSource, sqlExpressionFactory),
+                //FilmHouseConvertTranslator：用于处理转换
                 new FilmHouseConvertTranslator(sqlExpressionFactory),
+                //FilmHouseMathTranslator：用于处理数学运算
                 new FilmHouseMathTranslator(typeMappingSource, sqlExpressionFactory, model),
             });
         }

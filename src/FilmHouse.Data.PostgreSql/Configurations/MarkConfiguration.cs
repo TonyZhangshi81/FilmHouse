@@ -45,7 +45,12 @@ internal class MarkConfiguration : IEntityTypeConfiguration<MarkEntity>
         builder.Property(e => e.Target)
             .IsRequired()
             .HasColumnType("uuid")
-            .HasConversion<MarkTargetVO.MarkTargetValueConverter>();
+            .HasConversion<MarkTargetIdVO.MarkTargetValueConverter>();
+
+        builder.Property(e => e.IsEnabled)
+            .HasDefaultValue(typeof(IsEnabledVO).CreateValueObjectInstance("true"))
+            .HasColumnType("boolean")
+            .HasConversion<IsEnabledVO.IsEnabledVOValueConverter>();
 
         builder.Property(e => e.CreatedOn)
             .IsRequired()

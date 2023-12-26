@@ -39,8 +39,11 @@ public sealed class SecurityHeadersMiddleware
             context.Response.Headers.Add(CSPHEADER, this.options.CspHeader);
         }
 
+        // 用来防止网页被嵌入到其他网站的框架中，可以将该标头设置为`SAMEORIGIN`，这将只允许网页在同源的框架中加载。
         context.Response.Headers.Add(XFRAMEOPTIONSHEADER, this.options.XFrameOptionsHeader);
+        // 用于启用浏览器的内置跨站脚本（XSS）保护机制，`1; mode=block`表示启用该机制，并在检测到潜在的 XSS 攻击时阻止页面加载。
         context.Response.Headers.Add(XXSSPROTECTIONHEADER, "1; mode=block");
+        // 为了防止浏览器执行非预期的 MIME 类型的脚本，可以将该标头设置为`nosniff`。这将告诉浏览器不要嗅探响应中的 MIME 类型，而应始终使用服务器指定的 MIME 类型。
         context.Response.Headers.Add(XCONTENTTYPEOPTIONSHEADER, "nosniff");
 
         if (this.options.ReferrerPolicyHeader != null)
