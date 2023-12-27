@@ -12,7 +12,7 @@ namespace FilmHouse.Core.Presentation.Web.Filters
     /// <remarks>
     /// 由于在PageModel和Controller的构造器之前有必要执行,所以将实现<see cref="IResourceFilter"/>。
     /// </remarks>
-    [ImplementationRegister(10)]
+    [ImplementationRegister(20)]
     public class RequestIdSettingFilter : IAsyncResourceFilter, IFilter
     {
         private readonly ICurrentRequestId _requestIdAccessor;
