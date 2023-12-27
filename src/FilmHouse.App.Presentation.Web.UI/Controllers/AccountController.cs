@@ -50,13 +50,13 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [LogonFilter]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string transfer)
         {
             if (base.User.Identity.IsAuthenticated)
             {
                 return base.RedirectToAction("Index", "Mine");
             }
-            base.ViewBag.ReturnUrl = returnUrl;
+            base.ViewBag.Transfer = transfer;
             return base.View();
         }
 
@@ -65,7 +65,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnurl)
+        public async Task<IActionResult> Login(LoginViewModel model, string transfer)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                         {
                             return base.RedirectToAction("Index", "Movie", new { Area = "Manage" });
                         }
-                        return this.RedirectToLocal(returnurl);
+                        return this.RedirectToLocal(transfer);
 
                     case Commands.Account.SignInStatus.UndefinedAccount:
                         base.ModelState.AddModelError("", "用户名不存在。");
@@ -144,7 +144,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         //
         // POST: /Account/SignOut/
         [HttpGet]
-        public async Task<IActionResult> SignOut(string returnUrl)
+        public async Task<IActionResult> SignOut(string transfer)
         {
             switch (this._authenticationSettings.Provider)
             {
@@ -174,7 +174,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 consentFeature.WithdrawConsent();
             }
 
-            return this.RedirectToLocal(returnUrl);
+            return this.RedirectToLocal(transfer);
         }
 
         #endregion
@@ -200,11 +200,11 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
 
 
-        private ActionResult RedirectToLocal(string returnUrl)
+        private ActionResult RedirectToLocal(string transfer)
         {
-            if (!base.Url.IsLocalUrl(returnUrl) && !string.IsNullOrEmpty(returnUrl) && !string.IsNullOrWhiteSpace(returnUrl))
+            if (!string.IsNullOrEmpty(transfer) && !string.IsNullOrWhiteSpace(transfer)) // !base.Url.IsLocalUrl(transfer) && 
             {
-                return base.Redirect(returnUrl);
+                return base.Redirect(transfer);
             }
             return base.RedirectToAction("Index", "Home");
         }

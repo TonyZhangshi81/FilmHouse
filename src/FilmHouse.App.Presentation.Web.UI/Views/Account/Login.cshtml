@@ -14,7 +14,7 @@
     var name = settingProvider.GetValue("WebSiteSettings:Name");
 }
 
-<form asp-action="Login" asp-controller="Account" asp-route-returnUrl="@ViewBag.ReturnUrl" method="post" class="form-horizontal" role="form">
+<form asp-action="Login" asp-controller="Account" asp-route-returnUrl="@ViewBag.Transfer" method="post" class="form-horizontal" role="form">
 
     @Html.AntiForgeryToken()
     <div class="panel panel-body center-horizon panel-login" style="margin-top:20px; padding:30px 50px 20px 50px;">

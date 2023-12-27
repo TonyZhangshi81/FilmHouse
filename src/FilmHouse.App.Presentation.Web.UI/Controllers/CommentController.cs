@@ -33,7 +33,7 @@ public class CommentController : Controller
     //
     // GET: /Comment/Create/
     [Authorize]
-    public async Task<IActionResult> Create(ContentVO content, MovieIdVO movieId, string returnurl)
+    public async Task<IActionResult> Create(ContentVO content, MovieIdVO movieId, string transfer)
     {
         // 创建请求ID
         this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
@@ -41,7 +41,7 @@ public class CommentController : Controller
         var command = new FilmHouse.Commands.Comment.CreateCommand(content, movieId);
         await this._mediator.Send(command);
 
-        return RedirectToLocal(returnurl);
+        return RedirectToLocal(transfer);
     }
 
     #endregion
@@ -51,7 +51,7 @@ public class CommentController : Controller
     //
     // GET: /Comment/Delete/
     [Authorize]
-    public async Task<ActionResult> Delete(CommentIdVO commentId, string returnurl)
+    public async Task<ActionResult> Delete(CommentIdVO commentId, string transfer)
     {
         var command = new FilmHouse.Commands.Comment.DeleteCommand(commentId);
         var result = await this._mediator.Send(command);
@@ -60,7 +60,7 @@ public class CommentController : Controller
         {
             return RedirectToAction("NotFound", "Error");
         }
-        return RedirectToLocal(returnurl);
+        return RedirectToLocal(transfer);
     }
 
     #endregion
@@ -68,11 +68,11 @@ public class CommentController : Controller
 
 
 
-    private ActionResult RedirectToLocal(string returnurl)
+    private ActionResult RedirectToLocal(string transfer)
     {
-        if (!Url.IsLocalUrl(returnurl) && !string.IsNullOrEmpty(returnurl) && !string.IsNullOrWhiteSpace(returnurl))
+        if (!string.IsNullOrEmpty(transfer) && !string.IsNullOrWhiteSpace(transfer)) // !Url.IsLocalUrl(transfer) && 
         {
-            return Redirect(returnurl);
+            return Redirect(transfer);
         }
         return RedirectToAction("Index", "Home");
     }

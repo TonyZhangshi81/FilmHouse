@@ -3,7 +3,7 @@
 @model MovieResourcesHurdleViewModel
 
 @{
-    var fullUrl = ViewBag.ReturnUrl;
+    var transfer = ViewBag.Transfer;
 
     @if (Model.Resources.Count == 0)
     {
@@ -41,7 +41,7 @@
                         @if (item.UserId != null)
                         {
                             <td>
-                                <a href="/People/Index?id=@item.UserId&returnurl=@fullUrl" class="link-text" target="_self" title="@item.Account 的主页">@item.Account</a>
+                                <a href="/People/Index?id=@item.UserId&transfer=@transfer" class="link-text" target="_self" title="@item.Account 的主页">@item.Account</a>
                             </td>
                         }
                         else
@@ -79,7 +79,7 @@
                             @item.DiscSize
                         </td>
                         <td>
-                            <a class="btn btn-xs" title="有用" href="/Resource/Favor?id=@item.ResourceId&returnurl=@fullUrl">
+                            <a class="btn btn-xs" title="有用" href="/Resource/Favor?id=@item.ResourceId&transfer=@transfer">
                                 <span class="fa fa-thumbs-o-up"></span>&nbsp;@item.FavorCount
                             </a>
                         </td>

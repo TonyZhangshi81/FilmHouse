@@ -1,6 +1,7 @@
 ﻿@using FilmHouse.Commands;
 @using FilmHouse.Core.Services.Configuration;
 @using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Http.Extensions;
 
 @inject ISettingProvider settingProvider
 
@@ -9,15 +10,13 @@
 @{
     Layout = "_LayoutWide";
 
-    var requestUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+    var transfer = new Uri(Context.Request.GetDisplayUrl()).PathAndQuery;
     var name = settingProvider.GetValue("WebSiteSettings:Name");
     var subTitle = settingProvider.GetValue("WebSiteSettings:SubTitle");
 
     ViewData["Title"] = subTitle;
     ViewBag.PageType = 1;
     ViewBag.NavType = 1;
-
-    
 }
 
 @section Links {
@@ -76,37 +75,37 @@
     <div class="col-sm-8 col-sm-offset-2 text-center hidden-xxs" style="margin-top:30px;">
         @if (Model.Discovery.Movie.IsPlan)
         {
-            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=1&returnurl=@requestUrl" title="取消">
+            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=1&transfer=@transfer" title="取消">
                 <span class="glyphicon glyphicon-time"></span>
             </a>
         }
         else
         {
-            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=1&returnurl=@requestUrl" title="想看">
+            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=1&transfer=@transfer" title="想看">
                 <span class="glyphicon glyphicon-time"></span>
             </a>
         }
         @if (Model.Discovery.Movie.IsFinish)
         {
-            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=2&returnurl=@requestUrl" title="取消">
+            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=2&transfer=@transfer" title="取消">
                 <span class="glyphicon glyphicon-ok-circle"></span>
             </a>
         }
         else
         {
-            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=2&returnurl=@requestUrl" title="看过">
+            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=2&transfer=@transfer" title="看过">
                 <span class="glyphicon glyphicon-ok-circle"></span>
             </a>
         }
         @if (Model.Discovery.Movie.IsFavor)
         {
-            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=3&returnurl=@requestUrl" title="取消">
+            <a class="link-glyph link-glyph-reverse" href="/Mark/Cancel?target=@Model.Discovery.Movie.MovieId&type=3&transfer=@transfer" title="取消">
                 <span class="glyphicon glyphicon-heart-empty"></span>
             </a>
         }
         else
         {
-            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=3&returnurl=@requestUrl" title="喜欢">
+            <a class="link-glyph link-glyph-default" href="/Mark/Create?target=@Model.Discovery.Movie.MovieId&type=3&transfer=@transfer" title="喜欢">
                 <span class="glyphicon glyphicon-heart-empty"></span>
             </a>
         }

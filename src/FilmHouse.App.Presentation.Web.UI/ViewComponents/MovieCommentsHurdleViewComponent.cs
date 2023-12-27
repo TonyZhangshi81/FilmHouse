@@ -16,14 +16,14 @@ public class MovieCommentsHurdleViewComponent : ViewComponent
     /// 
     /// </summary>
     /// <param name="comments"></param>
-    /// <param name="returnUrl"></param>
+    /// <param name="transfer"></param>
     /// <param name="isFinish"></param>
     /// <returns></returns>
-    public IViewComponentResult Invoke(List<CommentDiscViewModel> comments, string returnUrl, bool isFinish)
+    public IViewComponentResult Invoke(List<CommentDiscViewModel> comments, string transfer, bool isFinish)
     {
         try
         {
-            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.Transfer = transfer;
             ViewBag.IsFinish = isFinish;
             return View("/Views/Components/MovieCommentsHurdle/Index.cshtml", comments);
         }
