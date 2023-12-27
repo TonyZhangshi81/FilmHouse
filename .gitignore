@@ -257,3 +257,4 @@ ModelManifest.xml
 
 /tools/nginx-1.24.0/temp/*
 !/tools/nginx-1.24.0/temp/.gitkeep
+/src/tye-app/.tye/process_store
