@@ -2,7 +2,8 @@
 @using Microsoft.AspNetCore.Http.Extensions;
 
 @{
-    var fullUrl =Context.Request.GetDisplayUrl();
+    var transfer = new Uri(Context.Request.GetDisplayUrl()).PathAndQuery;
+
     var proxyServerHost = Context.Request.Headers["X-Forwarded-Server"];
     var clientIP = Context.Request.Headers["X-Forwarded-For"];
     var clientHost = Context.Request.Headers["X-Forwarded-Host"];
@@ -21,7 +22,7 @@
                     <li><a href="/Mine/MineAlbum?type=1">我的专辑</a></li>
                     <li class="divider"></li>
                     <li>
-                        @Html.ActionLink("注销", "SignOut", "Account", routeValues: new { returnUrl = fullUrl }, htmlAttributes: new { id = "signOutLink" })
+                        @Html.ActionLink("注销", "SignOut", "Account", routeValues: new { transfer = transfer }, htmlAttributes: new { id = "signOutLink" })
                     </li>
                 </ul>
             </li>
@@ -31,7 +32,7 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("注册", "Register", "Account", routeValues: new { returnUrl = fullUrl }, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("登录", "Login", "Account", routeValues: new { returnUrl = fullUrl }, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("注册", "Register", "Account", routeValues: new { transfer = transfer }, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("登录", "Login", "Account", routeValues: new { transfer = transfer }, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

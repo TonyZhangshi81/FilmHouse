@@ -59,6 +59,9 @@ public class Seed
             await dbContext.Marks.AddRangeAsync(GetMarks(uuid, sysDate, dbContext));
             await dbContext.SaveChangesAsync();
 
+            // 资源请求
+            await dbContext.Asks.AddRangeAsync(GetAsks(uuid, sysDate, dbContext));
+            await dbContext.SaveChangesAsync();
 
 #endif
 
@@ -901,4 +904,38 @@ public class Seed
                     Order = new SortOrderVO(3),
                     CreatedOn = dateTime },
        };
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <param name="dateTime"></param>
+    /// <param name="dbContext"></param>
+    /// <returns></returns>
+    private static IEnumerable<AskEntity> GetAsks(RequestIdVO uuid, CreatedOnVO dateTime, FilmHouseDbContext dbContext)
+    {
+        var mvId01 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("雷神4：爱与雷霆")).Select(d => d.MovieId).First();
+        var mvId02 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).Select(d => d.MovieId).First();
+        var mvId03 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).Select(d => d.MovieId).First();
+
+        var tonyzhangshi = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("tonyzhangshi")).Select(d => d.UserId).First();
+        var test01 = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test01")).Select(d => d.UserId).First();
+        var test02 = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test02")).Select(d => d.UserId).First();
+        var test03 = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test03")).Select(d => d.UserId).First();
+
+        var list = new List<AskEntity>()
+        {
+            new(){ RequestId = uuid, AskId = new(Guid.NewGuid()), UserId = tonyzhangshi, MovieId = mvId01, RequestTime = new(System.DateTime.Now), RequestWith = new(12300), Note = new("tonyzhangshi请求-雷神4：爱与雷霆"), Status = new(false), IsEnabled = new(true), CreatedOn = new(System.DateTime.Now) },
+            new(){ RequestId = uuid, AskId = new(Guid.NewGuid()), UserId = tonyzhangshi, MovieId = mvId02, RequestTime = new(System.DateTime.Now.AddHours(-1)), RequestWith = new(3455), Note = new("tonyzhangshi请求-剪刀手安德华"), Status = new(false), IsEnabled = new(true), CreatedOn = new(System.DateTime.Now) },
+            new(){ RequestId = uuid, AskId = new(Guid.NewGuid()), UserId = tonyzhangshi, MovieId = mvId03, RequestTime = new(System.DateTime.Now.AddHours(-2)), RequestWith = new(1233), Note = new("tonyzhangshi请求-黑天鹅"), Status = new(false), IsEnabled = new(true), CreatedOn = new(System.DateTime.Now) },
+            new(){ RequestId = uuid, AskId = new(Guid.NewGuid()), UserId = test01, MovieId = mvId01, RequestTime = new(System.DateTime.Now.AddHours(-3)), RequestWith = new(6667), Note = new("test01请求-雷神4：爱与雷霆"), Status = new(false), IsEnabled = new(true), CreatedOn = new(System.DateTime.Now) },
+            new(){ RequestId = uuid, AskId = new(Guid.NewGuid()), UserId = test01, MovieId = mvId02, RequestTime = new(System.DateTime.Now.AddHours(-4)), RequestWith = new(345), Note = new("test01请求-剪刀手安德华"), Status = new(false), IsEnabled = new(true), CreatedOn = new(System.DateTime.Now) },
+            new(){ RequestId = uuid, AskId = new(Guid.NewGuid()), UserId = test02, MovieId = mvId03, RequestTime = new(System.DateTime.Now.AddHours(-5)), RequestWith = new(222), Note = new("test02请求-黑天鹅"), Status = new(false), IsEnabled = new(true), CreatedOn = new(System.DateTime.Now) },
+            new(){ RequestId = uuid, AskId = new(Guid.NewGuid()), UserId = test03, MovieId = mvId03, RequestTime = new(System.DateTime.Now.AddHours(-6)), RequestWith = new(111), Note = new("test03请求-黑天鹅"), Status = new(false), IsEnabled = new(true), CreatedOn = new(System.DateTime.Now) },
+        };
+        return list;
+    }
+
+
+
 }

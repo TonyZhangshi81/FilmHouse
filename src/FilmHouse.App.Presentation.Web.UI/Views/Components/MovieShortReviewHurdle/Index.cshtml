@@ -3,7 +3,7 @@
 @model MovieShortReviewHurdleViewModel;
 
 @{
-    var fullUrl = ViewBag.ReturnUrl;
+    var transfer = ViewBag.Transfer;
 
     @*关注度*@
     <div class="panel panel-body">
@@ -40,7 +40,7 @@
                 else
                 {
                     <span>我的短评：@Model.PersonalReview.Content</span>
-                    <a class="link-text font-small" title="删除" href="/Comment/Delete?commentId=@Model.PersonalReview.CommentId&returnurl=@fullUrl">删除</a>
+                    <a class="link-text font-small" title="删除" href="/Comment/Delete?commentId=@Model.PersonalReview.CommentId&transfer=@transfer">删除</a>
                 }
             }
         </div>
