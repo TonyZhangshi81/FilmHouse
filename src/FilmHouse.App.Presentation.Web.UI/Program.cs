@@ -203,7 +203,7 @@ void ConfigureServices(IServiceCollection services)
         // 设置为`None`表示允许跨站点请求时发送Cookie。这是为了兼容旧版浏览器或需要与其他域名进行交互的情况。
         options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
         // 设置为`SameAsRequest`表示Cookie的安全性与请求的安全性相同。如果请求是通过HTTPS进行的，则Cookie也会被标记为安全，只能通过HTTPS传输。
-        options.Secure = CookieSecurePolicy.SameAsRequest;
+        options.Secure = CookieSecurePolicy.Always;
         // 设置为`None`表示允许客户端脚本访问和操作Cookie。如果设置为`HttpOnlyPolicy.Always`，则Cookie将被标记为仅限服务器访问，无法通过客户端脚本访问。
         options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always;
         // 指定用于跟踪用户是否已同意 cookie 使用策略
@@ -214,7 +214,7 @@ void ConfigureServices(IServiceCollection services)
             // 设置过期间隔为3天
             Expiration = TimeSpan.FromDays(3),
             IsEssential = true,
-            Name = "cookie.grant.consent"
+            Name = "COOKIE_CONSENT"
         };
     });
 
