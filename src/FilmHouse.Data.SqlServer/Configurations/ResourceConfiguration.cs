@@ -53,7 +53,7 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 
         builder.Property(e => e.Size)
             .HasDefaultValue(typeof(ResourceSizeVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(11)")
+            .HasColumnType("numeric(11, 0)")
             .HasConversion<ResourceSizeVO.ResourceSizeValueConverter>();
 
         builder.Property(e => e.UserId)
@@ -67,7 +67,7 @@ internal class ResourceConfiguration : IEntityTypeConfiguration<ResourceEntity>
 
         builder.Property(e => e.FavorCount)
             .HasDefaultValue(typeof(FavorCountVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(4)")
+            .HasColumnType("numeric(4, 0)")
             .HasConversion<FavorCountVO.FavorCountValueConverter>();
 
         builder.Property(e => e.Type)

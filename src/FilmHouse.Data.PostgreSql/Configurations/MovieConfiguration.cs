@@ -111,7 +111,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 
         builder.Property(e => e.Rating)
             .HasDefaultValue(typeof(RatingVO).CreateValueObjectInstance("0.0"))
-            .HasColumnType("numeric(3,1)")
+            .HasColumnType("numeric(3, 1)")
             .HasConversion<RatingVO.RatingValueConverter>();
 
         builder.Property(e => e.RatingCount)
@@ -156,7 +156,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 
         builder.Property(e => e.PageViews)
             .HasDefaultValue(typeof(PageViewsVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(11)")
+            .HasColumnType("numeric(11, 0)")
             .HasConversion<PageViewsVO.PageViewsValueConverter>();
 
         builder.Property(e => e.IsEnabled)

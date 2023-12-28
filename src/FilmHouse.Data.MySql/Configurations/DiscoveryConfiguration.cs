@@ -47,7 +47,7 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
 
         builder.Property(e => e.Order)
             .IsRequired()
-            .HasColumnType("numeric(3)")
+            .HasColumnType("numeric(3, 0)")
             .HasConversion<SortOrderVO.SortOrderValueConverter>();
 
         builder.Property(e => e.IsEnabled)

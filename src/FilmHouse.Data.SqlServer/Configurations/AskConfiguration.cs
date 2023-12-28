@@ -54,7 +54,7 @@ internal class AskConfiguration : IEntityTypeConfiguration<AskEntity>
 
         builder.Property(e => e.RequestWith)
             .HasDefaultValue(typeof(RequestWithVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(4)")
+            .HasColumnType("numeric(10, 0)")
             .HasConversion<RequestWithVO.RequestWithValueConverter>();
 
         builder.Property(e => e.Note)

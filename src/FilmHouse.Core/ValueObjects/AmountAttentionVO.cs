@@ -11,7 +11,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 关注量（4位长度）的值对象类。进行与原始型的隐性分配。
+    /// 关注量（8位长度）的值对象类。进行与原始型的隐性分配。
     /// </summary>
     [JsonConverter(typeof(AmountAttentionConverter))]
     [ValueConverter(typeof(AmountAttentionValueConverter), typeof(AmountAttentionArrayValueConverter))]
@@ -30,7 +30,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 取得作为数值的最大位数。
         /// </summary>
-        public const int Precision = 4;
+        public const int Precision = 8;
 
         /// <summary>
         /// 获取值对象包含的原始类型。

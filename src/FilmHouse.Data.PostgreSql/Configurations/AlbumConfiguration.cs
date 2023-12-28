@@ -56,7 +56,7 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.AmountAttention)
             .HasDefaultValue(typeof(AmountAttentionVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(4)")
+            .HasColumnType("numeric(8, 0)")
             .HasConversion<AmountAttentionVO.AmountAttentionValueConverter>();
 
         builder.Property(e => e.IsEnabled)
