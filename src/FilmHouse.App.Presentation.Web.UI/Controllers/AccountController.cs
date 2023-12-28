@@ -1,9 +1,7 @@
 ﻿using System.Security.Claims;
 using FilmHouse.Commands.Account;
-using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Presentation.Web.Auth;
 using FilmHouse.Core.Presentation.Web.Filters;
-using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Web.Models;
@@ -137,6 +135,15 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
             await base.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, p);
         }
 
+        private ActionResult RedirectToLocal(string transfer)
+        {
+            if (!string.IsNullOrEmpty(transfer) && !string.IsNullOrWhiteSpace(transfer)) // !base.Url.IsLocalUrl(transfer) && 
+            {
+                return base.Redirect(transfer);
+            }
+            return base.RedirectToAction("Index", "Home");
+        }
+
         #endregion
 
         #region 注销
@@ -179,6 +186,91 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
         #endregion
 
+        #region 注册
+
+        //
+        // GET: /Account/Register/
+        [AllowAnonymous]
+        public ActionResult Register(string transfer)
+        {
+            ViewBag.Transfer = transfer;
+            return View();
+        }
+
+        //
+        // POST: /Account/Register/
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model, string transfer)
+        {
+            if (ModelState.IsValid)
+            {
+                var clientIP = new LastLoginIpVO(Helper.GetClientIP(base.HttpContext));
+                var command = new CreateAccountCommand(model.Account, model.Password, clientIP);
+                var result = await this._mediator.Send(command);
+                if (result.Status == CreateStatus.Success)
+                {
+                    await this.SetClaimsIdentity(model.Account, result.UserId, result.IsAdmin);
+                    await this._mediator.Send(new ValidateLoginCommand(result.UserId, clientIP));
+
+                    this._logger.LogInformation($@"Authentication success for local account ""{model.Account}""");
+
+                    if (result.IsAdmin.AsPrimitive())
+                    {
+                        return RedirectToAction("Index", "ManageMovie");
+                    }
+                    else
+                    {
+                        return RedirectToLocal(transfer);
+                    }
+                }
+                ModelState.AddModelError("", "用户名已存在");
+            }
+
+            return View(model);
+        }
+
+        #endregion
+
+        #region 重置密码
+        //
+        // GET: /Account/ResetPassword/
+        [AllowAnonymous]
+        //[ResetPasswordFilter]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ResetPassword/
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            /*
+            model.Account = Session["ResetAccount"].ToString();
+            var result = AccountManager.ResetPassword(model.Account, model.Password);
+            if (result.Succeeded)
+            {
+                Session["CanReset"] = false;
+                return RedirectToAction("Login", "Account");
+            }
+            ModelState.AddModelError("", "重置密码失败，请重试。");
+            */
+            return View();
+        }
+        #endregion
+
+
+
+
 
         /// <summary>
         /// 
@@ -200,14 +292,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
 
 
-        private ActionResult RedirectToLocal(string transfer)
-        {
-            if (!string.IsNullOrEmpty(transfer) && !string.IsNullOrWhiteSpace(transfer)) // !base.Url.IsLocalUrl(transfer) && 
-            {
-                return base.Redirect(transfer);
-            }
-            return base.RedirectToAction("Index", "Home");
-        }
+
 
     }
 }
