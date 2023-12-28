@@ -159,7 +159,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 
         builder.Property(e => e.PageViews)
             .HasDefaultValue(typeof(PageViewsVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(11)")
+            .HasColumnType("numeric(11, 0)")
             .HasConversion<PageViewsVO.PageViewsValueConverter>();
 
         builder.Property(e => e.IsEnabled)
