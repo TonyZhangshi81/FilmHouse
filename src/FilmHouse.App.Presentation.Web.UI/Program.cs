@@ -19,6 +19,7 @@ using FilmHouse.Web;
 using FilmHouse.Web.Configuration;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -367,6 +368,12 @@ void ConfigureMiddleware()
             await Task.CompletedTask;
         }));
     }
+
+    // 处理转发的头信息（其中包括客戶端請求host名和客戶端請求協議類型）
+    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto
+    });
 
     // 重定向到HTTPS
     app.UseHttpsRedirection();
