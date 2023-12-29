@@ -1,6 +1,6 @@
 ﻿using AspNetCoreRateLimit;
 
-namespace FilmHouse.Web.Configuration;
+namespace FilmHouse.App.Presentation.Web.UI.Configuration;
 
 // Setup document: https://github.com/stefanprodan/AspNetCoreRateLimit/wiki/IpRateLimitMiddleware#setup
 public static class ConfigureRateLimit

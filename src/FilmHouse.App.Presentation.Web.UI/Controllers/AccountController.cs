@@ -1,11 +1,11 @@
 ﻿using System.Security.Claims;
+using FilmHouse.App.Presentation.Web.UI.Models;
 using FilmHouse.Commands.Account;
 using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Presentation.Web.Auth;
 using FilmHouse.Core.Presentation.Web.Filters;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Web.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

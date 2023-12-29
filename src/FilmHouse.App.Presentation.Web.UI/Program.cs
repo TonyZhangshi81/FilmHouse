@@ -16,7 +16,7 @@ using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
 using FilmHouse.Web;
-using FilmHouse.Web.Configuration;
+using FilmHouse.App.Presentation.Web.UI.Configuration;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -27,7 +27,7 @@ using Microsoft.Extensions.WebEncoders;
 using Microsoft.Net.Http.Headers;
 using NLog.Web;
 using Spectre.Console;
-using Encoder = FilmHouse.Web.Configuration.Encoder;
+using Encoder = FilmHouse.App.Presentation.Web.UI.Configuration.Encoder;
 
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

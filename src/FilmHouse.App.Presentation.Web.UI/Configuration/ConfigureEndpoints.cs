@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Abstractions;
 
-namespace FilmHouse.Web.Configuration;
+namespace FilmHouse.App.Presentation.Web.UI.Configuration;
 
 public class ConfigureEndpoints
 {

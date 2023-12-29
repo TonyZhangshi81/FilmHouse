@@ -2,7 +2,7 @@
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
 
-namespace FilmHouse.Web.Configuration;
+namespace FilmHouse.App.Presentation.Web.UI.Configuration;
 
 public static class ConfigureDataBaseSqlStorage
 {

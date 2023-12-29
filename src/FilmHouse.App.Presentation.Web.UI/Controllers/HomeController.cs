@@ -3,11 +3,11 @@ using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Web.Models;
+using FilmHouse.App.Presentation.Web.UI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FilmHouse.Web.Controllers
+namespace FilmHouse.App.Presentation.Web.UI.Controllers
 {
     public class HomeController : Controller
     {
