@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
 
-namespace Isid.Ilex.Core.Infrastructure.Data.Query
+namespace FilmHouse.Data.PostgreSql.Infrastructure.Data.Query
 {
     /// <summary>
     /// 

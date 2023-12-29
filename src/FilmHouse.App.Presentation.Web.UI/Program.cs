@@ -16,7 +16,7 @@ using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
 using FilmHouse.Web;
-using FilmHouse.Web.Configuration;
+using FilmHouse.App.Presentation.Web.UI.Configuration;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -27,7 +27,7 @@ using Microsoft.Extensions.WebEncoders;
 using Microsoft.Net.Http.Headers;
 using NLog.Web;
 using Spectre.Console;
-using Encoder = FilmHouse.Web.Configuration.Encoder;
+using Encoder = FilmHouse.App.Presentation.Web.UI.Configuration.Encoder;
 
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -219,16 +219,6 @@ void ConfigureServices(IServiceCollection services)
         };
     });
 
-    /*
-     * 已经移动至ConfigureMiddleware中统一处理中间件
-    services.Configure<RequestLocalizationOptions>(options =>
-    {
-        options.DefaultRequestCulture = new("en-US");
-        options.SupportedCultures = cultures;
-        options.SupportedUICultures = cultures;
-    });
-    */
-
     // 添加本地化资源路径
     services.AddLocalization(options => options.ResourcesPath = "Resources");
     // 添加控制器，并添加自动验证的AntiforgeryTokenFilter
@@ -391,7 +381,7 @@ void ConfigureMiddleware()
     // 请求本地化，支持请求 Culture
     app.UseRequestLocalization(new RequestLocalizationOptions
     {
-        DefaultRequestCulture = new("en-US"),
+        DefaultRequestCulture = new("zh-cn"),
         SupportedCultures = cultures,
         SupportedUICultures = cultures
     });

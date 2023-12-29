@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Core.Utils.Data
+namespace FilmHouse.Core.Utils
 {
     public static class IComparableExtension
     {

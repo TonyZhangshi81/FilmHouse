@@ -14,9 +14,41 @@ public class CreateAccountCommandHandlerTest : TransactionalTestBase
 {
     private static readonly RequestIdVO CurrentRequestId = new RequestIdVO(Guid.NewGuid());
 
+    /// <summary>
+    /// 用户登录成功
+    /// </summary>
+    /// <returns></returns>
     [Test]
     [Arrange(nameof(OnCreateAccountCommandArrange))]
     public async Task DeleteAccount01()
+    {
+        var account = new UserAccountEntity()
+        {
+            Account = new("test99"),
+            PasswordHash = new("Password01"),
+            EmailAddress = new("tonyzhangshi@163.com"),
+            Avatar = new("001.png"),
+            Cover = new("002.png"),
+            IsAdmin = new(false),
+            LastLoginIp = new("111:222:333:444"),
+            LastLoginTime = new(DateTime.Now),
+            CreatedOn = new(DateTime.Now)
+        };
+
+        var result = await this.Mediator.Send(new CreateAccountCommand(account.Account, account.PasswordHash, account.LastLoginIp));
+
+        Assert.That(this.DbContext.UserAccounts.Where(d => d.RequestId.Equals(CurrentRequestId)).Any(), Is.EqualTo(true));
+        Assert.That(result.Status, Is.EqualTo(CreateStatus.Success));
+        Assert.That(result.UserId, Dz.EqualTo(this.DbContext.UserAccounts.Where(d => d.Account == account.Account).Select(d => d.UserId).First()));
+        Assert.That(result.IsAdmin, Dz.EqualTo(false));
+    }
+
+    /// <summary>
+    /// 用户已经存在
+    /// </summary>
+    /// <returns></returns>
+    [Test]
+    public async Task DeleteAccount02()
     {
         var account = new UserAccountEntity()
         {
@@ -31,10 +63,12 @@ public class CreateAccountCommandHandlerTest : TransactionalTestBase
             CreatedOn = new(DateTime.Now)
         };
 
-        await this.Mediator.Send(new CreateAccountCommand(account));
+        var result = await this.Mediator.Send(new CreateAccountCommand(account.Account, account.PasswordHash, account.LastLoginIp));
 
-        Assert.That(this.DbContext.UserAccounts.Where(d => d.RequestId.Equals(CurrentRequestId)).Any(), Is.EqualTo(true));
+        Assert.That(this.DbContext.UserAccounts.Where(d => d.Account.Equals(account.Account)).Any(), Is.EqualTo(true));
+        Assert.That(result.Status, Is.EqualTo(CreateStatus.AccountExist));
     }
+
 
     /// <summary>
     /// 设置服务时进行独特的定制

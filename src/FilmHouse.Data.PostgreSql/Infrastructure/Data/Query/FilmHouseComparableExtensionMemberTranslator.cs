@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Query;
@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Query.ExpressionTranslators.Internal;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal;
 
-namespace Isid.Ilex.Core.Infrastructure.Data.Query
+namespace FilmHouse.Data.PostgreSql.Infrastructure.Data.Query
 {
     /// <summary>
     /// <see cref="IComparableExtension"/>

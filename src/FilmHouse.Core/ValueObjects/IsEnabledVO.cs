@@ -382,7 +382,7 @@ namespace FilmHouse.Core.ValueObjects
                             {
                                 return null;
                             }
-                            var typeConverter = new FilmHouse.Core.Utils.Data.BooleanConverter();
+                            var typeConverter = new FilmHouse.Core.Utils.BooleanConverter();
                             var booleanValue = (bool?)typeConverter.ConvertFrom(stringValue);
                             return booleanValue == null ? null : new IsEnabledVO(booleanValue.Value);
                         }

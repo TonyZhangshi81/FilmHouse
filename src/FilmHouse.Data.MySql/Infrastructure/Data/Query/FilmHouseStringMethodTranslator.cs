@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;

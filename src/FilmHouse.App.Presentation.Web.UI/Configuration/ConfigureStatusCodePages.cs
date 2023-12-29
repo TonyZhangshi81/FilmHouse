@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace FilmHouse.Web.Configuration;
+namespace FilmHouse.App.Presentation.Web.UI.Configuration;
 
 public class ConfigureStatusCodePages
 {

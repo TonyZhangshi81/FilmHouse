@@ -1,5 +1,5 @@
 ﻿using FilmHouse.Core.ValueObjects;
-using FilmHouse.Web.Models;
+using FilmHouse.App.Presentation.Web.UI.Models;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models.Components
 {

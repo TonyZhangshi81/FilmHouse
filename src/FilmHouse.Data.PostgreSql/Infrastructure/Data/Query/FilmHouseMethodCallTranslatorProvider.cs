@@ -1,5 +1,4 @@
-﻿using Isid.Ilex.Core.Infrastructure.Data.Query;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Query;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Query;
@@ -25,7 +24,7 @@ namespace FilmHouse.Data.PostgreSql.Infrastructure.Data.Query
             IDbContextOptions npgsqlOptions)
             : base(dependencies, model, npgsqlOptions)
         {
-           // 获取NpgsqlSqlExpressionFactory实例
+            // 获取NpgsqlSqlExpressionFactory实例
             var sqlExpressionFactory = (NpgsqlSqlExpressionFactory)dependencies.SqlExpressionFactory;
             // 获取NpgsqlTypeMappingSource实例
             var typeMappingSource = (NpgsqlTypeMappingSource)dependencies.RelationalTypeMappingSource;

@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using FilmHouse.Core.ValueObjects;
 
-namespace FilmHouse.Core.Utils.Data
+namespace FilmHouse.Core.Utils
 {
     /// <summary>
     /// <see cref="string"/>是对原始型的值对象的支援方法。
