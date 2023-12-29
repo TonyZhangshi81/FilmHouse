@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FilmHouse.Core.Utils.Data
+namespace FilmHouse.Core.Utils
 {
     /// <summary>
     /// 关于<see cref="decimal"/>的扩展方法的实用程序类。

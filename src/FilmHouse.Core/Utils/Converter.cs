@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#nullable enable
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FilmHouse.Core.Utils.Data;
 
-namespace FilmHouse.Core.Utils.Data
+namespace FilmHouse.Core.Utils
 {
-    /// <summary>
-    /// 向<see cref="Convert.ChangeType(object, Type)"/>添加转换类<see cref="DateOnly"/>
-    /// </summary>
     public static class Converter
     {
         /// <summary>
-        /// 
+        /// 向<see cref="Convert.ChangeType(object, Type)"/>添加转换类<see cref="DateOnly"/>
         /// </summary>
         /// <param name="value"></param>
         /// <param name="conversionType"></param>
         /// <returns></returns>
-        public static object ChangeType(object value, Type conversionType)
+        public static object? ChangeType(object? value, Type conversionType)
         {
             if (value == null)
             {

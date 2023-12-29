@@ -219,16 +219,6 @@ void ConfigureServices(IServiceCollection services)
         };
     });
 
-    /*
-     * 已经移动至ConfigureMiddleware中统一处理中间件
-    services.Configure<RequestLocalizationOptions>(options =>
-    {
-        options.DefaultRequestCulture = new("en-US");
-        options.SupportedCultures = cultures;
-        options.SupportedUICultures = cultures;
-    });
-    */
-
     // 添加本地化资源路径
     services.AddLocalization(options => options.ResourcesPath = "Resources");
     // 添加控制器，并添加自动验证的AntiforgeryTokenFilter

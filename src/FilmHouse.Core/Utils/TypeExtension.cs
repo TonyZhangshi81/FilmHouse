@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FilmHouse.Core.ValueObjects;
 
-namespace FilmHouse.Core.Utils.Data
+namespace FilmHouse.Core.Utils
 {
     /// <summary>
     /// 
@@ -58,7 +58,7 @@ namespace FilmHouse.Core.Utils.Data
             {
                 if (parameterType == typeof(bool))
                 {
-                    var booleanConverter = new Utils.Data.BooleanConverter();
+                    var booleanConverter = new BooleanConverter();
                     var typedValue = booleanConverter.ConvertFrom(value);
                     return typedValue!;
                 }
