@@ -381,7 +381,7 @@ void ConfigureMiddleware()
     // 请求本地化，支持请求 Culture
     app.UseRequestLocalization(new RequestLocalizationOptions
     {
-        DefaultRequestCulture = new("en-US"),
+        DefaultRequestCulture = new("zh-cn"),
         SupportedCultures = cultures,
         SupportedUICultures = cultures
     });

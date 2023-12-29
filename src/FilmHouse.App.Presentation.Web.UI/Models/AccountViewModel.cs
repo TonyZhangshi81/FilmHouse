@@ -36,7 +36,7 @@ namespace FilmHouse.Web.Models
 
         [SysDataAnnotations.Display(Name = nameof(Resources.ConfirmPassword), ResourceType = typeof(Resources))]
         [SysDataAnnotations.DataType(SysDataAnnotations.DataType.Password)]
-        [SysDataAnnotations.Compare("Password", ErrorMessageResourceName = nameof(Resources.ValidationConfirmPassword), ErrorMessageResourceType = typeof(Resources))]
+        [PasswordCompare("Password")]
         public ConfirmPasswordVO ConfirmPassword { get; set; }
     }
 
