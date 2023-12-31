@@ -1,10 +1,9 @@
-﻿$(document).ready(function () {
+﻿$(function () {
+
   $("#link-to-details").smoothScroll();
   $("#link-to-summary").smoothScroll();
   $("#link-to-works").smoothScroll();
-});
 
-$(document).ready(function () {
   $("#btnDisplay").click(function () {
     $("#summaryshort").slideUp(500);
     $("#summarylong").slideDown(500);
@@ -13,9 +12,7 @@ $(document).ready(function () {
     $("#summaryshort").slideDown(500);
     $("#summarylong").slideUp(500);
   });
-});
 
-$(function () {
   $("[rel=drevil]").popover({
     trigger: 'manual',
     //placement: 'bottom',
@@ -37,8 +34,6 @@ $(function () {
       }
     }, 100);
   });
+
 });
 
-$(document).ready(function () {
-  $.backstretch("../../Content/Account/CelebBack.jpg");
-});

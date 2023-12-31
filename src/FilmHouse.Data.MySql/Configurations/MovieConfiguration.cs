@@ -129,7 +129,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
         builder.Property(e => e.IMDb)
             .HasColumnType("varchar(10)")
             .HasMaxLength(10)
-            .HasConversion<IMDbVO.IMDbValueConverter>();
+            .HasConversion<IMDbIDVO.IMDbIDVOValueConverter>();
 
         builder.Property(e => e.Summary)
             .HasComment("Variable-length character data, ⇐ 2G")

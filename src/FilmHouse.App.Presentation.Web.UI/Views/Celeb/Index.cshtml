@@ -1,12 +1,169 @@
-﻿@model FilmHouse.App.Presentation.Web.UI.Models.CelebViewModel
+﻿@using Microsoft.AspNetCore.Http.Extensions;
+@using Microsoft.AspNetCore.Http;
+
+@model FilmHouse.App.Presentation.Web.UI.Models.CelebViewModel
 
 @{
-    //ViewBag.Title = Model.Name;
+    ViewBag.Title = Model.Celebrity.Name;
     ViewBag.PageType = 2;
+
+    var transfer = new Uri(Context.Request.GetDisplayUrl()).PathAndQuery;
 }
 
-
-
-
-@{
+@section Links {
+    <link rel="stylesheet" asp-append-version="true" href="~/css/celeb.css" />
 }
+
+@section Scripts {
+    <script src="~/lib/smoothscroll/jquery.smooth-scroll.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/js/Celeb/Index.js" asp-append-version="true" defer="defer"></script>
+}
+
+<div class="panel panel-default" style="margin-top:167px;">
+    <div style="float:left; display:inline-block; margin-top:-167px; margin-left:25px; margin-right:25px; padding:3px; background-color:white; box-shadow:0px 0px 10px #999999;">
+        <img src="~/Content/Celeb/@Model.Celebrity.Avatar" class="img-responsive" title="@Model.Celebrity.Name" style="width:170px; height:240px;" />
+    </div>
+    <div>
+        <div class="font-larger" style="margin-top:10px; margin-bottom:10px;">
+            <strong>@Model.Celebrity.Name&nbsp;&nbsp;&nbsp;&nbsp;@Model.Celebrity.NameEn</strong>
+        </div>
+        <div style="margin-bottom:10px;">
+            @if (!Model.Celebrity.IsCollect)
+            {
+                <a class="btn btn-mark" title="收藏" href="/Mark/Create?target=@Model.Celebrity.CelebrityId&type=4&transfer=@transfer">
+                    <span class="fa fa-star-o" aria-hidden="true"></span> 收藏
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-mark-inverse" title="取消收藏" href="/Mark/Cancel?target=@Model.Celebrity.CelebrityId&type=4&transfer=@transfer">
+                    <span class="fa fa-star-o" aria-hidden="true"></span> 收藏
+                </a>
+            }
+            @if (Model.Celebrity.IsCreate)
+            {
+                <a class="btn btn-mark tipup" href="/Celeb/Edit?id=@Model.Celebrity.CelebrityId" title="修改 @Model.Celebrity.Name" data-toggle="tooltip" data-placement="top">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </a>
+                if (Model.Celebrity.DoubanID != null && !string.IsNullOrEmpty(Model.Celebrity.DoubanID.AsPrimitive()))
+                {
+                    <a class="btn btn-mark tipup" href="/Celeb/Refresh?id=@Model.Celebrity.CelebrityId" title="更新 @Model.Celebrity.Name" data-toggle="tooltip" data-placement="top">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </a>
+                }
+                <a class="btn btn-mark tipup" href="/Celeb/Delete?id=@Model.Celebrity.CelebrityId" title="删除 @Model.Celebrity.Name" data-toggle="tooltip" data-placement="top">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </a>
+            }
+        </div>
+    </div>
+
+    <div class="panel-footer text-center no-padding" style="background-color:transparent; padding:10px;">
+        <div class="list-tab">
+            <a href="#details" id="link-to-details">&nbsp;&nbsp;详情&nbsp;&nbsp;</a>
+            <a href="#summary" id="link-to-summary">&nbsp;&nbsp;简介&nbsp;&nbsp;</a>
+            <a href="#works" id="link-to-works">&nbsp;&nbsp;作品&nbsp;&nbsp;</a>
+        </div>
+    </div>
+</div>
+
+<div class="no-padding">
+    @*详情*@
+    <div class="panel panel-default" id="details">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>影人详情</strong>&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body">
+            <ul style="list-style:none; padding:0px; margin:0px;">
+                <li>
+                    <span style="color:#808080;">性别:</span>
+                    @Html.DisplayFor(model => model.Celebrity.GenderName)
+                </li>
+                @if (Model.Celebrity.Deathday == null)
+                {
+                    <li>
+                        <span style="color:#808080;">出生日期:</span>
+                        @Html.DisplayFor(model => model.Celebrity.Birthday)
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <span style="color:#808080;">生卒日期:</span>
+                        @Html.DisplayFor(model => model.Celebrity.Birthday) "至" @Html.DisplayFor(model => model.Celebrity.Deathday)
+                    </li>
+                }
+
+                <li>
+                    <span style="color:#808080;">出生地:</span>
+                    @Html.DisplayFor(model => model.Celebrity.BornPlace)
+                </li>
+
+                <li>
+                    <span style="color:#808080;">职业:</span>
+                    @Html.DisplayFor(model => model.Celebrity.Professions)
+                </li>
+
+                <li>
+                    <span style="color:#808080;">更多中文名:</span>
+                    @Html.DisplayFor(model => model.Celebrity.Aka)
+                </li>
+
+                <li>
+                    <span style="color:#808080;">更多外文名:</span>
+                    @Html.DisplayFor(model => model.Celebrity.AkaEn)
+                </li>
+
+                <li>
+                    <span style="color:#808080;">家庭成员:</span>
+                    @Html.DisplayFor(model => model.Celebrity.Family)
+                </li>
+
+                @if (Model.Celebrity.DoubanID != null && !string.IsNullOrEmpty(Model.Celebrity.DoubanID.AsPrimitive()) && !string.IsNullOrWhiteSpace(Model.Celebrity.DoubanID.AsPrimitive()))
+                {
+                    <li>
+                        <span style="color:#808080;">豆瓣链接:</span>
+                        <a href="https://movie.douban.com/celebrity/@Model.Celebrity.DoubanID/" class="link-text" target="_self">@Model.Celebrity.DoubanID</a>
+                    </li>
+                }
+
+                @if (Model.Celebrity.IMDbID != null && !string.IsNullOrEmpty(Model.Celebrity.IMDbID.AsPrimitive()) && !string.IsNullOrWhiteSpace(Model.Celebrity.IMDbID.AsPrimitive()))
+                {
+                    <li>
+                        <span style="color:#808080;">IMDb链接:</span>
+                        <a href="http://www.imdb.com/name/@Model.Celebrity.IMDbID/" class="link-text" target="_self">@Model.Celebrity.IMDbID</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    @*简介*@
+    <div class="panel panel-default" id="summary">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>简介</strong>&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body" id="divbody">
+            @await Component.InvokeAsync("SummaryHurdle", new { summary = Model.Celebrity.Summary })
+        </div>
+    </div>
+
+    @*作品*@
+    <div class="panel panel-default no-border" id="works">
+        <div class="panel-heading text-center">
+            ————&nbsp;&nbsp;<strong>作品</strong>&nbsp;&nbsp;————
+        </div>
+        <div class="panel-body">
+            @if (Model.CelebAboutMovies.Count == 0)
+            {
+                <div class="text-center">还没有收录过 @Model.Celebrity.Name 的作品(＃￣▽￣＃)</div>
+            }
+
+            @foreach (var movie in Model.CelebAboutMovies)
+            {
+                @await Component.InvokeAsync("CelebWorkItem", new { movie = movie, celebrityId = Model.Celebrity.CelebrityId })
+            }
+        </div>
+    </div>
+
+</div>

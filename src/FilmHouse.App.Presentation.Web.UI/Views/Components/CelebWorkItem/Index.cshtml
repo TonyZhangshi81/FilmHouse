@@ -1,0 +1,41 @@
+﻿@using FilmHouse.App.Presentation.Web.UI.Models.Components;
+@model CelebWorkItemViewModel
+
+@{
+    var takeCount = (int)ViewBag.TakeCount;
+
+    <div class="list-movie">
+        <a class="full-height full-width" href="/Movie/Index?movieId=@Model.MovieId" rel="drevil" data-container="body" data-toggle="popover" data-placement="top" data-shadow="true"
+           data-content="
+                                <div>
+                                    <poptitle>@Model.Title</poptitle>&nbsp;&nbsp;<poprating>@Model.Rating</poprating>&nbsp;&nbsp;<span>@Model.Year</span></div>
+                                <div>
+                                <strong>导演:</strong>
+                                @foreach (var celebName in Model.Directors.Take(takeCount))
+                                {
+                                  <span>@celebName</span>
+                                }
+                                </div>
+                                <div>
+                                <strong>主演:</strong>
+                                @foreach (var celebName in Model.Casts.Take(takeCount))
+                                {
+                                  <span>@celebName</span>
+                                }
+                                </div>
+                                    <div>
+                                      <strong>类型:</strong>
+                                      @foreach (var item in Model.GenresValue)
+                                      {
+                                        <span>@item</span>
+                                      }
+                                    </div>" >
+                  <img src="~/Content/Movie/@Model.Avatar" title="@Model.Title" class="col-md-4 img-responsive full-height full-width no-padding" />
+                </a>
+        <div class="text-center font-small">
+            @Model.Title
+            <br />
+            @Model.InMovieProfessions
+        </div>
+    </div>
+}

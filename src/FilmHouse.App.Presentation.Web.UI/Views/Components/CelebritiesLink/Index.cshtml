@@ -21,7 +21,7 @@
     {
         if (item.Id != null && !string.IsNullOrEmpty(item.Id.AsPrimitive().ToString()))
         {
-            <a href="/Celeb/Index?id=@item.Id" class="link-text" target="_self">@item.Name</a>
+            <a href="/Celeb/Index?celebrityId=@item.Id" class="link-text" target="_self">@item.Name</a>
         }
         else
         {

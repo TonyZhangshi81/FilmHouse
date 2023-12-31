@@ -8,7 +8,7 @@ namespace FilmHouse.Data.Spec;
 public sealed class AlbumSpec : BaseSpecification<AlbumEntity>
 {
     public AlbumSpec(MovieIdVO movieId)
-        : base(c => c.Items.StartsWith(movieId.AsPrimitive().ToString()))
+        : base(c => c.Items.Contains(movieId.AsPrimitive().ToString()))
     {
         ApplyOrderBy(p => p.CreatedOn);
     }

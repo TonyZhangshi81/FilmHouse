@@ -1,7 +1,10 @@
-﻿using FilmHouse.Core.ValueObjects;
+﻿using System.IO;
+using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using FilmHouse.Core.Utils;
 
 namespace FilmHouse.Data.Spec;
 
@@ -30,6 +33,15 @@ public sealed class MovieSpec : BaseSpecification<MovieEntity>
     public MovieSpec(MovieIdVO[] ids)
         : base(c => ids.Contains(c.MovieId))
     {
+    }
+
+    public MovieSpec(CelebrityIdVO celebrityId, int pageSize)
+        : base(c => c.DirectorsId.Contains(celebrityId.AsPrimitive().ToString()) 
+                    || c.WritersId.Contains(celebrityId.AsPrimitive().ToString())
+                    || c.CastsId.Contains(celebrityId.AsPrimitive().ToString()))
+    {
+        ApplyOrderByDescending(p => p.Rating);
+        ApplyPaging(0, pageSize);
     }
 
     /// <summary>
