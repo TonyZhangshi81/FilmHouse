@@ -94,6 +94,7 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
             // 取得登录用户的ID
             var claimsIdentity = userIdentity as ClaimsIdentity;
             var userId = new UserIdVO(new Guid(claimsIdentity.Claims.FirstOrDefault(c => c.Type == "uid").Value));
+            // 是否为管理员
             var isAdmin = (claimsIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value).Equals("Administrator");
 
             // 想看

@@ -48,6 +48,8 @@ public interface IRepository<T> where T : class
 
 
 
+    Task<IReadOnlyList<TResult>> SelectAsync<TResult>(Expression<Func<T, bool>> condition, Expression<Func<T, TResult>> selector, CancellationToken ct = default);
+
     IReadOnlyList<TResult> Select<TResult>(ISpecification<T> spec, Expression<Func<T, TResult>> selector);
 
     IReadOnlyList<TResult> Select<TResult>(Expression<Func<T, TResult>> selector);

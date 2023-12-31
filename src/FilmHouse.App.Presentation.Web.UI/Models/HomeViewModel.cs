@@ -54,12 +54,6 @@ public class HomeDiscViewModel
 
 }
 
-public class CelebrityViewModel
-{
-    public CelebrityIdVO Id { get; set; }
-    public CelebrityNameVO Name { get; set; }
-}
-
 public class MovieListViewModel
 {
     public MovieIdVO MovieId { get; set; }

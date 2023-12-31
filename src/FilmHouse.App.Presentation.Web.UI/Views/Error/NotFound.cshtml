@@ -3,8 +3,13 @@
     ViewBag.Title = "404 Not Found";
     ViewBag.PageType = 2;
 }
+
+@section Scripts {
+    <script src="~/js/Error/NotFound.js" asp-append-version="true" defer="defer"></script>
+}
+
 <div class="container text-center" style="margin-top:50px;margin-bottom:20px;">
-    <img src="~/Content/Error/404.png" style="width:640px;"/>
+    <img src="~/Content/Error/404.png" style="width:640px;" />
 </div>
 <div class="text-center" style="font-family:'Microsoft YaHei'; font-size:27px; font-weight:700;">
     <p>
@@ -17,7 +22,7 @@
 
 <div class="text-center" style="margin-bottom:50px;">
     <span style="color:#888888;">可能网页地址输入错了，请再核对下吧。或者：</span>
-    <a class="link-text" href="javaScript: history.back();">回到上一页</a>
+    <a id="turnBack" class="link-text">回到上一页</a>
     <span style="color:#888888;">  |  </span>
-    <a class="link-text" href="/Home/">回到首页</a>
+    <a class="link-text" href="/">回到首页</a>
 </div>

@@ -104,7 +104,8 @@ public abstract class DbContextRepository<T> : IRepository<T> where T : class
 
 
 
-
+    public async Task<IReadOnlyList<TResult>> SelectAsync<TResult>(Expression<Func<T, bool>> condition, Expression<Func<T, TResult>> selector, CancellationToken ct = default) =>
+        await DbContext.Set<T>().Where(condition).AsNoTracking().Select(selector).ToListAsync(cancellationToken: ct);
 
     public IReadOnlyList<TResult> Select<TResult>(ISpecification<T> spec, Expression<Func<T, TResult>> selector) =>
         ApplySpecification(spec).AsNoTracking().Select(selector).ToList();

@@ -1,5 +1,4 @@
-﻿using FilmHouse.App.Presentation.Web.UI.Models.Components;
-using FilmHouse.Core.ValueObjects;
+﻿using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models;
@@ -99,7 +98,7 @@ public class MovieDiscViewModel
     /// <summary>
     /// IMDbId
     /// </summary>
-    public IMDbVO IMDbID { get; set; }
+    public IMDbIDVO IMDbID { get; set; }
 
     /// <summary>
     /// 评论内容
@@ -231,4 +230,11 @@ public class MovieDiscViewModel
     public bool IsCreate { get; set; } = false;
 
 
+}
+
+
+public class CelebrityViewModel
+{
+    public CelebrityIdVO Id { get; set; }
+    public CelebrityNameVO Name { get; set; }
 }

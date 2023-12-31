@@ -7,13 +7,12 @@ using MediatR;
 
 namespace FilmHouse.Commands.Mark;
 
-public record CancelCommand(MarkTargetIdVO TargrtId, UserIdVO UserId, MarkTypeVO MarkType) : IRequest;
+public record IsMarkTypeCommand(MarkTargetIdVO TargrtId, UserIdVO UserId, MarkTypeVO MarkType) : IRequest<bool>;
 
-public class CancelCommandHandler : IRequestHandler<CancelCommand>
+public class IsMarkTypeCommandHandler : IRequestHandler<IsMarkTypeCommand, bool>
 {
     #region Initizalize
 
-    private readonly ICurrentRequestId _currentRequestId;
     private readonly IRepository<MarkEntity> _repo;
 
     /// <summary>
@@ -21,10 +20,9 @@ public class CancelCommandHandler : IRequestHandler<CancelCommand>
     /// </summary>
     /// <param name="repo"></param>
     /// <param name="currentRequestId"></param>
-    public CancelCommandHandler(IRepository<MarkEntity> repo, ICurrentRequestId currentRequestId)
+    public IsMarkTypeCommandHandler(IRepository<MarkEntity> repo)
     {
-        _repo = Guard.GetNotNull(repo, nameof(IRepository<MarkEntity>));
-        _currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
+        this._repo = Guard.GetNotNull(repo, nameof(IRepository<MarkEntity>));
     }
 
     #endregion Initizalize
@@ -36,12 +34,12 @@ public class CancelCommandHandler : IRequestHandler<CancelCommand>
     /// <param name="ct"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public Task Handle(CancelCommand request, CancellationToken ct)
+    public async Task<bool> Handle(IsMarkTypeCommand request, CancellationToken ct)
     {
         Guard.RequiresNotNull<MarkTargetIdVO, ArgumentNullException>(request.TargrtId);
         Guard.RequiresNotNull<UserIdVO, ArgumentNullException>(request.UserId);
         Guard.RequiresNotNull<MarkTypeVO, ArgumentNullException>(request.MarkType);
 
-        return this._repo.DeleteAsync(this._repo.GetAsync(d => d.Target == request.TargrtId && d.UserId == request.UserId && d.Type == request.MarkType).Result, ct);
+        return await this._repo.AnyAsync(d => d.Target == request.TargrtId && d.UserId == request.UserId && d.Type == request.MarkType);
     }
 }

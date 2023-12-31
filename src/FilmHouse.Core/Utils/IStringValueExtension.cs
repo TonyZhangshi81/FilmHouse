@@ -14,6 +14,24 @@ namespace FilmHouse.Core.Utils
         /// <param name="self"></param>
         /// <param name="value"></param>
         /// <returns></returns>
+        public static int IndexOfString(this IValue<string>? self, string value)
+        {
+            if (self == null)
+            {
+                return -1;
+            }
+            else
+            {
+                return self.AsPrimitive().IndexOf(value);
+            }
+        }
+
+        /// <summary>
+        /// <paramref name="value"/>判断是否包含。
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static bool Contains(this IValue<string>? self, string value) => self != null && self.AsPrimitive().Contains(value);
 
         /// <summary>

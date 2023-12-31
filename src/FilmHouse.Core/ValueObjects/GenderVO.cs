@@ -12,7 +12,7 @@ using FilmHouse.Core.ValueObjects;
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 性别的值对象类。进行与原始型的隐性分配。
+    /// 性别代码的值对象类。进行与原始型的隐性分配。
     /// </summary>
     [JsonConverter(typeof(GenderJsonConverter))]
     [ValueConverter(typeof(GenderValueConverter), typeof(GenderArrayValueConverter))]
@@ -75,6 +75,23 @@ namespace FilmHouse.Core.ValueObjects
             /// 「2:女性」
             /// </summary>
             public static readonly GenderVO GenderCode2 = new(2);
+        }
+        
+        /// <summary>
+        /// 性别名称
+        /// </summary>
+        /// <returns></returns>
+        public GenderNameVO? ToGenderName()
+        {
+            switch (this._value)
+            {
+                case 0:
+                    return new GenderNameVO("男");
+                case 1:
+                    return new GenderNameVO("女");
+                default:
+                    return null;
+            }
         }
 
         /// <summary>
