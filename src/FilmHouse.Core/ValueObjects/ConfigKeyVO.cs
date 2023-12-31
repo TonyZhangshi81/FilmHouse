@@ -45,8 +45,12 @@ namespace FilmHouse.Core.ValueObjects
             public static readonly ConfigKeyVO ClientValidationEnabled = new("WebSiteSettings:ClientValidationEnabled");
             public static readonly ConfigKeyVO UnobtrusiveJavaScriptEnabled = new("WebSiteSettings:UnobtrusiveJavaScriptEnabled");
             public static readonly ConfigKeyVO HomeDiscoveryMaxPage = new("Home:Discovery:MaxPage");
+            // 评论缩略显示长度
             public static readonly ConfigKeyVO MovieSummaryShort = new("Movie:Summary:Short");
+            // 影片页面上显示的最大评论件数
             public static readonly ConfigKeyVO MovieCommentMax = new("Movie:Comment:Max");
+            // 电影卡片明星显示最大个数
+            public static readonly ConfigKeyVO WorkItemCelebMax = new("CelebWorkItem:Celeb:Max");
         }
 
         /// <summary>

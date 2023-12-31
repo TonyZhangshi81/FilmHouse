@@ -1,12 +1,11 @@
 ﻿using System.Security.Claims;
+using FilmHouse.App.Presentation.Web.UI.Models;
 using FilmHouse.Commands.Account;
 using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Presentation.Web.Auth;
 using FilmHouse.Core.Presentation.Web.Filters;
-using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Web.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -23,6 +22,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
         private readonly IMediator _mediator;
         private readonly ILogger<AccountController> _logger;
+        private readonly ICurrentRequestId _currentRequestId;
 
         private readonly AuthenticationSettings _authenticationSettings;
 
@@ -32,11 +32,13 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         /// <param name="mediator"></param>
         /// <param name="logger"></param>
         /// <param name="authSettings"></param>
+        /// <param name="currentRequestId"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public AccountController(IMediator mediator, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings)
+        public AccountController(IMediator mediator, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings, ICurrentRequestId currentRequestId)
         {
-            this._logger = logger;
+            this._logger = Guard.GetNotNull(logger, nameof(ILogger<AccountController>));
             this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
+            this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
 
             var auSetting = Guard.GetNotNull(authSettings, nameof(IOptions<AuthenticationSettings>));
             this._authenticationSettings = auSetting.Value;
@@ -50,13 +52,13 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [LogonFilter]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string transfer)
         {
             if (base.User.Identity.IsAuthenticated)
             {
                 return base.RedirectToAction("Index", "Mine");
             }
-            base.ViewBag.ReturnUrl = returnUrl;
+            base.ViewBag.Transfer = transfer;
             return base.View();
         }
 
@@ -65,7 +67,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnurl)
+        public async Task<IActionResult> Login(LoginViewModel model, string transfer)
         {
             try
             {
@@ -89,7 +91,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                         {
                             return base.RedirectToAction("Index", "Movie", new { Area = "Manage" });
                         }
-                        return this.RedirectToLocal(returnurl);
+                        return this.RedirectToLocal(transfer);
 
                     case Commands.Account.SignInStatus.UndefinedAccount:
                         base.ModelState.AddModelError("", "用户名不存在。");
@@ -137,6 +139,15 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
             await base.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, p);
         }
 
+        private ActionResult RedirectToLocal(string transfer)
+        {
+            if (!string.IsNullOrEmpty(transfer) && !string.IsNullOrWhiteSpace(transfer)) // !base.Url.IsLocalUrl(transfer) && 
+            {
+                return base.Redirect(transfer);
+            }
+            return base.RedirectToAction("Index", "Home");
+        }
+
         #endregion
 
         #region 注销
@@ -144,7 +155,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         //
         // POST: /Account/SignOut/
         [HttpGet]
-        public async Task<IActionResult> SignOut(string returnUrl)
+        public async Task<IActionResult> SignOut(string transfer)
         {
             switch (this._authenticationSettings.Provider)
             {
@@ -174,10 +185,98 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 consentFeature.WithdrawConsent();
             }
 
-            return this.RedirectToLocal(returnUrl);
+            return this.RedirectToLocal(transfer);
         }
 
         #endregion
+
+        #region 注册
+
+        //
+        // GET: /Account/Register/
+        [AllowAnonymous]
+        public ActionResult Register(string transfer)
+        {
+            ViewBag.Transfer = transfer;
+            return View();
+        }
+
+        //
+        // POST: /Account/Register/
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model, string transfer)
+        {
+            if (ModelState.IsValid)
+            {
+                // 创建请求ID
+                this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
+
+                var clientIP = new LastLoginIpVO(Helper.GetClientIP(base.HttpContext));
+                var command = new CreateAccountCommand(model.Account, model.Password, clientIP);
+                var result = await this._mediator.Send(command);
+                if (result.Status == CreateStatus.Success)
+                {
+                    await this.SetClaimsIdentity(model.Account, result.UserId, result.IsAdmin);
+                    await this._mediator.Send(new ValidateLoginCommand(result.UserId, clientIP));
+
+                    this._logger.LogInformation($@"Authentication success for local account ""{model.Account}""");
+
+                    if (result.IsAdmin.AsPrimitive())
+                    {
+                        return RedirectToAction("Index", "ManageMovie");
+                    }
+                    else
+                    {
+                        return RedirectToLocal(transfer);
+                    }
+                }
+                ModelState.AddModelError("", "用户名已存在");
+            }
+
+            return View(model);
+        }
+
+        #endregion
+
+        #region 重置密码
+        //
+        // GET: /Account/ResetPassword/
+        [AllowAnonymous]
+        //[ResetPasswordFilter]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ResetPassword/
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            /*
+            model.Account = Session["ResetAccount"].ToString();
+            var result = AccountManager.ResetPassword(model.Account, model.Password);
+            if (result.Succeeded)
+            {
+                Session["CanReset"] = false;
+                return RedirectToAction("Login", "Account");
+            }
+            ModelState.AddModelError("", "重置密码失败，请重试。");
+            */
+            return View();
+        }
+        #endregion
+
+
+
 
 
         /// <summary>
@@ -200,14 +299,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
 
 
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (!base.Url.IsLocalUrl(returnUrl) && !string.IsNullOrEmpty(returnUrl) && !string.IsNullOrWhiteSpace(returnUrl))
-            {
-                return base.Redirect(returnUrl);
-            }
-            return base.RedirectToAction("Index", "Home");
-        }
+
 
     }
 }

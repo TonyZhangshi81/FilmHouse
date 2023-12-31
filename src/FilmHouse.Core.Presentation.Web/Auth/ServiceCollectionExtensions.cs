@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
 
 namespace FilmHouse.Core.Presentation.Web.Auth;
 
@@ -39,6 +40,14 @@ public static class ServiceCollectionExtensions
                         options.AccessDeniedPath = "/auth/accessdenied";
                         options.LoginPath = "/Account/Login";
                         options.LogoutPath = "/Account/SignOut";
+
+                        var section = configuration.GetSection("Session");
+
+                        options.SlidingExpiration = true;
+                        options.ExpireTimeSpan = TimeSpan.FromMinutes(section.GetValue<int>("Timeout"));
+                        options.Cookie.Name = section.GetValue<string>("Cookie.Name");
+                        options.Cookie.SameSite = (SameSiteMode)section.GetValue<int>("Cookie.SameSite");
+
                     });
                 break;
             default:

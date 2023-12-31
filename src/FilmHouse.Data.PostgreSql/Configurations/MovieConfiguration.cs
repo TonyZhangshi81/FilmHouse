@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.Utils;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -111,7 +111,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 
         builder.Property(e => e.Rating)
             .HasDefaultValue(typeof(RatingVO).CreateValueObjectInstance("0.0"))
-            .HasColumnType("numeric(3,1)")
+            .HasColumnType("numeric(3, 1)")
             .HasConversion<RatingVO.RatingValueConverter>();
 
         builder.Property(e => e.RatingCount)
@@ -127,7 +127,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
         builder.Property(e => e.IMDb)
             .HasColumnType("varchar(10)")
             .HasMaxLength(10)
-            .HasConversion<IMDbVO.IMDbValueConverter>();
+            .HasConversion<IMDbIDVO.IMDbIDVOValueConverter>();
 
         builder.Property(e => e.Summary)
             .HasComment("Variable-length character data, ⇐ 2G")
@@ -156,7 +156,7 @@ internal class MovieConfiguration : IEntityTypeConfiguration<MovieEntity>
 
         builder.Property(e => e.PageViews)
             .HasDefaultValue(typeof(PageViewsVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(11)")
+            .HasColumnType("numeric(11, 0)")
             .HasConversion<PageViewsVO.PageViewsValueConverter>();
 
         builder.Property(e => e.IsEnabled)

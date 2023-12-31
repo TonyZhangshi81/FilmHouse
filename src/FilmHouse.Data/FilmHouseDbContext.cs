@@ -54,11 +54,6 @@ public class FilmHouseDbContext : DbContext
     /// <param name="optionsBuilder"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // 检查是否已配置了数据库上下文。如果已配置，则直接返回，避免重复配置。
-        if (optionsBuilder.IsConfigured)
-        {
-            return;
-        }
         // 配置使用指定的`loggerFactory`来记录数据库操作日志。
         // 配置是否启用敏感数据记录。`false`表示禁用敏感数据记录。
         optionsBuilder

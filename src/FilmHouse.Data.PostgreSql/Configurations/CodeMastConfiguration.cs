@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.Utils;
 
 namespace FilmHouse.Data.PostgreSql.Configurations;
 
@@ -40,7 +40,7 @@ internal class CodeMastConfiguration : IEntityTypeConfiguration<CodeMastEntity>
 
         builder.Property(e => e.Order)
             .IsRequired()
-            .HasColumnType("numeric(3)")
+            .HasColumnType("numeric(3, 0)")
             .HasConversion<SortOrderVO.SortOrderValueConverter>();
 
         builder.Property(e => e.IsEnabled)

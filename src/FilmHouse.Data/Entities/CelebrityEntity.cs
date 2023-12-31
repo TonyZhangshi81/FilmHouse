@@ -59,7 +59,7 @@ public class CelebrityEntity : EntitiesBase
     public DoubanIDVO DoubanID { get; set; }
 
     [Column(Order = 16)]
-    public IMDbVO IMDb { get; set; }
+    public IMDbIDVO IMDbID { get; set; }
 
     [Column(Order = 17)]
     public SummaryVO Summary { get; set; }

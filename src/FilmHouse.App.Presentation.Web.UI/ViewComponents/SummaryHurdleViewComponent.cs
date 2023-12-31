@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FilmHouse.App.Presentation.Web.UI.ViewComponents;
 
-public class MovieSummaryHurdleViewComponent : ViewComponent
+public class SummaryHurdleViewComponent : ViewComponent
 {
-    private readonly ILogger<MovieSummaryHurdleViewComponent> _logger;
+    private readonly ILogger<SummaryHurdleViewComponent> _logger;
 
-    public MovieSummaryHurdleViewComponent(ILogger<MovieSummaryHurdleViewComponent> logger)
+    public SummaryHurdleViewComponent(ILogger<SummaryHurdleViewComponent> logger)
     {
         _logger = logger;
     }
@@ -21,11 +21,11 @@ public class MovieSummaryHurdleViewComponent : ViewComponent
     {
         try
         {
-            return View("/Views/Components/MovieSummaryHurdle/Index.cshtml", summary);
+            return View("/Views/Components/SummaryHurdle/Index.cshtml", summary);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error Reading MovieSummaryHurdle.");
+            _logger.LogError(e, "Error Reading SummaryHurdle.");
             return Content(string.Empty);
         }
     }

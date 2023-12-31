@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace FilmHouse.Web.Controllers;
+namespace FilmHouse.App.Presentation.Web.UI.Controllers;
 
 public class PrivacyController : Controller
 {

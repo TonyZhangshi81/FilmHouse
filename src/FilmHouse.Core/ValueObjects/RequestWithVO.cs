@@ -30,7 +30,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 取得作为数值的最大位数。
         /// </summary>
-        public const int Precision = 4;
+        public const int Precision = 10;
 
         /// <summary>
         /// 获取值对象包含的原始类型。

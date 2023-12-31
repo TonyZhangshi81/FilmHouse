@@ -16,13 +16,13 @@ public class MovieShortReviewHurdleViewComponent : ViewComponent
     /// 
     /// </summary>
     /// <param name="viewModel"></param>
-    /// <param name="returnUrl"></param>
+    /// <param name="transfer"></param>
     /// <returns></returns>
-    public IViewComponentResult Invoke(MovieShortReviewHurdleViewModel viewModel, string returnUrl)
+    public IViewComponentResult Invoke(MovieShortReviewHurdleViewModel viewModel, string transfer)
     {
         try
         {
-            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.Transfer = transfer;
             return View("/Views/Components/MovieShortReviewHurdle/Index.cshtml", viewModel);
         }
         catch (Exception e)

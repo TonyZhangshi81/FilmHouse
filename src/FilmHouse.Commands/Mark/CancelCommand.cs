@@ -9,7 +9,7 @@ namespace FilmHouse.Commands.Mark;
 
 public record CancelCommand(MarkTargetIdVO TargrtId, UserIdVO UserId, MarkTypeVO MarkType) : IRequest;
 
-public class CancelCommandCommandHandler : IRequestHandler<CancelCommand>
+public class CancelCommandHandler : IRequestHandler<CancelCommand>
 {
     #region Initizalize
 
@@ -21,7 +21,7 @@ public class CancelCommandCommandHandler : IRequestHandler<CancelCommand>
     /// </summary>
     /// <param name="repo"></param>
     /// <param name="currentRequestId"></param>
-    public CancelCommandCommandHandler(IRepository<MarkEntity> repo, ICurrentRequestId currentRequestId)
+    public CancelCommandHandler(IRepository<MarkEntity> repo, ICurrentRequestId currentRequestId)
     {
         _repo = Guard.GetNotNull(repo, nameof(IRepository<MarkEntity>));
         _currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));

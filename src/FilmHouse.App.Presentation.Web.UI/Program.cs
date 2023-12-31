@@ -16,9 +16,10 @@ using FilmHouse.Data.MySql;
 using FilmHouse.Data.PostgreSql;
 using FilmHouse.Data.SqlServer;
 using FilmHouse.Web;
-using FilmHouse.Web.Configuration;
+using FilmHouse.App.Presentation.Web.UI.Configuration;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -26,7 +27,7 @@ using Microsoft.Extensions.WebEncoders;
 using Microsoft.Net.Http.Headers;
 using NLog.Web;
 using Spectre.Console;
-using Encoder = FilmHouse.Web.Configuration.Encoder;
+using Encoder = FilmHouse.App.Presentation.Web.UI.Configuration.Encoder;
 
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -203,7 +204,7 @@ void ConfigureServices(IServiceCollection services)
         // 设置为`None`表示允许跨站点请求时发送Cookie。这是为了兼容旧版浏览器或需要与其他域名进行交互的情况。
         options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
         // 设置为`SameAsRequest`表示Cookie的安全性与请求的安全性相同。如果请求是通过HTTPS进行的，则Cookie也会被标记为安全，只能通过HTTPS传输。
-        options.Secure = CookieSecurePolicy.SameAsRequest;
+        options.Secure = CookieSecurePolicy.Always;
         // 设置为`None`表示允许客户端脚本访问和操作Cookie。如果设置为`HttpOnlyPolicy.Always`，则Cookie将被标记为仅限服务器访问，无法通过客户端脚本访问。
         options.HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always;
         // 指定用于跟踪用户是否已同意 cookie 使用策略
@@ -214,19 +215,9 @@ void ConfigureServices(IServiceCollection services)
             // 设置过期间隔为3天
             Expiration = TimeSpan.FromDays(3),
             IsEssential = true,
-            Name = "cookie.grant.consent"
+            Name = "COOKIE_CONSENT"
         };
     });
-
-    /*
-     * 已经移动至ConfigureMiddleware中统一处理中间件
-    services.Configure<RequestLocalizationOptions>(options =>
-    {
-        options.DefaultRequestCulture = new("en-US");
-        options.SupportedCultures = cultures;
-        options.SupportedUICultures = cultures;
-    });
-    */
 
     // 添加本地化资源路径
     services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -368,6 +359,12 @@ void ConfigureMiddleware()
         }));
     }
 
+    // 处理转发的头信息（其中包括客戶端請求host名和客戶端請求協議類型）
+    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto
+    });
+
     // 重定向到HTTPS
     app.UseHttpsRedirection();
     // 静态文件，支持缓存，支持自定义缓存头
@@ -384,7 +381,7 @@ void ConfigureMiddleware()
     // 请求本地化，支持请求 Culture
     app.UseRequestLocalization(new RequestLocalizationOptions
     {
-        DefaultRequestCulture = new("en-US"),
+        DefaultRequestCulture = new("zh-cn"),
         SupportedCultures = cultures,
         SupportedUICultures = cultures
     });

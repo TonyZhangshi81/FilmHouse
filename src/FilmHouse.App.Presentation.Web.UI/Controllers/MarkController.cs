@@ -35,7 +35,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         //
         // GET: /Mark/Create/
         [Authorize]
-        public async Task<IActionResult> Create(Guid target, MarkTypeVO type, string returnurl)
+        public async Task<IActionResult> Create(Guid target, MarkTypeVO type, string transfer)
         {
             if (!await this.CheckTargetIdIsExist(target, type))
             {
@@ -58,7 +58,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 await this._mediator.Send(command);
             }
 
-            return Redirect(returnurl);
+            return Redirect(transfer);
         }
 
         private async Task<bool> CheckTargetIdIsExist(Guid targetId, MarkTypeVO markType)
@@ -97,7 +97,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         //
         // GET: /Mark/Cancel/
         [Authorize]
-        public async Task<IActionResult> Cancel(Guid target, MarkTypeVO type, string returnurl)
+        public async Task<IActionResult> Cancel(Guid target, MarkTypeVO type, string transfer)
         {
             if (!await this.CheckTargetIdIsExist(target, type))
             {
@@ -117,7 +117,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 await this._mediator.Send(command);
             }
 
-            return Redirect(returnurl);
+            return Redirect(transfer);
         }
     }
 }

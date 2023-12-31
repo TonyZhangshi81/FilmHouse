@@ -4,21 +4,20 @@
 @using Microsoft.AspNetCore.Http;
 @using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
-@model FilmHouse.Web.Models.MovieViewModel
+@model FilmHouse.App.Presentation.Web.UI.Models.MovieViewModel
 
 @{
     ViewBag.Title = Model.Movie.Title;
     ViewBag.PageType = 2;
 
-    var fullUrl = Context.Request.GetDisplayUrl();
+    var transfer = new Uri(Context.Request.GetDisplayUrl()).PathAndQuery;
 
 
-    var uri = new Uri(fullUrl);
-    var scheme = uri.Scheme;
-    var host = uri.Host;
-    var path = uri.AbsolutePath;
-    var query = uri.Query;
-    var fragment = uri.Fragment;
+    //var scheme = uri.Scheme;
+    //var host = uri.Host;
+    //var path = uri.AbsolutePath;
+    //var query = uri.Query;
+    //var fragment = uri.Fragment;
 
 
 }
@@ -36,7 +35,7 @@
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            @using (Html.BeginForm("Create", "Comment", routeValues: new { movieId = Model.Movie.MovieId, returnurl = fullUrl }, method: FormMethod.Post, true, htmlAttributes: new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("Create", "Comment", routeValues: new { movieId = Model.Movie.MovieId, transfer = transfer }, method: FormMethod.Post, true, htmlAttributes: new { @class = "form-horizontal", role = "form" }))
             {
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -82,7 +81,7 @@
             };
             }
             @* 操作：想看、取消想看、看过、取消看过、喜欢、取消喜欢、修改、更新、删除 *@
-            @await Component.InvokeAsync("MovieActionBar", new { viewModel = actionBarViewModel, returnUrl = fullUrl })
+            @await Component.InvokeAsync("MovieActionBar", new { viewModel = actionBarViewModel, transfer = transfer })
         </div>
     </div>
 
@@ -175,7 +174,7 @@
             ————&nbsp;&nbsp;<strong>剧情介绍</strong>&nbsp;&nbsp;————
         </div>
         <div class="panel-body" id="divbody">
-            @await Component.InvokeAsync("MovieSummaryHurdle", new { summary = Model.Movie.Summary })
+            @await Component.InvokeAsync("SummaryHurdle", new { summary = Model.Movie.Summary })
         </div>
     </div>
 
@@ -201,7 +200,7 @@
                 Resources = Model.Resources
             };
             }
-            @await Component.InvokeAsync("MovieResourcesHurdle", new { movieResources = resources, returnUrl = fullUrl })
+            @await Component.InvokeAsync("MovieResourcesHurdle", new { movieResources = resources, transfer = transfer })
         </div>
     </div>
 
@@ -211,7 +210,7 @@
             ————&nbsp;&nbsp;<strong>@Model.Movie.Title 的短评</strong>(<a class="link-text" href="/Movie/Comment?movieId=@Model.Movie.MovieId" target="_self">全部 @Model.Movie.CommentCount 条</a>)&nbsp;&nbsp;————
         </div>
         <div class="panel-body">
-            @await Component.InvokeAsync("MovieCommentsHurdle", new { comments = Model.Comments, returnUrl = fullUrl, isFinish = Model.Movie.IsFinish })
+            @await Component.InvokeAsync("MovieCommentsHurdle", new { comments = Model.Comments, transfer = transfer, isFinish = Model.Movie.IsFinish })
         </div>
     </div>
 </div>
@@ -220,14 +219,14 @@
     @*关注度、我的评论、相关专辑*@
     @{
         var shortReviewViewModel = new MovieShortReviewHurdleViewModel()
-        {
-            Albums = Model.Albums,
-            PersonalReview = Model.PersonalReview,
-            FavorCount = Model.Movie.FavorCount,
-            FinishCount = Model.Movie.FinishCount,
-            IsFinish = Model.Movie.IsFinish,
-            PlanCount = Model.Movie.PlanCount
-        };
+            {
+                Albums = Model.Albums,
+                PersonalReview = Model.PersonalReview,
+                FavorCount = Model.Movie.FavorCount,
+                FinishCount = Model.Movie.FinishCount,
+                IsFinish = Model.Movie.IsFinish,
+                PlanCount = Model.Movie.PlanCount
+            };
     }
-    @await Component.InvokeAsync("MovieShortReviewHurdle", new { viewModel = shortReviewViewModel, returnUrl = fullUrl })
+    @await Component.InvokeAsync("MovieShortReviewHurdle", new { viewModel = shortReviewViewModel, transfer = transfer })
 </div>

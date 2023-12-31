@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.Utils;
 
 namespace FilmHouse.Data.MySql.Configurations;
 
@@ -61,7 +61,7 @@ internal class AlbumConfiguration : IEntityTypeConfiguration<AlbumEntity>
 
         builder.Property(e => e.AmountAttention)
             .HasDefaultValue(typeof(AmountAttentionVO).CreateValueObjectInstance("0"))
-            .HasColumnType("numeric(4)")
+            .HasColumnType("numeric(8, 0)")
             .HasConversion<AmountAttentionVO.AmountAttentionValueConverter>();
 
         builder.Property(e => e.IsEnabled)

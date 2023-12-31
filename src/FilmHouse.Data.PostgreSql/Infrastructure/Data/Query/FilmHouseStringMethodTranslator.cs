@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -16,6 +16,11 @@ namespace FilmHouse.Data.PostgreSql.Infrastructure.Data.Query
     {
         private static readonly Dictionary<MethodInfo, MethodInfo> SupportedMethodTranslations = new()
         {
+            // IndexOfString
+            {
+                typeof(IStringValueExtension).GetMethod(nameof(IStringValueExtension.IndexOfString), new[] { typeof(IValue<string>), typeof(string) })!,
+                typeof(string).GetRuntimeMethod(nameof(string.IndexOf), new[] { typeof(string) })!
+            },
             // Contains
             {
                 typeof(IStringValueExtension).GetMethod(nameof(IStringValueExtension.Contains), new[] { typeof(IValue<string>), typeof(string) })!,

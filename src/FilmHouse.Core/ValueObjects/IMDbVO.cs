@@ -14,19 +14,19 @@ namespace FilmHouse.Core.ValueObjects
     /// <summary>
     /// IMDb（10位文本）的值对象类。
     /// </summary>
-    [JsonConverter(typeof(IMDbJsonConverter))]
-    [ValueConverter(typeof(IMDbValueConverter), typeof(IMDbArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(IMDbTypeConverter))]
+    [JsonConverter(typeof(IMDbIDVOJsonConverter))]
+    [ValueConverter(typeof(IMDbIDVOValueConverter), typeof(IMDbIDVOArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(IMDbIDVOTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class IMDbVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<IMDbVO>, IComparable<IMDbVO>, IValue<string>, IValueObject
+    public partial class IMDbIDVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<IMDbIDVO>, IComparable<IMDbIDVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "IMDb(size:10)";
+        public new const string TypeName = "IMDbID(size:10)";
 
         /// <summary>
         /// 取得位数。
@@ -34,10 +34,10 @@ namespace FilmHouse.Core.ValueObjects
         public const int Size = 10;
 
         /// <summary>
-        /// <see cref="IMDbVO"/>的新实例。
+        /// <see cref="IMDbIDVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public IMDbVO(string value)
+        public IMDbIDVO(string value)
             : base(value)
         {
             this.PreProcess(ref value);
@@ -50,21 +50,21 @@ namespace FilmHouse.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="IMDbVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="IMDbIDVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(IMDbVO value)
+        public static explicit operator string(IMDbIDVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="IMDbVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="IMDbIDVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator IMDbVO(string value)
+        public static explicit operator IMDbIDVO(string value)
         {
-            return new IMDbVO(value);
+            return new IMDbIDVO(value);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in IMDbVO? x, in IMDbVO? y)
+        internal static bool Equals(in IMDbIDVO? x, in IMDbIDVO? y)
         {
             if (x is null && y is null)
             {
@@ -91,7 +91,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(IMDbVO? other)
+        public bool Equals(IMDbIDVO? other)
         {
             return Equals(this, other);
         }
@@ -108,9 +108,9 @@ namespace FilmHouse.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(IMDbVO).IsAssignableFrom(t))
+            if (typeof(IMDbIDVO).IsAssignableFrom(t))
             {
-                return Equals((IMDbVO)obj);
+                return Equals((IMDbIDVO)obj);
             }
             if (t == typeof(string))
             {
@@ -141,7 +141,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in IMDbVO? x, in IMDbVO? y)
+        public static bool operator ==(in IMDbIDVO? x, in IMDbIDVO? y)
         {
             return Equals(x, y);
         }
@@ -149,7 +149,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in IMDbVO? x, in IMDbVO? y)
+        public static bool operator !=(in IMDbIDVO? x, in IMDbIDVO? y)
         {
             return !Equals(x, y);
         }
@@ -166,7 +166,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(IMDbVO? other)
+        public int CompareTo(IMDbIDVO? other)
         {
             if (other == null)
             {
@@ -177,9 +177,9 @@ namespace FilmHouse.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class IMDbJsonConverter : JsonConverter<IMDbVO>
+        private class IMDbIDVOJsonConverter : JsonConverter<IMDbIDVO>
         {
-            public override void Write(Utf8JsonWriter writer, IMDbVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, IMDbIDVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -192,7 +192,7 @@ namespace FilmHouse.Core.ValueObjects
                 }
             }
 
-            public override IMDbVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override IMDbIDVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -200,7 +200,7 @@ namespace FilmHouse.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new IMDbVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new IMDbIDVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -221,24 +221,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class IMDbValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<IMDbVO?, string?>
+        public class IMDbIDVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<IMDbIDVO?, string?>
         {
             /// <summary>
-            /// <see cref="IMDbValueConverter"/>的新实例。
+            /// <see cref="IMDbIDVOValueConverter"/>的新实例。
             /// </summary>
-            public IMDbValueConverter()
+            public IMDbIDVOValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="IMDbValueConverter"/>的新实例。
+            /// <see cref="IMDbIDVOValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public IMDbValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public IMDbIDVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new IMDbVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new IMDbIDVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -249,7 +249,7 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                IMDbVO value => value._value,
+                IMDbIDVO value => value._value,
                 _ => null,
             };
 
@@ -258,8 +258,8 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                IMDbVO value => value,
-                string value => new IMDbVO(value),
+                IMDbIDVO value => value,
+                string value => new IMDbIDVO(value),
                 _ => null,
             };
         }
@@ -267,24 +267,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class IMDbArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<IMDbVO?[], string?[]>
+        public class IMDbIDVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<IMDbIDVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="IMDbArrayValueConverter"/>的新实例。
+            /// <see cref="IMDbIDVOArrayValueConverter"/>的新实例。
             /// </summary>
-            public IMDbArrayValueConverter()
+            public IMDbIDVOArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="IMDbArrayValueConverter"/>的新实例。
+            /// <see cref="IMDbIDVOArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public IMDbArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public IMDbIDVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new IMDbVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new IMDbIDVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -295,9 +295,9 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                IMDbVO?[] values => values.Select(_ => _?._value).ToArray(),
+                IMDbIDVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<IMDbVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<IMDbIDVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -306,18 +306,18 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                IMDbVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new IMDbVO(_)).ToArray(),
-                IEnumerable<IMDbVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new IMDbVO(_)).ToArray(),
+                IMDbIDVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new IMDbIDVO(_)).ToArray(),
+                IEnumerable<IMDbIDVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new IMDbIDVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class IMDbTypeConverter : System.ComponentModel.TypeConverter
+        private class IMDbIDVOTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(IMDbVO);
+            private static readonly Type WrapperType = typeof(IMDbIDVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -347,13 +347,13 @@ namespace FilmHouse.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(IMDbVO))
+                if (t == typeof(IMDbIDVO))
                 {
-                    return (IMDbVO)value;
+                    return (IMDbIDVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new IMDbVO((string)value);
+                    return new IMDbIDVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -366,7 +366,7 @@ namespace FilmHouse.Core.ValueObjects
                     return null;
                 }
 
-                if (value is IMDbVO wrappedValue)
+                if (value is IMDbIDVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

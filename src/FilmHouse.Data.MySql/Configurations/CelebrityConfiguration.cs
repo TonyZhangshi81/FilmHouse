@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using FilmHouse.Data.Entities;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.Utils;
 
 namespace FilmHouse.Data.MySql.Configurations;
 
@@ -96,10 +96,10 @@ internal class CelebrityConfiguration : IEntityTypeConfiguration<CelebrityEntity
             .HasMaxLength(10)
             .HasConversion<DoubanIDVO.DoubanIDValueConverter>();
 
-        builder.Property(e => e.IMDb)
+        builder.Property(e => e.IMDbID)
             .HasColumnType("varchar(10)")
             .HasMaxLength(10)
-            .HasConversion<IMDbVO.IMDbValueConverter>();
+            .HasConversion<IMDbIDVO.IMDbIDVOValueConverter>();
 
         builder.Property(e => e.Summary)
             .HasComment("Variable-length character data, ⇐ 2G")

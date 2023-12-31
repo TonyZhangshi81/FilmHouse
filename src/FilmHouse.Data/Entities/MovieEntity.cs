@@ -133,7 +133,7 @@ public class MovieEntity : EntitiesBase
     /// IMDb
     /// </summary>
     [Column(Order = 21)]
-    public IMDbVO IMDb { get; set; }
+    public IMDbIDVO IMDb { get; set; }
 
     /// <summary>
     /// 评论

@@ -1,6 +1,5 @@
-﻿using FilmHouse.Web.Models;
+﻿using FilmHouse.App.Presentation.Web.UI.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Abstractions;
 
 namespace FilmHouse.App.Presentation.Web.UI.ViewComponents;
 

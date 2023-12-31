@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FilmHouse.Core.Utils.Data
+namespace FilmHouse.Core.Utils
 {
     /// <summary>
     /// 管理<see cref="IEnumerable{T}"/>和<see cref="IEnumerable"/>的扩展方法的类。

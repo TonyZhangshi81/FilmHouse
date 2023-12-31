@@ -1,4 +1,4 @@
-﻿using FilmHouse.Core.Utils.Data;
+﻿using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -45,7 +45,7 @@ internal class DiscoveryConfiguration : IEntityTypeConfiguration<DiscoveryEntity
 
         builder.Property(e => e.Order)
             .IsRequired()
-            .HasColumnType("numeric(3)")
+            .HasColumnType("numeric(3, 0)")
             .HasConversion<SortOrderVO.SortOrderValueConverter>();
 
         builder.Property(e => e.IsEnabled)

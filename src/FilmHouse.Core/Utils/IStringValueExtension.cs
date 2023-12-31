@@ -1,13 +1,31 @@
 ﻿#nullable enable
 using FilmHouse.Core.ValueObjects;
 
-namespace FilmHouse.Core.Utils.Data
+namespace FilmHouse.Core.Utils
 {
     /// <summary>
     /// <see cref="string"/>是对原始型的值对象的支援方法。
     /// </summary>
     public static class IStringValueExtension
     {
+        /// <summary>
+        /// <paramref name="value"/>判断是否包含。
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static int IndexOfString(this IValue<string>? self, string value)
+        {
+            if (self == null)
+            {
+                return -1;
+            }
+            else
+            {
+                return self.AsPrimitive().IndexOf(value);
+            }
+        }
+
         /// <summary>
         /// <paramref name="value"/>判断是否包含。
         /// </summary>

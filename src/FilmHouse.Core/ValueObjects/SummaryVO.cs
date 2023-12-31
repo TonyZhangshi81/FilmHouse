@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using FilmHouse.Core.Utils.Data;
+using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
 using System.Collections;
+using FilmHouse.Core.Utils.Data;
 
 namespace FilmHouse.Core.ValueObjects
 {
