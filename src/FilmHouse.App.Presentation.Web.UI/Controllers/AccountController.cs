@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Web;
 using FilmHouse.App.Presentation.Web.UI.Models;
 using FilmHouse.Commands.Account;
 using FilmHouse.Core.DependencyInjection;
@@ -52,13 +53,13 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [HttpGet]
         [AllowAnonymous]
         [LogonFilter]
-        public ActionResult Login(string transfer)
+        public ActionResult Login(string returnurl)
         {
             if (base.User.Identity.IsAuthenticated)
             {
                 return base.RedirectToAction("Index", "Mine");
             }
-            base.ViewBag.Transfer = transfer;
+            base.ViewBag.Transfer = !string.IsNullOrEmpty(returnurl) ? HttpUtility.UrlDecode(returnurl) : "/";
             return base.View();
         }
 
@@ -67,7 +68,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string transfer)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnurl)
         {
             try
             {
@@ -91,7 +92,8 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                         {
                             return base.RedirectToAction("Index", "Movie", new { Area = "Manage" });
                         }
-                        return this.RedirectToLocal(transfer);
+
+                        return this.RedirectToLocal(returnurl);
 
                     case Commands.Account.SignInStatus.UndefinedAccount:
                         base.ModelState.AddModelError("", "用户名不存在。");
