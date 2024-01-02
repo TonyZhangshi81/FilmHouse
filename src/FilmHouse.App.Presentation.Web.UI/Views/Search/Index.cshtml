@@ -1,0 +1,76 @@
+﻿@model FilmHouse.App.Presentation.Web.UI.Models.ClassifyViewModel
+
+@{
+    ViewBag.Title = "分类结果";
+    ViewBag.PageType = 2;
+    ViewBag.NavType = 2;
+}
+
+@section Links {
+    <link rel="stylesheet" asp-append-version="true" href="~/css/search.css" />
+}
+
+<div class="panel panel-body text-center no-padding">
+    <h4>总共找到 10 部电影</h4>
+</div>
+
+<div class="panel panel-body">
+    @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "form-inline", role = "form" }))
+    {
+        @Html.HiddenFor(m => m.Search)
+        @Html.DropDownList("genre", Model.listGenre, new { @class = "form-control", style = "margin-right:15px;" })
+        @Html.DropDownList("country", Model.listCountry, new { @class = "form-control", style = "margin-right:15px;" })
+        @Html.DropDownList("year", Model.listYear, new { @class = "form-control", style = "margin-right:15px;" })
+        <input type="submit" value="筛选" class="btn btn-primary" />
+    }
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body" style="padding:10px;">
+        @if (Model.listMovies.Count == 0)
+        {
+            <div class="text-center">没有找到关于 "@Model.Search" 的结果 (＃￣▽￣＃)</div>
+        }
+
+        @foreach (var item in Model.listMovies)
+        {
+            <div class="col-md-4 col-sm-6 col-xs-4 panel-float div-movie-back">
+                <div class="full-height" style="padding:5px; overflow:hidden; background-color:#F2F2F2;">
+                    <div class="full-height no-padding" style="height:170px; width:120px; float:left;">
+                        <a class="full-height" href="/Movie/Index?movieId=@item.MovieId" target="_self">
+                            <img src="~/Content/Movie/@item.Avatar" title="@item.Title" class="img-responsive full-height full-width" />
+                        </a>
+                    </div>
+                    <div class="hidden-xs" style="margin-left:125px;">
+                        <div>
+                            <a href="/Movie/Index?movieId=@item.MovieId" class="font-larger" target="_self">
+                                <strong title="@item.Title">@item.Title</strong>
+                            </a>
+                            <a href="http://movie.douban.com/subject/@item.DoubanID/" class="clr-doubangreen" title="跳转到豆瓣电影" target="_self">
+                                @item.Rating
+                            </a>
+                            <span class="label label-info font-small" style="padding:0px 3px;">@item.Year</span>
+                        </div>
+                        <div>
+                            @*导演*@
+                            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = item.Directors, type = "Directors", count = 4 })
+                        </div>
+                        <div>
+                            @*类型*@
+                            @await Component.InvokeAsync("MovieGenresHurdle", new { genres = item.GenresValue, count = 4 })
+                        </div>
+                        <div>
+                            <!-- 编剧 -->
+                            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = item.Writers, type = "Writers", count = 4 })
+                        </div>
+                        <div>
+                            <!-- 演员 -->
+                            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = item.Casts, type = "Casts", count = 4 })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
