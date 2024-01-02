@@ -1,22 +1,17 @@
-﻿using System.Configuration;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using AspNetCoreRateLimit;
+using FilmHouse.App.Presentation.Web.UI.Configuration;
 using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Presentation.Web.Auth;
 using FilmHouse.Core.Presentation.Web.Health;
 using FilmHouse.Core.Presentation.Web.SecurityHeaders;
 using FilmHouse.Core.Utils;
-using FilmHouse.Data;
-using FilmHouse.Data.MySql;
-using FilmHouse.Data.PostgreSql;
-using FilmHouse.Data.SqlServer;
 using FilmHouse.Web;
-using FilmHouse.App.Presentation.Web.UI.Configuration;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -219,6 +214,13 @@ void ConfigureServices(IServiceCollection services)
         };
     });
 
+    // .net core 启动反向代理支持（为了能够获取到由代理服务器传递的原始请求信息）
+    services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        // 处理转发的头信息（其中包括客戶端請求host名和客戶端請求協議類型）
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto;
+    });
+
     // 添加本地化资源路径
     services.AddLocalization(options => options.ResourcesPath = "Resources");
     // 添加控制器，并添加自动验证的AntiforgeryTokenFilter
@@ -359,11 +361,8 @@ void ConfigureMiddleware()
         }));
     }
 
-    // 处理转发的头信息（其中包括客戶端請求host名和客戶端請求協議類型）
-    app.UseForwardedHeaders(new ForwardedHeadersOptions
-    {
-        ForwardedHeaders = ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto
-    });
+    // 应用反向代理规则
+    app.UseForwardedHeaders();
 
     // 重定向到HTTPS
     app.UseHttpsRedirection();
