@@ -97,6 +97,24 @@ namespace FilmHouse.Localization {
         }
         
         /// <summary>
+        ///   request Id に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string RequestId {
+            get {
+                return ResourceManager.GetString("RequestId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   HttpStatus に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   UserName に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string UserName {

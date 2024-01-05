@@ -27,7 +27,7 @@ public class NginxController : ControllerBase
     public string Get()
     {
 
-        var codeContainer = this._codeProvider.AvailableAt(CodeGroupVO.Codes.GroupLanguage);
+        var codeContainer = this._codeProvider.AvailableAt(CodeGroupVO.Codes.Language);
         foreach (var item in codeContainer.Elements)
         {
             this._logger.LogInformation($"{item.Code}:{item.Name}");

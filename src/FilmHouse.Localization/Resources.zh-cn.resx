@@ -129,6 +129,12 @@
   <data name="Password" xml:space="preserve">
     <value>密码</value>
   </data>
+  <data name="RequestId" xml:space="preserve">
+    <value>請求ID</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>HTTP狀態</value>
+  </data>
   <data name="UserName" xml:space="preserve">
     <value>用户名</value>
   </data>

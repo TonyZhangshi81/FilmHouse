@@ -129,6 +129,12 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="RequestId" xml:space="preserve">
+    <value>request Id</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>HttpStatus</value>
+  </data>
   <data name="UserName" xml:space="preserve">
     <value>UserName</value>
   </data>
