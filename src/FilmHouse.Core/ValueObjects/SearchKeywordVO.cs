@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -8,38 +8,36 @@ using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Core.Services.Codes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 语言信息（400位数文本）的值对象类。
+    /// 查询关键字（50位文本）的值对象类。
     /// </summary>
-    [JsonConverter(typeof(LanguagesJsonConverter))]
-    [ValueConverter(typeof(LanguagesValueConverter), typeof(LanguagesArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(LanguagesTypeConverter))]
+    [JsonConverter(typeof(SearchKeywordVOJsonConverter))]
+    [ValueConverter(typeof(SearchKeywordVOValueConverter), typeof(SearchKeywordVOArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(SearchKeywordVOTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class LanguagesVO : FilmHouse.Core.ValueObjects.CodesId, IEquatable<LanguagesVO>, IComparable<LanguagesVO>, IValue<string>, IValueObject, IEnumeratorObject<CodeKeyVO>
+    public partial class SearchKeywordVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<SearchKeywordVO>, IComparable<SearchKeywordVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "Languages";
+        public new const string TypeName = "SearchKeyword(size:50)";
 
         /// <summary>
-        /// "语言"区分的代码组。
+        /// 取得位数。
         /// </summary>
-        public static readonly CodeGroupVO Group = CodeGroupVO.Codes.Language;
+        public const int Size = 50;
 
         /// <summary>
-        /// <see cref="LanguagesVO"/>的新实例。
+        /// <see cref="SearchKeywordVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public LanguagesVO(string value)
+        public SearchKeywordVO(string value)
             : base(value)
         {
             this.PreProcess(ref value);
@@ -52,33 +50,21 @@ namespace FilmHouse.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="CodeKeyVO"/>的集合。
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<CodeKeyVO>? ToEnumerable()
-        {
-            foreach (var value in this._value.Split('/', StringSplitOptions.RemoveEmptyEntries))
-            {
-                yield return (new CodeKeyVO(value));
-            }
-        }
-
-        /// <summary>
-        /// <see cref="string"/>向<see cref="LanguagesVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="SearchKeywordVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(LanguagesVO value)
+        public static explicit operator string(SearchKeywordVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="LanguagesVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="SearchKeywordVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator LanguagesVO(string value)
+        public static explicit operator SearchKeywordVO(string value)
         {
-            return new LanguagesVO(value);
+            return new SearchKeywordVO(value);
         }
 
         /// <summary>
@@ -87,7 +73,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in LanguagesVO? x, in LanguagesVO? y)
+        internal static bool Equals(in SearchKeywordVO? x, in SearchKeywordVO? y)
         {
             if (x is null && y is null)
             {
@@ -105,7 +91,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(LanguagesVO? other)
+        public bool Equals(SearchKeywordVO? other)
         {
             return Equals(this, other);
         }
@@ -122,9 +108,9 @@ namespace FilmHouse.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(LanguagesVO).IsAssignableFrom(t))
+            if (typeof(SearchKeywordVO).IsAssignableFrom(t))
             {
-                return Equals((LanguagesVO)obj);
+                return Equals((SearchKeywordVO)obj);
             }
             if (t == typeof(string))
             {
@@ -155,15 +141,15 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in LanguagesVO? x, in LanguagesVO? y)
+        public static bool operator ==(in SearchKeywordVO? x, in SearchKeywordVO? y)
         {
             return Equals(x, y);
         }
 
         /// <summary>
-        /// 是否不等于
+        /// 是否不相等
         /// </summary>
-        public static bool operator !=(in LanguagesVO? x, in LanguagesVO? y)
+        public static bool operator !=(in SearchKeywordVO? x, in SearchKeywordVO? y)
         {
             return !Equals(x, y);
         }
@@ -176,11 +162,11 @@ namespace FilmHouse.Core.ValueObjects
         // UnitGenerateOptions.ComparableInterfaceOnly
 
         /// <summary>
-        /// 将该实例<paramref name="other " />和比较。
+        /// 将该实例<paramref name="other" />和比较。
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(LanguagesVO? other)
+        public int CompareTo(SearchKeywordVO? other)
         {
             if (other == null)
             {
@@ -191,9 +177,9 @@ namespace FilmHouse.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class LanguagesJsonConverter : JsonConverter<LanguagesVO>
+        private class SearchKeywordVOJsonConverter : JsonConverter<SearchKeywordVO>
         {
-            public override void Write(Utf8JsonWriter writer, LanguagesVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, SearchKeywordVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -206,7 +192,7 @@ namespace FilmHouse.Core.ValueObjects
                 }
             }
 
-            public override LanguagesVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override SearchKeywordVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -214,7 +200,7 @@ namespace FilmHouse.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new LanguagesVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new SearchKeywordVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -235,24 +221,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class LanguagesValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<LanguagesVO?, string?>
+        public class SearchKeywordVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SearchKeywordVO?, string?>
         {
             /// <summary>
-            /// <see cref="LanguagesValueConverter"/>的新实例。
+            /// <see cref="SearchKeywordVOValueConverter"/>的新实例。
             /// </summary>
-            public LanguagesValueConverter()
+            public SearchKeywordVOValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="LanguagesValueConverter"/>的新实例。
+            /// <see cref="SearchKeywordVOValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public LanguagesValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public SearchKeywordVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new LanguagesVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new SearchKeywordVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -263,7 +249,7 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                LanguagesVO value => value._value,
+                SearchKeywordVO value => value._value,
                 _ => null,
             };
 
@@ -272,8 +258,8 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                LanguagesVO value => value,
-                string value => new LanguagesVO(value),
+                SearchKeywordVO value => value,
+                string value => new SearchKeywordVO(value),
                 _ => null,
             };
         }
@@ -281,37 +267,37 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class LanguagesArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<LanguagesVO?[], string?[]>
+        public class SearchKeywordVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<SearchKeywordVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="LanguagesArrayValueConverter"/>的新实例。
+            /// <see cref="SearchKeywordVOArrayValueConverter"/>的新实例。
             /// </summary>
-            public LanguagesArrayValueConverter()
+            public SearchKeywordVOArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="LanguagesArrayValueConverter"/>的新实例。
+            /// <see cref="SearchKeywordVOArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public LanguagesArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public SearchKeywordVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new LanguagesVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new SearchKeywordVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
 
             /// <summary>
-            /// 在将数据写入到存储的情况下,取得转换对象的函数,并将该函数设定为,将将该函数与将对象转换成该对象的函数,并将其与与子串、框化以及非严格匹配的简单类型的一致处理。
+            /// 当将数据写入存储时，获取转换对象的函数，设置为处理空、装箱和非严格匹配的简单类型匹配。
             /// </summary>
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                LanguagesVO?[] values => values.Select(_ => _?._value).ToArray(),
+                SearchKeywordVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<LanguagesVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<SearchKeywordVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -320,18 +306,18 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                LanguagesVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new LanguagesVO(_)).ToArray(),
-                IEnumerable<LanguagesVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new LanguagesVO(_)).ToArray(),
+                SearchKeywordVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new SearchKeywordVO(_)).ToArray(),
+                IEnumerable<SearchKeywordVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new SearchKeywordVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class LanguagesTypeConverter : System.ComponentModel.TypeConverter
+        private class SearchKeywordVOTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(LanguagesVO);
+            private static readonly Type WrapperType = typeof(SearchKeywordVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -361,13 +347,13 @@ namespace FilmHouse.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(LanguagesVO))
+                if (t == typeof(SearchKeywordVO))
                 {
-                    return (LanguagesVO)value;
+                    return (SearchKeywordVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new LanguagesVO((string)value);
+                    return new SearchKeywordVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -380,7 +366,7 @@ namespace FilmHouse.Core.ValueObjects
                     return null;
                 }
 
-                if (value is LanguagesVO wrappedValue)
+                if (value is SearchKeywordVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

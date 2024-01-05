@@ -42,15 +42,15 @@ namespace FilmHouse.Core.ValueObjects
             /// <summary>
             /// 「國家地區」
             /// </summary>
-            public static readonly CodeGroupVO GroupCountry = new("Country");
+            public static readonly CodeGroupVO Country = new("Country");
             /// <summary>
             /// 「電影類別」
             /// </summary>
-            public static readonly CodeGroupVO GroupMovieGenre = new("GenreMovie");
+            public static readonly CodeGroupVO MovieGenre = new("GenreMovie");
             /// <summary>
             /// 「語言」
             /// </summary>
-            public static readonly CodeGroupVO GroupLanguage = new("Language");
+            public static readonly CodeGroupVO Language = new("Language");
         }
 
         /// <summary>
