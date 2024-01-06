@@ -33,7 +33,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// "电影种类"区分的代码组。
         /// </summary>
-        public static readonly CodeGroupVO Group = CodeGroupVO.Codes.GroupMovieGenre;
+        public static readonly CodeGroupVO Group = CodeGroupVO.Codes.MovieGenre;
 
         /// <summary>
         /// <see cref="GenresVO"/>的新实例。

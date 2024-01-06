@@ -33,7 +33,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// "语言"区分的代码组。
         /// </summary>
-        public static readonly CodeGroupVO Group = CodeGroupVO.Codes.GroupLanguage;
+        public static readonly CodeGroupVO Group = CodeGroupVO.Codes.Language;
 
         /// <summary>
         /// <see cref="LanguagesVO"/>的新实例。

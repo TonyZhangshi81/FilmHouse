@@ -14,7 +14,7 @@ namespace FilmHouse.Core.Services.Configuration
     /// 实际使用配置管理信息时请使用<see cref="ISettingProvider"/>接口。
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [ServiceRegister(SelfServiceLifetime.Scoped)]
+    [ServiceRegister(FilmHouseServiceLifetime.Scoped)]
     public interface ISettingProviderCacher
     {
         /// <summary>

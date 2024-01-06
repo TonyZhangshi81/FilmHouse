@@ -8,3 +8,12 @@ services:
   bindings:
     - port: 7044
       protocol: http
+
+- name: ui-filmhouse-api
+  project: ../FilmHouse.App.Presentation.Web.Api/FilmHouse.App.Presentation.Web.Api.csproj
+  env:
+    - name: ASPNETCORE_ENVIRONMENT
+      value: Development
+  bindings:
+    - port: 5130
+      protocol: http

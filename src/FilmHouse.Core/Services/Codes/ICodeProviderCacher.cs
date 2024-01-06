@@ -14,7 +14,7 @@ namespace FilmHouse.Core.Services.Codes
     /// 实际使用代码管理信息时请使用<see cref="ICodeProvider"/>接口。
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [ServiceRegister(SelfServiceLifetime.Scoped)]
+    [ServiceRegister(FilmHouseServiceLifetime.Scoped)]
     public interface ICodeProviderCacher
     {
         /// <summary>
