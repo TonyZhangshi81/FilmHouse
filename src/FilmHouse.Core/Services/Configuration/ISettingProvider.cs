@@ -10,7 +10,7 @@ namespace FilmHouse.Core.Services.Configuration
     /// <summary>
     /// 提供从配置管理表获取的信息的接口。
     /// </summary>
-    [ServiceRegister(SelfServiceLifetime.Scoped)]
+    [ServiceRegister(FilmHouseServiceLifetime.Scoped)]
     public interface ISettingProvider
     {
         /// <summary>

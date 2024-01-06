@@ -1,45 +1,44 @@
-#nullable enable
+﻿#nullable enable
+using System;
 using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
+using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 消息的值对象类。
+    /// 调用目标WebAPI时指定的API密钥的值对象类。
     /// </summary>
-    [JsonConverter(typeof(MessageTextVOJsonConverter))]
-    [ValueConverter(typeof(MessageTextVOValueConverter), typeof(MessageTextVOArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(MessageTextVOTypeConverter))]
+    [JsonConverter(typeof(WebApiKeyVOJsonConverter))]
+    [ValueConverter(typeof(WebApiKeyVOValueConverter), typeof(WebApiKeyVOArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(WebApiKeyVOTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class MessageTextVO : IEquatable<MessageTextVO>, IComparable<MessageTextVO>, IValue<string>, IValueObject
+    public partial class WebApiKeyVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<WebApiKeyVO>, IComparable<WebApiKeyVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public const string TypeName = "消息";
-
+        public new const string TypeName = "WebApiKey(size:256)";
 
         /// <summary>
-        /// 获取值对象包含的原始类型。
+        /// 取得位数。
         /// </summary>
-        public string AsPrimitive() => this._value;
-        /// <summary>
-        /// 是不依赖句式而获取原始句式的方法。
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public object AsPrimitiveObject() => this.AsPrimitive();
+        public const int Size = 256;
 
         /// <summary>
-        /// <see cref="MessageTextVO"/>的新实例。
+        /// <see cref="WebApiKeyVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public MessageTextVO(string value)
+        public WebApiKeyVO(string value)
+            : base(value)
         {
             this.PreProcess(ref value);
             this._value = value;
@@ -51,21 +50,21 @@ namespace FilmHouse.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="MessageTextVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="WebApiKeyVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator string(MessageTextVO value)
+        public static explicit operator string(WebApiKeyVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="MessageTextVO"/>进行隐式转换
+        /// <see cref="WebApiKeyVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static implicit operator MessageTextVO(string value)
+        public static explicit operator WebApiKeyVO(string value)
         {
-            return new MessageTextVO(value);
+            return new WebApiKeyVO(value);
         }
 
         /// <summary>
@@ -74,7 +73,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in MessageTextVO? x, in MessageTextVO? y)
+        internal static bool Equals(in WebApiKeyVO? x, in WebApiKeyVO? y)
         {
             if (x is null && y is null)
             {
@@ -92,7 +91,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(MessageTextVO? other)
+        public bool Equals(WebApiKeyVO? other)
         {
             return Equals(this, other);
         }
@@ -109,9 +108,9 @@ namespace FilmHouse.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(MessageTextVO).IsAssignableFrom(t))
+            if (typeof(WebApiKeyVO).IsAssignableFrom(t))
             {
-                return Equals((MessageTextVO)obj);
+                return Equals((WebApiKeyVO)obj);
             }
             if (t == typeof(string))
             {
@@ -142,7 +141,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in MessageTextVO? x, in MessageTextVO? y)
+        public static bool operator ==(in WebApiKeyVO? x, in WebApiKeyVO? y)
         {
             return Equals(x, y);
         }
@@ -150,7 +149,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in MessageTextVO? x, in MessageTextVO? y)
+        public static bool operator !=(in WebApiKeyVO? x, in WebApiKeyVO? y)
         {
             return !Equals(x, y);
         }
@@ -167,7 +166,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(MessageTextVO? other)
+        public int CompareTo(WebApiKeyVO? other)
         {
             if (other == null)
             {
@@ -178,9 +177,9 @@ namespace FilmHouse.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class MessageTextVOJsonConverter : JsonConverter<MessageTextVO>
+        private class WebApiKeyVOJsonConverter : JsonConverter<WebApiKeyVO>
         {
-            public override void Write(Utf8JsonWriter writer, MessageTextVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, WebApiKeyVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -193,7 +192,7 @@ namespace FilmHouse.Core.ValueObjects
                 }
             }
 
-            public override MessageTextVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override WebApiKeyVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -201,7 +200,7 @@ namespace FilmHouse.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new MessageTextVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new WebApiKeyVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -222,24 +221,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class MessageTextVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<MessageTextVO?, string?>
+        public class WebApiKeyVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<WebApiKeyVO?, string?>
         {
             /// <summary>
-            /// <see cref="MessageTextVOValueConverter"/>的新实例。
+            /// <see cref="WebApiKeyVOValueConverter"/>的新实例。
             /// </summary>
-            public MessageTextVOValueConverter()
+            public WebApiKeyVOValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="MessageTextVOValueConverter"/>的新实例。
+            /// <see cref="WebApiKeyVOValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public MessageTextVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public WebApiKeyVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new MessageTextVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new WebApiKeyVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -250,7 +249,7 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                MessageTextVO value => value._value,
+                WebApiKeyVO value => value._value,
                 _ => null,
             };
 
@@ -259,8 +258,8 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                MessageTextVO value => value,
-                string value => new MessageTextVO(value),
+                WebApiKeyVO value => value,
+                string value => new WebApiKeyVO(value),
                 _ => null,
             };
         }
@@ -268,24 +267,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class MessageTextVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<MessageTextVO?[], string?[]>
+        public class WebApiKeyVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<WebApiKeyVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="MessageTextVOArrayValueConverter"/>的新实例。
+            /// <see cref="WebApiKeyVOArrayValueConverter"/>的新实例。
             /// </summary>
-            public MessageTextVOArrayValueConverter()
+            public WebApiKeyVOArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="MessageTextVOArrayValueConverter"/>的新实例。
+            /// <see cref="WebApiKeyVOArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public MessageTextVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public WebApiKeyVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new MessageTextVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new WebApiKeyVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -296,9 +295,9 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                MessageTextVO?[] values => values.Select(_ => _?._value).ToArray(),
+                WebApiKeyVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<MessageTextVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<WebApiKeyVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -307,18 +306,18 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                MessageTextVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new MessageTextVO(_)).ToArray(),
-                IEnumerable<MessageTextVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new MessageTextVO(_)).ToArray(),
+                WebApiKeyVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new WebApiKeyVO(_)).ToArray(),
+                IEnumerable<WebApiKeyVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new WebApiKeyVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class MessageTextVOTypeConverter : System.ComponentModel.TypeConverter
+        private class WebApiKeyVOTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(MessageTextVO);
+            private static readonly Type WrapperType = typeof(WebApiKeyVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -348,13 +347,13 @@ namespace FilmHouse.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(MessageTextVO))
+                if (t == typeof(WebApiKeyVO))
                 {
-                    return (MessageTextVO)value;
+                    return (WebApiKeyVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new MessageTextVO((string)value);
+                    return new WebApiKeyVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -367,7 +366,7 @@ namespace FilmHouse.Core.ValueObjects
                     return null;
                 }
 
-                if (value is MessageTextVO wrappedValue)
+                if (value is WebApiKeyVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

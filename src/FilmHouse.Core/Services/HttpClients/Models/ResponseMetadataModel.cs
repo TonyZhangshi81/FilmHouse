@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
+﻿#nullable enable
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using FilmHouse.Core.DataAnnotations;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Localization;
@@ -23,7 +18,7 @@ public partial class ResponseMetadataModel : IResponseMetadata
     [JsonPropertyName("status")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     [SysDataAnnotations.Display(Name = nameof(Resources.Status), ResourceType = typeof(Resources))]
-    [Number(HttpStatusCodeVO.TypeName)]
+    [Number]
     [NumberDigits(HttpStatusCodeVO.Precision)]
     [Required]
     public virtual HttpStatusCodeVO? Status { get; set; }
@@ -33,26 +28,24 @@ public partial class ResponseMetadataModel : IResponseMetadata
     /// </summary>
     [JsonPropertyName("timestamp")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    [SysDataAnnotations.Display(Name = nameof(Resources.Status), ResourceType = typeof(Resources))]
-
-    [System.ComponentModel.DataAnnotations.Display(Name = "タイムスタンプ")]
-    [Required(NeedsFullMessage = true)]
-    public virtual OffsetDateTime? Timestamp { get; set; }
+    [SysDataAnnotations.Display(Name = nameof(Resources.ApiResponseTime), ResourceType = typeof(Resources))]
+    [Required]
+    public virtual ApiResponseTimeVO? Timestamp { get; set; }
 
     /// <summary>
-    /// リクエストIDを設定または取得します。
+    /// 设置或获取请求ID。
     /// </summary>
     [JsonPropertyName("requestId")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    [System.ComponentModel.DataAnnotations.Display(Name = "リクエストID")]
-    [Required(NeedsFullMessage = true)]
-    public virtual RequestId? RequestId { get; set; }
+    [SysDataAnnotations.Display(Name = nameof(Resources.RequestId), ResourceType = typeof(Resources))]
+    [Required]
+    public virtual RequestIdVO? RequestId { get; set; }
 
     /// <summary>
-    /// 検証で発生したエラー内容を設定または取得します。
+    /// 设置或获取验证中发生的错误内容。
     /// </summary>
-    [JsonPropertyName("error")]
+    [JsonPropertyName("errors")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    [System.ComponentModel.DataAnnotations.Display(Name = "検証で発生したエラー内容")]
-    public virtual ResponseErrorModel? Error { get; set; }
+    [SysDataAnnotations.Display(Name = nameof(Resources.ApiResponseErrors), ResourceType = typeof(Resources))]
+    public virtual ICollection<MessageTextVO>? Errors { get; set; }
 }

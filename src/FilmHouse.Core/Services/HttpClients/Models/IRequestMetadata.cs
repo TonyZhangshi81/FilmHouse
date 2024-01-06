@@ -1,4 +1,5 @@
-﻿using FilmHouse.Core.ValueObjects;
+﻿#nullable enable
+using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Core.Services.HttpClients.Models;
 

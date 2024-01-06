@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿#nullable enable
+using System.Text.Json.Serialization;
 using FilmHouse.Core.DataAnnotations;
 
 namespace FilmHouse.Core.Services.HttpClients.Models;

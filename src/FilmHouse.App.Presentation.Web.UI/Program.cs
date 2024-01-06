@@ -135,6 +135,7 @@ void ConfigureConfiguration()
     // 将配置添加到服务中
     builder.Services.AddSingleton<IConfiguration>(configuration);
 }
+
 void ConfigureServices(IServiceCollection services)
 {
     services.AddLogging(logging =>
@@ -269,23 +270,8 @@ void ConfigureServices(IServiceCollection services)
     // 配置数据库
     services.AddDataBaseSqlStorage(dbType, connStr);
 
-    /*
-    services.AddIdentity<UserEntity, UserRoleEntity>(opt =>
-    {
-        opt.Password.RequireDigit = false;
-        opt.Password.RequireLowercase = false;
-        opt.Password.RequireNonAlphanumeric = false;
-        opt.Password.RequireUppercase = false;
-        opt.Password.RequiredLength = 6;
-        opt.Password.RequiredUniqueChars = 1;
-        opt.Lockout.MaxFailedAccessAttempts = 5;
-        opt.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 5, 0);
-        opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
-        opt.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
-    })
-        .AddDefaultTokenProviders()
-        .AddEntityFrameworkStores<FilmHouseDbContext>();
-    */
+    // IHttpClientFactory的注册处理
+    services.AddFilmHouseHttpClient();
 
     // 添加服务提供者，以便服务可以注入到其他服务中
     services.AddScoped<IServiceProvider>(provider => provider.GetService<IServiceProvider>());

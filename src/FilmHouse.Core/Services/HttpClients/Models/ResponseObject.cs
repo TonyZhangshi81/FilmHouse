@@ -1,34 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿#nullable enable
 using System.Text.Json.Serialization;
-using System.Web;
-using Isid.Ilex.Core.Domain.DataAnnotations;
+using FilmHouse.Core.DataAnnotations;
 
-namespace Isid.Ilex.Core.Domain.Services.HttpClients.Models
+namespace FilmHouse.Core.Services.HttpClients.Models;
+
+/// <summary>
+/// 定义从WebAPI返回的响应类型的类。
+/// </summary>
+/// <typeparam name="TMetadata">元数据的类型</typeparam>
+/// <typeparam name="TResponse">回应的类型</typeparam>
+public class ResponseObject<TMetadata, TResponse>
+    where TMetadata : IResponseMetadata
+    where TResponse : class
 {
     /// <summary>
-    /// WebAPIから返すレスポンスの型を定義するクラスです。
+    /// 设置或获取元数据。
     /// </summary>
-    /// <typeparam name="TMetadata">メタデータの型</typeparam>
-    /// <typeparam name="TResponse">レスポンスの型</typeparam>
-    public class ResponseObject<TMetadata, TResponse>
-        where TMetadata : IResponseMetadata
-        where TResponse : class
-    {
-        /// <summary>
-        /// メタデータを設定または取得します。
-        /// </summary>
-        [Required(NeedsFullMessage = true)]
-        [JsonPropertyName("metadata")]
-        public TMetadata? Metadata { get; set; }
+    [Required]
+    [JsonPropertyName("metadata")]
+    public TMetadata? Metadata { get; set; }
 
-        /// <summary>
-        /// レスポンスを設定または取得します。
-        /// </summary>
-        [JsonPropertyName("response")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public TResponse? Response { get; set; }
-    }
+    /// <summary>
+    /// 设置或获取响应。
+    /// </summary>
+    [JsonPropertyName("response")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public TResponse? Response { get; set; }
 }

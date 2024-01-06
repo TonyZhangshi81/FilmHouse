@@ -19,6 +19,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using FilmHouse.App.Presentation.Web.Api;
 using NLog.Web;
+using FilmHouse.Core.ValueObjects.Serialization.Generics;
 
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -122,7 +123,19 @@ void ConfigureServices(IServiceCollection services)
     // 配置数据库
     AddDataBaseSqlStorage(services, dbType, connStr);
 
-    builder.Services.AddControllers();
+    // WebAPI
+    builder.Services.AddControllers()
+                    .ConfigureApiBehaviorOptions(options =>
+                     {
+                         // 禁用模型状态无效筛选器，即不会自动返回模型验证错误信息的HTTP响应。
+                         options.SuppressModelStateInvalidFilter = true;
+                     })
+                    .AddJsonOptions(options =>
+                    {
+                        options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                        options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+                    });
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
