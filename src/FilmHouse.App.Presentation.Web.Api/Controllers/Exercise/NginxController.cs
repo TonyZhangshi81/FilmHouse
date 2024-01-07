@@ -6,7 +6,7 @@ using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FilmHouse.App.Presentation.Web.Api.Controllers;
+namespace FilmHouse.App.Presentation.Web.Api.Controllers.Exercise;
 
 [ApiController]
 [Route("api/[controller]")]

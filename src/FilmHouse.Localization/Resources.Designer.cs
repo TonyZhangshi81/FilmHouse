@@ -79,6 +79,15 @@ namespace FilmHouse.Localization {
         }
         
         /// <summary>
+        ///   查找类似 CommentId 的本地化字符串。
+        /// </summary>
+        public static string CommentId {
+            get {
+                return ResourceManager.GetString("CommentId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 ConfirmPassword 的本地化字符串。
         /// </summary>
         public static string ConfirmPassword {

@@ -4,7 +4,6 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using FilmHouse.Core.Services.HttpClients;
 using FilmHouse.Core.Utils;
-using IsiFilmHouse.Core.Services.HttpClients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

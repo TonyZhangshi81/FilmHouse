@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
 using FilmHouse.Core.ValueObjects;
+using System.Net;
 
 namespace FilmHouse.Core.ValueObjects
 {
@@ -58,6 +59,20 @@ namespace FilmHouse.Core.ValueObjects
             this._value = value;
             this.Validate();
         }
+        public HttpStatusCodeVO(System.Net.HttpStatusCode value)
+        {
+            var val = (int)value;
+            this.PreProcess(ref val);
+            this._value = val;
+            this.Validate();
+        }
+        public HttpStatusCodeVO(string value)
+        {
+            int val = int.Parse(value);
+            this.PreProcess(ref val);
+            this._value = val;
+            this.Validate();
+        }
 
         partial void PreProcess(ref int value);
 
@@ -71,12 +86,20 @@ namespace FilmHouse.Core.ValueObjects
         {
             return value._value;
         }
+        public static implicit operator string(HttpStatusCodeVO value)
+        {
+            return $"{value._value}";
+        }
 
         /// <summary>
         /// <see cref="HttpStatusCodeVO"/>向<see cref="int"/>对的隐性的角色扮演。
         /// </summary>
         /// <param name="value"></param>
         public static implicit operator HttpStatusCodeVO(int value)
+        {
+            return new HttpStatusCodeVO(value);
+        }
+        public static implicit operator HttpStatusCodeVO(string value)
         {
             return new HttpStatusCodeVO(value);
         }

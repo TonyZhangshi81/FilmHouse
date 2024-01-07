@@ -31,8 +31,11 @@ public abstract class HttpClientConfigurationBase : IFilmHouseHttpClientConfigur
     }
 
     /// <summary>
-    /// 
+    /// 作为httpClient的名字，当依赖注入时使用此名作为各个configureClient的匹配名，以此将httpClient与其对应的configure进行关联
     /// </summary>
+    /// <remarks>
+    /// 使用规则是取用各个configureClient所在的namespace词尾作为functionId的有效设定(使用谓语加宾语的方式命名namespace词尾，避免重复)
+    /// </remarks>
     public virtual string FunctionId
     {
         get

@@ -2,7 +2,7 @@
 using FilmHouse.Core.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace IsiFilmHouse.Core.Services.HttpClients;
+namespace FilmHouse.Core.Services.HttpClients;
 
 /// <summary>
 /// 当API请求对象由于某种原因没有返回响应时，返回既定响应的handler类。

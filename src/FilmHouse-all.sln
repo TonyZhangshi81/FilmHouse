@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Core", "FilmHouse
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Localization", "FilmHouse.Localization\FilmHouse.Localization.csproj", "{CA2D7CF8-0E18-4590-A29C-7FCD81D0E05B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.App.Presentation.Web.Api", "FilmHouse.App.Presentation.Web.Api\FilmHouse.App.Presentation.Web.Api.csproj", "{D943F1DE-5099-4724-A823-8DF7E376FDA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{CA2D7CF8-0E18-4590-A29C-7FCD81D0E05B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA2D7CF8-0E18-4590-A29C-7FCD81D0E05B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA2D7CF8-0E18-4590-A29C-7FCD81D0E05B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D943F1DE-5099-4724-A823-8DF7E376FDA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D943F1DE-5099-4724-A823-8DF7E376FDA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D943F1DE-5099-4724-A823-8DF7E376FDA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D943F1DE-5099-4724-A823-8DF7E376FDA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +98,7 @@ Global
 		{DAA1E7E4-C366-410D-AA3E-ECEF513D29E8} = {12EE32C5-FA6E-41C9-8A81-D1DCDF1C28C7}
 		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 		{CA2D7CF8-0E18-4590-A29C-7FCD81D0E05B} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
+		{D943F1DE-5099-4724-A823-8DF7E376FDA4} = {BFA828E5-7AAC-45E4-8D48-55FBC3C6BAD8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61B11A56-C8F0-4E30-8F0C-E5D1F40D52FA}
