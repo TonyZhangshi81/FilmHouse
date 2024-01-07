@@ -6,6 +6,7 @@ using FilmHouse.Core.ValueObjects;
 using FilmHouse.App.Presentation.Web.UI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using FilmHouse.Core.DependencyInjection;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers
 {
@@ -16,6 +17,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         private readonly IMediator _mediator;
         private readonly ISettingProvider _settingProvider;
         private readonly ICodeProvider _codeProvider;
+        private readonly ICurrentRequestId _currentRequestId;
 
         /// <summary>
         /// 
@@ -23,12 +25,14 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         /// <param name="mediator"></param>
         /// <param name="settingProvider"></param>
         /// <param name="codeProvider"></param>
+        /// <param name="currentRequestId"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public HomeController(IMediator mediator, ISettingProvider settingProvider, ICodeProvider codeProvider)
+        public HomeController(IMediator mediator, ISettingProvider settingProvider, ICodeProvider codeProvider, ICurrentRequestId currentRequestId)
         {
             this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
             this._settingProvider = Guard.GetNotNull(settingProvider, nameof(ISettingProvider));
             this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICodeProvider));
+            this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
         }
 
         #endregion Initizalize
@@ -42,6 +46,8 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [Route("[controller]/{pageIndex}")]
         public async Task<ActionResult> Index(int pageIndex = 1)
         {
+            this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
+
             var maxPage = this._settingProvider.GetValue("Home:Discovery:MaxPage").CastTo<int>();
 
             var model = new HomeViewModel();

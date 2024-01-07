@@ -123,6 +123,9 @@
   <data name="ApiResponseTime" xml:space="preserve">
     <value>Api应答回复时间</value>
   </data>
+  <data name="CommentId" xml:space="preserve">
+    <value>评论</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>确认密码</value>
   </data>

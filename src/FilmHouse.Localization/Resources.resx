@@ -123,6 +123,9 @@
   <data name="ApiResponseTime" xml:space="preserve">
     <value>Api Response Time</value>
   </data>
+  <data name="CommentId" xml:space="preserve">
+    <value>CommentId</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>ConfirmPassword</value>
   </data>

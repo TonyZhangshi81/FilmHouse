@@ -1,9 +1,10 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
+using FilmHouse.App.Presentation.Web.Api;
 using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
+using FilmHouse.Core.ValueObjects.Serialization.Generics;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
 using FilmHouse.Data.Infrastructure.Services.Codes;
@@ -14,12 +15,9 @@ using FilmHouse.Data.SqlServer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using FilmHouse.App.Presentation.Web.Api;
 using NLog.Web;
-using FilmHouse.Core.ValueObjects.Serialization.Generics;
 
 Console.OutputEncoding = Encoding.UTF8;
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

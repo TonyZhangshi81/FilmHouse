@@ -53,6 +53,9 @@ public class CommentController : Controller
     [Authorize]
     public async Task<ActionResult> Delete(CommentIdVO commentId, string transfer)
     {
+        // 创建请求ID
+        this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
+
         var command = new FilmHouse.Commands.Comment.DeleteCommand(commentId);
         var result = await this._mediator.Send(command);
 

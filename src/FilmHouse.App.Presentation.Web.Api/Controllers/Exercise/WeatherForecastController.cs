@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace FilmHouse.App.Presentation.Web.Api.Controllers;
+namespace FilmHouse.App.Presentation.Web.Api.Controllers.Exercise;
 
 [ApiController]
 [Route("api/[controller]")]
