@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Core", "FilmHouse
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Localization", "FilmHouse.Localization\FilmHouse.Localization.csproj", "{CA2D7CF8-0E18-4590-A29C-7FCD81D0E05B}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FilmHouse.Tests.Shared", "FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.shproj", "{8254239C-5C28-4542-978E-BE1EDBF82383}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,5 +97,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61B11A56-C8F0-4E30-8F0C-E5D1F40D52FA}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.projitems*{8254239c-5c28-4542-978e-be1edbf82383}*SharedItemsImports = 13
+		FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.projitems*{d14e0e3a-af3e-4c3d-91c8-92e1f35b9b9c}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

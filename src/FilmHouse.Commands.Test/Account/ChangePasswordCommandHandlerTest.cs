@@ -2,6 +2,7 @@
 using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Tests;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;

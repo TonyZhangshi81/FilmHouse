@@ -8,12 +8,6 @@
     <None Remove="TestSupport\**" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="TestStartup.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="nlog.config" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -45,10 +39,6 @@
     <ProjectReference Include="..\FilmHouse.Data.SqlServer\FilmHouse.Data.SqlServer.csproj" />
     <ProjectReference Include="..\FilmHouse.Data\FilmHouse.Data.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  <Import Project="..\FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.projitems" Label="Shared" />
 
 </Project>
