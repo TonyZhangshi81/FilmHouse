@@ -1,8 +1,9 @@
 ﻿using System.Security.Claims;
 using FilmHouse.Commands.Movie;
-using FilmHouse.Commands.Test.Utils;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Tests;
+using FilmHouse.Tests.Utils;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;

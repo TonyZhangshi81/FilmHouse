@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>8254239c-5c28-4542-978e-be1edbf82383</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>FilmHouse.Tests.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)nlog.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Seed.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestStartup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransactionalTestBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\ArrangeAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Constraints\ConstraintExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Constraints\ValueObjectEqualConstraint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Constraints\ValueObjectGreaterThanOrEqualConstraint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Constraints\ValueObjectLessThanOrEqualConstraint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Dz.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\InitializeUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)TestSupport\Data\" />
+  </ItemGroup>
+</Project>

@@ -1,5 +1,6 @@
 ﻿using FilmHouse.Commands.Celeb;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Tests;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 

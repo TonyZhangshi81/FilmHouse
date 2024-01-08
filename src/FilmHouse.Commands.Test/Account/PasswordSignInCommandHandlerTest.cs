@@ -1,5 +1,6 @@
 ﻿using FilmHouse.Commands.Account;
 using FilmHouse.Core.ValueObjects;
+using FilmHouse.Tests;
 using NUnit.Framework;
 
 namespace FilmHouse.Commands.Test.Account;

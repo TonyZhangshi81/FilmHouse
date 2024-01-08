@@ -1,8 +1,9 @@
 ﻿using FilmHouse.Commands.Account;
-using FilmHouse.Commands.Test.Utils;
 using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
+using FilmHouse.Tests;
+using FilmHouse.Tests.Utils;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;

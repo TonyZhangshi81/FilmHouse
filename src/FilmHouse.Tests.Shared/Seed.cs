@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 using NUnit.Framework.Constraints;
 using Microsoft.IdentityModel.Abstractions;
 
-namespace FilmHouse.Commands.Test;
+namespace FilmHouse.Tests;
 
 public class Seed
 {
