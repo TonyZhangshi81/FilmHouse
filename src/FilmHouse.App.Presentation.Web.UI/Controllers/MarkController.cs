@@ -14,20 +14,17 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
         private readonly IMediator _mediator;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ICurrentRequestId _currentRequestId;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="httpContextAccessor"></param>
-        /// <param name="currentRequestId"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public MarkController(IMediator mediator, IHttpContextAccessor httpContextAccessor, ICurrentRequestId currentRequestId)
+        public MarkController(IMediator mediator, IHttpContextAccessor httpContextAccessor)
         {
             this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
             this._httpContextAccessor = Guard.GetNotNull(httpContextAccessor, nameof(IHttpContextAccessor));
-            this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
         }
 
         #endregion Initizalize
@@ -41,9 +38,6 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
             {
                 return RedirectToAction("NotFound", "Error");
             }
-
-            // 创建请求ID
-            this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
 
             // 用户认证情报取得
             var userIdentity = this._httpContextAccessor.HttpContext.User.Identity;

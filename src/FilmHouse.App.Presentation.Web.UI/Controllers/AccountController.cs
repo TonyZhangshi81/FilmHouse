@@ -23,7 +23,6 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
 
         private readonly IMediator _mediator;
         private readonly ILogger<AccountController> _logger;
-        private readonly ICurrentRequestId _currentRequestId;
 
         private readonly AuthenticationSettings _authenticationSettings;
 
@@ -33,13 +32,11 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         /// <param name="mediator"></param>
         /// <param name="logger"></param>
         /// <param name="authSettings"></param>
-        /// <param name="currentRequestId"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public AccountController(IMediator mediator, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings, ICurrentRequestId currentRequestId)
+        public AccountController(IMediator mediator, ILogger<AccountController> logger, IOptions<AuthenticationSettings> authSettings)
         {
             this._logger = Guard.GetNotNull(logger, nameof(ILogger<AccountController>));
             this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
-            this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
 
             var auSetting = Guard.GetNotNull(authSettings, nameof(IOptions<AuthenticationSettings>));
             this._authenticationSettings = auSetting.Value;
@@ -212,9 +209,6 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                // 创建请求ID
-                this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
-
                 var clientIP = new LastLoginIpVO(Helper.GetClientIP(base.HttpContext));
                 var command = new CreateAccountCommand(model.Account, model.Password, clientIP);
                 var result = await this._mediator.Send(command);

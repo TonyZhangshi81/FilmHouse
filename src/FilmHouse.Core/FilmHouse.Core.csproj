@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Logging\Categories\" />
     <Folder Include="ValueObjects\Serialization\Generics\" />
   </ItemGroup>
 

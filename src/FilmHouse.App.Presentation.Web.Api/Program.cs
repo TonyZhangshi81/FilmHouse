@@ -1,6 +1,8 @@
 ﻿using System.Text;
+using System.Text.Json.Serialization;
 using FilmHouse.App.Presentation.Web.Api;
 using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.Presentation.Web.DependencyInjection;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
@@ -128,8 +130,13 @@ void ConfigureServices(IServiceCollection services)
                          // 禁用模型状态无效筛选器，即不会自动返回模型验证错误信息的HTTP响应。
                          options.SuppressModelStateInvalidFilter = true;
                      })
+                    .AddMvcOptions(options =>
+                    {
+                        options.Filters.AddFilters(services);
+                    })
                     .AddJsonOptions(options =>
                     {
+                        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                         options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
                         options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
                     });

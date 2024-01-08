@@ -6,13 +6,13 @@ $(function () {
 });
 
 function delayURL() {
-  var delay = document.getElementById("count_down").innerHTML;
-  var t = setTimeout("delayURL()", 1000);
+  var delay = document.getElementById("countDown").innerHTML;
+  var t = setTimeout(delayURL, 1000);
   if (delay > 0) {
     delay--;
-    document.getElementById("count_down").innerHTML = delay;
+    document.getElementById("countDown").innerHTML = delay;
   } else {
     clearTimeout(t);
-    window.location.href = "/Home";
+    window.location.href = "/";
   }
 };

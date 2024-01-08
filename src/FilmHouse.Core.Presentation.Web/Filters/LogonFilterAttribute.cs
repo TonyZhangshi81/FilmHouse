@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace FilmHouse.Core.Presentation.Web.Filters
 {
-    [ImplementationRegister(30)]
+    [ImplementationRegister(30, false)]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class LogonFilterAttribute : Attribute, IAsyncActionFilter, IFilter
     {
