@@ -3,8 +3,7 @@ using FilmHouse.Core.Services.HttpClients;
 using FilmHouse.Core.Services.HttpClients.Models;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.Data.Entities;
-using FilmHouse.Data.Infrastructure;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmHouse.App.Presentation.Web.Api.Controllers.Comment;
@@ -13,12 +12,12 @@ namespace FilmHouse.App.Presentation.Web.Api.Controllers.Comment;
 [Route("api/comment/[controller]")]
 public class DeleteController : ControllerBase
 {
-    private readonly IRepository<CommentEntity> _comment;
     private readonly ILogger<DeleteController> _logger;
+    private readonly IMediator _mediator;
 
-    public DeleteController(IRepository<CommentEntity> repo, ILogger<DeleteController> logger)
+    public DeleteController(IMediator mediator, ILogger<DeleteController> logger)
     {
-        this._comment = Guard.GetNotNull(repo, nameof(IRepository<CommentEntity>));
+        this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
         this._logger = Guard.GetNotNull(logger, nameof(ILogger<DeleteController>));
     }
 
@@ -36,13 +35,10 @@ public class DeleteController : ControllerBase
             return this.CreateInvalidModelStateContent(requestModel);
         }
 
-        var isSuccess = false;
-        if (await this._comment.AnyAsync(d => d.CommentId == requestModel!.Request!.CommentId))
-        {
-            await this._comment.DeleteAsync(requestModel!.Request!.CommentId);
-            isSuccess = true;
-        }
+        var command = new FilmHouse.Api.Commands.Comment.DeleteCommand(requestModel!.Request!.CommentId);
+        var result = await this._mediator.Send(command);
 
+        var isSuccess = (result == FilmHouse.Api.Commands.Comment.DeleteCommentStatus.Success);
         var response = new ResponseObject<ResponseMetadataModel, ResponseDataModel>()
         {
             Metadata = new()

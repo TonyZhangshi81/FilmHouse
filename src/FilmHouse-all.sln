@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Localization", "F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.App.Presentation.Web.Api", "FilmHouse.App.Presentation.Web.Api\FilmHouse.App.Presentation.Web.Api.csproj", "{D943F1DE-5099-4724-A823-8DF7E376FDA4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Api.Commands", "FilmHouse.Api.Commands\FilmHouse.Api.Commands.csproj", "{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Api.Commands.Test", "FilmHouse.Api.Commands.Test\FilmHouse.Api.Commands.Test.csproj", "{A7F93569-E639-4F8A-86E5-053771B2C3D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +87,14 @@ Global
 		{D943F1DE-5099-4724-A823-8DF7E376FDA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D943F1DE-5099-4724-A823-8DF7E376FDA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D943F1DE-5099-4724-A823-8DF7E376FDA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7F93569-E639-4F8A-86E5-053771B2C3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7F93569-E639-4F8A-86E5-053771B2C3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7F93569-E639-4F8A-86E5-053771B2C3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7F93569-E639-4F8A-86E5-053771B2C3D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +111,8 @@ Global
 		{E247A41A-0DB3-4F5C-8BF4-6317FD46C136} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 		{CA2D7CF8-0E18-4590-A29C-7FCD81D0E05B} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 		{D943F1DE-5099-4724-A823-8DF7E376FDA4} = {BFA828E5-7AAC-45E4-8D48-55FBC3C6BAD8}
+		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB} = {558E87CD-C7B6-460D-BC5B-DC685B52B41E}
+		{A7F93569-E639-4F8A-86E5-053771B2C3D3} = {558E87CD-C7B6-460D-BC5B-DC685B52B41E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61B11A56-C8F0-4E30-8F0C-E5D1F40D52FA}

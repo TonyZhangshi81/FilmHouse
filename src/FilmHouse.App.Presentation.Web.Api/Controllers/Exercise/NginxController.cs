@@ -1,5 +1,4 @@
-﻿using FilmHouse.Commands.Account;
-using FilmHouse.Core.Services.Codes;
+﻿using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
@@ -13,13 +12,13 @@ namespace FilmHouse.App.Presentation.Web.Api.Controllers.Exercise;
 public class NginxController : ControllerBase
 {
     private readonly IRepository<UserAccountEntity> _repo;
-    private readonly ILogger<ChangePasswordCommandHandler> _logger;
+    private readonly ILogger<NginxController> _logger;
     private readonly ICodeProvider _codeProvider;
 
-    public NginxController(IRepository<UserAccountEntity> repo, ILogger<ChangePasswordCommandHandler> logger, ICodeProvider codeProvider)
+    public NginxController(IRepository<UserAccountEntity> repo, ILogger<NginxController> logger, ICodeProvider codeProvider)
     {
         this._repo = Guard.GetNotNull(repo, nameof(IRepository<UserAccountEntity>));
-        this._logger = Guard.GetNotNull(logger, nameof(ILogger<ChangePasswordCommandHandler>));
+        this._logger = Guard.GetNotNull(logger, nameof(ILogger<NginxController>));
         this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICodeProvider));
     }
 

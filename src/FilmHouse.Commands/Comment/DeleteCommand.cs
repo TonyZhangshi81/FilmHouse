@@ -43,14 +43,6 @@ public class DeleteCommandHandler : IRequestHandler<DeleteCommand, DeleteComment
     {
         Guard.RequiresNotNull<CommentIdVO, ArgumentNullException>(request.CommentId);
 
-        /*
-        if (!await this._comment.AnyAsync(d => d.CommentId == request.CommentId))
-        {
-            return DeleteCommentStatus.UndefinedComment;
-        }
-
-        await this._comment.DeleteAsync(request.CommentId, ct);
-        */
         if (!await this.CallDeleteWebApiAsync(request.CommentId, ct))
         {
             return DeleteCommentStatus.UndefinedComment;

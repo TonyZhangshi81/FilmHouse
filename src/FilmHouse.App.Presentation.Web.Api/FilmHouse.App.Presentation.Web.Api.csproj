@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FilmHouse.Commands\FilmHouse.Commands.csproj" />
+    <ProjectReference Include="..\FilmHouse.Api.Commands\FilmHouse.Api.Commands.csproj" />
     <ProjectReference Include="..\FilmHouse.Core.Presentation.Web\FilmHouse.Core.Presentation.Web.csproj" />
     <ProjectReference Include="..\FilmHouse.Core\FilmHouse.Core.csproj" />
     <ProjectReference Include="..\FilmHouse.Data.MySql\FilmHouse.Data.MySql.csproj" />
