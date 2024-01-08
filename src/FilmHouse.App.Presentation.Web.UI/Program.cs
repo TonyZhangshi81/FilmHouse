@@ -7,10 +7,13 @@ using System.Text.Unicode;
 using AspNetCoreRateLimit;
 using FilmHouse.App.Presentation.Web.UI.Configuration;
 using FilmHouse.Core.DependencyInjection;
+using FilmHouse.Core.Exceptions;
 using FilmHouse.Core.Presentation.Web.Auth;
+using FilmHouse.Core.Presentation.Web.DependencyInjection;
 using FilmHouse.Core.Presentation.Web.Health;
 using FilmHouse.Core.Presentation.Web.SecurityHeaders;
 using FilmHouse.Core.Utils;
+using FilmHouse.Core.ValueObjects.Serialization.Generics;
 using FilmHouse.Web;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Diagnostics;
@@ -226,10 +229,19 @@ void ConfigureServices(IServiceCollection services)
     services.AddLocalization(options => options.ResourcesPath = "Resources");
     // 添加控制器，并添加自动验证的AntiforgeryTokenFilter
     services.AddControllers(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()))
-            .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                options.JsonSerializerOptions.Converters.Add(new TimeOnlyJsonConverter());
+            });
     // 添加 Razor 页面，并添加数据注释本地化提供者
     services.AddRazorPages()
             .AddDataAnnotationsLocalization(options => options.DataAnnotationLocalizerProvider = (_, factory) => factory.Create(typeof(Program)))
+            .AddMvcOptions(options =>
+            {
+                options.Filters.AddFilters(services);
+            })
             .AddRazorPagesOptions(options =>
             {
                 // 访问地址映射(/Admin/Post -> admin)
@@ -331,20 +343,31 @@ void ConfigureMiddleware()
         app.UseExceptionHandler(configure => configure.Run(async context =>
         {
             var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
-            if (exceptionHandlerPathFeature != null)
+            var exception = exceptionHandlerPathFeature.Error;
+            if (exception is FilmHouseErrorException)
             {
-                var exception = exceptionHandlerPathFeature.Error;
-                switch (exception)
-                {
-                    default:
-                        context.Response.StatusCode = 200;
-                        context.Response.Redirect("/error", true);
-                        break;
-                }
+                var errorLogger = context.RequestServices.GetRequiredService<ILogger<FilmHouse.Core.Logging.Categories.Core.Error>>();
+                errorLogger.LogError(exception, "");
+            }
+            else
+            {
+                var errorLogger = context.RequestServices.GetRequiredService<ILogger<FilmHouse.Core.Logging.Categories.Core.SystemError>>();
+                errorLogger.LogCritical(exception, "");
+            }
+
+            switch (exception)
+            {
+                default:
+                    context.Response.StatusCode = 200;
+                    context.Response.Redirect("/Error/NotAdmin", true);
+                    break;
             }
 
             await Task.CompletedTask;
         }));
+
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        //app.UseHsts();
     }
 
     // 应用反向代理规则

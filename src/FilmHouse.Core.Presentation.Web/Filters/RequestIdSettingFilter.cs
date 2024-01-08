@@ -3,6 +3,7 @@ using FilmHouse.Core.ValueObjects;
 using FilmHouse.Core.Presentation.Web.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace FilmHouse.Core.Presentation.Web.Filters
 {
@@ -42,7 +43,7 @@ namespace FilmHouse.Core.Presentation.Web.Filters
         {
             var requestId = EmptyRequestId;
 
-            if (context.ActionDescriptor is CompiledPageActionDescriptor pageDescriptor)
+            if (context.ActionDescriptor is ControllerActionDescriptor controllerDescriptor)
             {
                 // 页面
                 requestId = new(Guid.NewGuid());

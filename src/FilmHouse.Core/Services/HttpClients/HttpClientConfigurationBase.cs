@@ -1,11 +1,8 @@
-﻿using System;
-using FilmHouse.Core.Services.Configuration;
-using FilmHouse.Core.Services.HttpClients;
+﻿using FilmHouse.Core.Constants;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using Microsoft.Extensions.Configuration;
 using Polly;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FilmHouse.Core.Services.HttpClients;
 
@@ -68,7 +65,7 @@ public abstract class HttpClientConfigurationBase : IFilmHouseHttpClientConfigur
     {
         if (this.ApiKey != null)
         {
-            httpClient.DefaultRequestHeaders.Add("x-filmhouse-api-key", this.ApiKey.AsPrimitive());
+            httpClient.DefaultRequestHeaders.Add(HttpContextItemNames.ApiKeyRequestHeaderItem, this.ApiKey.AsPrimitive());
         }
     }
 

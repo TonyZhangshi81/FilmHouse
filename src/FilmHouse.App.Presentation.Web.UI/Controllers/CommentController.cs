@@ -12,18 +12,15 @@ public class CommentController : Controller
     #region Initizalize
 
     private readonly IMediator _mediator;
-    private readonly ICurrentRequestId _currentRequestId;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="mediator"></param>
-    /// <param name="currentRequestId"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public CommentController(IMediator mediator, ICurrentRequestId currentRequestId)
+    public CommentController(IMediator mediator)
     {
         this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
-        this._currentRequestId = Guard.GetNotNull(currentRequestId, nameof(ICurrentRequestId));
     }
 
     #endregion Initizalize
@@ -35,9 +32,6 @@ public class CommentController : Controller
     [Authorize]
     public async Task<IActionResult> Create(ContentVO content, MovieIdVO movieId, string transfer)
     {
-        // 创建请求ID
-        this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
-
         var command = new FilmHouse.Commands.Comment.CreateCommand(content, movieId);
         await this._mediator.Send(command);
 
@@ -53,9 +47,6 @@ public class CommentController : Controller
     [Authorize]
     public async Task<ActionResult> Delete(CommentIdVO commentId, string transfer)
     {
-        // 创建请求ID
-        this._currentRequestId.Set(new RequestIdVO(Guid.NewGuid()));
-
         var command = new FilmHouse.Commands.Comment.DeleteCommand(commentId);
         var result = await this._mediator.Send(command);
 
