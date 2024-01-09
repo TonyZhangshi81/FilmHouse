@@ -1,23 +1,30 @@
 # 1. 画面设计
 
-### 1-1. **[概要](./Summary.md)**
-### 1-2. **[画面原型](#jump_png)**
-### 1-3. **[model元素](#jump_model)**
-### 1-4. **[元素与数据源](#jump_logic)**
+## 1-1. **[概要](./Summary.md)**
+
+## 1-2. **[画面原型](#jump_png)**
+
+## 1-3. **[model元素](#jump_model)**
+
+## 1-4. **[元素与数据源](#jump_logic)**
 
 <a id="jump_png"></a>
+
 ## 首页
+
 ![首页](.\png\Search.png)
 
 <a id="jump_model"></a>
+
 ## model元素&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;>**[POCO描述](../functional-design/POCO.md)**&emsp;>**[数据库设计](../db-design/tables.md)**
-#### 搜索处理
+
+### 搜索处理
+
 | 参数名称      | 类型                    | 区域 | 描述 |
 | :------------ | :---------------------- | :--- | :--- |
 | SearchView    | SearchViewModel (class) |      |      |
 | &emsp;Keyword | KeywordVO               | (2)  |      |
-<br>
-#### 搜索处理
+  
 | 参数名称                      | 类型                              | 区域 | 描述                 |
 | :---------------------------- | :-------------------------------- | :--- | :------------------- |
 | ClassifyView                  | ClassifyViewModel (class)         |      |                      |
@@ -83,4 +90,5 @@
 | &emsp;&emsp;Albums            | List&lt;LinkItem> (class)         |      |                      |
 
 <a id="jump_logic"></a>
+
 ## 元素与数据源
