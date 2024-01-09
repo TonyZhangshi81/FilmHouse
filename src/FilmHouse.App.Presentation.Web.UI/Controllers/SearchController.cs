@@ -44,6 +44,7 @@ public class SearchController : Controller
         var searchCommand = new FilmHouse.Commands.Search.SearchCommand(new SearchKeywordVO(search), new CodeKeyVO(genre), new CodeKeyVO(country), new YearVO(year));
         var searchResult = await this._mediator.Send(searchCommand);
 
+        viewModel.Count = searchResult.Movies.Count();
         foreach (var movie in searchResult.Movies)
         {
             viewModel.listMovies.Add(MovieDiscViewModel.FromEntity(movie));
