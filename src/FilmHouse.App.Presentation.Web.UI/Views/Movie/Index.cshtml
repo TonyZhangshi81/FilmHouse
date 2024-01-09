@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.Http;
 @using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
-@model FilmHouse.App.Presentation.Web.UI.Models.MovieViewModel
+@model FilmHouse.App.Presentation.Web.UI.Models.MovieIndexViewModel
 
 @{
     ViewBag.Title = Model.Movie.Title;
@@ -203,6 +203,11 @@
             ————&nbsp;&nbsp;<strong>@Model.Movie.Title 的短评</strong>(<a class="link-text" href="/Movie/Comment?movieId=@Model.Movie.MovieId" target="_self">全部 @Model.Movie.CommentCount 条</a>)&nbsp;&nbsp;————
         </div>
         <div class="panel-body">
+            @{
+                var commentsViewModel = new MovieCommentsHurdleViewModel();
+                commentsViewModel.Comments = Model.Comments.Cast<List<FilmHouse.App.Presentation.Web.UI.Models.Components.MovieCommentsHurdleViewModel.CommentDiscViewModel>>();
+                commentsViewModel.IsFinish = Model.Movie.IsFinish;
+            }
             @await Component.InvokeAsync("MovieCommentsHurdle", new { comments = Model.Comments, transfer = transfer, isFinish = Model.Movie.IsFinish })
         </div>
     </div>

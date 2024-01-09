@@ -113,7 +113,7 @@ public class AlbumItemViewModel
     public string Note { get; set; }
     public string Time { get; set; }
 
-    public MovieViewModel MovieInfo { get; set; }
+    public MovieIndexViewModel MovieInfo { get; set; }
 }
 
 /// <summary>

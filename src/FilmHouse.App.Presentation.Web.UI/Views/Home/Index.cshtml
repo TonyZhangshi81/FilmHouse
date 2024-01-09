@@ -2,10 +2,11 @@
 @using FilmHouse.Core.Services.Configuration;
 @using Microsoft.AspNetCore.Http;
 @using Microsoft.AspNetCore.Http.Extensions;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
 @inject ISettingProvider settingProvider
 
-@model FilmHouse.App.Presentation.Web.UI.Models.HomeViewModel
+@model FilmHouse.App.Presentation.Web.UI.Models.HomeIndexViewModel
 
 @{
     Layout = "_LayoutWide";
@@ -60,11 +61,23 @@
         <!-- 可以考虑 visible-xs 在xs尺寸下隐藏以下信息 -->
         <div class="text-overflow font-small">
             <!-- 导演 -->
-            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Discovery.Movie.Directors, type = "Directors", count = 4 })
+            @{
+                var directors = new CelebritiesLinkViewModel();
+                directors.Celebrities = Model.Discovery.Movie.Directors.Cast<List<CelebritiesLinkViewModel.CelebrityViewModel>>();
+                directors.Type = "Directors";
+                directors.Count = 4;
+            }
+            @await Component.InvokeAsync("CelebritiesLink", new { viewModel = directors })
         </div>
         <div class="text-overflow font-small">
             <!-- 编剧 -->
-            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Discovery.Movie.Writers, type = "Writers", count = 4 })
+            @{
+                var writers = new CelebritiesLinkViewModel();
+                writers.Celebrities = Model.Discovery.Movie.Directors.Cast<List<CelebritiesLinkViewModel.CelebrityViewModel>>();
+                writers.Type = "Writers";
+                writers.Count = 4;
+            }
+            @await Component.InvokeAsync("CelebritiesLink", new { viewModel = writers })
         </div>
         <div class="text-overflow font-small">
             @* 类型 是否需要跳转至檢索畫面？？ *@

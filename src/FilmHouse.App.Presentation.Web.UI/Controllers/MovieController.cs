@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using FilmHouse.App.Presentation.Web.UI.Models.Components;
-using FilmHouse.Core.DependencyInjection;
+﻿using FilmHouse.App.Presentation.Web.UI.Models;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.App.Presentation.Web.UI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,8 +50,8 @@ public class MovieController : Controller
             return base.RedirectToAction("NotFound", "Error");
         }
 
-        var model = new MovieViewModel();
-        model.Movie = MovieDiscViewModel.FromEntity(display.DiscMovie);
+        var model = new MovieIndexViewModel();
+        model.Movie = MovieIndexViewModel.MovieDiscViewModel.FromEntity(display.DiscMovie);
         model.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => _.Name).ToList();
         model.Movie.CountriesValue = display.DiscMovie.Countries.AsCodeElement(this._codeProvider, CountriesVO.Group).Select(_ => _.Name).ToList();
         model.Movie.LanguagesValue = display.DiscMovie.Languages.AsCodeElement(this._codeProvider, LanguagesVO.Group).Select(_ => _.Name).ToList();
@@ -78,7 +75,7 @@ public class MovieController : Controller
         {
             foreach (var item in display.DiscMovie.Resources)
             {
-                model.Resources.Add(ResourceDiscViewModel.FromEntity(item));
+                model.Resources.Add(MovieIndexViewModel.ResourceDiscViewModel.FromEntity(item));
             }
         }
 
@@ -87,13 +84,13 @@ public class MovieController : Controller
         {
             foreach (var item in display.DiscMovie.Comments)
             {
-                model.Comments.Add(CommentDiscViewModel.FromEntity(item));
+                model.Comments.Add(MovieIndexViewModel.CommentDiscViewModel.FromEntity(item));
             }
         }
         // 个人评论
         if (display.PersonalReview != null)
         {
-            model.PersonalReview = CommentDiscViewModel.FromEntity(display.PersonalReview);
+            model.PersonalReview = MovieIndexViewModel.CommentDiscViewModel.FromEntity(display.PersonalReview);
         }
 
         // 当前影片相关的影集
@@ -101,7 +98,7 @@ public class MovieController : Controller
         {
             foreach (var item in display.Albums)
             {
-                model.Albums.Add(AlbumDiscViewModel.FromEntity(item));
+                model.Albums.Add(MovieIndexViewModel.AlbumDiscViewModel.FromEntity(item));
             }
         }
 

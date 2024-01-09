@@ -1,12 +1,10 @@
-﻿using FilmHouse.Core.Services.Codes;
+﻿using FilmHouse.App.Presentation.Web.UI.Models;
+using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
-using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects;
-using FilmHouse.App.Presentation.Web.UI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using FilmHouse.Core.DependencyInjection;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers
 {
@@ -45,7 +43,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         {
             var maxPage = this._settingProvider.GetValue("Home:Discovery:MaxPage").CastTo<int>();
 
-            var model = new HomeViewModel();
+            var model = new HomeIndexViewModel();
             model.Discovery.MaxPage = maxPage;
 
             var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage);
@@ -56,12 +54,12 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 return base.RedirectToAction("NotFound", "Error");
             }
 
-            model.Discovery = HomeDiscViewModel.FromEntity(display.Discoveries.ElementAt(0));
+            model.Discovery = HomeIndexViewModel.HomeDiscViewModel.FromEntity(display.Discoveries.ElementAt(0));
             model.Discovery.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => _.Name).ToList();
             // 最新栏目
-            model.News = HomeViewModel.FromEntity(display.NewMovies);
+            model.News = HomeIndexViewModel.FromEntity(display.NewMovies);
             // 热门栏目
-            model.Mosts = HomeViewModel.FromEntity(display.MostMovies);
+            model.Mosts = HomeIndexViewModel.FromEntity(display.MostMovies);
 
             // 当前页码
             model.Discovery.CurrentPageIndex = display.CurrentPageIndex;

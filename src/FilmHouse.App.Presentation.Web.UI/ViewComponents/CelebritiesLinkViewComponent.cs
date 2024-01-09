@@ -1,4 +1,4 @@
-﻿using FilmHouse.App.Presentation.Web.UI.Models;
+﻿using FilmHouse.App.Presentation.Web.UI.Models.Components;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmHouse.App.Presentation.Web.UI.ViewComponents;
@@ -15,20 +15,16 @@ public class CelebritiesLinkViewComponent : ViewComponent
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="celebrities"></param>
-    /// <param name="type"></param>
-    /// <param name="count"></param>
+    /// <param name="viewModel"></param>
     /// <returns></returns>
-    public IViewComponentResult Invoke(List<CelebrityViewModel> celebrities, string type, int count = 0)
+    public IViewComponentResult Invoke(CelebritiesLinkViewModel viewModel)
     {
         try
         {
-            ViewData["type"] = type;
-
-            var list = celebrities;
+            var list = viewModel.Celebrities;
             if (count != 0)
             {
-                list = celebrities.Take(count).ToList();
+                list = viewModel.Celebrities.Take(viewModel.Count).ToList();
             }
             return View("/Views/Components/CelebritiesLink/Index.cshtml", list);
         }
