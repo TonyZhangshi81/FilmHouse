@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.App.Presentation.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Api.Commands", "FilmHouse.Api.Commands\FilmHouse.Api.Commands.csproj", "{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Api.Commands.Test", "FilmHouse.Api.Commands.Test\FilmHouse.Api.Commands.Test.csproj", "{A7F93569-E639-4F8A-86E5-053771B2C3D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmHouse.Api.Commands.Test", "FilmHouse.Api.Commands.Test\FilmHouse.Api.Commands.Test.csproj", "{6D7ADF7F-96FA-422C-BE09-FECD8A10ABA2}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FilmHouse.Tests.Shared", "FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.shproj", "{8254239C-5C28-4542-978E-BE1EDBF82383}"
 EndProject
@@ -93,10 +93,10 @@ Global
 		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7F93569-E639-4F8A-86E5-053771B2C3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7F93569-E639-4F8A-86E5-053771B2C3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7F93569-E639-4F8A-86E5-053771B2C3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7F93569-E639-4F8A-86E5-053771B2C3D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D7ADF7F-96FA-422C-BE09-FECD8A10ABA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D7ADF7F-96FA-422C-BE09-FECD8A10ABA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D7ADF7F-96FA-422C-BE09-FECD8A10ABA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D7ADF7F-96FA-422C-BE09-FECD8A10ABA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,15 +114,14 @@ Global
 		{CA2D7CF8-0E18-4590-A29C-7FCD81D0E05B} = {19FA03C4-5871-4B54-8EBA-2788D6C26B6E}
 		{D943F1DE-5099-4724-A823-8DF7E376FDA4} = {BFA828E5-7AAC-45E4-8D48-55FBC3C6BAD8}
 		{7C2C7C2B-20AB-4CED-BC25-58425F950AEB} = {558E87CD-C7B6-460D-BC5B-DC685B52B41E}
-		{A7F93569-E639-4F8A-86E5-053771B2C3D3} = {558E87CD-C7B6-460D-BC5B-DC685B52B41E}
-		{8254239C-5C28-4542-978E-BE1EDBF82383} = {0BC6E909-18C4-446D-B88B-64AE7A5ECC83}
+		{6D7ADF7F-96FA-422C-BE09-FECD8A10ABA2} = {558E87CD-C7B6-460D-BC5B-DC685B52B41E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61B11A56-C8F0-4E30-8F0C-E5D1F40D52FA}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.projitems*{8254239c-5c28-4542-978e-be1edbf82383}*SharedItemsImports = 13
-		FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.projitems*{a7f93569-e639-4f8a-86e5-053771b2c3d3}*SharedItemsImports = 5
+		FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.projitems*{6D7ADF7F-96FA-422C-BE09-FECD8A10ABA2}*SharedItemsImports = 5
 		FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.projitems*{d14e0e3a-af3e-4c3d-91c8-92e1f35b9b9c}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
