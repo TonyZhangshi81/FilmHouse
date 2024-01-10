@@ -33,14 +33,14 @@
             }
             else
             {
-                if (Model.PersonalReview == null)
+                if (Model.Content == null || string.IsNullOrEmpty(Model.Content.AsPrimitive()))
                 {
                     <a class="link-text" title="插入短评" data-toggle="modal" data-target="#modalCmt">插入短评</a>
                 }
                 else
                 {
-                    <span>我的短评：@Model.PersonalReview.Content</span>
-                    <a class="link-text font-small" title="删除" href="/Comment/Delete?commentId=@Model.PersonalReview.CommentId&transfer=@transfer">删除</a>
+                    <span>我的短评：@Model.Content</span>
+                    <a class="link-text font-small" title="删除" href="/Comment/Delete?commentId=@Model.CommentId&transfer=@transfer">删除</a>
                 }
             }
         </div>
@@ -64,7 +64,7 @@
                     @foreach (var item in Model.Albums)
                     {
                         <li>
-                            <a class="link-list-item" href="/Album/Detail?albumId=@item.AlbumId" title="@item.Title" target="_self">@item.Title</a>
+                            <a class="link-list-item" href="/Album/Detail?albumId=@item.Value" title="@item.Text" target="_self">@item.Text</a>
                         </li>
                     }
                 </ul>

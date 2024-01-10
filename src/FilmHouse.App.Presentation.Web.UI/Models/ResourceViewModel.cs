@@ -66,7 +66,7 @@ public class ResourceDiscViewModel
         viewModel.Content = resource.Content;
         viewModel.Name = resource.Name;
         viewModel.Size = resource.Size;
-        viewModel.DiscSize = Util.CalculateToDiscSize(resource.Size);
+        viewModel.DiscSize = ModelUtils.CalculateToDiscSize(resource.Size);
         viewModel.FavorCount = resource.FavorCount;
         viewModel.Type = resource.Type;
         viewModel.ReviewStatus = resource.ReviewStatus;

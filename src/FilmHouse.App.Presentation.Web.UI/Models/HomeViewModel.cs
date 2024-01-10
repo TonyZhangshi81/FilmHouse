@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using FilmHouse.Core.Utils.Data;
-using FilmHouse.Core.ValueObjects;
+﻿using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models;
 
@@ -34,7 +31,7 @@ public class HomeIndexViewModel
             {
                 MovieId = item.MovieId,
                 // 电影标题
-                MovieTitle = MovieListViewModel.SetTitle(item.Title, item.TitleEn),
+                MovieTitle = Helper.ModelUtils.SetTitle(item.Title, item.TitleEn),
                 // 年代
                 Year = item.Year
             });
@@ -98,18 +95,14 @@ public class HomeIndexViewModel
     public class MovieListViewModel
     {
         public MovieIdVO MovieId { get; set; }
+        /// <summary>
+        /// 電影名
+        /// </summary>
         public MovieTitleAndEnVO MovieTitle { get; set; }
+        /// <summary>
+        /// 年代
+        /// </summary>
         public YearVO Year { get; set; }
-
-        public static MovieTitleAndEnVO SetTitle(MovieTitleVO title, MovieTitleEnVO titleEn)
-        {
-            var tle = new MovieTitleAndEnVO(title.AsPrimitive());
-            if (titleEn != null)
-            {
-                tle = new MovieTitleAndEnVO($"{title}\t{titleEn.AsPrimitive()}");
-            }
-            return tle;
-        }
     }
 
     /// <summary>
@@ -135,13 +128,13 @@ public class HomeIndexViewModel
         /// </summary>
         public SummaryVO Summary { get; set; }
         /// <summary>
-        /// 导演列表
+        /// 导演列表（明星ID、明星名）（带导航功能）
         /// </summary>
-        public List<CelebrityViewModel> Directors { get; set; } = new List<CelebrityViewModel>();
+        public List<SelectListItem> Directors { get; set; } = new List<SelectListItem>();
         /// <summary>
-        /// 作者列表
+        /// 作者列表（明星ID、明星名）（带导航功能）
         /// </summary>
-        public List<CelebrityViewModel> Writers { get; set; } = new List<CelebrityViewModel>();
+        public List<SelectListItem> Writers { get; set; } = new List<SelectListItem>();
         /// <summary>
         /// 类型（文子串）
         /// </summary>
@@ -167,77 +160,11 @@ public class HomeIndexViewModel
             viewModel.DoubanID = movie.DoubanID;
             viewModel.Rating = movie.Rating;
             viewModel.Summary = movie.Summary;
-
-            #region Directors
-
-            if (movie.DirectorsId == null)
-            {
-                if (movie.Directors != null)
-                {
-                    var directors = movie.Directors.ToEnumerable().GetEnumerator();
-                    while (directors.MoveNext())
-                    {
-                        viewModel.Directors.Add(new CelebrityViewModel() { Name = directors.Current });
-                    }
-                }
-            }
-            else
-            {
-                var index = 0;
-                var directorIds = movie.DirectorsId.ToEnumerable().GetEnumerator();
-                var directors = movie.Directors.ToEnumerable().Cast<CelebrityNameVO>().ToArray();
-                while (directorIds.MoveNext())
-                {
-                    viewModel.Directors.Add(new CelebrityViewModel() { Id = directorIds.Current, Name = directors.ElementAt(index) });
-                    index++;
-                }
-            }
-
-            #endregion Directors
-
-            #region Writers
-
-            if (movie.WritersId == null)
-            {
-                if (movie.Writers != null)
-                {
-                    var writers = movie.Writers.ToEnumerable().GetEnumerator();
-                    while (writers.MoveNext())
-                    {
-                        viewModel.Writers.Add(new CelebrityViewModel() { Name = writers.Current });
-                    }
-                }
-            }
-            else
-            {
-                var index = 0;
-                var writerIds = movie.WritersId.ToEnumerable().GetEnumerator();
-                var writers = movie.Writers.ToEnumerable().Cast<CelebrityNameVO>().ToArray();
-                while (writerIds.MoveNext())
-                {
-                    viewModel.Writers.Add(new CelebrityViewModel() { Id = writerIds.Current, Name = writers.ElementAt(index) });
-                    index++;
-                }
-            }
-
-            #endregion Writers
+            viewModel.Directors = Helper.ModelUtils.GetDirectors(movie.DirectorsId, movie.Directors);
+            viewModel.Writers = Helper.ModelUtils.GetWriters(movie.WritersId, movie.Writers);
 
             return viewModel;
         }
     }
 
-    /// <summary>
-    /// 明星数据对象类（带导航功能）
-    /// </summary>
-    public class CelebrityViewModel
-    {
-        /// <summary>
-        /// 明星ID
-        /// </summary>
-        public CelebrityIdVO Id { get; set; }
-        /// <summary>
-        /// 明星名
-        /// </summary>
-        public CelebrityNameVO Name { get; set; }
-    }
 }

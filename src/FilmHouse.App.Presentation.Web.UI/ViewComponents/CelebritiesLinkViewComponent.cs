@@ -21,12 +21,7 @@ public class CelebritiesLinkViewComponent : ViewComponent
     {
         try
         {
-            var list = viewModel.Celebrities;
-            if (count != 0)
-            {
-                list = viewModel.Celebrities.Take(viewModel.Count).ToList();
-            }
-            return View("/Views/Components/CelebritiesLink/Index.cshtml", list);
+            return View("/Views/Components/CelebritiesLink/Index.cshtml", viewModel);
         }
         catch (Exception e)
         {

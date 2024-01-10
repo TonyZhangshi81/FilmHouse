@@ -1,6 +1,4 @@
-﻿using FilmHouse.App.Presentation.Web.UI.Helper;
-using FilmHouse.Core.ValueObjects;
-using FilmHouse.Data.Entities;
+﻿using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models.Components
 {
@@ -55,23 +53,6 @@ namespace FilmHouse.App.Presentation.Web.UI.Models.Components
             /// 创建者名
             /// </summary>
             public AccountNameVO Account { get; set; }
-
-            public static ResourceDiscViewModel FromEntity(ResourceEntity resource)
-            {
-                var viewModel = new ResourceDiscViewModel();
-                viewModel.ResourceId = resource.ResourceId;
-                viewModel.Content = resource.Content;
-                viewModel.Name = resource.Name;
-                viewModel.DiscSize = Util.CalculateToDiscSize(resource.Size);
-                viewModel.FavorCount = resource.FavorCount;
-                viewModel.Type = resource.Type;
-                viewModel.UserId = resource.UserId;
-                if (resource.UserId != null)
-                {
-                    viewModel.Account = resource.UserAccount.Account;
-                }
-                return viewModel;
-            }
         }
     }
 }

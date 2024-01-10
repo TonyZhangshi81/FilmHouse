@@ -38,19 +38,5 @@ public class MovieCommentsHurdleViewModel
         /// 评论时间
         /// </summary>
         public CommentTimeVO CommentTime { get; set; }
-
-        public static CommentDiscViewModel FromEntity(CommentEntity comment)
-        {
-            var viewModel = new CommentDiscViewModel();
-            viewModel.UserId = comment.UserId;
-            viewModel.MovieId = comment.MovieId;
-            viewModel.Content = comment.Content;
-            viewModel.CommentTime = comment.CommentTime;
-            viewModel.UserAvatar = comment.UserAccount.Avatar;
-            viewModel.Account = comment.UserAccount.Account;
-
-            return viewModel;
-        }
-
     }
 }

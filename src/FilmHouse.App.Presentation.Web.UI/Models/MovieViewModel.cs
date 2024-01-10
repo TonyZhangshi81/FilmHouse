@@ -1,6 +1,7 @@
 ﻿using FilmHouse.App.Presentation.Web.UI.Helper;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models;
 
@@ -22,9 +23,9 @@ public class MovieIndexViewModel
     /// </summary>
     public List<CommentDiscViewModel> Comments { get; set; } = new List<CommentDiscViewModel>();
     /// <summary>
-    /// 该影片相关影集
+    /// 该影片相关影集(专辑ID、专辑名)
     /// </summary>
-    public List<AlbumDiscViewModel> Albums { get; set; } = new List<AlbumDiscViewModel>();
+    public List<SelectListItem> Albums { get; set; } = new List<SelectListItem>();
     /// <summary>
     /// 个人评论信息
     /// </summary>
@@ -49,31 +50,17 @@ public class MovieIndexViewModel
         /// </summary>
         public MovieAkaVO Aka { get; set; }
         /// <summary>
-        /// 导演列表
+        /// 导演列表（明星ID、明星名）（带导航功能）
         /// </summary>
-        public List<CelebrityViewModel> Directors { get; set; } = new List<CelebrityViewModel>();
+        public List<SelectListItem> Directors { get; set; } = new List<SelectListItem>();
         /// <summary>
-        /// 作者列表
+        /// 作者列表（明星ID、明星名）（带导航功能）
         /// </summary>
-        public List<CelebrityViewModel> Writers { get; set; } = new List<CelebrityViewModel>();
+        public List<SelectListItem> Writers { get; set; } = new List<SelectListItem>();
         /// <summary>
-        /// 主页列表
+        /// 主页列表（明星ID、明星名）（带导航功能）
         /// </summary>
-        public List<CelebrityViewModel> Casts { get; set; } = new List<CelebrityViewModel>();
-        /// <summary>
-        /// 明星数据对象类（带导航功能）
-        /// </summary>
-        public class CelebrityViewModel
-        {
-            /// <summary>
-            /// 明星ID
-            /// </summary>
-            public CelebrityIdVO Id { get; set; }
-            /// <summary>
-            /// 明星名
-            /// </summary>
-            public CelebrityNameVO Name { get; set; }
-        }
+        public List<SelectListItem> Casts { get; set; } = new List<SelectListItem>();
 
         /// <summary>
         /// 年代
@@ -139,6 +126,7 @@ public class MovieIndexViewModel
         public static MovieDiscViewModel FromEntity(MovieEntity movie)
         {
             var viewModel = new MovieDiscViewModel();
+
             viewModel.MovieId = movie.MovieId;
             viewModel.Avatar = movie.Avatar;
             viewModel.Title = movie.Title;
@@ -156,86 +144,9 @@ public class MovieIndexViewModel
             viewModel.IMDbID = movie.IMDb;
             viewModel.RatingCount = movie.RatingCount;
 
-            #region Directors
-
-            if (movie.DirectorsId == null)
-            {
-                if (movie.Directors != null)
-                {
-                    var directors = movie.Directors.ToEnumerable().GetEnumerator();
-                    while (directors.MoveNext())
-                    {
-                        viewModel.Directors.Add(new CelebrityViewModel() { Name = directors.Current });
-                    }
-                }
-            }
-            else
-            {
-                var index = 0;
-                var directorIds = movie.DirectorsId.ToEnumerable().GetEnumerator();
-                var directors = movie.Directors.ToEnumerable().Cast<CelebrityNameVO>().ToArray();
-                while (directorIds.MoveNext())
-                {
-                    viewModel.Directors.Add(new CelebrityViewModel() { Id = directorIds.Current, Name = directors.ElementAt(index) });
-                    index++;
-                }
-            }
-
-            #endregion Directors
-
-            #region Writers
-
-            if (movie.WritersId == null)
-            {
-                if (movie.Writers != null)
-                {
-                    var writers = movie.Writers.ToEnumerable().GetEnumerator();
-                    while (writers.MoveNext())
-                    {
-                        viewModel.Writers.Add(new CelebrityViewModel() { Name = writers.Current });
-                    }
-                }
-            }
-            else
-            {
-                var index = 0;
-                var writerIds = movie.WritersId.ToEnumerable().GetEnumerator();
-                var writers = movie.Writers.ToEnumerable().Cast<CelebrityNameVO>().ToArray();
-                while (writerIds.MoveNext())
-                {
-                    viewModel.Writers.Add(new CelebrityViewModel() { Id = writerIds.Current, Name = writers.ElementAt(index) });
-                    index++;
-                }
-            }
-
-            #endregion Writers
-
-            #region Casts
-
-            if (movie.CastsId == null)
-            {
-                if (movie.Casts != null)
-                {
-                    var casts = movie.Casts.ToEnumerable().GetEnumerator();
-                    while (casts.MoveNext())
-                    {
-                        viewModel.Casts.Add(new CelebrityViewModel() { Name = casts.Current });
-                    }
-                }
-            }
-            else
-            {
-                var index = 0;
-                var castsId = movie.CastsId.ToEnumerable().GetEnumerator();
-                var casts = movie.Casts.ToEnumerable().Cast<CelebrityNameVO>().ToArray();
-                while (castsId.MoveNext())
-                {
-                    viewModel.Casts.Add(new CelebrityViewModel() { Id = castsId.Current, Name = casts.ElementAt(index) });
-                    index++;
-                }
-            }
-
-            #endregion Casts
+            viewModel.Directors = Helper.ModelUtils.GetDirectors(movie.DirectorsId, movie.Directors);
+            viewModel.Writers = Helper.ModelUtils.GetWriters(movie.WritersId, movie.Writers);
+            viewModel.Casts = Helper.ModelUtils.GetCasts(movie.CastsId, movie.Casts);
 
             return viewModel;
         }
@@ -272,7 +183,7 @@ public class MovieIndexViewModel
     /// 电影资源信息数据对象类
     /// </summary>
     public class ResourceDiscViewModel
-    { 
+    {
         /// <summary>
         /// 资源ID
         /// </summary>
@@ -312,7 +223,7 @@ public class MovieIndexViewModel
             viewModel.ResourceId = resource.ResourceId;
             viewModel.Content = resource.Content;
             viewModel.Name = resource.Name;
-            viewModel.DiscSize = Util.CalculateToDiscSize(resource.Size);
+            viewModel.DiscSize = ModelUtils.CalculateToDiscSize(resource.Size);
             viewModel.FavorCount = resource.FavorCount;
             viewModel.Type = resource.Type;
             viewModel.UserId = resource.UserId;
@@ -329,6 +240,10 @@ public class MovieIndexViewModel
     /// </summary>
     public class CommentDiscViewModel
     {
+        /// <summary>
+        /// 評論ID
+        /// </summary>
+        public CommentIdVO CommentId { get; set; }
         /// <summary>
         /// 内容
         /// </summary>
@@ -357,6 +272,7 @@ public class MovieIndexViewModel
         public static CommentDiscViewModel FromEntity(CommentEntity comment)
         {
             var viewModel = new CommentDiscViewModel();
+            viewModel.CommentId = comment.CommentId;
             viewModel.UserId = comment.UserId;
             viewModel.MovieId = comment.MovieId;
             viewModel.Content = comment.Content;
@@ -364,30 +280,6 @@ public class MovieIndexViewModel
             viewModel.UserAvatar = comment.UserAccount.Avatar;
             viewModel.Account = comment.UserAccount.Account;
 
-            return viewModel;
-        }
-
-    }
-
-    /// <summary>
-    /// 电影专辑信息数据对象类
-    /// </summary>
-    public class AlbumDiscViewModel
-    {
-        /// <summary>
-        /// 专辑ID
-        /// </summary>
-        public AlbumIdVO AlbumId { get; set; }
-        /// <summary>
-        /// 专辑名
-        /// </summary>
-        public AlbumTitleVO Title { get; set; }
-
-        public static AlbumDiscViewModel FromEntity(AlbumEntity album)
-        {
-            var viewModel = new AlbumDiscViewModel();
-            viewModel.AlbumId = album.AlbumId;
-            viewModel.Title = album.Title;
             return viewModel;
         }
 

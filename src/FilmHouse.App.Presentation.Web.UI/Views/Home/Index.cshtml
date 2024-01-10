@@ -63,9 +63,8 @@
             <!-- 导演 -->
             @{
                 var directors = new CelebritiesLinkViewModel();
-                directors.Celebrities = Model.Discovery.Movie.Directors.Cast<List<CelebritiesLinkViewModel.CelebrityViewModel>>();
+                directors.Celebrities = Model.Discovery.Movie.Directors.Take(4).ToList();
                 directors.Type = "Directors";
-                directors.Count = 4;
             }
             @await Component.InvokeAsync("CelebritiesLink", new { viewModel = directors })
         </div>
@@ -73,9 +72,8 @@
             <!-- 编剧 -->
             @{
                 var writers = new CelebritiesLinkViewModel();
-                writers.Celebrities = Model.Discovery.Movie.Directors.Cast<List<CelebritiesLinkViewModel.CelebrityViewModel>>();
+                writers.Celebrities = Model.Discovery.Movie.Writers.Take(4).ToList();
                 writers.Type = "Writers";
-                writers.Count = 4;
             }
             @await Component.InvokeAsync("CelebritiesLink", new { viewModel = writers })
         </div>

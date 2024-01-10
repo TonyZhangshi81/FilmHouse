@@ -1,27 +1,16 @@
-﻿using FilmHouse.Core.ValueObjects;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models.Components;
 
 public class CelebritiesLinkViewModel
 {
-    public List<CelebrityViewModel> Celebrities { get; set; } = new List<CelebrityViewModel>();
-
+    /// <summary>
+    /// 明星ID、明星名
+    /// </summary>
+    public List<SelectListItem> Celebrities { get; set; } = new List<SelectListItem>();
+    /// <summary>
+    /// 類別（導演、編劇、主演）
+    /// </summary>
     public string Type { get; set; } = string.Empty;
 
-    public int Count { get; set; } = 4;
-
-    /// <summary>
-    /// 明星数据对象类（带导航功能）
-    /// </summary>
-    public class CelebrityViewModel
-    {
-        /// <summary>
-        /// 明星ID
-        /// </summary>
-        public CelebrityIdVO Id { get; set; }
-        /// <summary>
-        /// 明星名
-        /// </summary>
-        public CelebrityNameVO Name { get; set; }
-    }
 }

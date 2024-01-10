@@ -18,13 +18,13 @@
 
     foreach (var item in Model.Celebrities)
     {
-        if (item.Id != null && !string.IsNullOrEmpty(item.Id.AsPrimitive().ToString()))
+        if (!string.IsNullOrEmpty(item.Value))
         {
-            <a href="/Celeb/Index?celebrityId=@item.Id" class="link-text" target="_self">@item.Name</a>
+            <a href="/Celeb/Index?celebrityId=@item.Value" class="link-text" target="_self">@item.Text</a>
         }
         else
         {
-            <span>@item.Name</span>
+            <span>@item.Text</span>
         }
     }
 }

@@ -5,6 +5,7 @@ using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers;
 
@@ -96,10 +97,7 @@ public class MovieController : Controller
         // 当前影片相关的影集
         if (display.Albums.Any())
         {
-            foreach (var item in display.Albums)
-            {
-                model.Albums.Add(MovieIndexViewModel.AlbumDiscViewModel.FromEntity(item));
-            }
+            model.Albums = display.Albums.Select(d => new SelectListItem { Text = d.Title.AsPrimitive(), Value = d.AlbumId.AsPrimitive().ToString() }).ToList();
         }
 
         return base.View(model);

@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using FilmHouse.App.Presentation.Web.UI.Models;
+﻿using FilmHouse.App.Presentation.Web.UI.Models;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using MediatR;
@@ -32,13 +31,12 @@ public class SearchController : Controller
         var initCommand = new FilmHouse.Commands.Search.InitCommand();
         var initDisc = await this._mediator.Send(initCommand);
 
-        var viewModel = new ClassifyViewModel()
+        var viewModel = new SearchInedxViewModel.SearchResultViewModel()
         {
-            listCountry = initDisc.ListCountry,
-            listGenre = initDisc.ListGenre,
-            listYear = initDisc.ListYear,
+            ListCountry = initDisc.ListCountry,
+            ListGenre = initDisc.ListGenre,
+            ListYear = initDisc.ListYear,
         };
-
 
 
         var searchCommand = new FilmHouse.Commands.Search.SearchCommand(new SearchKeywordVO(search), new CodeKeyVO(genre), new CodeKeyVO(country), new YearVO(year));
@@ -47,7 +45,7 @@ public class SearchController : Controller
         viewModel.Count = searchResult.Movies.Count();
         foreach (var movie in searchResult.Movies)
         {
-            viewModel.listMovies.Add(MovieDiscViewModel.FromEntity(movie));
+            viewModel.ListMovies.Add(SearchInedxViewModel.SearchResultViewModel.FromEntity(movie));
         }
         /*
         string url = Translator.BuildUrl(Request.Url.ToString(), "search", search);
