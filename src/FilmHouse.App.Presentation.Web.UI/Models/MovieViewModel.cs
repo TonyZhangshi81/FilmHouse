@@ -58,7 +58,7 @@ public class MovieIndexViewModel
         /// </summary>
         public List<SelectListItem> Writers { get; set; } = new List<SelectListItem>();
         /// <summary>
-        /// 主页列表（明星ID、明星名）（带导航功能）
+        /// 主演列表（明星ID、明星名）（带导航功能）
         /// </summary>
         public List<SelectListItem> Casts { get; set; } = new List<SelectListItem>();
 
