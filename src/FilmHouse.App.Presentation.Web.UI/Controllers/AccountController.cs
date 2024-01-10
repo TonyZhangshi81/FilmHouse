@@ -81,7 +81,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
                 {
                     case Commands.Account.SignInStatus.Success:
                         await this.SetClaimsIdentity(model.Account, result.UserId, result.IsAdmin);
-                        await this._mediator.Send(new ValidateLoginCommand(result.UserId, new(Helper.GetClientIP(base.HttpContext))));
+                        await this._mediator.Send(new ValidateLoginCommand(result.UserId, new(Core.Utils.Helper.GetClientIP(base.HttpContext))));
 
                         this._logger.LogInformation($@"Authentication success for local account ""{model.Account}""");
 
@@ -209,7 +209,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var clientIP = new LastLoginIpVO(Helper.GetClientIP(base.HttpContext));
+                var clientIP = new LastLoginIpVO(Core.Utils.Helper.GetClientIP(base.HttpContext));
                 var command = new CreateAccountCommand(model.Account, model.Password, clientIP);
                 var result = await this._mediator.Send(command);
                 if (result.Status == CreateStatus.Success)
