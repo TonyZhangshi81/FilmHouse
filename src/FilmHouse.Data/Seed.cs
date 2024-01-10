@@ -100,7 +100,7 @@ public class Seed
             // 评论缩略显示长度
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSummaryShort, Value = new("250"), CreatedOn = dateTime },
             // 影片页面上显示的最大评论件数
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieCommentMax, Value = new("10"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieCommentMax, Value = new("6"), CreatedOn = dateTime },
             // 电影卡片明星显示最大个数
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.WorkItemCelebMax, Value = new("4"), CreatedOn = dateTime },
         };

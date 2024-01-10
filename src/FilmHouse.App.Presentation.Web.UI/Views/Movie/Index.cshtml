@@ -103,7 +103,7 @@
                     @Html.DisplayFor(model => model.Movie.Aka)
                 </li>
                 <li>
-                    <!-- 导演 -->
+                    @* 导演 *@
                     @{
                         var directors = new CelebritiesLinkViewModel();
                         directors.Celebrities = Model.Movie.Directors;
@@ -112,7 +112,7 @@
                     @await Component.InvokeAsync("CelebritiesLink", new { viewModel = directors })
                 </li>
                 <li>
-                    <!-- 编剧 -->
+                    @* 编剧 *@
                     @{
                         var writers = new CelebritiesLinkViewModel();
                         writers.Celebrities = Model.Movie.Directors;
@@ -121,7 +121,7 @@
                     @await Component.InvokeAsync("CelebritiesLink", new { viewModel = writers })
                 </li>
                 <li>
-                    <!-- 演员 -->
+                    @* 演员 *@
                     @{
                         var casts = new CelebritiesLinkViewModel();
                         casts.Celebrities = Model.Movie.Casts;
@@ -177,7 +177,7 @@
         </div>
     </div>
 
-    @*简介*@
+    @* 简介 *@
     <div class="panel panel-default" id="summary">
         <div class="panel-heading text-center">
             ————&nbsp;&nbsp;<strong>剧情介绍</strong>&nbsp;&nbsp;————
@@ -187,7 +187,7 @@
         </div>
     </div>
 
-    @*资源*@
+    @* 资源 *@
     <div class="panel panel-default" id="resources">
         <div class="panel-heading text-center">
             ————&nbsp;&nbsp;<strong>所有资源</strong>&nbsp;&nbsp;————
@@ -223,10 +223,10 @@
         </div>
     </div>
 
-    @*评论*@
+    @* 评论 *@
     <div class="panel panel-default" id="comments">
         <div class="panel-heading text-center">
-            ————&nbsp;&nbsp;<strong>@Model.Movie.Title 的短评</strong>(<a class="link-text" href="/Movie/Comment?movieId=@Model.Movie.MovieId" target="_self">全部 @Model.Movie.CommentCount 条</a>)&nbsp;&nbsp;————
+            ————&nbsp;&nbsp;<strong>@Model.Movie.Title 的短评</strong>(<a class="link-text" href="/Comment/Index?movieId=@Model.Movie.MovieId" target="_self">全部 @Model.Movie.CommentCount 条</a>)&nbsp;&nbsp;————
         </div>
         <div class="panel-body">
             @{
@@ -248,7 +248,7 @@
 </div>
 
 <div class="col-sm-3 div-right">
-    @*关注度、我的评论、相关专辑*@
+    @* 关注度、我的评论、相关专辑 *@
     @{
         var shortReviewViewModel = new MovieShortReviewHurdleViewModel()
             {
