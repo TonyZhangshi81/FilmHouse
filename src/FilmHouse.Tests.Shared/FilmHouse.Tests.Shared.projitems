@@ -12,6 +12,7 @@
     <None Include="$(MSBuildThisFileDirectory)appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)TestSupport\Data\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)nlog.config" />
@@ -28,8 +29,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Constraints\ValueObjectLessThanOrEqualConstraint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Dz.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\InitializeUtil.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)TestSupport\Data\" />
   </ItemGroup>
 </Project>

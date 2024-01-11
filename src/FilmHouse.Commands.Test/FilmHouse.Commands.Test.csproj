@@ -37,9 +37,6 @@
     <ProjectReference Include="..\FilmHouse.Data.SqlServer\FilmHouse.Data.SqlServer.csproj" />
     <ProjectReference Include="..\FilmHouse.Data\FilmHouse.Data.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestSupport\Data\" />
-  </ItemGroup>
   <Import Project="..\FilmHouse.Tests.Shared\FilmHouse.Tests.Shared.projitems" Label="Shared" />
 
 </Project>
