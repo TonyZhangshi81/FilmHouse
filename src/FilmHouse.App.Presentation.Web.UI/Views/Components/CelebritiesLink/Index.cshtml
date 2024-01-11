@@ -1,31 +1,30 @@
-﻿@using FilmHouse.App.Presentation.Web.UI.Models;
+﻿@using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
-@model List<CelebrityViewModel>
+@model CelebritiesLinkViewModel
 
 @{
-    var type = ViewData["type"] as string;
-    if (type == "Directors")
+    if (Model.Type == "Directors")
     {
         <span style="color:#808080;">导演:</span>
     }
-    if (type == "Writers")
+    if (Model.Type == "Writers")
     {
         <span style="color:#808080;">编剧:</span>
     }
-    if (type == "Casts")
+    if (Model.Type == "Casts")
     {
         <span style="color:#808080;">演员:</span>
     }
 
-    foreach (var item in Model)
+    foreach (var item in Model.Celebrities)
     {
-        if (item.Id != null && !string.IsNullOrEmpty(item.Id.AsPrimitive().ToString()))
+        if (!string.IsNullOrEmpty(item.Value))
         {
-            <a href="/Celeb/Index?celebrityId=@item.Id" class="link-text" target="_self">@item.Name</a>
+            <a href="/Celeb/Index?celebrityId=@item.Value" class="link-text" target="_self">@item.Text</a>
         }
         else
         {
-            <span>@item.Name</span>
+            <span>@item.Text</span>
         }
     }
 }

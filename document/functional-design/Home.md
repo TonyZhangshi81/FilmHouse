@@ -1,18 +1,25 @@
 # 1. 画面设计
 
-### 1-1. **[概要](./Summary.md)**
-### 1-2. **[画面原型](#jump_png)**
-### 1-3. **[model元素](#jump_model)**
-### 1-4. **[元素与数据源](#jump_logic)**
+## 1-1. **[概要](./Summary.md)**
+
+## 1-2. **[画面原型](#jump_png)**
+
+## 1-3. **[model元素](#jump_model)**
+
+## 1-4. **[元素与数据源](#jump_logic)**
 
 <a id="jump_png"></a>
+
 ## 首页
+
 ![首页](.\png\Home.png)
 
-
 <a id="jump_model"></a>
+
 ## model元素&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;>**[POCO描述](../functional-design/POCO.md)**&emsp;>**[数据库设计](../db-design/tables.md)**
-#### 显示处理
+
+### 显示处理
+
 | 参数名称              | 类型                                | 区域 | 描述         |
 | :-------------------- | :---------------------------------- | :--- | :----------- |
 | Discovery             | HomeDiscViewModel (class)           |      |              |
@@ -42,4 +49,5 @@
 | &emsp;Id              | MovieIdVO                           |      |              |
 
 <a id="jump_logic"></a>
+
 ## 元素与数据源

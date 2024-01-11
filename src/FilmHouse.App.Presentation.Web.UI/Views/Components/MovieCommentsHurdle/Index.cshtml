@@ -1,24 +1,23 @@
 ﻿@using FilmHouse.Core.ValueObjects;
-@using FilmHouse.App.Presentation.Web.UI.Models;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
-@model List<CommentDiscViewModel>
+@model MovieCommentsHurdleViewModel
 
 @{
     var transfer = ViewBag.Transfer;
-    var isFinish = ViewBag.IsFinish;
 
-    @if (Model.Count == 0)
+    @if (Model.Comments.Count == 0)
     {
         <div class="text-center">
             还没有人评论过这部电影(＃￣▽￣＃)
-            @if (isFinish)
+            @if (Model.IsFinish)
             {
                 <span>,</span>
                 <a class="link-text" title="插入短评" data-toggle="modal" data-target="#modalCmt">评论一下吧</a>
             }
         </div>
     }
-    @foreach (var item in Model)
+    @foreach (var item in Model.Comments)
     {
         <div class="comment-item">
             <div class="avatar">
@@ -41,10 +40,10 @@
             </div>
         </div>
     }
-    @if (Model.Count != 0)
+    @if (Model.Comments.Count != 0)
     {
         <div>
-            <a class="link-text" href="/Movie/Comment?movieId=@Model.ElementAt(0).MovieId" target="_self">查看全部</a>
+            <a class="link-text" href="/Comment/Index?movieId=@Model.Comments.ElementAt(0).MovieId" target="_self">查看全部</a>
         </div>
     }
 

@@ -100,7 +100,7 @@ public class Seed
             // 评论缩略显示长度
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSummaryShort, Value = new("250"), CreatedOn = dateTime },
             // 影片页面上显示的最大评论件数
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieCommentMax, Value = new("10"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieCommentMax, Value = new("6"), CreatedOn = dateTime },
             // 电影卡片明星显示最大个数
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.WorkItemCelebMax, Value = new("4"), CreatedOn = dateTime },
         };
@@ -830,6 +830,9 @@ public class Seed
         var mvId02 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("剪刀手安德华")).Select(d => d.MovieId).First().AsPrimitive();
         var mvId03 = dbContext.Movies.Where(d => d.Title == new MovieTitleVO("黑天鹅")).Select(d => d.MovieId).First().AsPrimitive();
 
+        var celebId01 = dbContext.Celebrities.Where(d => d.Name == new CelebrityNameVO("娜塔莉·波特曼")).Select(d => d.CelebrityId).First().AsPrimitive();
+        var celebId02 = dbContext.Celebrities.Where(d => d.Name == new CelebrityNameVO("约翰尼·德普")).Select(d => d.CelebrityId).First().AsPrimitive();
+
         var tonyzhangshi = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("tonyzhangshi")).Select(d => d.UserId).First();
         var test01 = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test01")).Select(d => d.UserId).First();
         var test02 = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test02")).Select(d => d.UserId).First();
@@ -838,15 +841,17 @@ public class Seed
         var test05 = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test05")).Select(d => d.UserId).First();
         var test06 = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("test06")).Select(d => d.UserId).First();
 
+        var albumId01 = dbContext.Albums.Where(d => d.Title == new AlbumTitleVO("影集A")).Select(d => d.AlbumId).First().AsPrimitive();
+        var albumId02 = dbContext.Albums.Where(d => d.Title == new AlbumTitleVO("影集B")).Select(d => d.AlbumId).First().AsPrimitive();
+        var albumId03 = dbContext.Albums.Where(d => d.Title == new AlbumTitleVO("影集C")).Select(d => d.AlbumId).First().AsPrimitive();
+
         var list = new List<MarkEntity>()
         {
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode1, UserId = tonyzhangshi, Target = new(mvId01), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = tonyzhangshi, Target = new(mvId01), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = tonyzhangshi, Target = new(mvId01), CreatedOn = dateTime },
-            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode4, UserId = tonyzhangshi, Target = new(mvId01), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode5, UserId = tonyzhangshi, Target = new(mvId01), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode6, UserId = tonyzhangshi, Target = new(mvId01), CreatedOn = dateTime },
-            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = tonyzhangshi, Target = new(mvId01), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode1, UserId = tonyzhangshi, Target = new(mvId02), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode2, UserId = tonyzhangshi, Target = new(mvId02), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = tonyzhangshi, Target = new(mvId03), CreatedOn = dateTime },
@@ -868,6 +873,21 @@ public class Seed
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = test04, Target = new(mvId01), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = test05, Target = new(mvId01), CreatedOn = dateTime },
             new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode3, UserId = test06, Target = new(mvId01), CreatedOn = dateTime },
+
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = tonyzhangshi, Target = new(albumId02), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = test01, Target = new(albumId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = test02, Target = new(albumId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = test03, Target = new(albumId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = test04, Target = new(albumId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = test05, Target = new(albumId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = test06, Target = new(albumId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = tonyzhangshi, Target = new(albumId03), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = test05, Target = new(albumId03), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode7, UserId = test06, Target = new(albumId03), CreatedOn = dateTime },
+
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode4, UserId = tonyzhangshi, Target = new(celebId01), CreatedOn = dateTime },
+            new(){ RequestId = uuid, MarkId = new(Guid.NewGuid()), Type = MarkTypeVO.Codes.MarkTypeCode4, UserId = tonyzhangshi, Target = new(celebId02), CreatedOn = dateTime },
+
         };
         return list;
     }

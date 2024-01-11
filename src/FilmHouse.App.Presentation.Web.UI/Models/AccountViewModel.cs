@@ -5,6 +5,9 @@ using SysDataAnnotations = System.ComponentModel.DataAnnotations;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models;
 
+/// <summary>
+/// 登錄頁面
+/// </summary>
 public class LoginViewModel
 {
     [SysDataAnnotations.Display(Name = nameof(Resources.UserName), ResourceType = typeof(Resources))]
@@ -21,6 +24,9 @@ public class LoginViewModel
     public UserIdVO Id { get; set; }
 }
 
+/// <summary>
+/// 註冊頁面
+/// </summary>
 public class RegisterViewModel
 {
     [SysDataAnnotations.Display(Name = nameof(Resources.UserName), ResourceType = typeof(Resources))]
@@ -40,6 +46,9 @@ public class RegisterViewModel
     public ConfirmPasswordVO ConfirmPassword { get; set; }
 }
 
+/// <summary>
+/// 忘記密碼
+/// </summary>
 public class ForgotPasswordViewModel
 {
     [SysDataAnnotations.Display(Name = nameof(Resources.UserName), ResourceType = typeof(Resources))]
@@ -52,6 +61,9 @@ public class ForgotPasswordViewModel
     public EmailAddressVO Email { get; set; }
 }
 
+/// <summary>
+/// 密碼重置頁面
+/// </summary>
 public class ResetPasswordViewModel
 {
     [SysDataAnnotations.Display(Name = nameof(Resources.UserName), ResourceType = typeof(Resources))]

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using FilmHouse.App.Presentation.Web.UI.Helper;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 
@@ -65,7 +66,7 @@ public class ResourceDiscViewModel
         viewModel.Content = resource.Content;
         viewModel.Name = resource.Name;
         viewModel.Size = resource.Size;
-        viewModel.DiscSize = CalculateToDiscSize(resource.Size);
+        viewModel.DiscSize = ModelUtils.CalculateToDiscSize(resource.Size);
         viewModel.FavorCount = resource.FavorCount;
         viewModel.Type = resource.Type;
         viewModel.ReviewStatus = resource.ReviewStatus;
@@ -85,30 +86,8 @@ public class ResourceDiscViewModel
         return viewModel;
     }
 
-    /// <summary>
-    /// 显示用文件大小
-    /// </summary>
-    /// <param name="size"></param>
-    /// <returns></returns>
-    static DisplayResourceSizeVO CalculateToDiscSize(ResourceSizeVO size)
-    {
-        if (size.AsPrimitive() > 1024 * 1024 * 1024)
-        {
-            return new($"{size.AsPrimitive() / (1024 * 1024 * 1024)} G");
-        }
-        else if (size.AsPrimitive() > 1024 * 1024)
-        {
-            return new($"{size.AsPrimitive() / (1024 * 1024)} M");
-        }
-        else if (size.AsPrimitive() > 1024)
-        {
-            return new($"{size.AsPrimitive() / 1024} K");
-        }
-        else
-        {
-            return new($"{size.AsPrimitive()} 字节");
-        }
-    }
+    
+
 }
 
 public class FilterResViewModel

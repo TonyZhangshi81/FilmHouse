@@ -1,4 +1,6 @@
-﻿@model FilmHouse.App.Presentation.Web.UI.Models.ClassifyViewModel
+﻿@using FilmHouse.App.Presentation.Web.UI.Models.Components;
+
+@model FilmHouse.App.Presentation.Web.UI.Models.SearchInedxViewModel.SearchResultViewModel;
 
 @{
     ViewBag.Title = "分类结果";
@@ -11,28 +13,28 @@
 }
 
 <div class="panel panel-body text-center no-padding">
-    <h4>总共找到 10 部电影</h4>
+    <h4>总共找到 @Model.Count 部电影</h4>
 </div>
 
 <div class="panel panel-body">
     @using (Html.BeginForm("Index", "Search", FormMethod.Get, new { @class = "form-inline", role = "form" }))
     {
         @Html.HiddenFor(m => m.Search)
-        @Html.DropDownList("genre", Model.listGenre, new { @class = "form-control", style = "margin-right:15px;" })
-        @Html.DropDownList("country", Model.listCountry, new { @class = "form-control", style = "margin-right:15px;" })
-        @Html.DropDownList("year", Model.listYear, new { @class = "form-control", style = "margin-right:15px;" })
+        @Html.DropDownList("genre", Model.ListGenre, new { @class = "form-control", style = "margin-right:15px;" })
+        @Html.DropDownList("country", Model.ListCountry, new { @class = "form-control", style = "margin-right:15px;" })
+        @Html.DropDownList("year", Model.ListYear, new { @class = "form-control", style = "margin-right:15px;" })
         <input type="submit" value="筛选" class="btn btn-primary" />
     }
 </div>
 
 <div class="panel panel-default">
     <div class="panel-body" style="padding:10px;">
-        @if (Model.listMovies.Count == 0)
+        @if (Model.ListMovies.Count == 0)
         {
             <div class="text-center">没有找到关于 "@Model.Search" 的结果 (＃￣▽￣＃)</div>
         }
 
-        @foreach (var item in Model.listMovies)
+        @foreach (var item in Model.ListMovies)
         {
             <div class="col-md-4 col-sm-6 col-xs-4 panel-float div-movie-back">
                 <div class="full-height" style="padding:5px; overflow:hidden; background-color:#F2F2F2;">
@@ -53,7 +55,12 @@
                         </div>
                         <div>
                             @*导演*@
-                            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = item.Directors, type = "Directors", count = 4 })
+                            @{
+                                var directors = new CelebritiesLinkViewModel();
+                                directors.Celebrities = item.Directors.Take(4).ToList();
+                                directors.Type = "Directors";
+                            }
+                            @await Component.InvokeAsync("CelebritiesLink", new { viewModel = directors })
                         </div>
                         <div>
                             @*类型*@
@@ -61,11 +68,21 @@
                         </div>
                         <div>
                             <!-- 编剧 -->
-                            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = item.Writers, type = "Writers", count = 4 })
+                            @{
+                                var writers = new CelebritiesLinkViewModel();
+                                writers.Celebrities = item.Writers.Take(4).ToList();
+                                writers.Type = "Writers";
+                            }
+                            @await Component.InvokeAsync("CelebritiesLink", new { viewModel = writers })
                         </div>
                         <div>
                             <!-- 演员 -->
-                            @await Component.InvokeAsync("CelebritiesLink", new { celebrities = item.Casts, type = "Casts", count = 4 })
+                            @{
+                                var casts = new CelebritiesLinkViewModel();
+                                casts.Celebrities = item.Casts.Take(4).ToList();
+                                casts.Type = "Casts";
+                            }
+                            @await Component.InvokeAsync("CelebritiesLink", new { viewModel = casts })
                         </div>
                     </div>
 

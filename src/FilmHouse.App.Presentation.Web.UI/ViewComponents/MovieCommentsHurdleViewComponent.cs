@@ -1,4 +1,4 @@
-﻿using FilmHouse.App.Presentation.Web.UI.Models;
+﻿using FilmHouse.App.Presentation.Web.UI.Models.Components;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmHouse.App.Presentation.Web.UI.ViewComponents;
@@ -15,17 +15,15 @@ public class MovieCommentsHurdleViewComponent : ViewComponent
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="comments"></param>
+    /// <param name="commentsViewModel"></param>
     /// <param name="transfer"></param>
-    /// <param name="isFinish"></param>
     /// <returns></returns>
-    public IViewComponentResult Invoke(List<CommentDiscViewModel> comments, string transfer, bool isFinish)
+    public IViewComponentResult Invoke(MovieCommentsHurdleViewModel commentsViewModel, string transfer)
     {
         try
         {
             ViewBag.Transfer = transfer;
-            ViewBag.IsFinish = isFinish;
-            return View("/Views/Components/MovieCommentsHurdle/Index.cshtml", comments);
+            return View("/Views/Components/MovieCommentsHurdle/Index.cshtml", commentsViewModel);
         }
         catch (Exception e)
         {

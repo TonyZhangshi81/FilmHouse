@@ -2,23 +2,17 @@
 @using FilmHouse.Core.Services.Configuration;
 @using Microsoft.AspNetCore.Http.Extensions;
 @using Microsoft.AspNetCore.Http;
+@using FilmHouse.App.Presentation.Web.UI.Models;
 @using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
-@model FilmHouse.App.Presentation.Web.UI.Models.MovieViewModel
+@model FilmHouse.App.Presentation.Web.UI.Models.MovieIndexViewModel
 
 @{
     ViewBag.Title = Model.Movie.Title;
     ViewBag.PageType = 2;
+    ViewBag.NavType = 1;
 
     var transfer = new Uri(Context.Request.GetDisplayUrl()).PathAndQuery;
-
-
-    //var scheme = uri.Scheme;
-    //var host = uri.Host;
-    //var path = uri.AbsolutePath;
-    //var query = uri.Query;
-    //var fragment = uri.Fragment;
-
 
 }
 
@@ -109,16 +103,31 @@
                     @Html.DisplayFor(model => model.Movie.Aka)
                 </li>
                 <li>
-                    <!-- 导演 -->
-                    @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Movie.Directors, type = "Directors" })
+                    @* 导演 *@
+                    @{
+                        var directors = new CelebritiesLinkViewModel();
+                        directors.Celebrities = Model.Movie.Directors;
+                        directors.Type = "Directors";
+                    }
+                    @await Component.InvokeAsync("CelebritiesLink", new { viewModel = directors })
                 </li>
                 <li>
-                    <!-- 编剧 -->
-                    @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Movie.Writers, type = "Writers" })
+                    @* 编剧 *@
+                    @{
+                        var writers = new CelebritiesLinkViewModel();
+                        writers.Celebrities = Model.Movie.Directors;
+                        writers.Type = "Writers";
+                    }
+                    @await Component.InvokeAsync("CelebritiesLink", new { viewModel = writers })
                 </li>
                 <li>
-                    <!-- 演员 -->
-                    @await Component.InvokeAsync("CelebritiesLink", new { celebrities = Model.Movie.Casts, type = "Casts" })
+                    @* 演员 *@
+                    @{
+                        var casts = new CelebritiesLinkViewModel();
+                        casts.Celebrities = Model.Movie.Casts;
+                        casts.Type = "Casts";
+                    }
+                    @await Component.InvokeAsync("CelebritiesLink", new { viewModel = casts })
                 </li>
                 <li>
                     <span style="color:#808080;">上映日期:</span>
@@ -168,7 +177,7 @@
         </div>
     </div>
 
-    @*简介*@
+    @* 简介 *@
     <div class="panel panel-default" id="summary">
         <div class="panel-heading text-center">
             ————&nbsp;&nbsp;<strong>剧情介绍</strong>&nbsp;&nbsp;————
@@ -178,7 +187,7 @@
         </div>
     </div>
 
-    @*资源*@
+    @* 资源 *@
     <div class="panel panel-default" id="resources">
         <div class="panel-heading text-center">
             ————&nbsp;&nbsp;<strong>所有资源</strong>&nbsp;&nbsp;————
@@ -194,34 +203,58 @@
         <div class="panel-body">
             @{
                 var resources = new MovieResourcesHurdleViewModel()
-            {
-                MovieId = Model.Movie.MovieId,
-                Title = Model.Movie.Title,
-                Resources = Model.Resources
-            };
+                {
+                    MovieId = Model.Movie.MovieId,
+                    Title = Model.Movie.Title,
+                    Resources = Model.Resources.Select(d => new MovieResourcesHurdleViewModel.ResourceDiscViewModel
+                    {
+                        Account = d.Account,
+                        Content = d.Content,
+                        DiscSize = d.DiscSize,
+                        FavorCount = d.FavorCount,
+                        Name = d.Name,
+                        ResourceId = d.ResourceId,
+                        Type = d.Type,
+                        UserId = d.UserId
+                    }).ToList()
+                };
             }
             @await Component.InvokeAsync("MovieResourcesHurdle", new { movieResources = resources, transfer = transfer })
         </div>
     </div>
 
-    @*评论*@
+    @* 评论 *@
     <div class="panel panel-default" id="comments">
         <div class="panel-heading text-center">
-            ————&nbsp;&nbsp;<strong>@Model.Movie.Title 的短评</strong>(<a class="link-text" href="/Movie/Comment?movieId=@Model.Movie.MovieId" target="_self">全部 @Model.Movie.CommentCount 条</a>)&nbsp;&nbsp;————
+            ————&nbsp;&nbsp;<strong>@Model.Movie.Title 的短评</strong>(<a class="link-text" href="/Comment/Index?movieId=@Model.Movie.MovieId" target="_self">全部 @Model.Movie.CommentCount 条</a>)&nbsp;&nbsp;————
         </div>
         <div class="panel-body">
-            @await Component.InvokeAsync("MovieCommentsHurdle", new { comments = Model.Comments, transfer = transfer, isFinish = Model.Movie.IsFinish })
+            @{
+                var commentsViewModel = new MovieCommentsHurdleViewModel();
+                commentsViewModel.Comments = Model.Comments.Select(d => new MovieCommentsHurdleViewModel.CommentDiscViewModel()
+                {
+                    Account = d.Account,
+                    CommentTime = d.CommentTime,
+                    Content = d.Content,
+                    MovieId = d.MovieId,
+                    UserAvatar = d.UserAvatar,
+                    UserId = d.UserId
+                }).ToList();
+                commentsViewModel.IsFinish = Model.Movie.IsFinish;
+            }
+            @await Component.InvokeAsync("MovieCommentsHurdle", new { commentsViewModel = commentsViewModel, transfer = transfer })
         </div>
     </div>
 </div>
 
 <div class="col-sm-3 div-right">
-    @*关注度、我的评论、相关专辑*@
+    @* 关注度、我的评论、相关专辑 *@
     @{
         var shortReviewViewModel = new MovieShortReviewHurdleViewModel()
             {
                 Albums = Model.Albums,
-                PersonalReview = Model.PersonalReview,
+                CommentId = (Model.PersonalReview != null) ? Model.PersonalReview.CommentId : null,
+                Content = (Model.PersonalReview != null) ? Model.PersonalReview.Content : null,
                 FavorCount = Model.Movie.FavorCount,
                 FinishCount = Model.Movie.FinishCount,
                 IsFinish = Model.Movie.IsFinish,

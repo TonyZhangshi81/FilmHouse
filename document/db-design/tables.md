@@ -1,30 +1,49 @@
 # 1. 数据库设计
 
-### 1-1. **[Album 影集](#jump_Album)**
-### 1-2. **[Ask 资源请求](#jump_Ask)**
-### 1-3. **[Celebrity 影人详细](#jump_Celebrity)**
-### 1-4. **[Comment 评论](#jump_Comment)**
-### 1-5. **[Configuration 配置设定](#jump_Configuration)**
-### 1-6. **[Discovery 电影每日发现](#jump_Discovery)**
-### 1-7. **[Country 制片国家/地区](#jump_Country)** <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
-### 1-8. **[GenreMovie 电影类型](#jump_GenreMovie)** <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
-### 1-9. **[Language 语言](#jump_Language)** <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
-### 1-10. **[CodeMast CODE管理表](#jump_CodeMast)**
-### 1-11. **[Mark 标记信息](#jump_Mark)**
-### 1-12. **[Movie 电影](#jump_Movie)**
-### 1-13. **[Resource 影片资源](#jump_Resource)**
-### 1-14. **[UserAccount 账户信息](#jump_UserAccount)**
-### 1-15. **[Notice 通知](#jump_Notice)**
-### 1-16. **[Work 工作](#jump_Work)**
+## 1-1. **[Album 影集](#jump_Album)**
+
+## 1-2. **[Ask 资源请求](#jump_Ask)**
+
+## 1-3. **[Celebrity 影人详细](#jump_Celebrity)**
+
+## 1-4. **[Comment 评论](#jump_Comment)**
+
+## 1-5. **[Configuration 配置设定](#jump_Configuration)**
+
+## 1-6. **[Discovery 电影每日发现](#jump_Discovery)**
+
+## 1-7. **[Country 制片国家/地区](#jump_Country)** <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
+
+## 1-8. **[GenreMovie 电影类型](#jump_GenreMovie)** <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
+
+## 1-9. **[Language 语言](#jump_Language)** <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
+
+## 1-10. **[CodeMast CODE管理表](#jump_CodeMast)**
+
+## 1-11. **[Mark 标记信息](#jump_Mark)**
+
+## 1-12. **[Movie 电影](#jump_Movie)**
+
+## 1-13. **[Resource 影片资源](#jump_Resource)**
+
+## 1-14. **[UserAccount 账户信息](#jump_UserAccount)**
+
+## 1-15. **[Notice 通知](#jump_Notice)**
+
+## 1-16. **[Work 工作](#jump_Work)**
 
 # 2. 业务表关系
-### 2-1. **[ER图](#jump_ER)**
+
+## 2-1. **[ER图](#jump_ER)**
 
 ***（以下类型秒数是基于postgresql数据库）***
+
 ## 业务表结构
 
 <a id="jump_Album"></a>
+
 ### [影集] Album
+
 | 列名            |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                                                  | VO                |
 | :-------------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :-------------------------------------------------------------------- | :---------------- |
 | RequestId       |   uuid    |   36 |      |  v   |     |     |        | GUID                                                                  | RequestIdVO       |
@@ -43,7 +62,9 @@
 
 
 <a id="jump_Ask"></a>
+
 ### [资源请求] Ask
+
 | 列名        |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                             | VO            |
 | :---------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :----------------------------------------------- | :------------ |
 | RequestId   |   uuid    |   36 |      |  v   |     |     |        | GUID                                             | RequestIdVO   |
@@ -59,7 +80,9 @@
 
 
 <a id="jump_Celebrity"></a>
+
 ### [影人详细] Celebrity
+
 | 列名         |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                             | VO             |
 | :----------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :----------------------------------------------- | :------------- |
 | RequestId    |   uuid    |   36 |      |  v   |     |     |        | GUID                                             | RequestIdVO    |
@@ -87,7 +110,9 @@
 
 
 <a id="jump_Comment"></a>
+
 ### [评论] Comment
+
 | 列名        |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                             | VO            |
 | :---------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :----------------------------------------------- | :------------ |
 | RequestId   |   uuid    |   36 |      |  v   |     |     |        | GUID                                             | RequestIdVO   |
@@ -101,7 +126,9 @@
 
 
 <a id="jump_Configuration"></a>
+
 ### [配置设定] Configuration
+
 | 列名      |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述     | VO          |
 | :-------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :------- | :---------- |
 | RequestId |   uuid    |   36 |      |  v   |     |     |        | GUID     | RequestIdVO |
@@ -112,7 +139,9 @@
 
 
 <a id="jump_Discovery"></a>
+
 ### [电影每日发现] Discovery
+
 | 列名        |   类型   | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                      | VO            |
 | :---------- | :------: | ---: | ---: | :--: | :-: | :-: | -----: | :---------------------------------------- | :------------ |
 | RequestId   |   uuid   |   36 |      |  v   |     |     |        | GUID                                      | RequestIdVO   |
@@ -125,7 +154,9 @@
 
 
 <a id="jump_Movie"></a>
+
 ### [电影] Movie
+
 | 列名         |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                                                         | VO             |
 | :----------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :--------------------------------------------------------------------------- | :------------- |
 | RequestId    |   uuid    |   36 |      |  v   |     |     |        | GUID                                                                         | RequestIdVO    |
@@ -168,42 +199,49 @@
   - 编剧列表导航（其中有一位导演的情况）
     - Writers = "蒂姆·波顿 / 卡罗琳·汤普森" && DirectorsId = "003" && WritersId = "003/004"
 
-- 以下是 Status 与 Note 的使用规则
+- 以下是`Status`与`Note`的使用规则
   - 发布电影信息时（一般用户）：Status = 1 && Note = ""
   - 发布电影信息时（管理员）：Status = 2 && Note = ""
   - 评审电影信息时（通过）：Status = 2 && Note = ""
-  - 评审电影信息时（不通过）：Status = 1 && Note = "（0:内容有误 1:已经存在 other:其他）"
+  - 评审电影信息时（不通过）：Status = 1 && Note = "（0:内容有误;1:已经存在;other:其他）"
 
 - 电影最新与热门的数据规则
-  - 最新：Status = 1（以 CreatedOn 降序取前20件数据）
-  - 热门：Status = 2（以 PageViews 降序取前20件数据）
+  - 最新：Status = 1（以`CreatedOn`降序取前20件数据）
+  - 热门：Status = 2（以`PageViews`降序取前20件数据）
   
-
-#### <span style="display:block;color:orangered;">(Country、GenreMovie、Language 这三个实体使用CodeMast进行管理)</span>
+### <span style="display:block;color:orangered;">(Country、GenreMovie、Language 这三个实体使用CodeMast进行管理)</span>
 
 <a id="jump_Country"></a>
+
 ### [制片国家/地区] Country <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
+
 | 列名         |   类型   | 长度 | 精度 | 非空 |  PK | 默认值 | 描述   |
 | :----------- | :------: | ---: | ---: | ---: | --: | -----: | :----- |
 | country_Id   | tinyint  |    1 |      |    v |   v |        | ID     |
 | country_Name | nvarchar |   50 |      |    v |     |        | 国家名 |
 
 <a id="jump_GenreMovie"></a>
+
 ### [电影类型] GenreMovie <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
+
 | 列名       |   类型   | 长度 | 精度 | 非空 |  PK | 默认值 | 描述     |
 | :--------- | :------: | ---: | ---: | ---: | --: | -----: | :------- |
 | genre_Id   | tinyint  |    1 |      |    v |   v |        | ID       |
 | genre_Name | nvarchar |   50 |      |    v |     |        | 电影类型 |
 
 <a id="jump_Language"></a>
+
 ### [语言] Language <span style="display:block;color:orangered;">(已经废弃 -> CODE管理表)</span>
+
 | 列名      |   类型   | 长度 | 精度 | 非空 |  PK | 默认值 | 描述 |
 | :-------- | :------: | ---: | ---: | ---: | --: | -----: | :--- |
 | lang_Id   | tinyint  |    1 |      |    v |   v |        | ID   |
 | lang_Name | nvarchar |   50 |      |    v |     |        | 语言 |
 
 <a id="jump_CodeMast"></a>
+
 ### [代码信息管理] CodeMast
+
 | 列名      |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述     | VO          |
 | :-------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :------- | :---------- |
 | RequestId |   uuid    |   36 |      |  v   |     |     |        | GUID     | RequestIdVO |
@@ -214,13 +252,15 @@
 | CreatedOn | timestamp |    8 |      |  v   |     |     |        | 创建时间 | CreatedOnVO |
 | UpDatedOn | timestamp |    8 |      |      |     |     |        | 修改时间 | UpDatedOnVO |
 
-- 以下是 Group 的分类规则
-  - Country 代表国家/地区（001:剧情; 002:爱情; 003:奇幻; 004:惊悚...... ）
-  - GenreMovie 电影类型（001:英语; 002:法语; 003:意大利语...... ）
-  - Language 代表语言（001:美国; 002:澳大利亚......）
+- 以下是`Group`的分类规则
+  - Country：代表国家/地区（001:剧情; 002:爱情; 003:奇幻; 004:惊悚等等）
+  - GenreMovie：电影类型（001:英语; 002:法语; 003:意大利语等等）
+  - Language：代表语言（001:美国; 002:澳大利亚等等）
 
 <a id="jump_UserAccount"></a>
+
 ### [账户信息] UserAccount
+
 | 列名          |   类型   | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                       | VO              |
 | :------------ | :------: | ---: | ---: | :--: | :-: | :-: | -----: | :------------------------- | :-------------- |
 | RequestId     |   uuid   |   36 |      |  v   |     |     |        | GUID                       | RequestIdVO     |
@@ -236,9 +276,10 @@
 | LastLoginIp   | varchar  |   64 |      |      |     |     |        | 最后一次登录的客户端IP     | LastLoginIpVO   |
 | LastLoginTime | datetime |    8 |      |      |     |     |        | 最后一次登录的时间         | LastLoginTimeVO |
 
-
 <a id="jump_Resource"></a>
+
 ### [影片资源] Resource
+
 | 列名         |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                             | VO             |
 | :----------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :----------------------------------------------- | :------------- |
 | RequestId    |   uuid    |   36 |      |  v   |     |     |        | GUID                                             | RequestIdVO    |
@@ -255,9 +296,10 @@
 | CreatedOn    | timestamp |    8 |      |  v   |     |     |        | 创建时间                                         | CreatedOnVO    |
 | UpDatedOn    | timestamp |    8 |      |      |     |     |        | 修改时间                                         | UpDatedOnVO    |
 
-
 <a id="jump_Mark"></a>
+
 ### [标记信息] Mark
+
 | 列名      |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                                                                               | VO          |
 | :-------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :------------------------------------------------------------------------------------------------- | :---------- |
 | RequestId |   uuid    |   36 |      |  v   |     |     |        | GUID                                                                                               | RequestIdVO |
@@ -268,9 +310,10 @@
 | CreatedOn | timestamp |    8 |      |  v   |     |     |        | 创建时间                                                                                           | CreatedOnVO |
 | UpDatedOn | timestamp |    8 |      |      |     |     |        | 修改时间                                                                                           | UpDatedOnVO |
 
-
 <a id="jump_Notice"></a>
+
 ### [通知] Notice
+
 | 列名       |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                              | VO           |
 | :--------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :------------------------------------------------ | :----------- |
 | RequestId  |   uuid    |   36 |      |  v   |     |     |        | GUID                                              | RequestIdVO  |
@@ -282,9 +325,10 @@
 | CreatedOn  | timestamp |    8 |      |  v   |     |     |        | 创建时间                                          | CreatedOnVO  |
 | UpDatedOn  | timestamp |    8 |      |      |     |     |        | 修改时间                                          | UpDatedOnVO  |
 
-
 <a id="jump_Work"></a>
+
 ### [工作] Work
+
 | 列名        |   类型    | 长度 | 精度 | 非空 | PK  | FK  | 默认值 | 描述                                              | VO            |
 | :---------- | :-------: | ---: | ---: | :--: | :-: | :-: | -----: | :------------------------------------------------ | :------------ |
 | RequestId   |   uuid    |   36 |      |  v   |     |     |        | GUID                                              | RequestIdVO   |
@@ -295,19 +339,8 @@
 | CreatedOn   | timestamp |    8 |      |  v   |     |     |        | 创建时间                                          | CreatedOnVO   |
 | UpDatedOn   | timestamp |    8 |      |      |     |     |        | 修改时间                                          | UpDatedOnVO   |
 
-
 <a id="jump_ER"></a>
+
 ## 业务表关系(ER图)
+
 ![ER图](FilmHouse-db-design.png)
-
-
-
-
-
-
-
-
-
-
-
-

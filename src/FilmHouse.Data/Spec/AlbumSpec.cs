@@ -2,15 +2,21 @@
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using FilmHouse.Data.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace FilmHouse.Data.Spec;
 
 public sealed class AlbumSpec : BaseSpecification<AlbumEntity>
 {
-    public AlbumSpec(MovieIdVO movieId)
-        : base(c => c.Items.Contains(movieId.AsPrimitive().ToString()))
+    public AlbumSpec() : base()
     {
-        ApplyOrderBy(p => p.CreatedOn);
+        AddInclude(album => album.Include(p => p.UserAccount));
+        ApplyOrderByDescending(p => p.AmountAttention);
     }
 
+    public AlbumSpec(MovieIdVO movieId) : base(c => c.Items.Contains(movieId.AsPrimitive().ToString()))
+    {
+        AddInclude(album => album.Include(p => p.UserAccount));
+        ApplyOrderBy(p => p.CreatedOn);
+    }
 }

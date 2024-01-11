@@ -1,0 +1,103 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions;
+@using Microsoft.AspNetCore.Http;
+@using FilmHouse.App.Presentation.Web.UI.Models;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
+
+@model FilmHouse.App.Presentation.Web.UI.Models.CommentIndexViewModel;
+
+@{
+    ViewBag.Title = Model.Movie.Title + "的短评";
+    ViewBag.PageType = 2;
+    ViewBag.NavType = 1;
+
+    var transfer = new Uri(Context.Request.GetDisplayUrl()).PathAndQuery;
+}
+
+@section Links {
+    <link rel="stylesheet" asp-append-version="true" href="~/css/comment.css" />
+}
+
+
+<div class="panel panel-body col-sm-8" style="margin-bottom:20px;">
+    <h4>
+        <a href="/Movie/Index?movieId=@Model.Movie.MovieId" class="link-text" target="_self" title="去 @Model.Movie.Title 的页面">@Model.Movie.Title</a>的短评
+    </h4>
+    <h6>全部共 @Model.Comments.Count 条</h6>
+    <hr />
+    @if (Model.Comments.Count == 0)
+    {
+        <div class="text-center">
+            这里空荡荡的，什么也没有(＃￣▽￣＃)
+        </div>
+    }
+    else
+    {
+        foreach (var item in Model.Comments)
+        {
+            <div class="comment-item">
+                <div class="avatar">
+                    <a title="@item.Account" href="/People/Index?id=@item.UserId&transfer=@transfer" target="_self" class="link-avatar">
+                        <img src="~/Content/User/Avatar/@item.UserAvatar" style="width: 54px;height: 54px; border-radius: 27px;">
+                    </a>
+                </div>
+                <div class="comment">
+                    <div>
+                        <span>
+                            <a title="@item.Account" href="/People/Index?id=@item.UserId" class="link-text" target="_self">@item.Account</a>
+                        </span>
+                        <span>
+                            &nbsp;&nbsp; @item.CommentTime
+                        </span>
+                    </div>
+                    <p class="">
+                        @item.Content
+                    </p>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+<div class="col-sm-4" style="padding-left:20px; margin-bottom:20px;">
+    <div>
+        <a href="/Movie/Index?movieId=@Model.Movie.MovieId" class="link-text" target="_self" title="去 @Model.Movie.Title 的页面">去 @Model.Movie.Title 的页面</a>
+    </div>
+    <div style="margin-top:20px;">
+        <a href="/Movie/Index?movieId=@Model.Movie.MovieId" target="_self">
+            <img src="~/Content/Movie/@Model.Movie.Avatar" class="img-thumbnail" title="@Model.Movie.Title" style="height:225px;" />
+        </a>
+    </div>
+    <div style="margin-top:5px;">
+        @* 导演 *@
+        @{
+            var directors = new CelebritiesLinkViewModel();
+            directors.Celebrities = Model.Movie.Directors;
+            directors.Type = "Directors";
+        }
+        @await Component.InvokeAsync("CelebritiesLink", new { viewModel = directors })
+    </div>
+    <div style="margin-top:5px;">
+        @* 演员 *@
+        @{
+            var casts = new CelebritiesLinkViewModel();
+            casts.Celebrities = Model.Movie.Casts;
+            casts.Type = "Casts";
+        }
+        @await Component.InvokeAsync("CelebritiesLink", new { viewModel = casts })
+    </div>
+    <div style="margin-top:5px;">
+        @* 类型 *@
+        @await Component.InvokeAsync("MovieGenresHurdle", new { genres = Model.Movie.GenresValue })
+    </div>
+    <div style="margin-top:5px;">
+        @* 制片国家/地区 *@
+        @await Component.InvokeAsync("MovieCountriesHurdle", new { genres = Model.Movie.CountriesValue })
+    </div>
+    <div style="margin-top:5px;">
+        片长: <span>@Model.Movie.Durations</span>
+    </div>
+    <div style="margin-top:5px;">
+        上映: <span>@Model.Movie.Pubdates</span>
+    </div>
+</div>

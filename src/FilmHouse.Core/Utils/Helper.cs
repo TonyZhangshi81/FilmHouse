@@ -11,14 +11,15 @@ using System.Text.RegularExpressions;
 
 namespace FilmHouse.Core.Utils;
 
-public static class Helper
+public static partial class Helper
 {
     public static string AppVersion
     {
         get
         {
             var asm = Assembly.GetEntryAssembly();
-            if (null == asm) return "N/A";
+            if (null == asm)
+                return "N/A";
 
             // e.g. 11.2.0.0
             var fileVersion = asm.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
@@ -30,7 +31,8 @@ public static class Helper
                 var gitHash = version[(version.IndexOf('+') + 1)..]; // e57ab0321ae44bd778c117646273a77123b6983f
                 var prefix = version[..version.IndexOf('+')]; // 11.2-preview
 
-                if (gitHash.Length <= 6) return version;
+                if (gitHash.Length <= 6)
+                    return version;
 
                 // consider valid hash
                 var gitHashShort = gitHash[..6];
@@ -60,7 +62,8 @@ public static class Helper
             for (int i = 0; i < input.Length; i += 2)
             {
                 hash1 = ((hash1 << 5) + hash1) ^ input[i];
-                if (i == input.Length - 1) break;
+                if (i == input.Length - 1)
+                    break;
                 hash2 = ((hash2 << 5) + hash2) ^ input[i + 1];
             }
 
@@ -71,7 +74,8 @@ public static class Helper
     public static string TryGetFullOSVersion()
     {
         var osVer = Environment.OSVersion;
-        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return osVer.VersionString;
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            return osVer.VersionString;
 
         try
         {
@@ -96,7 +100,8 @@ public static class Helper
 
     public static string GetDNSPrefetchUrl(string cdnEndpoint)
     {
-        if (string.IsNullOrWhiteSpace(cdnEndpoint)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(cdnEndpoint))
+            return string.Empty;
 
         var uri = new Uri(cdnEndpoint);
         return $"{uri.Scheme}://{uri.Host}/";
@@ -124,7 +129,8 @@ public static class Helper
 
     public static string HashPassword(string plainMessage)
     {
-        if (string.IsNullOrWhiteSpace(plainMessage)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(plainMessage))
+            return string.Empty;
 
         var data = Encoding.UTF8.GetBytes(plainMessage);
         using var sha = SHA256.Create();
@@ -391,8 +397,10 @@ public static class Helper
 
     public static IEnumerable<string> GetErrorMessagesFromModelState(ModelStateDictionary modelStateDictionary)
     {
-        if (modelStateDictionary is null) return null;
-        if (modelStateDictionary.ErrorCount == 0) return null;
+        if (modelStateDictionary is null)
+            return null;
+        if (modelStateDictionary.ErrorCount == 0)
+            return null;
 
         return from modelState in modelStateDictionary.Values
                from error in modelState.Errors
