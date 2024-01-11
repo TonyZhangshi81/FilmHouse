@@ -47,6 +47,7 @@ public class FilmHouseDbContext : DbContext
     public virtual DbSet<ResourceEntity> Resources { get; set; }
     public virtual DbSet<UserAccountEntity> UserAccounts { get; set; }
     public virtual DbSet<WorkEntity> Works { get; set; }
+    public virtual DbSet<FindPasswordEntity> FindPwds { get; set; }
 
     /// <summary>
     /// 
@@ -94,6 +95,7 @@ public static class FilmHouseDbContextExtension
         context.Resources.RemoveRange();
         context.UserAccounts.RemoveRange();
         context.Works.RemoveRange();
+        context.FindPwds.RemoveRange();
 
         await context.SaveChangesAsync();
     }

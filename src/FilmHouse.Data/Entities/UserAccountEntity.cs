@@ -17,6 +17,7 @@ public class UserAccountEntity : EntitiesBase
         Notices = new HashSet<NoticeEntity>();
         Resources = new HashSet<ResourceEntity>();
         Marks = new HashSet<MarkEntity>();
+        FindPwds = new HashSet<FindPasswordEntity>();
     }
 
     [Column(Order = 2)]
@@ -82,6 +83,10 @@ public class UserAccountEntity : EntitiesBase
     /// 
     /// </summary>
     public virtual ICollection<MarkEntity> Marks { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual ICollection<FindPasswordEntity> FindPwds { get; set; }
 
 }
 

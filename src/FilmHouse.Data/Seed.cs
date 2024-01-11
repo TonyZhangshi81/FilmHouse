@@ -1,10 +1,8 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Text;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using Microsoft.Extensions.Logging;
 
 namespace FilmHouse.Data;
@@ -61,6 +59,10 @@ public class Seed
 
             // 资源请求
             await dbContext.Asks.AddRangeAsync(GetAsks(uuid, sysDate, dbContext));
+            await dbContext.SaveChangesAsync();
+
+            // 找回密码
+            await dbContext.FindPwds.AddRangeAsync(GetFindPwds(uuid, sysDate, dbContext));
             await dbContext.SaveChangesAsync();
 
 #endif
@@ -958,6 +960,23 @@ public class Seed
         return list;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="uuid"></param>
+    /// <param name="dateTime"></param>
+    /// <param name="dbContext"></param>
+    /// <returns></returns>
+    private static IEnumerable<FindPasswordEntity> GetFindPwds(RequestIdVO uuid, CreatedOnVO dateTime, FilmHouseDbContext dbContext)
+    {
+        var tonyzhangshi = dbContext.UserAccounts.Where(d => d.Account == new AccountNameVO("tonyzhangshi")).Select(d => d.UserId).First();
 
+        var list = new List<FindPasswordEntity>()
+        {
+            new(){ RequestId = uuid, FindId = new(Guid.NewGuid()), UserId = tonyzhangshi, Token = new("abc1234567"), EmailAddress = new("tonyfindpsw01@gamil.com"), ExpiryTime = new(System.DateTime.Now.AddMinutes(10)), IsEnabled = new(false), CreatedOn = new(System.DateTime.Now) },
+            new(){ RequestId = uuid, FindId = new(Guid.NewGuid()), UserId = tonyzhangshi, Token = new("abc7654321"), EmailAddress = new("tonyfindpsw02@gamil.com"), ExpiryTime = new(System.DateTime.Now.AddMinutes(20)), IsEnabled = new(false), CreatedOn = new(System.DateTime.Now) },
+        };
+        return list;
+    }
 
 }

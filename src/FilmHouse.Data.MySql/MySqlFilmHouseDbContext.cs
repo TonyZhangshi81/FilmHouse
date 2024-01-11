@@ -43,6 +43,7 @@ public class MySqlFilmHouseDbContext : FilmHouseDbContext
         modelBuilder.ApplyConfiguration(new ResourceConfiguration());
         modelBuilder.ApplyConfiguration(new UserAccountConfiguration());
         modelBuilder.ApplyConfiguration(new WorkConfiguration());
+        modelBuilder.ApplyConfiguration(new FindPasswordConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }
