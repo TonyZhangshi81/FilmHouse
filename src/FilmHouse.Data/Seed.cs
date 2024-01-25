@@ -130,8 +130,12 @@ public class Seed
             new() { RequestId = uuid, Group = CodeGroupVO.Codes.Language, Code = new CodeKeyVO("002"), Name = new CodeValueVO("法语"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
             new() { RequestId = uuid, Group = CodeGroupVO.Codes.Language, Code = new CodeKeyVO("003"), Name = new CodeValueVO("意大利语"), Order = new SortOrderVO(3), CreatedOn  = dateTime },
 
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.Country, Code = new CodeKeyVO("001"), Name = new CodeValueVO("美国"), Order = new SortOrderVO(1), CreatedOn  = dateTime },
-            new() { RequestId = uuid, Group = CodeGroupVO.Codes.Country, Code = new CodeKeyVO("002"), Name = new CodeValueVO("澳大利亚"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = CodeGroupVO.Codes.Country, Code = new CodeKeyVO("001"), Name = new CodeValueVO("美国"), Order = new SortOrderVO(3), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = CodeGroupVO.Codes.Country, Code = new CodeKeyVO("002"), Name = new CodeValueVO("澳大利亚"), Order = new SortOrderVO(6), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = CodeGroupVO.Codes.Country, Code = new CodeKeyVO("003"), Name = new CodeValueVO("大陆"), Order = new SortOrderVO(1), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = CodeGroupVO.Codes.Country, Code = new CodeKeyVO("004"), Name = new CodeValueVO("香港"), Order = new SortOrderVO(2), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = CodeGroupVO.Codes.Country, Code = new CodeKeyVO("005"), Name = new CodeValueVO("日本"), Order = new SortOrderVO(4), CreatedOn  = dateTime },
+            new() { RequestId = uuid, Group = CodeGroupVO.Codes.Country, Code = new CodeKeyVO("006"), Name = new CodeValueVO("韩国"), Order = new SortOrderVO(5), CreatedOn  = dateTime },
 
         };
 
