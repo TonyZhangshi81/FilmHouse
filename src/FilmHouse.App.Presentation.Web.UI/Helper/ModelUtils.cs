@@ -150,4 +150,30 @@ public static class ModelUtils
         }
         return tle;
     }
+
+    /// <summary>
+    /// url里有key的值，就替换为value,没有的话就追加.
+    /// </summary>
+    /// <param name="sourceUrl">原url</param>
+    /// <param name="ParamText">参数名</param>
+    /// <param name="ParamValue">参数值</param>
+    /// <returns></returns>
+    public static string BuildUrl(string sourceUrl, string ParamText, string ParamValue)
+    {
+        System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(string.Format("{0}=[^&]*", ParamText), System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        System.Text.RegularExpressions.Regex reg1 = new System.Text.RegularExpressions.Regex("[&]{2,}", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        string url = reg.Replace(sourceUrl, "");
+        //_url = reg1.Replace(_url, "");
+        if (url.IndexOf("?") == -1)
+        {
+            url += string.Format("?{0}={1}", ParamText, ParamValue);//?
+        }
+        else
+        {
+            url += string.Format("&{0}={1}", ParamText, ParamValue);//&
+        }
+        url = reg1.Replace(url, "&");
+        url = url.Replace("?&", "?");
+        return url;
+    }
 }

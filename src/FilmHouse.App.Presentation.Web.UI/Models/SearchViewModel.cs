@@ -32,6 +32,10 @@ public class SearchInedxViewModel
         public List<MovieDiscViewModel> ListMovies { get; set; } = new List<MovieDiscViewModel>();
 
         /// <summary>
+        /// 查询总页数
+        /// </summary>
+        public int PagingCount { get; set; }
+        /// <summary>
         /// 查詢件數
         /// </summary>
         public int Count { get; set; }
@@ -57,13 +61,15 @@ public class SearchInedxViewModel
         public string Year { get; set; }
 
         /// <summary>
-        /// 頁碼
+        /// 当前頁碼
         /// </summary>
         public int Page { get; set; }
-        public int PagingCount { get; set; }
-        public int PagingSize { get { return 10; } }
+        /// <summary>
+        /// 单页显示件数
+        /// </summary>
+        public int PagingSize { get; set; }
 
-        public static MovieDiscViewModel FromEntity(MovieEntity movie)
+        public static MovieDiscViewModel FromEntity(MovieEntity movie, bool isPlan = false, bool isFinish = false, bool isFavor = false)
         {
             var viewModel = new MovieDiscViewModel();
             viewModel.MovieId = movie.MovieId;
@@ -75,6 +81,9 @@ public class SearchInedxViewModel
             viewModel.Directors = Helper.ModelUtils.GetDirectors(movie.DirectorsId, movie.Directors);
             viewModel.Writers = Helper.ModelUtils.GetWriters(movie.WritersId, movie.Writers);
             viewModel.Casts = Helper.ModelUtils.GetCasts(movie.CastsId, movie.Casts);
+            viewModel.IsPlan = isPlan;
+            viewModel.IsFinish = isFinish;
+            viewModel.IsFavor = isFavor;
 
             return viewModel;
         }
@@ -122,21 +131,20 @@ public class SearchInedxViewModel
         /// 主页列表（带导航功能）
         /// </summary>
         public List<SelectListItem> Casts { get; set; } = new List<SelectListItem>();
-    }
 
-    /// <summary>
-    /// 明星数据对象类（带导航功能）
-    /// </summary>
-    public class CelebrityViewModel
-    {
         /// <summary>
-        /// 明星ID
+        /// 是否想看
         /// </summary>
-        public CelebrityIdVO Id { get; set; }
+        public bool IsPlan { get; set; } = false;
         /// <summary>
-        /// 明星名
+        /// 是否看过
         /// </summary>
-        public CelebrityNameVO Name { get; set; }
+        public bool IsFinish { get; set; } = false;
+        /// <summary>
+        /// 是否喜欢
+        /// </summary>
+        public bool IsFavor { get; set; } = false;
+
     }
 }
 

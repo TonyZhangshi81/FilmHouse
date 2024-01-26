@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace FilmHouse.Commands.Home;
 
-public record DisplayCommand(int pageIndex, int maxIndex) : IRequest<DisplayContect>;
+public record DisplayCommand(int pageIndex, int maxIndex, int maxNew, int maxMost) : IRequest<DisplayContect>;
 
 public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayContect>
 {
@@ -53,10 +53,10 @@ public class DisplayCommandHandler : IRequestHandler<DisplayCommand, DisplayCont
         var discoveryQuery = await this._discovery.SelectAsync(discoverySpec, c => c, ct);
         var discMovie = discoveryQuery[0].Movie;
         // 最新栏目
-        var newMoviesSpec = new MovieSpec(20, 1, ReviewStatusVO.Codes.ReviewStatusCode1);
+        var newMoviesSpec = new MovieSpec(request.maxNew, 1, ReviewStatusVO.Codes.ReviewStatusCode1);
         var newMovies = await this._movie.SelectAsync(newMoviesSpec, c => c, ct);
         // 热门栏目
-        var mostMoviesSpec = new MovieSpec(20, 1, ReviewStatusVO.Codes.ReviewStatusCode2);
+        var mostMoviesSpec = new MovieSpec(request.maxMost, 1, ReviewStatusVO.Codes.ReviewStatusCode2);
         var mostMovies = await this._movie.SelectAsync(mostMoviesSpec, c => c, ct);
 
         var movieId = discoveryQuery[0].MovieId;

@@ -41,12 +41,14 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
         [Route("[controller]/{pageIndex}")]
         public async Task<ActionResult> Index(int pageIndex = 1)
         {
-            var maxPage = this._settingProvider.GetValue("Home:Discovery:MaxPage").CastTo<int>();
+            var maxPage = this._settingProvider.GetValue(ConfigKeyVO.Keys.HomeDiscoveryMaxPage).CastTo<int>();
+            var maxNew = this._settingProvider.GetValue(ConfigKeyVO.Keys.HomeDiscoveryNewMovies).CastTo<int>();
+            var maxMost = this._settingProvider.GetValue(ConfigKeyVO.Keys.HomeDiscoveryMostMovies).CastTo<int>();
 
             var model = new HomeIndexViewModel();
             model.Discovery.MaxPage = maxPage;
 
-            var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage);
+            var command = new FilmHouse.Commands.Home.DisplayCommand(pageIndex, maxPage, maxNew, maxMost);
             var display = await this._mediator.Send(command);
 
             if (display.Status != 0)
