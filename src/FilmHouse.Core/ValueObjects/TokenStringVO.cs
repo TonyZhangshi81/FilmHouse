@@ -1,65 +1,43 @@
 ﻿#nullable enable
+using System;
+using System.ComponentModel;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FilmHouse.Core.Utils.Data;
 using FilmHouse.Core.ValueObjects.Serialization;
+using FilmHouse.Core.ValueObjects;
 
 namespace FilmHouse.Core.ValueObjects
 {
     /// <summary>
-    /// 配置键的值对象类。
+    /// Token字符串（500位）的值对象类。
     /// </summary>
-    [JsonConverter(typeof(ConfigKeyJsonConverter))]
-    [ValueConverter(typeof(ConfigKeyValueConverter), typeof(ConfigKeyArrayValueConverter))]
-    [System.ComponentModel.TypeConverter(typeof(ConfigKeyTypeConverter))]
+    [JsonConverter(typeof(TokenStringVOJsonConverter))]
+    [ValueConverter(typeof(TokenStringVOValueConverter), typeof(TokenStringVOArrayValueConverter))]
+    [System.ComponentModel.TypeConverter(typeof(TokenStringVOTypeConverter))]
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [System.Runtime.CompilerServices.CompilerGenerated]
-    public partial class ConfigKeyVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<ConfigKeyVO>, IComparable<ConfigKeyVO>, IValue<string>, IValueObject
+    public partial class TokenStringVO : FilmHouse.Core.ValueObjects.TextBase, IEquatable<TokenStringVO>, IComparable<TokenStringVO>, IValue<string>, IValueObject
     {
         private readonly string _value;
 
         /// <summary>
         /// 取得型名。
         /// </summary>
-        public new const string TypeName = "ConfigKey(size:50)";
+        public new const string TypeName = "TokenString";
 
         /// <summary>
         /// 取得位数。
         /// </summary>
-        public const int Size = 50;
+        public const int Size = 500;
 
         /// <summary>
-        /// 提供代码组持有的代码值的常数定义。
-        /// </summary>
-        public static class Keys
-        {
-            public static readonly ConfigKeyVO Name = new("WebSiteSettings:Name");
-            public static readonly ConfigKeyVO SubTitle = new("WebSiteSettings:SubTitle");
-            public static readonly ConfigKeyVO Version = new("WebSiteSettings:Version");
-            public static readonly ConfigKeyVO WebpagesEnabled = new("WebSiteSettings:WebpagesEnabled");
-            public static readonly ConfigKeyVO ClientValidationEnabled = new("WebSiteSettings:ClientValidationEnabled");
-            public static readonly ConfigKeyVO UnobtrusiveJavaScriptEnabled = new("WebSiteSettings:UnobtrusiveJavaScriptEnabled");
-            // 首頁每日發現件數限制
-            public static readonly ConfigKeyVO HomeDiscoveryMaxPage = new("Home:Discovery:MaxPage");
-            // 最新欄目顯示件數
-            public static readonly ConfigKeyVO HomeDiscoveryNewMovies = new("Home:Discovery:NewMovies");
-            // 熱門欄目顯示件數
-            public static readonly ConfigKeyVO HomeDiscoveryMostMovies = new("Home:Discovery:MostMovies");
-            // 评论缩略显示长度
-            public static readonly ConfigKeyVO MovieSummaryShort = new("Movie:Summary:Short");
-            // 影片页面上显示的最大评论件数
-            public static readonly ConfigKeyVO MovieCommentMax = new("Movie:Comment:Max");
-            // 电影卡片明星显示最大个数
-            public static readonly ConfigKeyVO WorkItemCelebMax = new("CelebWorkItem:Celeb:Max");
-            // 檢索頁單頁顯示的件數限制
-            public static readonly ConfigKeyVO MovieSearchMax = new("Movie:Search:Max");
-        }
-
-        /// <summary>
-        /// <see cref="ConfigKeyVO"/>的新实例。
+        /// <see cref="TokenStringVO"/>的新实例。
         /// </summary>
         /// <param name="value">值对象包含的原始类型</param>
-        public ConfigKeyVO(string value)
+        public TokenStringVO(string value)
             : base(value)
         {
             this.PreProcess(ref value);
@@ -72,21 +50,21 @@ namespace FilmHouse.Core.ValueObjects
         partial void Validate();
 
         /// <summary>
-        /// <see cref="string"/>向<see cref="ConfigKeyVO"/>进行隐式转换
+        /// <see cref="string"/>向<see cref="TokenStringVO"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator string(ConfigKeyVO value)
+        public static explicit operator string(TokenStringVO value)
         {
             return value._value;
         }
 
         /// <summary>
-        /// <see cref="ConfigKeyVO"/>向<see cref="string"/>进行隐式转换
+        /// <see cref="TokenStringVO"/>向<see cref="string"/>进行隐式转换
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator ConfigKeyVO(string value)
+        public static explicit operator TokenStringVO(string value)
         {
-            return new ConfigKeyVO(value);
+            return new TokenStringVO(value);
         }
 
         /// <summary>
@@ -95,7 +73,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        internal static bool Equals(in ConfigKeyVO? x, in ConfigKeyVO? y)
+        internal static bool Equals(in TokenStringVO? x, in TokenStringVO? y)
         {
             if (x is null && y is null)
             {
@@ -113,7 +91,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(ConfigKeyVO? other)
+        public bool Equals(TokenStringVO? other)
         {
             return Equals(this, other);
         }
@@ -130,9 +108,9 @@ namespace FilmHouse.Core.ValueObjects
                 return false;
             }
             var t = obj.GetType();
-            if (typeof(ConfigKeyVO).IsAssignableFrom(t))
+            if (typeof(TokenStringVO).IsAssignableFrom(t))
             {
-                return Equals((ConfigKeyVO)obj);
+                return Equals((TokenStringVO)obj);
             }
             if (t == typeof(string))
             {
@@ -163,7 +141,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否等于
         /// </summary>
-        public static bool operator ==(in ConfigKeyVO? x, in ConfigKeyVO? y)
+        public static bool operator ==(in TokenStringVO? x, in TokenStringVO? y)
         {
             return Equals(x, y);
         }
@@ -171,7 +149,7 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// 是否不相等
         /// </summary>
-        public static bool operator !=(in ConfigKeyVO? x, in ConfigKeyVO? y)
+        public static bool operator !=(in TokenStringVO? x, in TokenStringVO? y)
         {
             return !Equals(x, y);
         }
@@ -188,7 +166,7 @@ namespace FilmHouse.Core.ValueObjects
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public int CompareTo(ConfigKeyVO? other)
+        public int CompareTo(TokenStringVO? other)
         {
             if (other == null)
             {
@@ -199,9 +177,9 @@ namespace FilmHouse.Core.ValueObjects
 
 
         // UnitGenerateOptions.JsonConverter
-        private class ConfigKeyJsonConverter : JsonConverter<ConfigKeyVO>
+        private class TokenStringVOJsonConverter : JsonConverter<TokenStringVO>
         {
-            public override void Write(Utf8JsonWriter writer, ConfigKeyVO value, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, TokenStringVO value, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -214,7 +192,7 @@ namespace FilmHouse.Core.ValueObjects
                 }
             }
 
-            public override ConfigKeyVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override TokenStringVO? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 var converter = options.GetConverter(typeof(string)) as JsonConverter<string>;
                 if (converter != null)
@@ -222,7 +200,7 @@ namespace FilmHouse.Core.ValueObjects
                     try
                     {
                         var value = converter.Read(ref reader, typeToConvert, options);
-                        return value != null ? new ConfigKeyVO(value.Replace("\r\n", "\n")) : null;
+                        return value != null ? new TokenStringVO(value.Replace("\r\n", "\n")) : null;
                     }
                     catch (Exception exception)
                     {
@@ -243,24 +221,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class ConfigKeyValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ConfigKeyVO?, string?>
+        public class TokenStringVOValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<TokenStringVO?, string?>
         {
             /// <summary>
-            /// <see cref="ConfigKeyValueConverter"/>的新实例。
+            /// <see cref="TokenStringVOValueConverter"/>的新实例。
             /// </summary>
-            public ConfigKeyValueConverter()
+            public TokenStringVOValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="ConfigKeyValueConverter"/>的新实例。
+            /// <see cref="TokenStringVOValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public ConfigKeyValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public TokenStringVOValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x != null ? x._value : null,
-                        convertFromProviderExpression: x => x != null ? new ConfigKeyVO(x) : null,
+                        convertFromProviderExpression: x => x != null ? new TokenStringVO(x) : null,
                         mappingHints: mappingHints)
             {
             }
@@ -271,7 +249,7 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string value => value,
-                ConfigKeyVO value => value._value,
+                TokenStringVO value => value._value,
                 _ => null,
             };
 
@@ -280,8 +258,8 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                ConfigKeyVO value => value,
-                string value => new ConfigKeyVO(value),
+                TokenStringVO value => value,
+                string value => new TokenStringVO(value),
                 _ => null,
             };
         }
@@ -289,24 +267,24 @@ namespace FilmHouse.Core.ValueObjects
         /// <summary>
         /// EntityFrameworkCore和值对象进行相互转换的转换器类。
         /// </summary>
-        public class ConfigKeyArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<ConfigKeyVO?[], string?[]>
+        public class TokenStringVOArrayValueConverter : Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<TokenStringVO?[], string?[]>
         {
             /// <summary>
-            /// <see cref="ConfigKeyArrayValueConverter"/>的新实例。
+            /// <see cref="TokenStringVOArrayValueConverter"/>的新实例。
             /// </summary>
-            public ConfigKeyArrayValueConverter()
+            public TokenStringVOArrayValueConverter()
                 : this(null)
             {
             }
 
             /// <summary>
-            /// <see cref="ConfigKeyArrayValueConverter"/>的新实例。
+            /// <see cref="TokenStringVOArrayValueConverter"/>的新实例。
             /// </summary>
             /// <param name="mappingHints"></param>
-            public ConfigKeyArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
+            public TokenStringVOArrayValueConverter(Microsoft.EntityFrameworkCore.Storage.ValueConversion.ConverterMappingHints? mappingHints = null)
                 : base(
                         convertToProviderExpression: x => x.Select(_ => _ == null ? (string?)null : _._value).ToArray(),
-                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new ConfigKeyVO(_)).ToArray(),
+                        convertFromProviderExpression: x => x.Select(_ => _ == null ? null : new TokenStringVO(_)).ToArray(),
                         mappingHints: mappingHints)
             {
             }
@@ -317,9 +295,9 @@ namespace FilmHouse.Core.ValueObjects
             public override Func<object?, object?> ConvertToProvider => (x) => x switch
             {
                 string?[] values => values,
-                ConfigKeyVO?[] values => values.Select(_ => _?._value).ToArray(),
+                TokenStringVO?[] values => values.Select(_ => _?._value).ToArray(),
                 IEnumerable<string?> values => values.ToArray(),
-                IEnumerable<ConfigKeyVO?> values => values.Select(_ => _?._value).ToArray(),
+                IEnumerable<TokenStringVO?> values => values.Select(_ => _?._value).ToArray(),
                 _ => null,
             };
 
@@ -328,18 +306,18 @@ namespace FilmHouse.Core.ValueObjects
             /// </summary>
             public override Func<object?, object?> ConvertFromProvider => (x) => x switch
             {
-                ConfigKeyVO?[] values => values,
-                string?[] values => values.Select(_ => _ == null ? null : new ConfigKeyVO(_)).ToArray(),
-                IEnumerable<ConfigKeyVO?> values => values.ToArray(),
-                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new ConfigKeyVO(_)).ToArray(),
+                TokenStringVO?[] values => values,
+                string?[] values => values.Select(_ => _ == null ? null : new TokenStringVO(_)).ToArray(),
+                IEnumerable<TokenStringVO?> values => values.ToArray(),
+                IEnumerable<string?> values => values.Select(_ => _ == null ? null : new TokenStringVO(_)).ToArray(),
                 _ => null,
             };
         }
 
         // Default
-        private class ConfigKeyTypeConverter : System.ComponentModel.TypeConverter
+        private class TokenStringVOTypeConverter : System.ComponentModel.TypeConverter
         {
-            private static readonly Type WrapperType = typeof(ConfigKeyVO);
+            private static readonly Type WrapperType = typeof(TokenStringVO);
             private static readonly Type ValueType = typeof(string);
             private static readonly Type BindingValueType = typeof(string);
 
@@ -369,13 +347,13 @@ namespace FilmHouse.Core.ValueObjects
             public override object? ConvertFrom(System.ComponentModel.ITypeDescriptorContext? context, System.Globalization.CultureInfo? culture, object value)
             {
                 var t = value.GetType();
-                if (t == typeof(ConfigKeyVO))
+                if (t == typeof(TokenStringVO))
                 {
-                    return (ConfigKeyVO)value;
+                    return (TokenStringVO)value;
                 }
                 if (t == typeof(string))
                 {
-                    return new ConfigKeyVO((string)value);
+                    return new TokenStringVO((string)value);
                 }
 
                 return base.ConvertFrom(context, culture, value);
@@ -388,7 +366,7 @@ namespace FilmHouse.Core.ValueObjects
                     return null;
                 }
 
-                if (value is ConfigKeyVO wrappedValue)
+                if (value is TokenStringVO wrappedValue)
                 {
                     if (destinationType == WrapperType)
                     {

@@ -1,4 +1,7 @@
 ﻿@using FilmHouse.App.Presentation.Web.UI.Models.Components;
+@using Microsoft.AspNetCore.Http.Extensions;
+@using Microsoft.AspNetCore.Http;
+@using FilmHouse.Core.ValueObjects;
 
 @model FilmHouse.App.Presentation.Web.UI.Models.SearchInedxViewModel.SearchResultViewModel;
 
@@ -6,6 +9,8 @@
     ViewBag.Title = "分类结果";
     ViewBag.PageType = 2;
     ViewBag.NavType = 2;
+
+    var transfer = new Uri(Context.Request.GetDisplayUrl()).PathAndQuery;
 }
 
 @section Links {
@@ -85,9 +90,43 @@
                             @await Component.InvokeAsync("CelebritiesLink", new { viewModel = casts })
                         </div>
                     </div>
-
+                    <div class="hidden-xs" style="position:absolute; right:11px; bottom:11px;">
+                        <div class="btn-group" role="group">
+                            @if (!item.IsPlan)
+                            {
+                                <a class="btn btn-mark-xs" title="想看" href="/Mark/Create?target=@item.MovieId&type=@MarkTypeVO.Codes.MarkTypeCode1&transfer=@transfer"><span class="glyphicon glyphicon-time"></span></a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-mark-xs-inverse" title="取消想看" href="/Mark/Cancel?target=@item.MovieId&type=@MarkTypeVO.Codes.MarkTypeCode1&transfer=@transfer"><span class="glyphicon glyphicon-time"></span></a>
+                            }
+                            @if (!item.IsFinish)
+                            {
+                                <a class="btn btn-mark-xs" title="已看" href="/Mark/Create?target=@item.MovieId&type=@MarkTypeVO.Codes.MarkTypeCode2&transfer=@transfer"><span class="glyphicon glyphicon-ok-circle"></span></a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-mark-xs-inverse" title="取消已看" href="/Mark/Cancel?target=@item.MovieId&type=@MarkTypeVO.Codes.MarkTypeCode2&transfer=@transfer"><span class="glyphicon glyphicon-ok-circle"></span></a>
+                            }
+                            @if (!item.IsFavor)
+                            {
+                                <a class="btn btn-mark-xs" title="喜欢" href="/Mark/Create?target=@item.MovieId&type=@MarkTypeVO.Codes.MarkTypeCode3&transfer=@transfer"><span class="glyphicon glyphicon-heart-empty"></span></a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-mark-xs-inverse" title="取消喜欢" href="/Mark/Cancel?target=@item.MovieId&type=@MarkTypeVO.Codes.MarkTypeCode3&transfer=@transfer"><span class="glyphicon glyphicon-heart-empty"></span></a>
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         }
     </div>
+    @* 翻页控件 *@
+    @if (Model.PagingCount > 1)
+    {
+        <div class="panel-footer">
+            @FilmHouse.App.Presentation.Web.UI.Helper.Controls.PageTagList(Model.Page, Model.PagingSize, Model.PagingCount, ViewBag.CurrentUrl)
+        </div>
+    }
 </div>

@@ -5,6 +5,7 @@ using FilmHouse.Data.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FilmHouse.Core.Utils;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FilmHouse.Data.Spec;
 
@@ -36,7 +37,7 @@ public sealed class MovieSpec : BaseSpecification<MovieEntity>
     }
 
     public MovieSpec(CelebrityIdVO celebrityId, int pageSize)
-        : base(c => c.DirectorsId.Contains(celebrityId.AsPrimitive().ToString()) 
+        : base(c => c.DirectorsId.Contains(celebrityId.AsPrimitive().ToString())
                     || c.WritersId.Contains(celebrityId.AsPrimitive().ToString())
                     || c.CastsId.Contains(celebrityId.AsPrimitive().ToString()))
     {
@@ -61,5 +62,80 @@ public sealed class MovieSpec : BaseSpecification<MovieEntity>
         .Include(p => p.Comments.OrderByDescending(d => d.CommentTime).Take(commentTake)).ThenInclude(pc => pc.UserAccount)
         .Include(p => p.Resources.Where(d => d.ReviewStatus == ReviewStatusVO.Codes.ReviewStatusCode2).OrderByDescending(d => d.CreatedOn)).ThenInclude(pc => pc.UserAccount)
         );
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="searchKeyword"></param>
+    /// <param name="genre"></param>
+    /// <param name="country"></param>
+    /// <param name="year"></param>
+    /// <param name="reviewStatus"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageIndex"></param>
+    public MovieSpec(SearchKeywordVO searchKeyword, CodeKeyVO genre, CodeKeyVO country, YearVO year, ReviewStatusVO reviewStatus) : base(c => c.ReviewStatus == reviewStatus)
+    {
+        // 关键字查询
+        if (!string.IsNullOrEmpty(searchKeyword.AsPrimitive()))
+        {
+            this.AddCriteria(d => d.Title.Contains(searchKeyword.AsPrimitive()) || d.TitleEn.Contains(searchKeyword.AsPrimitive()) || d.Aka.Contains(searchKeyword.AsPrimitive()));
+        }
+        // 电影种类
+        if (!"0".Equals(genre.AsPrimitive()))
+        {
+            this.AddCriteria(d => d.Genres.Contains(genre.AsPrimitive()));
+        }
+        // 国家地区
+        if (!"0".Equals(country.AsPrimitive()))
+        {
+            this.AddCriteria(d => d.Countries.Contains(country.AsPrimitive()));
+        }
+        // 年代
+        if (!"0".Equals(year.AsPrimitive()))
+        {
+            this.AddCriteria(d => d.Year == year);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="searchKeyword"></param>
+    /// <param name="genre"></param>
+    /// <param name="country"></param>
+    /// <param name="year"></param>
+    /// <param name="reviewStatus"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageIndex"></param>
+    public MovieSpec(SearchKeywordVO searchKeyword, CodeKeyVO genre, CodeKeyVO country, YearVO year, ReviewStatusVO reviewStatus, int pageSize, int pageIndex) : base(c => c.ReviewStatus == reviewStatus)
+    {
+        var startRow = (pageIndex - 1) * pageSize;
+
+        // 关键字查询
+        if (!string.IsNullOrEmpty(searchKeyword.AsPrimitive()))
+        {
+            this.AddCriteria(d => d.Title.Contains(searchKeyword.AsPrimitive()) || d.TitleEn.Contains(searchKeyword.AsPrimitive()) || d.Aka.Contains(searchKeyword.AsPrimitive()));
+        }
+        // 电影种类
+        if (!"0".Equals(genre.AsPrimitive()))
+        {
+            this.AddCriteria(d => d.Genres.Contains(genre.AsPrimitive()));
+        }
+        // 国家地区
+        if (!"0".Equals(country.AsPrimitive()))
+        {
+            this.AddCriteria(d => d.Countries.Contains(country.AsPrimitive()));
+        }
+        // 年代
+        if (!"0".Equals(year.AsPrimitive()))
+        {
+            this.AddCriteria(d => d.Year == year);
+        }
+
+        ApplyOrderByDescending(p => p.CreatedOn);
+
+        ApplyPaging(startRow, pageSize);
     }
 }
