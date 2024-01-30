@@ -14,4 +14,10 @@ public sealed class CommentSpec : BaseSpecification<CommentEntity>
         ApplyOrderByDescending(p => p.CommentTime);
     }
 
+    public CommentSpec(UserIdVO userId)
+        : base(c => c.UserId == userId)
+    {
+        AddInclude(comment => comment.Include(p => p.Movie));
+        ApplyOrderByDescending(p => p.CommentTime);
+    }
 }
