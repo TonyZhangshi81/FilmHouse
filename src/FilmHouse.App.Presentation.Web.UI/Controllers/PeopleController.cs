@@ -36,10 +36,10 @@ public class PeopleController : Controller
         }
 
         // 如果是管理員的情況
-        if (display.DiscUserAccount.IsAdmin.AsPrimitive())
-        {
-            return Redirect(transfer);
-        }
+        //if (display.DiscUserAccount.IsAdmin.AsPrimitive())
+        //{
+        //    return Redirect(transfer);
+        //}
 
         var model = new PeopleIndexViewModel();
 
