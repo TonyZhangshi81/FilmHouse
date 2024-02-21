@@ -1,65 +1,71 @@
 ﻿#divPanel {
-    border-radius: 0px;
-    margin-bottom: 20px;
-    background-size: cover;
-    /*margin-top: -20px;*/
+  border-radius: 0px;
+  margin-bottom: 20px;
+  background-size: cover;
+  /*margin-top: -20px;*/
 }
 
 #divMask {
-    padding: 77px 10px;
+  padding: 77px 10px;
 }
 
 #divLink {
-    width: 120px;
-    height: 120px;
-    margin-left: auto;
-    margin-right: auto;
+  width: 120px;
+  height: 120px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #imgAvatar {
-    border-radius: 60px;
-    width: 120px;
-    height: 120px;
-    -webkit-box-shadow: 5px 5px 8px #666666;
-    -moz-box-shadow: 5px 5px 8px #666666;
-    box-shadow: 5px 5px 8px #666666;
-    border: 5px solid rgba(255,255,255,0);
-    text-align: center;
-    transition: border 0.2s ease, box-shadow 0.5s ease;
+  border-radius: 60px;
+  width: 120px;
+  height: 120px;
+  -webkit-box-shadow: 5px 5px 8px #666666;
+  -moz-box-shadow: 5px 5px 8px #666666;
+  box-shadow: 5px 5px 8px #666666;
+  border: 5px solid rgba(255,255,255,0);
+  text-align: center;
+  transition: border 0.2s ease, box-shadow 0.5s ease;
 }
 
-    #imgAvatar:hover {
-        -webkit-box-shadow: 0 0 18px #666666;
-        -moz-box-shadow: 0 0 18px #666666;
-        box-shadow: 0 0 18px #666666;
-        border: 0px solid rgba(255,255,255,0);
-    }
+  #imgAvatar:hover {
+    -webkit-box-shadow: 0 0 18px #666666;
+    -moz-box-shadow: 0 0 18px #666666;
+    box-shadow: 0 0 18px #666666;
+    border: 0px solid rgba(255,255,255,0);
+  }
 
 #commonmovie {
-    background-color: white;
-    margin: 0px;
-    padding: 0px;
+  background-color: white;
+  margin: 0px;
+  padding: 0px;
 }
 
 #commonlist {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 
 .commonitem {
-    padding: 5px;
+  padding: 5px;
 }
 
 .commonimage {
-    width: 115px;
-    height: 160px;
-    border: 5px solid #EEEEEE;
-    transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  width: 115px;
+  height: 160px;
+  border: 5px solid #EEEEEE;
+  transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-    .commonimage:hover,
-    .commonimage:active,
-    .commonimage:focus {
-        border: 5px solid #FFFFFF;
-        box-shadow: 0px 0px 10px #DEDEDE;
-    }
+  .commonimage:hover,
+  .commonimage:active,
+  .commonimage:focus {
+    border: 5px solid #FFFFFF;
+    box-shadow: 0px 0px 10px #DEDEDE;
+  }
+
+p.comment {
+  white-space: normal;
+  /*text-wrap: normal;*/
+  word-wrap: break-word;
+}

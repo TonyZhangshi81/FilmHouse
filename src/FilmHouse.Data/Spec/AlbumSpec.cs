@@ -14,6 +14,11 @@ public sealed class AlbumSpec : BaseSpecification<AlbumEntity>
         ApplyOrderByDescending(p => p.AmountAttention);
     }
 
+    public AlbumSpec(UserIdVO userId) : base(c => c.UserId == userId)
+    {
+        AddInclude(album => album.Include(p => p.UserAccount));
+    }
+
     public AlbumSpec(MovieIdVO movieId) : base(c => c.Items.Contains(movieId.AsPrimitive().ToString()))
     {
         AddInclude(album => album.Include(p => p.UserAccount));

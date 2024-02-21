@@ -1,11 +1,13 @@
 ﻿using FilmHouse.App.Presentation.Web.UI.Helper;
 using FilmHouse.App.Presentation.Web.UI.Models;
+using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers;
 
@@ -15,17 +17,20 @@ public class SearchController : Controller
 
     private readonly IMediator _mediator;
     private readonly ISettingProvider _settingProvider;
+    private readonly ICodeProvider _codeProvider;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="mediator"></param>
     /// <param name="settingProvider"></param>
+    /// <param name="codeProvider"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public SearchController(IMediator mediator, ISettingProvider settingProvider)
+    public SearchController(IMediator mediator, ISettingProvider settingProvider, ICodeProvider codeProvider)
     {
         this._mediator = Guard.GetNotNull(mediator, nameof(IMediator));
         this._settingProvider = Guard.GetNotNull(settingProvider, nameof(ISettingProvider));
+        this._codeProvider = Guard.GetNotNull(codeProvider, nameof(ICodeProvider));
     }
 
     #endregion Initizalize
@@ -34,7 +39,7 @@ public class SearchController : Controller
     // GET: /Search/
     public async Task<IActionResult> Index(string search, string genre = "0", string country = "0", string year = "0", int page = 1)
     {
-        var pagingSize = this._settingProvider.GetValue(ConfigKeyVO.Keys.MovieSearchMax).CastTo<int>();
+        var pagingSize = this._settingProvider.GetValue(ConfigKeyVO.Keys.MovieSearchPageMax).CastTo<int>();
 
         var initCommand = new FilmHouse.Commands.Search.InitCommand();
         var initDisc = await this._mediator.Send(initCommand);
@@ -67,17 +72,22 @@ public class SearchController : Controller
         {
             var mark = searchResult.Marks.Where(d => d.MovieId == movie.MovieId).FirstOrDefault();
 
+            var genres = movie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
+
+            var model = SearchInedxViewModel.SearchResultViewModel.FromEntity(movie);
+            // 影片种类
+            model.GenresValue = genres;
             // 电影偏好
-            if (mark == null)
+            if (mark != null)
             {
-                viewModel.ListMovies.Add(SearchInedxViewModel.SearchResultViewModel.FromEntity(movie));
+                model.IsPlan = mark.IsPlan;
+                model.IsFinish = mark.IsFinish;
+                model.IsFavor = mark.IsFavor;
             }
-            else
-            {
-                viewModel.ListMovies.Add(SearchInedxViewModel.SearchResultViewModel.FromEntity(movie, mark.IsPlan, mark.IsFinish, mark.IsFavor));
-            }
+            viewModel.ListMovies.Add(model);
         }
-        string url = ModelUtils.BuildUrl(Request.GetDisplayUrl(), "search", search);
+
+        var url = ModelUtils.BuildUrl(Request.GetDisplayUrl(), "search", search);
         url = ModelUtils.BuildUrl(url, "genre", genre);
         url = ModelUtils.BuildUrl(url, "country", country);
         url = ModelUtils.BuildUrl(url, "year", year);

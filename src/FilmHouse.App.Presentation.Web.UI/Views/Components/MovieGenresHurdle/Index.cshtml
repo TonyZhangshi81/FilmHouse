@@ -1,10 +1,10 @@
 ﻿@using FilmHouse.Core.ValueObjects;
-@model List<CodeValueVO>
+@model List<SelectListItem>
 
 @{
     <span style="color:#808080;">类型:</span>
     foreach (var item in Model)
     {
-        <span>@item</span>
+        <a class="link-text" href="/Search/Index?genre=@item.Value" target="_self">@item.Text</a>
     }
 }

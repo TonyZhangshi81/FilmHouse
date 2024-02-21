@@ -111,7 +111,9 @@ public class Seed
             // 电影卡片明星显示最大个数
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.WorkItemCelebMax, Value = new("4"), CreatedOn = dateTime },
             // 檢索頁單頁顯示的件數限制
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSearchMax, Value = new("12"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSearchPageMax, Value = new("12"), CreatedOn = dateTime },
+            // 影集頁單頁顯示的影片件數限制
+            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.AlbumPageMovieMax, Value = new("2"), CreatedOn = dateTime },
         };
 
     /// <summary>

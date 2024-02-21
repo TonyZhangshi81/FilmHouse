@@ -36,14 +36,14 @@
         {
             <div class="comment-item">
                 <div class="avatar">
-                    <a title="@item.Account" href="/People/Index?id=@item.UserId&transfer=@transfer" target="_self" class="link-avatar">
+                    <a title="@item.Account" href="/People/Index?userId=@item.UserId&transfer=@transfer" target="_self" class="link-avatar">
                         <img src="~/Content/User/Avatar/@item.UserAvatar" style="width: 54px;height: 54px; border-radius: 27px;">
                     </a>
                 </div>
                 <div class="comment">
                     <div>
                         <span>
-                            <a title="@item.Account" href="/People/Index?id=@item.UserId" class="link-text" target="_self">@item.Account</a>
+                            <a title="@item.Account" href="/People/Index?userId=@item.UserId" class="link-text" target="_self">@item.Account</a>
                         </span>
                         <span>
                             &nbsp;&nbsp; @item.CommentTime

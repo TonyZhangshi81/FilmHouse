@@ -89,7 +89,8 @@ public class Seed
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSummaryShort, Value = new("250"), CreatedOn = dateTime },
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieCommentMax, Value = new("10"), CreatedOn = dateTime },
             new() { RequestId = uuid, Key = ConfigKeyVO.Keys.WorkItemCelebMax, Value = new("4"), CreatedOn = dateTime },
-            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSearchMax, Value = new("12"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.MovieSearchPageMax, Value = new("12"), CreatedOn = dateTime },
+            new() { RequestId = uuid, Key = ConfigKeyVO.Keys.AlbumPageMovieMax, Value = new("2"), CreatedOn = dateTime },
         };
 
     /// <summary>

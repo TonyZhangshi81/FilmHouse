@@ -52,7 +52,7 @@
                 <a class="navbar-brand" href="/" style="font-family:'Weston Free'; " title="@subTitle">@name</a>
             </div>
             <div class="navbar-collapse collapse">
-                @await Component.InvokeAsync("MenuLink", new { navType = ViewBag.NavType })
+                @await Component.InvokeAsync("MenuLink", new { navType = ViewBag.NavType ?? 0 })
                 <partial name="_LoginPartial" />
             </div>
         </div>

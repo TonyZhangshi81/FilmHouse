@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="album-info">
-                    <a class="link-no-line text-overflow" href="/Album/Detail?id=@item.AlbumId" target="_self" title="@item.Title">@item.Title</a>
+                    <a class="link-no-line text-overflow" href="/Album/Detail?albumId=@item.AlbumId" target="_self" title="@item.Title">@item.Title</a>
                     <small>@item.Summary</small>
                 </div>
 
@@ -36,7 +36,7 @@
                     @if (item.UserId != null && !string.IsNullOrEmpty(item.UserId.AsPrimitive().ToString()))
                     {
                         <div class="album-user">
-                            <a href="/People/Index?id=@item.UserId" data-toggle="tooltip" data-placement="top" title="@item.Account" target="_self">
+                            <a href="/People/Index?userId=@item.UserId" data-toggle="tooltip" data-placement="top" title="@item.Account" target="_self">
                                 <i class="fa fa-user"></i>
                             </a>
                         </div>

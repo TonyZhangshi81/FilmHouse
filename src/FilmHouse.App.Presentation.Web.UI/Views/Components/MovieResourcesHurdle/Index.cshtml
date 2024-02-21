@@ -9,7 +9,7 @@
     {
         <div class="text-center">
             这部电影还没有资源呢(＃￣▽￣＃),
-            <a class="link-text" href="/Resource/Create?id=@Model.MovieId" title="为 @Model.Title 添加资源">上传资源</a>
+            <a class="link-text" href="/Resource/Create?movieId=@Model.MovieId" title="为 @Model.Title 添加资源">上传资源</a>
         </div>
     }
     else
@@ -41,7 +41,7 @@
                         @if (item.UserId != null)
                         {
                             <td>
-                                <a href="/People/Index?id=@item.UserId&transfer=@transfer" class="link-text" target="_self" title="@item.Account 的主页">@item.Account</a>
+                                <a href="/People/Index?userId=@item.UserId&transfer=@transfer" class="link-text" target="_self" title="@item.Account 的主页">@item.Account</a>
                             </td>
                         }
                         else

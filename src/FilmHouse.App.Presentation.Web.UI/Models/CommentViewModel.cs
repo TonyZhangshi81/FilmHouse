@@ -95,7 +95,7 @@ public class CommentIndexViewModel
         /// <summary>
         /// 类型（文子串）
         /// </summary>
-        public List<CodeValueVO> GenresValue { get; set; } = new List<CodeValueVO>();
+        public List<SelectListItem> GenresValue { get; set; } = new List<SelectListItem>();
         /// <summary>
         /// 国家地区（代碼串）
         /// </summary>

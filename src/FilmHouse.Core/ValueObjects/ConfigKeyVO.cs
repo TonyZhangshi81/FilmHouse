@@ -52,7 +52,9 @@ namespace FilmHouse.Core.ValueObjects
             // 电影卡片明星显示最大个数
             public static readonly ConfigKeyVO WorkItemCelebMax = new("CelebWorkItem:Celeb:Max");
             // 檢索頁單頁顯示的件數限制
-            public static readonly ConfigKeyVO MovieSearchMax = new("Movie:Search:Max");
+            public static readonly ConfigKeyVO MovieSearchPageMax = new("Movie:Search:Max");
+            // 影集頁單頁顯示的影片件數限制
+            public static readonly ConfigKeyVO AlbumPageMovieMax = new("Album:Movie:Max");
         }
 
         /// <summary>
