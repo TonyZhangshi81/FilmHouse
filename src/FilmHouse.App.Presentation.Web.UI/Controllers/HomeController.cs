@@ -1,10 +1,12 @@
-﻿using FilmHouse.App.Presentation.Web.UI.Models;
+﻿using System.Linq;
+using FilmHouse.App.Presentation.Web.UI.Models;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers
 {
@@ -57,7 +59,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
             }
 
             model.Discovery = HomeIndexViewModel.HomeDiscViewModel.FromEntity(display.Discoveries.ElementAt(0));
-            model.Discovery.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => _.Name).ToList();
+            model.Discovery.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
             // 最新栏目
             model.News = HomeIndexViewModel.FromEntity(display.NewMovies);
             // 热门栏目

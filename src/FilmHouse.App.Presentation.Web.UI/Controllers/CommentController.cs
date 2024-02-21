@@ -6,6 +6,7 @@ using FilmHouse.Core.ValueObjects;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.IdentityModel.Abstractions;
 
 namespace FilmHouse.App.Presentation.Web.UI.Controllers;
@@ -83,7 +84,7 @@ public class CommentController : Controller
             model.Comments.Add(CommentIndexViewModel.CommentDiscViewModel.FromEntity(comment));
         }
         model.Movie = CommentIndexViewModel.MovieDiscViewModel.FromEntity(display.Movie);
-        model.Movie.GenresValue = display.Movie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => _.Name).ToList();
+        model.Movie.GenresValue = display.Movie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
         model.Movie.CountriesValue = display.Movie.Countries.AsCodeElement(this._codeProvider, CountriesVO.Group).Select(_ => _.Name).ToList();
 
         return View(model);

@@ -1,12 +1,14 @@
 ﻿@using Microsoft.AspNetCore.Http.Extensions;
 @using Microsoft.AspNetCore.Http;
 @using FilmHouse.Core.ValueObjects;
+@using FilmHouse.App.Presentation.Web.UI.Models.Components;
 
 @model FilmHouse.App.Presentation.Web.UI.Models.AlbumDetailViewModel;
 
 @{
-    ViewBag.Title = Model.Title;
+    ViewBag.Title = Model.Album.Title;
     ViewBag.PageType = 2;
+    ViewBag.NavType = 4;
 
     var transfer = new Uri(Context.Request.GetDisplayUrl()).PathAndQuery;
 }
@@ -27,7 +29,7 @@
     <p style="margin-top:10px;">@Model.Album.Summary</p>
     <div style="margin-top:10px; margin-bottom:15px; ">
 
-        @if (Model.IsCreator)
+        @if (Model.Album.IsCreate)
         {
             <a class="link-text" href="/Album/Edit?albumId=@Model.Album.AlbumId&transfer=@transfer" title="修改">&gt;修改</a>
             <a class="link-text" href="/Album/Delete?albumId=@Model.Album.AlbumId&transfer=@transfer" title="删除">&gt;删除</a>
@@ -49,75 +51,60 @@
 
     <hr />
 
-    @if (Model.Items.Count == 0)
+    @if (Model.Movies.Count == 0)
     {
         <div class="text-center">这个专辑还没有内容(＃￣▽￣＃)</div>
     }
 
-    @foreach (var item in Model.Items)
+    @foreach (var item in Model.Movies)
     {
         <div id="div-back">
             <div class="panel panel-default" id="div-card">
                 <div id="div-image">
-                    <a class="full-height" href="/Movie/Index?id=@item.MovieInfo.Id">
-                        <img src="~/Content/Movie/@item.MovieInfo.Avatar" title="@item.MovieInfo.Title" class="img-responsive full-height full-width" />
+                    <a class="full-height" href="/Movie/Index?movieId=@item.MovieId">
+                        <img src="~/Content/Movie/@item.Avatar" title="@item.Title" class="img-responsive full-height full-width" />
                     </a>
                 </div>
                 <div id="div-info">
                     <div>
-                        <a href="/Movie/Index?id=@item.MovieInfo.Id" target="_self">
-                            <strong title="@item.MovieInfo.Title">@item.MovieInfo.Title</strong>
+                        <a href="/Movie/Index?movieId=@item.MovieId" target="_self">
+                            <strong title="@item.Title">@item.Title</strong>
                         </a>
-                        <a href="http://movie.douban.com/subject/@item.MovieInfo.DoubanID/" class="clr-doubangreen" title="跳转到豆瓣电影" target="_self">
-                            @item.MovieInfo.Rating
+                        <a href="http://movie.douban.com/subject/@item.DoubanID/" class="clr-doubangreen" title="跳转到豆瓣电影" target="_self">
+                            @item.Rating
                         </a>
-                        <span class="label label-info font-small" style="padding:0px 3px;">@item.MovieInfo.Year</span>
+                        <span class="label label-info font-small" style="padding:0px 3px;">@item.Year</span>
                     </div>
                     <div class="text-overflow">
-                        <strong>导演</strong>
-                        @foreach (var celebitem in item.MovieInfo.Directors.Take(4))
-                        {
-                            if (!string.IsNullOrEmpty(celebitem.Id))
-                            {
-                                <a href="/Celeb/Index?id=@celebitem.Id" class="link-text" target="_self">@celebitem.Title</a>
-                            }
-                            else
-                            {
-                                <span>@celebitem.Title</span>
-                            }
+                        <!-- 导演 -->
+                        @{
+                            var directors = new CelebritiesLinkViewModel();
+                            directors.Celebrities = item.Directors.Take(4).ToList();
+                            directors.Type = "Directors";
                         }
+                        @await Component.InvokeAsync("CelebritiesLink", new { viewModel = directors })
                     </div>
                     <div class="text-overflow">
-                        <strong>类型</strong>
-                        <span>@item.MovieInfo.Genres</span>
+                        @* 类型 是否需要跳转至檢索畫面？？ *@
+                        @await Component.InvokeAsync("MovieGenresHurdle", new { genres = item.GenresValue, count = 4 })
                     </div>
                     <div class="text-overflow">
-                        <strong>编剧</strong>
-                        @foreach (var celebitem in item.MovieInfo.Writers.Take(4))
-                        {
-                            if (!string.IsNullOrEmpty(celebitem.Id))
-                            {
-                                <a href="/Celeb/Index?id=@celebitem.Id" class="link-text" target="_self">@celebitem.Title</a>
-                            }
-                            else
-                            {
-                                <span>@celebitem.Title</span>
-                            }
+                        <!-- 编剧 -->
+                        @{
+                            var writers = new CelebritiesLinkViewModel();
+                            writers.Celebrities = item.Writers.Take(4).ToList();
+                            writers.Type = "Writers";
                         }
+                        @await Component.InvokeAsync("CelebritiesLink", new { viewModel = writers })
                     </div>
                     <div class="text-overflow">
-                        <strong>主演</strong>
-                        @foreach (var celebitem in item.MovieInfo.Casts.Take(4))
-                        {
-                            if (!string.IsNullOrEmpty(celebitem.Id))
-                            {
-                                <a href="/Celeb/Index?id=@celebitem.Id" class="link-text" target="_self">@celebitem.Title</a>
-                            }
-                            else
-                            {
-                                <span>@celebitem.Title</span>
-                            }
+                        @* 主演 *@
+                        @{
+                            var casts = new CelebritiesLinkViewModel();
+                            casts.Celebrities = item.Casts.Take(4).ToList();
+                            casts.Type = "Casts";
                         }
+                        @await Component.InvokeAsync("CelebritiesLink", new { viewModel = casts })
                     </div>
                 </div>
             </div>
@@ -125,9 +112,9 @@
                 <div style="display:inline-block;">
                     备注：<span>@item.Note</span>
                 </div>
-                @if (Model.IsCreator)
+                @if (Model.Album.IsCreate)
                 {
-                    <a href="/Album/DeleteItem?id=@Model.Id&movie=@item.MovieInfo.Id&transfer=@transfer" class="link-text pull-right" title="删除 @item.MovieInfo.Title">删除</a>
+                    <a href="/Album/DeleteItem?albumId=@Model.Album.AlbumId&movieId=@item.MovieId&transfer=@transfer" class="link-text pull-right" title="删除 @item.Title">删除</a>
                 }
             </div>
         </div>
@@ -135,15 +122,14 @@
 
     @if (Model.PagingCount > 1)
     {
-        @FilmHouse.App.Presentation.Web.UI.Helper.Controls.PageTagList(Model.Page, Model.PagingSize, Model.PagingCount, ViewBag.CurrentUrl)
+        @FilmHouse.App.Presentation.Web.UI.Helper.Controls.PageTagList(Model.Page, Model.PagingSize, Model.PagingCount, transfer)
     }
 
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                @using (Html.BeginForm("AddItem", "Album", new { id = Model.Id, returnurl = Request.Url }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
+                <form asp-action="AddItem" asp-controller="Album" asp-route-returnUrl="@transfer" method="post" class="form-horizontal" role="form">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
@@ -153,10 +139,9 @@
                         </h4>
                     </div>
                     <div class="modal-body" style="padding:15px 50px;">
+                        @Html.HiddenFor(m => m.AddAlbum.AlbumId)
                         <label class="control-label" for="movie" style="margin-top:0px;">电影编号</label>
-                        <input name="movie" id="movie" class="form-control" placeholder="请输入电影编号" style="margin-top: 5px;" />
-                        <label class="control-label" for="note" style="margin-top:12px;">备注</label>
-                        <input name="note" id="note" class="form-control" style="margin-top:5px;" />
+                        @Html.TextBoxFor(m => m.AddAlbum.MovieId, new { @class = "form-control", placeholder = "请输入电影编号", style = "margin-top: 5px;" })
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -164,7 +149,7 @@
                         </button>
                         <input type="submit" class="btn btn-primary" value="提交">
                     </div>
-                }
+                </form>
             </div>
         </div>
     </div>

@@ -81,7 +81,7 @@ public class MovieIndexViewModel
         /// <summary>
         /// 类型（文子串）
         /// </summary>
-        public List<CodeValueVO> GenresValue { get; set; } = new List<CodeValueVO>();
+        public List<SelectListItem> GenresValue { get; set; } = new List<SelectListItem>();
         /// <summary>
         /// 语言（代碼串）
         /// </summary>

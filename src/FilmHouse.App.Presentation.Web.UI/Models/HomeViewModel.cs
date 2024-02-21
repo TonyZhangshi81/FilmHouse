@@ -138,7 +138,7 @@ public class HomeIndexViewModel
         /// <summary>
         /// 类型（文子串）
         /// </summary>
-        public List<CodeValueVO> GenresValue { get; set; } = new List<CodeValueVO>();
+        public List<SelectListItem> GenresValue { get; set; } = new List<SelectListItem>();
         /// <summary>
         /// 是否想看
         /// </summary>

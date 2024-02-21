@@ -75,7 +75,8 @@ public sealed class MovieSpec : BaseSpecification<MovieEntity>
     /// <param name="reviewStatus"></param>
     /// <param name="pageSize"></param>
     /// <param name="pageIndex"></param>
-    public MovieSpec(SearchKeywordVO searchKeyword, CodeKeyVO genre, CodeKeyVO country, YearVO year, ReviewStatusVO reviewStatus) : base(c => c.ReviewStatus == reviewStatus)
+    public MovieSpec(SearchKeywordVO searchKeyword, CodeKeyVO genre, CodeKeyVO country, YearVO year, ReviewStatusVO reviewStatus)
+        : base(c => c.ReviewStatus == reviewStatus)
     {
         // 关键字查询
         if (!string.IsNullOrEmpty(searchKeyword.AsPrimitive()))
@@ -109,7 +110,8 @@ public sealed class MovieSpec : BaseSpecification<MovieEntity>
     /// <param name="reviewStatus"></param>
     /// <param name="pageSize"></param>
     /// <param name="pageIndex"></param>
-    public MovieSpec(SearchKeywordVO searchKeyword, CodeKeyVO genre, CodeKeyVO country, YearVO year, ReviewStatusVO reviewStatus, int pageSize, int pageIndex) : base(c => c.ReviewStatus == reviewStatus)
+    public MovieSpec(SearchKeywordVO searchKeyword, CodeKeyVO genre, CodeKeyVO country, YearVO year, ReviewStatusVO reviewStatus, int pageSize, int pageIndex)
+        : base(c => c.ReviewStatus == reviewStatus)
     {
         var startRow = (pageIndex - 1) * pageSize;
 
@@ -138,4 +140,44 @@ public sealed class MovieSpec : BaseSpecification<MovieEntity>
 
         ApplyPaging(startRow, pageSize);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="movieIds"></param>
+    public MovieSpec(AlbumJsonItemsVO movieIds)
+        : base()
+    {
+        var items = new List<MovieIdVO>();
+        foreach (var item in movieIds.AsPrimitive().Split(",", StringSplitOptions.TrimEntries))
+        {
+            items.Add(new MovieIdVO(Guid.Parse(item)));
+        }
+        this.AddCriteria(c => items.Contains(c.MovieId));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="movieIds"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageIndex"></param>
+    public MovieSpec(AlbumJsonItemsVO movieIds, int pageSize, int pageIndex)
+        : base()
+    {
+        var startRow = (pageIndex - 1) * pageSize;
+
+        var items = new List<MovieIdVO>();
+        foreach (var item in movieIds.AsPrimitive().Split(",", StringSplitOptions.TrimEntries))
+        {
+            items.Add(new MovieIdVO(Guid.Parse(item)));
+        }
+        this.AddCriteria(c => items.Contains(c.MovieId));
+
+        ApplyOrderByDescending(p => p.CreatedOn);
+
+        ApplyPaging(startRow, pageSize);
+    }
+
+
 }

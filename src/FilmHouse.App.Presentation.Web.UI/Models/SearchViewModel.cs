@@ -122,7 +122,7 @@ public class SearchInedxViewModel
         /// <summary>
         /// 类型（文子串）
         /// </summary>
-        public List<CodeValueVO> GenresValue { get; set; } = new List<CodeValueVO>();
+        public List<SelectListItem> GenresValue { get; set; } = new List<SelectListItem>();
         /// <summary>
         /// 作者列表（带导航功能）
         /// </summary>
