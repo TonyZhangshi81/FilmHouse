@@ -136,9 +136,13 @@ public class HomeIndexViewModel
         /// </summary>
         public List<SelectListItem> Writers { get; set; } = new List<SelectListItem>();
         /// <summary>
-        /// 类型（文子串）
+        /// 类型（带导航功能）
         /// </summary>
         public List<SelectListItem> GenresValue { get; set; } = new List<SelectListItem>();
+        /// <summary>
+        /// 类型（代碼串）
+        /// </summary>
+        public GenresVO Genres { get; set; }
         /// <summary>
         /// 是否想看
         /// </summary>
@@ -162,6 +166,7 @@ public class HomeIndexViewModel
             viewModel.Summary = movie.Summary;
             viewModel.Directors = Helper.ModelUtils.GetDirectors(movie.DirectorsId, movie.Directors);
             viewModel.Writers = Helper.ModelUtils.GetWriters(movie.WritersId, movie.Writers);
+            viewModel.Genres = movie.Genres;
 
             return viewModel;
         }

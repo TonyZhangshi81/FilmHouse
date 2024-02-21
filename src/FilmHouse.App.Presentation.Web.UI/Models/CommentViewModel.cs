@@ -93,7 +93,7 @@ public class CommentIndexViewModel
         /// </summary>
         public GenresVO Genres { get; set; }
         /// <summary>
-        /// 类型（文子串）
+        /// 类型（带导航功能）
         /// </summary>
         public List<SelectListItem> GenresValue { get; set; } = new List<SelectListItem>();
         /// <summary>
@@ -101,9 +101,9 @@ public class CommentIndexViewModel
         /// </summary>
         public CountriesVO Countries { get; set; }
         /// <summary>
-        /// 国家地区（文子串）
+        /// 国家地区（带导航功能）
         /// </summary>
-        public List<CodeValueVO> CountriesValue { get; set; } = new List<CodeValueVO>();
+        public List<SelectListItem> CountriesValue { get; set; } = new List<SelectListItem>();
         /// <summary>
         /// 片长
         /// </summary>

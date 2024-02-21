@@ -53,8 +53,11 @@ public class MovieController : Controller
 
         var model = new MovieIndexViewModel();
         model.Movie = MovieIndexViewModel.MovieDiscViewModel.FromEntity(display.DiscMovie);
+        // 電影類型
         model.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
-        model.Movie.CountriesValue = display.DiscMovie.Countries.AsCodeElement(this._codeProvider, CountriesVO.Group).Select(_ => _.Name).ToList();
+        // 國家地區
+        model.Movie.CountriesValue = display.DiscMovie.Countries.AsCodeElement(this._codeProvider, CountriesVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
+        // 語言
         model.Movie.LanguagesValue = display.DiscMovie.Languages.AsCodeElement(this._codeProvider, LanguagesVO.Group).Select(_ => _.Name).ToList();
         // 评论总数
         model.Movie.CommentCount = display.CommentCount;

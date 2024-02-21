@@ -11,7 +11,7 @@
     Layout = "~/Views/Account/_LayoutPage.cshtml";
 
     var subTitle = settingProvider.GetValue("WebSiteSettings:SubTitle");
-    var name = settingProvider.GetValue("WebSiteSettings:Name");
+    var webName = settingProvider.GetValue("WebSiteSettings:Name");
 }
 
 <form asp-action="Register" asp-controller="Account" asp-route-returnUrl="@ViewBag.Transfer" method="post" class="form-horizontal" role="form">
@@ -20,7 +20,7 @@
     <div class="panel panel-body center-horizon panel-login" style="margin-top:20px; padding:30px 50px 20px 50px;">
 
         <div class="text-center" style="margin:0px -50px;">
-            <text style="font-size:36px; color:#121212; font-weight:bold; font-family:'Founder clear engraving this Song simplified';">@name</text>
+            <text style="font-size:36px; color:#121212; font-weight:bold; font-family:'Founder clear engraving this Song simplified';">@webName</text>
         </div>
         <div class="text-center" style="margin:0px -50px;">
             <text style="font-size:20px; color:#444444; font-weight:normal; font-family:'Microsoft JhengHei UI';">FileHouse</text>

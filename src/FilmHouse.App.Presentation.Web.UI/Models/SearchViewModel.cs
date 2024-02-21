@@ -120,7 +120,7 @@ public class SearchInedxViewModel
         /// </summary>
         public List<SelectListItem> Directors { get; set; } = new List<SelectListItem>();
         /// <summary>
-        /// 类型（文子串）
+        /// 类型（带导航功能）
         /// </summary>
         public List<SelectListItem> GenresValue { get; set; } = new List<SelectListItem>();
         /// <summary>

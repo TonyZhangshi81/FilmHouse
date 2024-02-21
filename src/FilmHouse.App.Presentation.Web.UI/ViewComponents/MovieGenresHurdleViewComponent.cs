@@ -1,6 +1,4 @@
-﻿using FilmHouse.Core.ValueObjects;
-using Microsoft.AspNetCore.Mvc;
-using Spectre.Console;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FilmHouse.App.Presentation.Web.UI.ViewComponents;

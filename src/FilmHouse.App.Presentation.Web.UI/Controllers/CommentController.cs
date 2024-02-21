@@ -84,8 +84,10 @@ public class CommentController : Controller
             model.Comments.Add(CommentIndexViewModel.CommentDiscViewModel.FromEntity(comment));
         }
         model.Movie = CommentIndexViewModel.MovieDiscViewModel.FromEntity(display.Movie);
+        // 類型
         model.Movie.GenresValue = display.Movie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
-        model.Movie.CountriesValue = display.Movie.Countries.AsCodeElement(this._codeProvider, CountriesVO.Group).Select(_ => _.Name).ToList();
+        // 國家地區
+        model.Movie.CountriesValue = display.Movie.Countries.AsCodeElement(this._codeProvider, CountriesVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
 
         return View(model);
     }

@@ -78,7 +78,7 @@
             @await Component.InvokeAsync("CelebritiesLink", new { viewModel = writers })
         </div>
         <div class="text-overflow font-small">
-            @* 类型 是否需要跳转至檢索畫面？？ *@
+            @* 类型 *@
             @await Component.InvokeAsync("MovieGenresHurdle", new { genres = Model.Discovery.Movie.GenresValue, count = 4 })
         </div>
     </div>

@@ -38,11 +38,11 @@
 
 <body style="padding:0px; height:100%; background-size:cover; overflow:hidden;">
 
-    <div style="height:30px; margin:20px 100px 0px 100px;">
+    <div style="height:30px; margin:10px 10px 0px 10px;">
         <a href="/Home/Index" class="link-icon" title="@name @subTitle">
             <img src="~/Content/Icon/Gray.png" style="width:32px; height:32px;" />
         </a>
-        <div style="width:360px; display:inline; float:left;">
+        <div style="max-width:560px; min-width:360px;">
             @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "searchForm" }))
             {
                 <div class="input-group">
@@ -54,9 +54,9 @@
             }
         </div>
 
-        <div class="hidden-xs" style="display:inline; float:right;">
-            <a class="btn btn-account" style="margin-right:20px;" href="/Account/Register">注册</a>
-            <a class="btn btn-account" href="/Account/Login">登录</a>
+        <div class="hidden" style="display:inline; float:right;">
+            <a class="btn btn-sm btn-account" style="margin-right:20px;" href="/Account/Register">注册</a>
+            <a class="btn btn-sm btn-account" href="/Account/Login">登录</a>
         </div>
     </div>
 
