@@ -180,4 +180,14 @@ public sealed class MovieSpec : BaseSpecification<MovieEntity>
     }
 
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userId"></param>
+    public MovieSpec(UserIdVO userId)
+        : base(c => c.UserId == userId)
+    {
+        ApplyOrderByDescending(p => p.CreatedOn);
+    }
+
 }
