@@ -59,7 +59,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Controllers
             }
 
             model.Discovery = HomeIndexViewModel.HomeDiscViewModel.FromEntity(display.Discoveries.ElementAt(0));
-            model.Discovery.Movie.GenresValue = display.DiscMovie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
+            model.Discovery.Movie.GenresValue = model.Discovery.Movie.Genres.AsCodeElement(this._codeProvider, GenresVO.Group).Select(_ => new SelectListItem() { Text = _.Name.AsPrimitive(), Value = _.Code.AsPrimitive() }).ToList();
             // 最新栏目
             model.News = HomeIndexViewModel.FromEntity(display.NewMovies);
             // 热门栏目

@@ -2,10 +2,18 @@
 
   $(".tipup").tooltip();
 
-  var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+  const $button = $("#cookieConsent button[data-cookie-string]");
+  $button.on("click", function () { dataCookieString(this); });
 
-  var $button = $("#cookieConsent button[data-cookie-string]");
-  $button.click(function () { dataCookieString(this); });
+  const isShow = $("#hidIsShow").val();
+  if (isShow) {
+    $('#cookieConsent').show(1000);
+    /*
+    $('#cookieConsent').animate({
+      scrollTop: $(".site-info").offset().top
+    }, 2500, "easeOutQuint");
+    */
+  }
 
   //Barba.Pjax.start();
 });
@@ -13,7 +21,7 @@
 function dataCookieString(event) {
   //document.cookie = event.dataset.cookieString;
 
-  var pUrl = "/Account/grantcookie";
+  const pUrl = "/Account/grantcookie";
 
   $.ajax({
     type: "GET",
@@ -24,7 +32,10 @@ function dataCookieString(event) {
     async: false,
     success: function (data) {
       console.log("grant consent!");
-      $("#cookieConsent").hide();
+
+      setTimeout(function () {
+        $('#cookieConsent').hide(400);
+      }, 200);
     }
   });
 

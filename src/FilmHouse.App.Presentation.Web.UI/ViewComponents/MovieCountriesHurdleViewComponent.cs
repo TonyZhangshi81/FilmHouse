@@ -1,6 +1,5 @@
-﻿using FilmHouse.Core.ValueObjects;
-using Microsoft.AspNetCore.Mvc;
-using Spectre.Console;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FilmHouse.App.Presentation.Web.UI.ViewComponents;
 
@@ -19,7 +18,7 @@ public class MovieCountriesHurdleViewComponent : ViewComponent
     /// <param name="genres"></param>
     /// <param name="count"></param>
     /// <returns></returns>
-    public IViewComponentResult Invoke(List<CodeValueVO> genres, int count = 0)
+    public IViewComponentResult Invoke(List<SelectListItem> genres, int count = 0)
     {
         try
         {

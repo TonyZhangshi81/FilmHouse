@@ -5,17 +5,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace FilmHouse.App.Presentation.Web.UI.Models;
 
 
-public class MineIndexViewModel
+public class PeopleIndexViewModel
 {
     /// <summary>
-    /// 
+    /// 电影信息
     /// </summary>
-    public MineDiscViewModel DiscViewModel { get; set; } = new MineDiscViewModel();
+    public UserAccountDiscViewModel MineDiscViewModel { get; set; } = new UserAccountDiscViewModel();
 
     /// <summary>
     /// 
     /// </summary>
-    public class MineDiscViewModel
+    public class UserAccountDiscViewModel
     {
         public UserIdVO UserId { get; set; }
 
@@ -86,9 +86,9 @@ public class MineIndexViewModel
         public List<CommentListItem> Comments { get; set; }
 
 
-        public static MineDiscViewModel FromEntity(UserAccountEntity userAccount)
+        public static UserAccountDiscViewModel FromEntity(UserAccountEntity userAccount)
         {
-            var viewModel = new MineDiscViewModel();
+            var viewModel = new UserAccountDiscViewModel();
             viewModel.UserId = userAccount.UserId;
             viewModel.Account = userAccount.Account;
             viewModel.Avatar = userAccount.Avatar;
