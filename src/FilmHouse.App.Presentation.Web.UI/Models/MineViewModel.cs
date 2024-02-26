@@ -1,6 +1,7 @@
 ﻿using FilmHouse.Core.ValueObjects;
 using FilmHouse.Data.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using static FilmHouse.App.Presentation.Web.UI.Models.MineIndexViewModel;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models;
 
@@ -8,7 +9,7 @@ namespace FilmHouse.App.Presentation.Web.UI.Models;
 public class MineIndexViewModel
 {
     /// <summary>
-    /// 
+    /// 我的主页
     /// </summary>
     public MineDiscViewModel DiscViewModel { get; set; } = new MineDiscViewModel();
 
@@ -207,3 +208,50 @@ public class MineIndexViewModel
     }
 
 }
+
+
+/// <summary>
+/// 我的电影
+/// </summary>
+public class MineMovieViewModel
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public MineMovieDiscViewModel DiscViewModel { get; set; } = new MineMovieDiscViewModel();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MineMovieDiscViewModel
+    {
+        /// <summary>
+        /// 想看、看过、喜欢、自己创建的影片数量统计
+        /// </summary>
+        public int PlanCount { get; set; }
+        public int FinishCount { get; set; }
+        public int FavorCount { get; set; }
+        public int CreateCount { get; set; }
+
+        public List<MovieMark> MovieMarks { get; set; } = new List<MovieMark>();
+
+        public class MovieMark
+        {
+            public MovieIdVO MovieId { get; set; }
+            public MovieTitleVO Title { get; set; }
+            public YearVO Year { get; set; }
+            public DirectorNamesVO Directors { get; set; }
+            public string GenresValue { get; set; }
+            public RatingVO Rating { get; set; }
+            public ReviewStatusVO ReviewStatus { get; set; }
+            public NoteVO Note { get; set; }
+            public DoubanIDVO DoubanID { get; set; }
+
+            public bool IsPlan { get; set; }
+            public bool IsFinish { get; set; }
+            public bool IsFavor { get; set; }
+        }
+    }
+
+}
+

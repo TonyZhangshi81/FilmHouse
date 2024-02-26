@@ -8,11 +8,16 @@ namespace FilmHouse.Data.Spec;
 
 public sealed class MarkSpec : BaseSpecification<MarkEntity>
 {
-    public MarkSpec(MarkTypeVO markType, UserIdVO userId, MarkTargetIdVO target) 
+    public MarkSpec(MarkTypeVO markType, UserIdVO userId, MarkTargetIdVO target)
         : base(c => c.Type == markType && c.UserId == userId && c.Target == target)
     {
     }
 
+    public MarkSpec(MarkTypeVO markType, UserIdVO userId)
+        : base(c => c.Type == markType && c.UserId == userId)
+    {
+        ApplyOrderByDescending(p => p.CreatedOn);
+    }
 
 
 }
