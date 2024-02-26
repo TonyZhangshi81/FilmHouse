@@ -1,0 +1,222 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions;
+@using Microsoft.AspNetCore.Http;
+
+@model FilmHouse.App.Presentation.Web.UI.Models.MineIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutWide.cshtml";
+    ViewBag.Title = Model.DiscViewModel.Account + "的主页";
+    ViewBag.PageType = 2;
+    ViewBag.NavType = 5;
+}
+
+@section Links {
+    <link rel="stylesheet" asp-append-version="true" href="~/css/mine.css" />
+}
+
+<div class="container">
+    <div id="divPanel" style="background-image: url('/Content/User/Cover/@Model.DiscViewModel.Cover');">
+        <div id="divMask">
+            <div id="divLink">
+                <a href="/Mine/ChangeAvatar" id="aLink">
+                    <img class="img-responsive tipup" src="~/Content/User/Avatar/@Model.DiscViewModel.Avatar" data-toggle="tooltip" data-placement="right" title="点击更改设置" id="imgAvatar" />
+                </a>
+            </div>
+            <div id="divAccount">
+                <a href="/Mine/MineMovie?type=1">电影</a>
+                <a href="/Mine/MineCeleb?type=1">影人</a>
+                <a href="/Mine/MineRes">资源</a>
+                <a href="/Mine/MineAlbum?type=1">专辑</a>
+                &Iota;
+                <a href="/Mine/ChangeAvatar/">设置</a>
+                <a href="/Mine/">@Model.DiscViewModel.Account</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-sm-9 no-padding">
+        @*专辑*@
+        <div class="panel panel-default" style="min-height:320px;">
+            <div class="panel-heading text-center">
+                ————&nbsp;&nbsp;<strong>专辑</strong> (<a class="btn btn-link link-text" href="/Mine/MineAlbum?type=1" title="查看全部">@Model.DiscViewModel.AlbumCount 部</a>)&nbsp;&nbsp;————
+            </div>
+            <div class="panel-body" style="padding:10px;">
+                @if (Model.DiscViewModel.Albums.Count == 0)
+                {
+                    <div class="text-center">
+                        没有创建过专辑(＃￣▽￣＃)，<a class="link-text" href="/Album/Create" target="_self">创建一个</a>
+                    </div>
+                }
+                else
+                {
+                    foreach (var item in Model.DiscViewModel.Albums)
+                    {
+                        <div class="col-lg-4 col-md-3 col-sm-4" style="padding:10px;">
+                            <div class="album panel-float">
+
+                                <div class="album-avatar">
+                                    <a href="/Album/Detail?albumId=@item.AlbumId" title="@item.Title" target="_self"><img src="~/Content/Album/@item.Cover" /></a>
+                                </div>
+
+                                <div class="album-info">
+                                    <a class="link-no-line text-overflow" href="/Album/Detail?albumId=@item.AlbumId" target="_self" title="@item.Title">@item.Title</a>
+                                    <small>@item.Summary</small>
+                                </div>
+
+                                <div class="album-bottom">
+                                    <i class="fa fa-eye"></i><span> &nbsp;@item.AmountAttention</span>
+                                    <i class="fa fa-heart"></i><span> &nbsp;@item.FollowCount</span>
+                                    @if (item.UserId != null)
+                                    {
+                                        <div class="album-user">
+                                            <a href="/People/Index?userId=@item.UserId" data-toggle="tooltip" data-placement="top" title="@item.Account" target="_self">
+                                                <i class="fa fa-user"></i>
+                                            </a>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        @*最近动态*@
+        <div class="panel panel-default" style="min-height:320px;">
+            <div class="panel-heading text-center">
+                ————&nbsp;&nbsp;<strong>最近动态</strong>&nbsp;&nbsp;————
+            </div>
+            <div class="panel-body">
+                @if (Model.DiscViewModel.Comments.Count == 0)
+                {
+                    <div class="text-center">
+                        没有动态(＃￣▽￣＃)
+                    </div>
+                }
+                else
+                {
+                    <ul class="list-link">
+                        @foreach (var item in Model.DiscViewModel.Comments)
+                        {
+                            <li>
+                                <div style="font-weight:bold;">
+                                    对电影&nbsp;&nbsp;<a class="link-text" href="/Movie/Index?movieId=@item.MovieId" target="_self">@item.Title</a>&nbsp;&nbsp;的评论
+                                    <span class="font-small" style="margin-left:10px; color:#555555;">@item.CommentTime</span>
+                                </div>
+                                <p class="comment">
+                                    @item.Content
+                                </p>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3 div-right">
+        @*想看的电影*@
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                ————&nbsp;&nbsp;<strong>想看</strong> (<a class="link-text" href="/Mine/MineMovie?type=1" title="查看全部">@Model.DiscViewModel.PlanCount 部</a>)&nbsp;&nbsp;————
+            </div>
+            <div class="panel-body">
+                @if (Model.DiscViewModel.MoviePlans.Count == 0)
+                {
+                    <div class="text-center">
+                        没有想看的电影(＃￣▽￣＃)
+                    </div>
+                }
+                else
+                {
+                    <ul class="list-link">
+                        @foreach (var item in Model.DiscViewModel.MoviePlans)
+                        {
+                            <li>
+                                <a class="link-list-item" href="/Movie/Index?movieId=@item.Value" target="_self">@item.Text</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                ————&nbsp;&nbsp;<strong>看过</strong> (<a class="link-text" href="/Mine/MineMovie?type=2" title="查看全部">@Model.DiscViewModel.FinishCount 部</a>)&nbsp;&nbsp;————
+            </div>
+            <div class="panel-body">
+                @if (Model.DiscViewModel.MovieFinishs.Count == 0)
+                {
+                    <div class="text-center">
+                        没有看过的电影(＃￣▽￣＃)
+                    </div>
+                }
+                else
+                {
+                    <ul class="list-link">
+                        @foreach (var item in Model.DiscViewModel.MovieFinishs)
+                        {
+                            <li>
+                                <a class="link-list-item" href="/Movie/Index?movieId=@item.Value" target="_self">@item.Text</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                ————&nbsp;&nbsp;<strong>喜欢</strong> (<a class="link-text" href="/Mine/MineMovie?type=3" title="查看全部">@Model.DiscViewModel.FavorCount 部</a>)&nbsp;&nbsp;————
+            </div>
+            <div class="panel-body">
+                @if (Model.DiscViewModel.MovieFavors.Count == 0)
+                {
+                    <div class="text-center">
+                        没有喜欢的电影(＃￣▽￣＃)
+                    </div>
+                }
+                else
+                {
+                    <ul class="list-link">
+                        @foreach (var item in Model.DiscViewModel.MovieFavors)
+                        {
+                            <li>
+                                <a class="link-list-item" href="/Movie/Index?movieId=@item.Value" target="_self">@item.Text</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                ————&nbsp;&nbsp;<strong>影人</strong> (<a class="link-text" href="/Mine/MineCeleb?type=1" title="查看全部">@Model.DiscViewModel.CollectCount 位</a>)&nbsp;&nbsp;————
+            </div>
+            <div class="panel-body">
+                @if (Model.DiscViewModel.CelebCollects.Count == 0)
+                {
+                    <div class="text-center">
+                        没有收藏过影人(＃￣▽￣＃)
+                    </div>
+                }
+                else
+                {
+                    <ul class="list-link">
+                        @foreach (var item in Model.DiscViewModel.CelebCollects)
+                        {
+                            <li>
+                                <a class="link-list-item" href="/Celeb/Index?movieId=@item.Value" target="_self">@item.Text</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>
