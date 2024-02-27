@@ -1,4 +1,7 @@
 @echo off
+
+dotnet restore
+
 dotnet clean FilmHouse-all.sln
 if %errorlevel% neq 0 (
   pause
