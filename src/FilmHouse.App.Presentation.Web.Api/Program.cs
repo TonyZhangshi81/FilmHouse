@@ -5,6 +5,7 @@ using FilmHouse.Core.DependencyInjection;
 using FilmHouse.Core.Presentation.Web.DependencyInjection;
 using FilmHouse.Core.Services.Codes;
 using FilmHouse.Core.Services.Configuration;
+using FilmHouse.Core.Services.MongoBasicOperation;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects.Serialization.Generics;
 using FilmHouse.Data.Entities;
@@ -78,6 +79,9 @@ void ConfigureConfiguration()
         .Build();
     // 将配置添加到服务中
     builder.Services.AddSingleton<IConfiguration>(configuration);
+
+    // MongodbHost信息
+    builder.Services.Configure<MongoDBContextOptions>(builder.Configuration.GetSection("MongodbHost"));
 }
 
 void ConfigureServices(IServiceCollection services)
@@ -144,8 +148,6 @@ void ConfigureServices(IServiceCollection services)
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
-
-
 }
 
 
