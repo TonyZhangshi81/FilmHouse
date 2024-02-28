@@ -12,6 +12,7 @@ using FilmHouse.Core.Presentation.Web.Auth;
 using FilmHouse.Core.Presentation.Web.DependencyInjection;
 using FilmHouse.Core.Presentation.Web.Health;
 using FilmHouse.Core.Presentation.Web.SecurityHeaders;
+using FilmHouse.Core.Services.MongoBasicOperation;
 using FilmHouse.Core.Utils;
 using FilmHouse.Core.ValueObjects.Serialization.Generics;
 using FilmHouse.Web;
@@ -137,6 +138,8 @@ void ConfigureConfiguration()
         .Build();
     // 将配置添加到服务中
     builder.Services.AddSingleton<IConfiguration>(configuration);
+    // MongodbHost信息
+    builder.Services.Configure<MongoDBContextOptions>(builder.Configuration.GetSection("MongodbHost"));
 }
 
 void ConfigureServices(IServiceCollection services)
