@@ -34,6 +34,8 @@ public static class ServiceCollectionExtensions
 
         hcBuilder.AddCheck<MemoryHealthCheck>("memory health check", tags: new string[] { "system", "memory", "ready" });
 
+        hcBuilder.AddCheck<MongoHealthCheck>("mongo health check", tags: new string[] { "db", "mongo", "ready" });
+
         return services;
     }
 }
