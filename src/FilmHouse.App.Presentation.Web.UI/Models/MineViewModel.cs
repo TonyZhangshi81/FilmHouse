@@ -5,7 +5,9 @@ using static FilmHouse.App.Presentation.Web.UI.Models.MineIndexViewModel;
 
 namespace FilmHouse.App.Presentation.Web.UI.Models;
 
-
+/// <summary>
+/// 我的主页
+/// </summary>
 public class MineIndexViewModel
 {
     /// <summary>
@@ -250,6 +252,52 @@ public class MineMovieViewModel
             public bool IsPlan { get; set; }
             public bool IsFinish { get; set; }
             public bool IsFavor { get; set; }
+        }
+    }
+
+}
+
+
+/// <summary>
+/// 我的影人
+/// </summary>
+public class MineCelebViewModel
+{
+    /// <summary>
+    /// 我的影人
+    /// </summary>
+    public MineCelebDiscViewModel DiscViewModel { get; set; } = new MineCelebDiscViewModel();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MineCelebDiscViewModel
+    {
+        public UserIdVO UserId { get; set; }
+
+        public AccountNameVO Account { get; set; }
+
+        public UserAvatarVO Avatar { get; set; }
+
+        public CoverVO Cover { get; set; }
+
+
+        public List<CelebViewModel> Celebs { get; set; }
+
+        /// <summary>
+        /// 收藏、创建的影人数量统计
+        /// </summary>
+        public int CollectCount { get; set; }
+        public int CreateCount { get; set; }
+
+        public static MineCelebDiscViewModel FromEntity(UserAccountEntity userAccount)
+        {
+            var viewModel = new MineCelebDiscViewModel();
+            viewModel.UserId = userAccount.UserId;
+            viewModel.Account = userAccount.Account;
+            viewModel.Avatar = userAccount.Avatar;
+            viewModel.Cover = userAccount.Cover;
+            return viewModel;
         }
     }
 

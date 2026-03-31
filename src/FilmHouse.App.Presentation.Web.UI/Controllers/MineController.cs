@@ -160,6 +160,24 @@ public class MineController : Controller
         return View(model);
     }
 
+
+    //
+    // GET: /Mine/MarkedCeleb/
+    [Authorize]
+    public async Task<IActionResult> MineCeleb(int type)
+    {
+        if (type > 2 || type < 1)
+        {
+            return RedirectToAction("NotFound", "Error");
+        }
+        ViewBag.CelebType = type;
+
+        var command = new FilmHouse.Commands.Mine.MovieDisplayCommand(type);
+        var display = await this._mediator.Send(command);
+        return null;
+
+    }
+
     #endregion
 
 
